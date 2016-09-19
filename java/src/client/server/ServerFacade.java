@@ -91,9 +91,9 @@ public class ServerFacade {
      * @post player is in the game with specified color
      * @post user catan.game cookie is set
      *
-     * @return Boolean
+     * @return String - JSON server response
      */
-    public Boolean gamesJoin(){
+    public String gamesJoin(){
 
     }
 
@@ -110,9 +110,9 @@ public class ServerFacade {
      *
      * @post game is saved on the server
      *
-     * @return String 
+     * @return String - JSON server response
      */
-    public Boolean gamesSave(){
+    public String gamesSave(){
 
     }
 
@@ -127,9 +127,139 @@ public class ServerFacade {
      *
      * @post game is saved on the server
      *
-     * @return String 
+     * @return String - JSON server response
      */
-    public Boolean gamesSave(){
+    public String gamesLoad(){
+
+    }
+
+    /**
+     * gameModel
+     *
+     * Fetch the newest model from the Server
+     *
+     * @param version: Integer version of the Model
+     *
+     * @pre user is logged in
+     * @pre user has joined a game
+     *
+     * @return String - JSON representation of client
+     */
+    public String gameModel(int version){
+
+    }
+
+    /**
+     * gameReset
+     *
+     * Clears out the command history of the current game
+     *
+     * @pre user is logged in
+     * @pre user has joined a game
+     *
+     * @post game history has been cleared
+     *
+     * @return String - JSON representation of client
+     */
+    public String gameReset(){
+
+    }
+
+    /**
+     * gameCommands
+     *
+     * Return history of commands that have been performed
+     *
+     * @pre user is logged in
+     * @pre user has joined a game
+     *
+     * @return String - JSON array of commands that been run on the 
+     */
+    public String gameCommands(){
+
+    }
+
+    /**
+     * gameCommands
+     *
+     * Executes specified commands on the server
+     *
+     * @pre user is logged in
+     * @pre user has joined a game
+     *
+     * @post client model has been updated
+     *
+     * @return String - JSON object representing updated client model
+     */
+    public String gameCommands(List<Commands> commands){
+
+    }
+
+    /**
+     * gameListAI
+     *
+     * Returns a list of supported AI types
+     *
+     * @return String - JSON object representing a list of AI types
+     */
+    public String gameListAI(){
+
+    }
+
+    /**
+     * gameAddAI
+     *
+     * Add an AI player to the current game
+     *
+     * @pre user has logged in
+     * @pre user has joined a game
+     * @pre game is not currently full
+     * @pre AI type is valid
+     *
+     * @post AI player has been added to the game
+     *
+     * @see shared.definitions.AIType
+     *
+     * @return String - JSON object representing response from server
+     */
+    public String gameAddAI(){
+
+    }
+
+    /**
+     * utilChangeLogLevel
+     *
+     * Change the log level on the server
+     *
+     * @pre LogLevel is valid
+     *
+     * @post Server uses the new LogLevel
+     *
+     * @see shared.definitions.LogLevel
+     *
+     * @return String - JSON object representing response from server
+     */
+    public String utilChangeLogLevel(){
+
+    }
+
+    /**
+     * move
+     *
+     * perform the the specified action with the game
+     *
+     * @pre User is logged in
+     * @pre User is in a game
+     *
+     * @post Move has been performed
+     *
+     * @see shared.commands.command
+     *
+     * @throws InvalidMoveException if move does not have a valid type
+     *
+     * @return String - JSON object representing response from server
+     */
+    public String move(Command command){
 
     }
 }
