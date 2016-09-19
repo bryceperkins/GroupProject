@@ -3,30 +3,30 @@ package shared.definitions;
 /**
  * The Moves that can be performed by a user.
  */
-public enum LogLevel
+public enum MoveType
 {
-    ACCEPTTRADE, BUYDEVCARD, BUILDCITY, BUILDROAD, BUILDSETTLEMENT, DISCARDCARDS, FINISHTURN, MARITIMETRADE, MONOPOLY, MONUMENT, OFFERTRADE, ROADBUILDING, ROLLNUMBER, ROBPLAYER, SOLDIER, YEAROFPLENTY;
+    AcceptTrade, BuyDevCard, BuildCity, BuiildRoad, BuildSettlement, DiscardCards, FinishTurn, MaritimeTrade, Monopoly, Monument, OfferTrade, RoadBuilding, RollNumber, RobPlayer, Soldier, YearOfPlenty;
 	
 	private String type;
 	
 	static
 	{
-        ACCEPTTRADE.type = "acceptTrade";
-        BUYDEVCARD.type = "buyDevCard";
-        BUILDCITY.type = "buildCity";
-        BUILDROAD.type = "buildRoad";
-        BUILDSETTLEMENT.type = "buildSettlement";
-        DISCARDCARDS.type = "dicardCards";
-        FINISHTURN.type = "finishTurn";
-        MARITIMETRADE.type = "maritimeTrade";
-        MONOPOLY.type = "Monopoly";
-        MONUMENT.type = "Monument";
-        OFFERTRADE.type = "offerTrade";
-        ROADBUILDING.type = "roadBuilding";
-        ROLLNUMBER.type = "rollNumber";
-        ROBPLAYER.type = "robPlayer";
-        SOLDIER.type = "Soldier";
-        YEAROFPLENTY.type = "YearOfPlenty";
+        AcceptTrade.type = "acceptTrade";
+        BuyDevCard.type = "buyDevCard";
+        BuildCity.type = "buildCity";
+        BuildRoad.type = "buildRoad";
+        BuildSettlement.type = "buildSettlement";
+        DiscardCards.type = "dicardCards";
+        FinishTurn.type = "finishTurn";
+        MaritimeTrade.type = "maritimeTrade";
+        Monopoly.type = "Monopoly";
+        Monumnet.type = "Monument";
+        OfferTrade.type = "offerTrade";
+        RoadBuilding.type = "roadBuilding";
+        RollNumber.type = "rollNumber";
+        RobPlayer.type = "robPlayer";
+        Soldier.type = "Soldier";
+        YearOfPlenty.type = "YearOfPlenty";
 	}
 	
 	public String getType(){

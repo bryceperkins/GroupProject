@@ -2,6 +2,11 @@ package client.model;
 
 import java.util.HashMap;
 
+import shared.definitions.*;
+import shared.locations.*;
+import map.*;
+import player.*;
+
 /**
  * Game model class containing all local information provided by
  * the server for a given game.

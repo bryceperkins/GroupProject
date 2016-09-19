@@ -1,6 +1,11 @@
 package shared.commands;
 
+import client.model.*;
+import shared.locations.*;
+
 public class BuildRoad extends PlayingCommand {
+    private Boolean free;
+    private EdgeLocation location;
     /**
      *  Build a Road.
      *
@@ -18,7 +23,5 @@ public class BuildRoad extends PlayingCommand {
      *  @post Settlement is on the map
      *  @post longest road gained if necessary
      */
-    private Boolean free;
-    private EdgeLocation location;
     public BuildRoad(Boolean free, EdgeLocation location){};
 }

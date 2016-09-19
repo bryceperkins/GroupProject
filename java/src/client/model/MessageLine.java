@@ -1,4 +1,4 @@
-package client.model
+package client.model;
 
 /**
  * Contains a message body and the message's source.

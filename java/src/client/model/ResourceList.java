@@ -1,4 +1,4 @@
-package client.model
+package client.model;
 
 /**
  * Contains a list of all the resources in Catan.
@@ -13,9 +13,9 @@ public class ResourceList{
 	
 	/**
 	 * Determines if this ResourceList has all of the resources specified
-	 * @Param resource_list A ResourceList containing the resources we are checking for in this ResourceList.
-	 * @Pre Will function given any ResourceList
-	 * @Post Will return true if this ResourceList contains the resources specified.
+	 * @param resource_list A ResourceList containing the resources we are checking for in this ResourceList.
+	 * @pre Will function given any ResourceList
+	 * @post Will return true if this ResourceList contains the resources specified.
 	 */
 	public boolean hasResources(ResourceList resource_list){}
 }

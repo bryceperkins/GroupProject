@@ -13,6 +13,6 @@ public class DiscardCards {
      *  @post you lost the specified resources
      *  @post after last discard model status set to 'Robbing'
      */
-    private ResourceHand discardedCards;
-    public DiscardCards(ResourceHand discardedCards){};
+    private TradeOffer discardedCards;
+    public DiscardCards(TradeOffer discardedCards){};
 }

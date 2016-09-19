@@ -9,14 +9,15 @@ public class Poller {
 
     public Poller(){
     }
+    /**
+     * @param interval - how often the server should be polled.
+     */
     public Poller(int interval){
     }
     /**
      * poll
      *
-     * Calls to ServerInterface.gameModel().
-     *
-     * @param version The version of the model that is being requested from the server.
+     * Polls the server for the current version of the model.  Updates version if different.
      */
     public void poll(){
     }

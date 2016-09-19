@@ -1,6 +1,11 @@
 package shared.commands;
 
+import client.model.*;
+import shared.locations.*;
+
 public class RobPlayer extends PlayingCommand{
+    private HexLocation location;
+    private PlayerIndex victimIndex;
     /**
      *  Relocate the robber and rob another player
      *
@@ -13,8 +18,6 @@ public class RobPlayer extends PlayingCommand{
      *  @post Robber has moved
      *  @post Player being robbed (if any) has given you their resource cards
      */
-    private HexLocation location;
-    private PlayerIndex victimIndex;
     public RobPlayer(HexLocation location, PlayerIndex victimIndex){};
 
 }

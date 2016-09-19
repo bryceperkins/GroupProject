@@ -1,11 +1,16 @@
 package shared.commands;
 
+import client.model.*;
+import shared.locations.*;
+
 public class BuildSettlement extends PlayingCommand{
+    private Boolean free;
+    private VertexLocation location;
     /**
      *  Build a Settlement.
      *
      *  @param free - If this settlement is free
-     *  @param locaiton - VertexLocation
+     *  @param location - VertexLocation
      *
      *  @pre Location is open
      *  @pre Location is not on water
@@ -16,7 +21,5 @@ public class BuildSettlement extends PlayingCommand{
      *  @post resources lost
      *  @post Settlement is on the map
      */
-    private Boolean free;
-    private VertexLocation location;
-    public BuildSettlement(Boolean free, Vertexlocation location){};
+    public BuildSettlement(Boolean free, VertexLocation location){};
 }

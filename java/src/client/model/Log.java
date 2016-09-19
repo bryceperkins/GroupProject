@@ -1,4 +1,4 @@
-package client.model
+package client.model;
 
 /**
  * Contains all log messages and their sources

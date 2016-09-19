@@ -1,5 +1,5 @@
 package shared.communication;
 
-interface Name {
+public interface Name {
     boolean valid();
 }

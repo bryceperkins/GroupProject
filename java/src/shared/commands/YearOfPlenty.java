@@ -1,6 +1,10 @@
 package shared.commands;
 
+import shared.definitions.*;
+
 public class YearOfPlenty extends DevCardCommand {
+    private ResourceType resource1;
+    private ResourceType resource2;
     /**
      *  Gain two resources from the bank
      *
@@ -11,7 +15,5 @@ public class YearOfPlenty extends DevCardCommand {
      *
      *  @post You gained the two specified resources
      */
-    private ResourceType resource1;
-    private ResourceType resource2;
     public YearOfPlenty(ResourceType resource1, ResourceType resource2){};
 }

@@ -1,6 +1,9 @@
 package shared.commands;
 
+import client.model.*;
+
 public class AcceptTrade extends Command{
+    private Boolean willAccept;
     /**
      *  Accept the proposed trade.
      *
@@ -12,6 +15,5 @@ public class AcceptTrade extends Command{
      *  @post resources exchanged
      *  @post trade offere removed
      */
-    private Boolean willAccept;
     public AcceptTrade(Boolean willAccept){};
 }

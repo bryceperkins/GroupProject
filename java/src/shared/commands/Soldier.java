@@ -1,6 +1,11 @@
 package shared.commands;
 
+import shared.locations.*;
+import client.model.*;
+
 public class Soldier extends DevCardCommand{
+    private HexLocation location;
+    private PlayerIndex victimIndex;
     /**
      *  Relocate the robber and rob another player
      *
@@ -14,8 +19,6 @@ public class Soldier extends DevCardCommand{
      *  @post Player being robbed (if any) has given you their resource cards
      *  @post Largest army awarded to player with most Solder cards
      */
-    private HexLocation location;
-    private PlayerIndex victimIndex;
     public Soldier(HexLocation location, PlayerIndex victimIndex){};
 
 }

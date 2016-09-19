@@ -1,5 +1,7 @@
 package shared.commands;
 
+import shared.definitions.*;
+
 public class MaritimeTrade extends PlayingCommand{
     /**
      *  Perform a trade with the Bank
@@ -13,5 +15,5 @@ public class MaritimeTrade extends PlayingCommand{
      *  
      *  @post trade has been performed
      */
-    public MaritimeTrade(int ratio, Resource inputResource, Resource outputResource){};
+    public MaritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource){};
 }

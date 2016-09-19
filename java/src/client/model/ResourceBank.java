@@ -1,4 +1,4 @@
-package client.model
+package client.model;
 
 /**
  * Contains a ResourceList whose values may not increase above 19.

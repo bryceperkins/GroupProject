@@ -1,4 +1,4 @@
-package client.model
+package client.model;
 
 /**
  * Enumerates the resource types in Catan

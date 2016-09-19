@@ -19,6 +19,8 @@ client.roll
 client.server
 client.turntracker
 client.utils
+map
+player
 shared.commands
 shared.communication
 shared.definitions

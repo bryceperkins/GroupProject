@@ -1,5 +1,8 @@
 package shared.commands;
 
+import shared.definitions.*;
+import client.model.*;
+
 public class Command {
     private MoveType type;
     private PlayerIndex playerIndex;

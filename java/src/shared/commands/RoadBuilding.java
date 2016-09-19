@@ -1,7 +1,13 @@
 package shared.commands;
 
+import shared.locations.*;
+
 public class RoadBuilding extends DevCardCommand {
+    private EdgeLocation spot1;
+    private EdgeLocation spot2;
     /**
+     *  RoadBuilding
+     *
      *  Build two roads for free
      *
      *  @param spot1 - Location for first road
@@ -19,7 +25,5 @@ public class RoadBuilding extends DevCardCommand {
      *  @post 2 new roads appear
      *  @post longest road gained if necessary
      */
-    private EdgeLocation spot1;
-    private EdgeLocation spot2;
     public RoadBuilding(EdgeLocation spot1, EdgeLocation spot2){};
 }

@@ -2,6 +2,8 @@ package client.model;
 
 import java.util.ArrayList;
 
+import shared.communication.*;
+
 /**
  * Facade class which statically manages the client's games and updates
  * the model based on the results from the server
