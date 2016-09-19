@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class Monument extends DevCardCommand{
     /**
      *  Play the monument DevCard

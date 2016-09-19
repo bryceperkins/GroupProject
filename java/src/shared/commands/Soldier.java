@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class Soldier extends DevCardCommand{
     /**
      *  Relocate the robber and rob another player

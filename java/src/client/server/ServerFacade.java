@@ -1,3 +1,5 @@
+package client.server;
+
 public class ServerFacade {
     private User user;
     private Server server;

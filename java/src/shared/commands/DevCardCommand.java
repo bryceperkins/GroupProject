@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class DevCardCommand extends PlayingCommand{
     /**
      *  Similar to a playing command, however, you have to have the specified card, and have not played a non-monument card already.
@@ -12,5 +14,5 @@ public class DevCardCommand extends PlayingCommand{
     /**
      *  @throws NoCardException
      */
-    public class execute throws NoCardException(){};
+    public String execute() throws NoCardException{};
 }

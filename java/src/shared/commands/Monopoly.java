@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class Monopoly extends DevCardCommand{
     /**
      *  Play the monopoly DevCard

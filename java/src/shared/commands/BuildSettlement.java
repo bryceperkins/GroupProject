@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class BuildSettlement extends PlayingCommand{
     /**
      *  Build a Settlement.

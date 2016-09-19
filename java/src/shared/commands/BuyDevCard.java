@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class BuyDevCard extends PlayingCommand{
     /**
      *  Purchase a dev card from the Bank

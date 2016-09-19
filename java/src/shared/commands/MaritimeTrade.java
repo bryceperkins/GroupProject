@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class MaritimeTrade extends PlayingCommand{
     /**
      *  Perform a trade with the Bank

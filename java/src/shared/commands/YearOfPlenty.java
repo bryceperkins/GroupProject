@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class YearOfPlenty extends DevCardCommand {
     /**
      *  Gain two resources from the bank

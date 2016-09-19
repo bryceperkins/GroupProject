@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class AcceptTrade extends Command{
     /**
      *  Accept the proposed trade.

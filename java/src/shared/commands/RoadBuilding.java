@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class RoadBuilding extends DevCardCommand {
     /**
      *  Build two roads for free

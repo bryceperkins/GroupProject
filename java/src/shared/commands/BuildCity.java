@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class BuildCity extends PlayingCommand{
     /**
      *  Build a city.

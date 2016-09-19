@@ -1,4 +1,4 @@
-package client.server
+package shared.communication;
 
 /**
  * A container for a File name.

@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class OfferTrade extends PlayingCommand{
     /**
      *  Offer a trade to another player
