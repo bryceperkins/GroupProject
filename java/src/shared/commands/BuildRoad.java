@@ -1,4 +1,6 @@
-public class Buildroad extends PlayingCommand {
+package shared.commands;
+
+public class BuildRoad extends PlayingCommand {
     /**
      *  Build a Road.
      *

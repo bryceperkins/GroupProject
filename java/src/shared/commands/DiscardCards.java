@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class DiscardCards {
     /**
      *  Purchase a dev card from the Bank

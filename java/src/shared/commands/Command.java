@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class Command {
     private MoveType type;
     private PlayerIndex playerIndex;
@@ -7,9 +9,9 @@ public class Command {
     /**
      * Send the command to the server for execution
      */
-    public void execute(){};
+    public String execute(){};
     /**
      * Execute the command on the server
      */
-    public void serverExecute(){};
+    public String serverExecute(){};
 }

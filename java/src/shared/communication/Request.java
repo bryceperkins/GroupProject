@@ -1,4 +1,4 @@
-package client.server
+package shared.communication;
 
 public class Request {
     private User user;

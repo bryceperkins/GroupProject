@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class FinishTurn extends PlayingCommand{
     /**
      *  Finish your turn

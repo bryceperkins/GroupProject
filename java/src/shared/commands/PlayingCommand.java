@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class PlayingCommand extends Command{
     /**
      *  Similar to a regular command, however, 'Playing' commands require it to be your turn
@@ -8,5 +10,5 @@ public class PlayingCommand extends Command{
     /**
      *  @throws TurnException
      */
-    public class execute throws TurnException(){};
+    public String execute() throws TurnException{};
 }

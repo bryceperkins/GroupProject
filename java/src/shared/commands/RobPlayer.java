@@ -1,3 +1,5 @@
+package shared.commands;
+
 public class RobPlayer extends PlayingCommand{
     /**
      *  Relocate the robber and rob another player
