@@ -1,0 +1,32 @@
+
+notes for Catan
+
+
+Summary 
+Naming consistency issues
+Git
+CAN's just need to be accessible
+Server facade - be careful with how big it can get
+Command pattern issues - just for diagram
+
+
+we have chance to gain back half the points we do not meet
+
+make changes, give TA notes, changes we made, and UML
+
+----------------------
+
+Server Poller - if updates come only through here, there will be a wait. Haven't talked about dependency injection - how do we tell which proxy to use
+	Dependency Injection - Set proxy 
+
+Proxy model - he can live with that...
+	Server side commands will not have the same similarity. There wil be multiple 
+	Handlers in UML are classes in javadocs
+
+	
+Map - make an easier way to access CAN actions - don't make them so far down a path
+    - make a facade that has access to map, game, etc... Then controllers will have easier access to CAN's through this facade 
+	
+User - valid is what was referred to as Validation by the TA's
+
+Serialization - should work for current setup - will have to work with other direction for info flow
