@@ -7,7 +7,7 @@ public class Command {
     private MoveType type;
     private PlayerIndex playerIndex;
 
-    public Command(MoveType type, PlayerIndex playerIndex);
+    public Command(){};
 
     /**
      * Send the command to the server for execution

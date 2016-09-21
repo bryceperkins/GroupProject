@@ -5,7 +5,7 @@ package shared.definitions;
  */
 public enum MoveType
 {
-    AcceptTrade, BuyDevCard, BuildCity, BuiildRoad, BuildSettlement, DiscardCards, FinishTurn, MaritimeTrade, Monopoly, Monument, OfferTrade, RoadBuilding, RollNumber, RobPlayer, Soldier, YearOfPlenty;
+    AcceptTrade, BuyDevCard, BuildCity, BuildRoad, BuildSettlement, DiscardCards, FinishTurn, MaritimeTrade, Monopoly, Monument, OfferTrade, RoadBuilding, RollNumber, RobPlayer, Soldier, YearOfPlenty;
 	
 	private String type;
 	
@@ -20,7 +20,7 @@ public enum MoveType
         FinishTurn.type = "finishTurn";
         MaritimeTrade.type = "maritimeTrade";
         Monopoly.type = "Monopoly";
-        Monumnet.type = "Monument";
+        Monument.type = "Monument";
         OfferTrade.type = "offerTrade";
         RoadBuilding.type = "roadBuilding";
         RollNumber.type = "rollNumber";

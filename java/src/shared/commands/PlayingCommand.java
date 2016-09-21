@@ -6,9 +6,9 @@ public class PlayingCommand extends Command{
      *  and the clients status is 'Playing'
      *
      */
-    public PlayingCommand();
+    public PlayingCommand(){};
     /**
      *  @throws TurnException
      */
-    public String execute() throws TurnException{};
+    public String execute(){};
 }

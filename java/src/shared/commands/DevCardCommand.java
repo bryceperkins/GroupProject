@@ -10,9 +10,9 @@ public class DevCardCommand extends PlayingCommand{
      */
     private Boolean hasCard;
     private Boolean hasPlayed;
-    public DevCardCommand();
+    public DevCardCommand(){};
     /**
      *  @throws NoCardException
      */
-    public String execute() throws NoCardException{};
+    public String execute(){};
 }

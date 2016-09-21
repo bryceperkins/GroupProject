@@ -46,5 +46,5 @@ public class Player {
 	 * @param offer trader offer to check resource amount against 
 	 * @return true if player can make a trade, else false2
 	 */
-	public boolean canMakeTrade(TradeOffer offer){return true;}
+	public boolean canMakeTrade(){return true;}
 }

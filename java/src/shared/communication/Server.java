@@ -1,5 +1,5 @@
 package shared.communication;
 
 public interface Server {
-    public String handleRequest(Request request){}
+    public String handleRequest(Request request);
 }
