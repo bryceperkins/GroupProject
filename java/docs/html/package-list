@@ -13,14 +13,14 @@ client.map
 client.maritime
 client.misc
 client.model
+client.model.map
+client.model.player
 client.points
 client.resources
 client.roll
 client.server
 client.turntracker
 client.utils
-map
-player
 shared.commands
 shared.communication
 shared.definitions

@@ -1,4 +1,4 @@
-package map;
+package client.model.map;
 
 import player.Player;
 

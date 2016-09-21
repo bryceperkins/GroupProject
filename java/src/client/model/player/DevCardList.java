@@ -1,4 +1,4 @@
-package player;
+package client.model.player;
 
 public class DevCardList {
 
