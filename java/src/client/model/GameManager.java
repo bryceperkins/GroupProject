@@ -31,7 +31,7 @@ public class GameManager {
      * @pre a game exists at gameIndex
      * @return whether or not the user can join the specified game
      */
-    public static boolean userCanJoinGame(int gameIndex, User user) {}
+    public static boolean userCanJoinGame(Game game) {}
 
     /**
      * @return The model of the game active on the client, or null if no game is active
