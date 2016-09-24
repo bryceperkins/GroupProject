@@ -17,5 +17,7 @@ public class ResourceList{
 	 * @pre Will function given any ResourceList
 	 * @post Will return true if this ResourceList contains the resources specified.
 	 */
-	public boolean hasResources(ResourceList resource_list){}
+	public boolean hasResources(ResourceList resource_list){
+        return true;
+    }
 }

@@ -10,5 +10,6 @@ public class UserName implements Name{
      * @return Boolean
      */
     public boolean valid(){
+        return true;
     }
 }

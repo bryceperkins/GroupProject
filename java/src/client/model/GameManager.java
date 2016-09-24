@@ -2,13 +2,15 @@ package client.model;
 
 import java.util.ArrayList;
 
-import shared.communication.*;
+import client.model.*;
 
 /**
  * Facade class which statically manages the client's games and updates
  * the model based on the results from the server
  */
 public class GameManager {
+
+    private static Game activeGame;
 
     private static ArrayList<Game> games;
     private static int activeGameIndex = -1;
@@ -26,17 +28,20 @@ public class GameManager {
     public static void processGame(String json) {}
 
     /**
-     * @param gameIndex the index of the game to join
-     * @param user the user of inquiry
-     * @pre a game exists at gameIndex
+     * @param game the game to join
+     * @pre the game exists 
      * @return whether or not the user can join the specified game
      */
-    public static boolean userCanJoinGame(Game game) {}
+    public static boolean userCanJoinGame(Game game) {
+        return true;
+    }
 
     /**
      * @return The model of the game active on the client, or null if no game is active
      */
-    public static Game getActiveGame() {}
+    public static Game getActiveGame() {
+        return activeGame;
+    }
 
     public static ArrayList<Game> getGames() {
         return games;

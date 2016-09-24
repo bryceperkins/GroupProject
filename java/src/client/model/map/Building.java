@@ -1,6 +1,6 @@
 package client.model.map;
 
-import player.Player;
+import client.model.player.*;
 
 public abstract class Building {
 	

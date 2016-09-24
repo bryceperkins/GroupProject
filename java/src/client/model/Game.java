@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 import shared.definitions.*;
 import shared.locations.*;
-import map.*;
-import player.*;
+import client.model.map.*;
+import client.model.player.*;
 
 /**
  * Game model class containing all local information provided by
@@ -27,12 +27,16 @@ public class Game {
     /**
      * @return whether the game is completed
      */
-    public boolean gameOver() {}
+    public boolean gameOver() {
+        return true;
+    }
 
     /**
      * @return whether the game is ready to begin
      */
-    public boolean canBeginGame() {}
+    public boolean canBeginGame() {
+        return true;
+    }
 
     public String getName() {
         return name;

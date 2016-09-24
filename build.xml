@@ -61,6 +61,8 @@
         <echo> Making Java documentation </echo>
         <delete dir="${javadoc.dir}"/>
 		<javadoc destdir="${javadoc.dir}" Package="true">
+            <tag name="pre" description="Pre-conditions for this call"/>
+            <tag name="post" description="Post-conditions as a result of the call"/>
 			<classpath refid="java.lib.classpath" />
 			<packageset dir="${java.src.dir}">
 				<include name="client/**"/>
@@ -69,6 +71,27 @@
 		</javadoc>
    </target>
     
+    <target name="junit" depends="compile" description="Run JUnit Test cases">
+        <echo> Running JUnit testsuite  </echo>
+        <junit printsummary="yes" haltonfailure="no">
+            <!--
+                <classpath location="lib/junit-4.11.jar" />
+                <classpath location="lib/hamcrest-core-1.3.jar" />t
+            -->
+            <classpath refid="test.path" />
+            <classpath location="${test.classes.dir}" />
+
+            <formatter type="xml" />
+            <formatter type="plain" />
+
+            <batchtest fork="yes" todir="${report.dir}">
+                <fileset dir="${test.dir}">
+                    <include name="**/*Test*.java" />
+                </fileset>
+            </batchtest>
+        </junit>
+   </target>
+
     <!--
     <target name="make-js-doc" description="Generate the JavaScript docs">
         <echo> Making JavaScript documentation </echo>

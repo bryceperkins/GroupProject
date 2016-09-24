@@ -14,5 +14,11 @@ public class DevCardCommand extends PlayingCommand{
     /**
      *  @throws NoCardException
      */
-    public String execute(){};
+    public String execute(){
+        return "";
+    };
+
+    public String serverExecute() {
+        return "";
+    }
 }

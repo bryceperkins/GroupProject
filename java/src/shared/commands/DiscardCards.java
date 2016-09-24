@@ -1,6 +1,9 @@
 package shared.commands;
 
-public class DiscardCards {
+import client.server.*;
+import client.model.*;
+
+public class DiscardCards extends PlayingCommand {
     /**
      *  Purchase a dev card from the Bank
      *
