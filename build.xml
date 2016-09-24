@@ -76,7 +76,7 @@
         </javadoc>
     </target>
 
-    <target name="test" depends="test-compile">
+    <target name="test" depends="compile">
         <junit printsummary="on" haltonfailure="yes" fork="true">
             <classpath refid="java.lib.classpath" />
             <formatter type="brief" usefile="false" />
