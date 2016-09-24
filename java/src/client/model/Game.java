@@ -66,6 +66,10 @@ public class Game {
         return map;
     }
 
+    public void setPlayers(HashMap<String, Player> players) {
+        this.players = players;
+    }
+
     public HashMap<String, Player> getPlayers() {
         return players;
     }

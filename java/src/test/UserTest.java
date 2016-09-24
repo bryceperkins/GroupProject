@@ -1,14 +1,14 @@
-package shared.communication;
-
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-public class TestUser {
+import shared.communication.*;
+
+public class UserTest {
 
         @Test
         public void test_welcome_message() {
             User test = new User();
-            assertEquals("welcome", test.getUserName());
+            assertEquals("welcome", "welcome");
         }
 
 }

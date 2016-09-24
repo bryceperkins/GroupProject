@@ -10,6 +10,7 @@ public class Password implements Name{
      *  
      * @return Boolean
      */
-    public boolean valid(){
+    public boolean valid() {
+        return true;
     }
 }
