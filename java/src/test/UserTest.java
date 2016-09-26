@@ -8,27 +8,61 @@ import shared.communication.*;
 
 public class UserTest {
     private User testUser;
+    private String testUsername;
+    private String testPassword;
 
     @Before
     public void setUp() {
-        User testUser = new User();
+        try {
+            testUser = new User();
+            testUsername = "Steve";
+            testPassword = "Password";
+        } catch (Exception err) {
+            System.err.println("setUp failed");
+        } finally {
+            assertNotNull(testUser);
+        }
     }
 
     @After
-    public void tearDown() throws Exception{
+    public void tearDown() {
         testUser = null;
         assertNull(testUser);
     }
 
     @Test
-    public void test_true() {
-        User test = new User();
-        assertTrue(true);
+    public void test_createEmptyUser() {
+        testUser = new User();
+        assertNotNull(testUser);
     }
 
     @Test
-    public void test_equal() {
-        User test = new User();
-        assertEquals(6, 6);
+    public void test_createUserValidName() {
+        testUser = new User(testUsername, testPassword);
+        assertEquals("Steve", testUser.getUserName());
+    }
+    
+    @Test
+    public void test_createUserValidPassword() {
+        testUser = new User(testUsername, testPassword);
+        assertEquals("Password", testUser.getPassword());
+    }
+    
+    @Test()
+    public void test_createUserInvalidName() {
+        try {
+            testUser = new User("'); fail", "password");
+        } catch (Exception err) {
+            assertNull(testUser.getUserName());
+        }
+    }
+    
+    @Test()
+    public void test_createUserInvalidPassword() {
+        try {
+            testUser = new User("fail", "'):\"");
+        } catch (Exception err) {
+            assertNull(testUser.getPassword());
+        }
     }
 }

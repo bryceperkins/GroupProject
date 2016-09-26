@@ -2,7 +2,8 @@ package shared.commands;
 
 import client.server.*;
 
-public class AcceptTrade implements Command{
+public class AcceptTrade extends Command{
+    private String type = "acceptTrade";
     private Boolean willAccept;
     /**
      *  Accept the proposed trade.
@@ -15,7 +16,9 @@ public class AcceptTrade implements Command{
      *  @post resources exchanged
      *  @post trade offere removed
      */
-    public AcceptTrade(Boolean willAccept){};
+    public AcceptTrade(Boolean accept){
+        this.willAccept = accept;
+    };
 
     public String execute() {
         return ""; 

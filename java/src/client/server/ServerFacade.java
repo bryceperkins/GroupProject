@@ -1,23 +1,41 @@
 package client.server;
 
-import shared.communication.*;
+import java.util.*;
+import java.io.*;
+import java.net.*;
+
+import shared.communication.servers.*;
+import shared.commands.*;
 
 public class ServerFacade {
-    private User user;
-    private Server server;
-
-    public ServerFacade(Server server){
-        this.user = new User();
+    private iServer server;
+    
+    public ServerFacade() {
+        setServer();
     }
+
+    public ServerFacade(String host, String port) {
+        setServer(host, port);
+    }
+
     /**
-     * call
+     * execute
      *
-     * Use the provided command to make a call to the server.
-     *
-     * @param command - The crafted command
-     * @return String - the JSON response 
+     * @param command - The command to be sent to the user
+     * 
+     * 
+     * @see Server
      */
-    public String call(Command command){
-        return "";
+    public String execute(Command command)
+    {
+        String response = this.server.submit(command);
+        return response;
+    }
+    public void setServer() {
+        this.server = new Mock();
+    }
+    public void setServer(String host, String port) {
+        this.server = new HTTP(host, port);
     }
 }
+
