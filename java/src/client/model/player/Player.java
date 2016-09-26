@@ -3,6 +3,19 @@ package client.model.player;
 import client.model.*;
 
 public class Player {
+    private String name;
+    private String color;
+    private int id;
+
+    public Player(String name, String color, int id){
+        this.name = name;
+        this.color = color;
+        this.id = id;
+    };
+
+    public String getName(){
+        return this.name;
+    }
 	
 	/**
 	 * triggers by a player rolling a seven or a robber being moved to a hex tile controlled by a player

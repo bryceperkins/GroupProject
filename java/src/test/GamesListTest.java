@@ -44,8 +44,6 @@ public class GamesListTest {
         JsonParser parser = new JsonParser();
         JsonArray array = parser.parse(response).getAsJsonArray();
         game = gson.fromJson(array.get(0), Game.class);
-        System.out.println("Game: " + game.getName());
-        System.out.println("Game Players: " + game.getPlayers().size());
-        assertNotNull(game);
+        assertEquals(4, game.getPlayers().size());
     }
 }

@@ -25,7 +25,7 @@ public class DeGame implements JsonDeserializer<Game> {
     final HashMap<String, Player> players = new HashMap();
     for (int i = 0; i < jsonPlayersArray.size(); i++) {
         Player player = gson.fromJson(jsonPlayersArray.get(i), Player.class);
-        players.put(player.getName(), gson.fromJson(jsonPlayersArray.get(i), Player.class));
+        players.put(player.getName(), player);
     }
 
     final Game game = new Game();
