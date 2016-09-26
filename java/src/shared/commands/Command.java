@@ -1,11 +1,16 @@
 package shared.commands;
 
 public abstract class Command {
-    private transient String endpoint;
+    transient String endpoint;
+    transient String method;
 
     public Command(){};
 
     public String getEndPoint(){
-        return this.endpoint;
-    };
+        return endpoint;   
+    }
+
+    public String getMethod(){
+        return method;
+    }
 }

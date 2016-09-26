@@ -21,21 +21,15 @@ public class HTTP implements iServer {
     
     String SERVER_HOST;
     String URL_PREFIX;
-    String METHOD;
     
     public HTTP(){
-        this("localhost", "8080", "POST");
+        this("localhost", "8080");
     }
 
     public HTTP(String host, String port){
-        this(host, port, "POST");
-    }
-
-    public HTTP(String host, String port, String method){
         this.SERVER_HOST = host;
         this.SERVER_PORT = Integer.parseInt(port);
         this.URL_PREFIX = "http://" + host + ":" + port;
-        setMethod(method);
     }
 
     public String getPrefix(){
@@ -44,10 +38,6 @@ public class HTTP implements iServer {
 
     public int getResponseCode(){
         return this.response_code;
-    }
-
-    public void setMethod(String method) {
-        this.METHOD = method;
     }
 
     /**
@@ -63,14 +53,15 @@ public class HTTP implements iServer {
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
             if (cookies.getCookieStore().getCookies().size() > 0) {
-                String tmp = "";
+                StringBuilder tmp = new StringBuilder();
                 for (int i = 0; i < cookies.getCookieStore().getCookies().size(); i++){
-                    tmp = tmp + cookies.getCookieStore().getCookies().get(i) + ";";
+                    tmp.append(cookies.getCookieStore().getCookies().get(i));
+                    tmp.append(";");
                 }
-                connection.setRequestProperty("Cookie", tmp);    
+                connection.setRequestProperty("Cookie", tmp.toString());    
             }
 
-            connection.setRequestMethod(this.METHOD);
+            connection.setRequestMethod(command.getMethod());
             connection.setDoOutput(true);
             connection.connect();
             OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
@@ -79,9 +70,10 @@ public class HTTP implements iServer {
             this.response_code = connection.getResponseCode();
 
 
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                response = org.apache.commons.io.IOUtils.toString(connection.getInputStream());
-            }
+            response = org.apache.commons.io.IOUtils.toString(connection.getInputStream());
+            //if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            //    response = org.apache.commons.io.IOUtils.toString(connection.getInputStream());
+            //}
             
             Map<String, List<String>> headerFields = connection.getHeaderFields();
             List<String> cookiesHeader = headerFields.get(this.COOKIES_HEADER);

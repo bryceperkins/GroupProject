@@ -2,13 +2,13 @@ package shared.commands;
 
 import shared.communication.*;
 
-public class UserLogin extends Command{
+public class UserRegister extends Command{
     private String username;
     private String password;
 
-    public UserLogin(String name, String password) {
+    public UserRegister(String name, String password) {
         super();
-        endpoint = "/user/login";
+        endpoint = "/user/register";
         method = "POST";
 
         User tmp = new User(name, password);

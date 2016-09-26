@@ -16,6 +16,8 @@ public class Mock implements iServer {
 
     public String submit(Command command) {
         Gson gson = new Gson();
+        String json = gson.toJson(command);
+        System.out.println(json);
         return gson.toJson(command);
     }
 }
