@@ -63,8 +63,8 @@ public class PlayerTest {
 	{
 		testPlayer.addResources(superList);
 		TradeOffer trade_offer = new TradeOffer();
-		//FIXME PRIVATE/MAYBE POINTLESS CLASS
-		TradeOfferResourceList emptyList = new TradeOfferResourceList();
+
+		ResourceList emptyList = new ResourceList();
 		trade_offer.setOffer(emptyList);
 		
 		assertEquals(true, testPlayer.canMakeTrade(trade_offer));

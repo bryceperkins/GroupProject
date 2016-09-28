@@ -48,25 +48,7 @@ public class Player {
         return this.name;
     }
 	
-	/**
-	 * triggers by a player rolling a seven or a robber being moved to a hex tile controlled by a player
-	 * forces a player to discard half of his resource list if his resourcelist total is greater than seven
-	 */
-	public void robberEvent(){
-		
-		if (resources.getTotal() > 7)
-		{
-			int numberToDiscard = resources.getTotal()/2;
-			
-			if(resources.getTotal()%2 == 1)
-				numberToDiscard++;
-			
-			//FIXME
-			//do something here to choose cards to discard
 
-			
-		}
-	}
 	
 	/**
 	 * incremented values in player resourcelist by inputting a resourcelist
