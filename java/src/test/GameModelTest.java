@@ -28,7 +28,7 @@ public class GameModelTest {
     }
 
     @Test
-    public void test_GamesModelMock() {
+    public void test_GameModelMock() {
         this.server = new ServerFacade();
         String response = server.execute(new GameModel());
         String expected = "{}";
@@ -37,19 +37,17 @@ public class GameModelTest {
     }
 
     @Test
-    public void test_GamesListLive() {
+    public void test_GameModelLive() {
         this.server = new ServerFacade("localhost", "8081");
         this.server.execute(new UserLogin("Sam", "sam"));
         this.server.execute(new GamesJoin(3, CatanColor.RED));
         String response = server.execute(new GameModel());
 
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Game.class, new GameDeserializer());
+        gsonBuilder.registerTypeAdapter(Game.class, new GameModelDeserializer());
         Gson gson = gsonBuilder.create();
 
-        JsonParser parser = new JsonParser();
-        JsonArray array = parser.parse(response).getAsJsonArray();
-        game = gson.fromJson(array.get(0), Game.class);
+        game = gson.fromJson(response, Game.class);
         assertEquals(4, game.getPlayers().size());
     }
 }
