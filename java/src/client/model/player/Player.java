@@ -46,7 +46,15 @@ public class Player {
         this.didDiscard = false;
         this.playedDevCard = false;
     }
-	
+
+	/**
+	 * @param resources
+	 * @return whether the player has at least the resources in the passed resource list
+	 */
+    public boolean hasResources(ResourceList resources) {
+		return this.resources.hasResources(resources);
+	}
+
 	/**
 	 * checks if player has the prerequisite resources to build a city
 	 * @return true if player has necessary resources, else false
