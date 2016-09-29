@@ -3,7 +3,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
-import org.junit.Ignore;
 
 import com.google.gson.*;
 
@@ -21,13 +20,9 @@ public class GamesJoinTest {
     private Game game;
     private String response;
     private String expected;
-    private CatanColor c;
 
     @Before
     public void setUp() {
-        this.c = CatanColor.RED;
-        this.server = new ServerFacade("localhost", "8081");
-        this.server.execute(new UserLogin("Sam", "sam"));
     }
 
     @After
@@ -36,16 +31,41 @@ public class GamesJoinTest {
 
     @Test
     public void test_GamesJoinMock() {
+        CatanColor c = CatanColor.RED;
         this.server = new ServerFacade();
-        this.response = server.execute(new GamesJoin(1, this.c));
-        this.expected = "Success";
+        this.response = server.execute(new GamesJoin(1, c));
+        this.expected = "{\"id\":1,\"color\":\"red\"}";
         assertEquals(expected, response);
 
     }
 
-    @Ignore("Live Test") @Test
+    @Test
     public void test_GamesJoinLive() {
-        this.response = this.server.execute(new GamesJoin(3, this.c));
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        CatanColor c = CatanColor.RED;
+
+        gsonBuilder.registerTypeAdapter(Game.class, new GameDeserializer());
+        Gson gson = gsonBuilder.create();
+
+        this.server = new ServerFacade("localhost", "8081");
+        this.server.execute(new UserLogin("Sam", "sam"));
+        this.response = this.server.execute(new GamesJoin(3, c));
+
+        assertEquals("Success", this.response);
+    }
+    
+    @Test
+    public void test_GamesJoinLive_multiple() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        CatanColor c = CatanColor.RED;
+
+        gsonBuilder.registerTypeAdapter(Game.class, new GameDeserializer());
+        Gson gson = gsonBuilder.create();
+
+        this.server = new ServerFacade("localhost", "8081");
+        this.server.execute(new UserLogin("Sam", "sam"));
+        this.response = this.server.execute(new GamesJoin(3, c));
+
         assertEquals("Success", this.response);
     }
 }

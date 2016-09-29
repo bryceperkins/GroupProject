@@ -63,4 +63,8 @@ public class Mock implements iServer {
     public String getDetails(){
         return "Mock";
     }
+
+    public String getDetails(){
+        return "Mock";
+    }
 }
