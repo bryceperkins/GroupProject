@@ -1,9 +1,6 @@
 package client.model;
 
-import java.util.HashMap;
-
-import shared.definitions.*;
-import shared.locations.*;
+import java.util.List;
 import client.model.map.*;
 import client.model.player.*;
 import java.util.List;
@@ -112,6 +109,8 @@ public class Game {
     public List<Player> getPlayers() {
         return players;
     }
+
+    public Player getPlayer(PlayerIndex id) { return players.get(id.getIndex()); }
 
     public TurnTracker getTurnTracker() {
         return turnTracker;
