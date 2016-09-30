@@ -1,8 +1,8 @@
 package client.model.player;
 
 import java.util.ArrayList;
-
 import client.model.*;
+import client.model.player.*;
 import client.model.map.Port;
 
 public class Player {
@@ -25,29 +25,28 @@ public class Player {
     private int victoryPoints;
 
 
-    public Player(String name, Color color, int id){
-        this.name = name;
-        this.color = color;
-        this.playerID = id;
-        
-        //TODO 
-        //playerIndex=?
-        //UserID=?
-        //playerID=?
-        
+    
+    public Player(Color color, String name, int playerID, int playerIndex, int userID) {
+
+		this.color = color;
+		this.name = name;
+		this.playerID = playerID;
+		this.playerIndex = playerIndex;
+		this.userID = userID;
+		
+		this.resources = new ResourceList();
+        this.newDevCards = new DevCardList();
+        this.oldDevCards = new DevCardList();
+        this.ports = new ArrayList<Port>();
         this.citiesRemaining = 4;
         this.roadsRemaining = 15;
         this.settlementsRemaining = 5;
         this.monumentsPlayed = 0;
         this.soldiersPlayed = 0;
-        this.ports = new ArrayList<Port>();
         this.victoryPoints = 0;
-    };
-
-    public String getName(){
-        return this.name;
+        this.didDiscard = false;
+        this.playedDevCard = false;
     }
-	
 
 	
 	/**
@@ -119,6 +118,91 @@ public class Player {
 		return resources.hasResources(offer.getOffer());
 	}
 
+
+	public int getCitiesRemaining() {
+		return citiesRemaining;
+	}
+
+
+	public Color getColor() {
+		return color;
+	}
+
+
+	public boolean isDidDiscard() {
+		return didDiscard;
+	}
+
+
+	public int getMonumentsPlayed() {
+		return monumentsPlayed;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public DevCardList getNewDevCards() {
+		return newDevCards;
+	}
+
+
+	public DevCardList getOldDevCards() {
+		return oldDevCards;
+	}
+
+
+	public ArrayList<Port> getPorts() {
+		return ports;
+	}
+
+
+	public int getPlayerID() {
+		return playerID;
+	}
+
+
+	public int getPlayerIndex() {
+		return playerIndex;
+	}
+
+
+	public boolean isPlayedDevCard() {
+		return playedDevCard;
+	}
+
+
+	public ResourceList getResources() {
+		return resources;
+	}
+
+
+	public int getRoadsRemaining() {
+		return roadsRemaining;
+	}
+
+
+	public int getSettlementsRemaining() {
+		return settlementsRemaining;
+	}
+
+
+	public int getSoldiersPlayed() {
+		return soldiersPlayed;
+	}
+
+
+	public int getUserID() {
+		return userID;
+	}
+
+
+	public int getVictoryPoints() {
+		return victoryPoints;
+	}
+	
 	
 	
 }

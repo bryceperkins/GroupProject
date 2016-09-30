@@ -16,4 +16,18 @@ public class TradeOffer {
 
     }
 
+	public PlayerIndex getSender() {
+		return sender;
+	}
+
+	public PlayerIndex getReciever() {
+		return reciever;
+	}
+
+	public TradeOfferResourceList getOffer() {
+		return offer;
+	}
+    
+    
+
 }
