@@ -51,4 +51,5 @@ public class Map {
     public void setRobber(Robber robber) {
         this.robber = robber;
     }
+
 }
