@@ -3,6 +3,7 @@ package client.model.map;
 public class HexLocation {
 	private int x;
 	private int y;
+<<<<<<< 5fb7bf6a333ee51b235d9e4cb5cf74e524ce54d5
 	
 	public HexLocation(int x, int y) {
 		super();
@@ -41,4 +42,13 @@ public class HexLocation {
 	}
 	
 	
+=======
+
+	public HexLocation(int x, int y){
+		this.x = x;
+		this.y = y;
+	};
+
+
+>>>>>>> add tests
 }
