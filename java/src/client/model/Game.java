@@ -6,6 +6,8 @@ import shared.definitions.*;
 import shared.locations.*;
 import client.model.map.*;
 import client.model.player.*;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Game model class containing all local information provided by
@@ -20,9 +22,23 @@ public class Game {
     private Chat chat;
     private Log log;
     private Map map;
-    private HashMap<String, Player> players;
-    private TurnTracker turnTracker;
-    private TradeOffer tradeOffer;
+    private List<Player> players;
+    private TurnTracker turn_tracker;
+    private TradeOffer trade_offer;
+	
+	public Game(){
+		name = "Test";
+		version = 1;
+		winner = PlayerIndex.None;
+		bank = new ResourceBank();
+		chat = new Chat();
+		log = new Log();
+		map = new Map();
+		players = new ArrayList<Player>();
+		turn_tracker = new TurnTracker();
+		trade_offer = new TradeOffer();
+		System.out.println("In Game Constructor");
+	}
 
     /**
      * @return whether the game is completed
@@ -54,6 +70,10 @@ public class Game {
         return winner;
     }
 
+	public void setWinner(PlayerIndex index){
+		this.winner = index;
+	}
+	
     public ResourceBank getBank() {
         return bank;
     }
@@ -70,20 +90,20 @@ public class Game {
         return map;
     }
 
-    public void setPlayers(HashMap<String, Player> players) {
+    public void setPlayers(List<Player> players) {
         this.players = players;
     }
 
-    public HashMap<String, Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
     public TurnTracker getTurnTracker() {
-        return turnTracker;
+        return turn_tracker;
     }
 
     public TradeOffer getTradeOffer() {
-        return tradeOffer;
+        return trade_offer;
     }
 
 

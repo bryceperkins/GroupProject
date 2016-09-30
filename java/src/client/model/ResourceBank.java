@@ -8,4 +8,8 @@ public class ResourceBank {
 	
 	ResourceList resources;
 	
+	public ResourceBank(){
+		resources = new ResourceList(19,19,19,19,19);
+	}
+	
 }

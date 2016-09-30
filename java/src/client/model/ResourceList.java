@@ -11,6 +11,22 @@ public class ResourceList{
 	int wheat;
 	int wood;
 	
+	public ResourceList(int brick, int ore, int sheep, int wheat, int wood){
+		this.brick = brick;
+		this.ore = ore;
+		this.sheep = sheep;
+		this.wheat = wheat;
+		this.wood = wood;
+	}
+	
+	public ResourceList(){
+		brick = 0;
+		ore = 0;
+		sheep = 0;
+		wheat = 0;
+		wood = 0;
+	}
+	
 	/**
 	 * Determines if this ResourceList has all of the resources specified
 	 * @param resource_list A ResourceList containing the resources we are checking for in this ResourceList.
