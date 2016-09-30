@@ -6,8 +6,7 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
-import client.model.*;
-import client.model.TradeOffer.TradeOfferResourceList;
+import client.model.*;	
 import client.model.player.*;
 
 public class PlayerTest {
