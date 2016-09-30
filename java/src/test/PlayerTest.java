@@ -1,13 +1,16 @@
 package test;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-import org.junit.Before;
+import static org.junit.Assert.assertEquals;
 import org.junit.After;
-
-import client.model.*;	
-import client.model.player.*;
+import org.junit.Before;
+import org.junit.Test;
+import client.model.HexDirection;
+import client.model.ResourceList;
+import client.model.ResourceType;
+import client.model.TradeOffer;
+import client.model.map.*;
+import client.model.player.Color;
+import client.model.player.Player;
 
 public class PlayerTest {
 	private Player testPlayer;
@@ -40,7 +43,7 @@ public class PlayerTest {
 	@Test
 	public void test_canBuildSettlement_expect_true()
 	{
-		testPlayer.addResources(superList);
+		testPlayer.setResources(superList);
 		assertEquals(true, testPlayer.canBuildCity());
 	}
 	
@@ -53,14 +56,14 @@ public class PlayerTest {
 	@Test
 	public void test_canBuyDevCard_expect_true()
 	{
-		testPlayer.addResources(superList);
+		testPlayer.setResources(superList);
 		assertEquals(true, testPlayer.canBuyDevCard());
 	}
 	
 	@Test
 	public void test_canMakeTrade_expect_true()
 	{
-		testPlayer.addResources(superList);
+		testPlayer.setResources(superList);
 		TradeOffer trade_offer = new TradeOffer();
 		
 		//trade request of one sheep for one brick
@@ -72,4 +75,27 @@ public class PlayerTest {
 		assertEquals(true, testPlayer.canMakeTrade(trade_offer));
 	}
 	
+	@Test 
+	public void test_canMakeMaritimeTradeWithoutPorts_false()
+	{
+		//set 
+		ResourceList tempList = new ResourceList();
+		tempList.setBrick(3);
+		testPlayer.setResources(tempList);
+		assertEquals(false, testPlayer.canMakeMaritimeTrade(ResourceType.Brick));
+	}
+	
+	@Test
+	public void test_canMakeMaritimeTradeWithPorts_true()
+	{
+		Port port = new Port(ResourceType.Brick, new HexLocation(0,0), 3, HexDirection.N);
+		testPlayer.addPort(port);
+		ResourceList tempList = new ResourceList();
+		tempList.setBrick(3);
+		testPlayer.setResources(tempList);
+		
+		assertEquals(true, testPlayer.canMakeMaritimeTrade(ResourceType.Brick));
+		
+		
+	}
 }
