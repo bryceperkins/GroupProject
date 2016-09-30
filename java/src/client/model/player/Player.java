@@ -185,6 +185,10 @@ public class Player {
 		return newDevCards;
 	}
 
+	public int getPlayerId() {
+		return playerID;
+	}
+
 
 	public DevCardList getOldDevCards() {
 		return oldDevCards;

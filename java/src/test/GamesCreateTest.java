@@ -35,6 +35,7 @@ public class GamesCreateTest {
         assertEquals(expected, response);
 
     }
+<<<<<<< c63de33e0f183ef30c5b5786d3a7975844b7e163
 
     @Ignore("Live Test")  @Test
     public void skip_test_GamesCreateLive() {
@@ -50,4 +51,6 @@ public class GamesCreateTest {
         game = gson.fromJson(response, Game.class);
         assertEquals("test", game.getName());
     }
+=======
+>>>>>>> did a lot of stuff
 }

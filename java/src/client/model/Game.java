@@ -148,4 +148,35 @@ public class Game {
         this.tradeOffer = tradeOffer;
     }
 
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public void setWinner(PlayerIndex winner) {
+        this.winner = winner;
+    }
+
+    public void setBank(ResourceBank bank) {
+        this.bank = bank;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
+    }
+
+    public void setLog(Log log) {
+        this.log = log;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
+    public void setTurnTracker(TurnTracker turnTracker) {
+        this.turnTracker = turnTracker;
+    }
+
+    public void setTradeOffer(TradeOffer tradeOffer) {
+        this.tradeOffer = tradeOffer;
+    }
 }

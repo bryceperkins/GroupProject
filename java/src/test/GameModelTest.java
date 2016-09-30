@@ -35,19 +35,4 @@ public class GameModelTest {
         assertEquals(expected, response);
 
     }
-
-    @Test
-    public void test_GameModelLive() {
-        this.server = new ServerFacade("localhost", "8081");
-        this.server.execute(new UserLogin("Sam", "sam"));
-        this.server.execute(new GamesJoin(3, CatanColor.RED));
-        String response = server.execute(new GameModel());
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Game.class, new GameModelDeserializer());
-        Gson gson = gsonBuilder.create();
-
-        game = gson.fromJson(response, Game.class);
-        assertEquals(4, game.getPlayers().size());
-    }
 }

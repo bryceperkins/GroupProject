@@ -8,6 +8,7 @@ import shared.locations.*;
 
 public class Map {
 
+<<<<<<< c63de33e0f183ef30c5b5786d3a7975844b7e163
 <<<<<<< 5fb7bf6a333ee51b235d9e4cb5cf74e524ce54d5
     private List<Hex> hexes;
     private List<Port> ports;
@@ -57,6 +58,12 @@ public class Map {
 	private ArrayList<Port> ports;
 	private ArrayList<VertexLocation> settlements;
 	private ArrayList<VertexLocation> cities;
+=======
+	private List<Hex> hexes;
+	private List<Port> ports;
+	private List<VertexLocation> settlements;
+	private List<VertexLocation> cities;
+>>>>>>> did a lot of stuff
 	private int radius;
 	private Robber robber;
 
@@ -74,4 +81,27 @@ public class Map {
 
 	public boolean canBuildCity(Player player,ItemLocation itemLocation){return true; }
 
+	public void setHexes(List<Hex> hexes) {
+		this.hexes = hexes;
+	}
+
+	public void setPorts(List<Port> ports) {
+		this.ports = ports;
+	}
+
+	public void setSettlements(List<VertexLocation> settlements) {
+		this.settlements = settlements;
+	}
+
+	public void setCities(List<VertexLocation> cities) {
+		this.cities = cities;
+	}
+
+	public void setRadius(int radius) {
+		this.radius = radius;
+	}
+
+	public void setRobber(Robber robber) {
+		this.robber = robber;
+	}
 }

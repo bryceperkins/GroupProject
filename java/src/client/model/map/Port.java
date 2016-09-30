@@ -11,6 +11,24 @@ public class Port {
 	private int ratio;
 	private Direction direction;
 
+	public void setResource(ResourceType resource) {
+		this.resource = resource;
+	}
+
+	public void setLocation(HexLocation location) {
+		this.location = location;
+	}
+
+	public void setRatio(int ratio) {
+		this.ratio = ratio;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+
+	public Port() {}
+
 	public Port(ResourceType resource, HexLocation location, int ratio, Direction direction){
 		this.resource = resource;
 		this.location = location;

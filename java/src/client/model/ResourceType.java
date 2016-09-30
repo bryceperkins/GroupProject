@@ -5,5 +5,5 @@ package client.model;
  */
 
 public enum ResourceType {
-	Wood, Ore, Sheep, Brick, Wheat, None
+	wood, ore, sheep, brick, wheat, none;
 }

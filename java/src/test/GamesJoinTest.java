@@ -38,34 +38,4 @@ public class GamesJoinTest {
         assertEquals(expected, response);
 
     }
-
-    @Test
-    public void test_GamesJoinLive() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        CatanColor c = CatanColor.RED;
-
-        gsonBuilder.registerTypeAdapter(Game.class, new GameDeserializer());
-        Gson gson = gsonBuilder.create();
-
-        this.server = new ServerFacade("localhost", "8081");
-        this.server.execute(new UserLogin("Sam", "sam"));
-        this.response = this.server.execute(new GamesJoin(3, c));
-
-        assertEquals("Success", this.response);
-    }
-    
-    @Test
-    public void test_GamesJoinLive_multiple() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        CatanColor c = CatanColor.RED;
-
-        gsonBuilder.registerTypeAdapter(Game.class, new GameDeserializer());
-        Gson gson = gsonBuilder.create();
-
-        this.server = new ServerFacade("localhost", "8081");
-        this.server.execute(new UserLogin("Sam", "sam"));
-        this.response = this.server.execute(new GamesJoin(3, c));
-
-        assertEquals("Success", this.response);
-    }
 }

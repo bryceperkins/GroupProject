@@ -41,6 +41,7 @@ public class GamesListTest {
         assertEquals(expected, response);
 
     }
+<<<<<<< c63de33e0f183ef30c5b5786d3a7975844b7e163
 /*
     @Ignore("Live Test")  @Test
     public void test_GamesListLive() {
@@ -58,4 +59,6 @@ public class GamesListTest {
         assertTrue(array.size() > 0);
     }
 */
+=======
+>>>>>>> did a lot of stuff
 }

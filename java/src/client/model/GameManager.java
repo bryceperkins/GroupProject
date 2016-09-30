@@ -1,7 +1,6 @@
 package client.model;
 
 import java.util.ArrayList;
-
 import client.model.*;
 
 /**
@@ -15,7 +14,9 @@ public class GameManager {
     private static ArrayList<Game> games;
     private static int activeGameIndex = -1;
 
-    private static void createGame(String json) {}
+    private static void createGame(String json) {
+
+    }
 
     private static void updateGame(String json) {}
 
