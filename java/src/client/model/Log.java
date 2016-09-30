@@ -6,5 +6,7 @@ package client.model;
 
 public class Log{
 	
+	public Log(){}
+	
 	private MessageLine[] lines;
 }

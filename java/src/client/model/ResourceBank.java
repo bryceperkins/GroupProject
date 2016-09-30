@@ -6,7 +6,15 @@ package client.model;
 
 public class ResourceBank {
 	
-	ResourceList resources;
+	private ResourceList resources;
+	
+	public ResourceBank(ResourceList resources){
+		this.resources.setBrick(resources.getBrick());
+		this.resources.setOre(resources.getOre());
+		this.resources.setSheep(resources.getSheep());
+		this.resources.setWood(resources.getWood());
+		this.resources.setWheat(resources.getWheat());
+	}
 	
 	public ResourceBank(){
 		resources = new ResourceList(19,19,19,19,19);

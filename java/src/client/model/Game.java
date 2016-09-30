@@ -23,8 +23,8 @@ public class Game {
     private Log log;
     private Map map;
     private List<Player> players;
-    private TurnTracker turn_tracker;
-    private TradeOffer trade_offer;
+    private TurnTracker turnTracker;
+    private TradeOffer tradeOffer;
 	
 	public Game(){
 		name = "Test";
@@ -35,8 +35,8 @@ public class Game {
 		log = new Log();
 		map = new Map();
 		players = new ArrayList<Player>();
-		turn_tracker = new TurnTracker();
-		trade_offer = new TradeOffer();
+		turnTracker = new TurnTracker();
+		tradeOffer = new TradeOffer();
 		System.out.println("In Game Constructor");
 	}
 
@@ -99,11 +99,11 @@ public class Game {
     }
 
     public TurnTracker getTurnTracker() {
-        return turn_tracker;
+        return turnTracker;
     }
 
     public TradeOffer getTradeOffer() {
-        return trade_offer;
+        return tradeOffer;
     }
 
 

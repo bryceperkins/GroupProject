@@ -1,7 +1,8 @@
 package shared.deserializers;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 import com.google.gson.*;
 import client.model.player.*;
@@ -22,10 +23,10 @@ public class DeGame implements JsonDeserializer<Game> {
     Gson gson = new Gson();
 
     final JsonArray jsonPlayersArray = jsonObject.get("players").getAsJsonArray();
-    final HashMap<String, Player> players = new HashMap();
+    final List<Player> players = new ArrayList<Player>();
     for (int i = 0; i < jsonPlayersArray.size(); i++) {
         Player player = gson.fromJson(jsonPlayersArray.get(i), Player.class);
-        players.put(player.getName(), player);
+        players.add(player);
     }
 
     final Game game = new Game();
