@@ -47,17 +47,6 @@ public class Player {
         this.didDiscard = false;
         this.playedDevCard = false;
     }
-
-	
-	/**
-	 * incremented values in player resourcelist by inputting a resourcelist
-	 * addList must be nonempty 
-	 * @param addList resourceList containing the resource numbers to be added to player resourcelist
-	 */
-	public void addResources(ResourceList addList)
-	{
-		resources.addResources(addList);
-	}
 	
 	/**
 	 * checks if player has the prerequisite resources to build a city
@@ -116,6 +105,47 @@ public class Player {
 	public boolean canMakeTrade(TradeOffer offer){
 		
 		return resources.hasResources(offer.getOffer());
+	}
+	
+	public boolean canMakeMaritimeTrade(ResourceType rt)
+	{
+		int ratio = 4;
+		ResourceList temp = new ResourceList();
+		
+		for(int i = 0; i < ports.size(); i++)
+		{
+			if(ports.get(i).getResource() == rt)
+			{
+				ratio = ports.get(i).getRatio();
+				break;
+			}
+		}
+		
+		switch (rt)
+		{
+		case Wood:
+			temp.setWood(ratio);
+			break;
+		case Sheep:
+			temp.setSheep(ratio);
+			break;
+		case Brick:
+			temp.setBrick(ratio);
+			break;
+		case Ore:
+			temp.setOre(ratio);
+			break;
+		case Wheat:
+			temp.setWheat(ratio);
+			break;
+		}
+		
+		return resources.hasResources(temp);
+	}
+	
+	public void addPort(Port port)
+	{
+		this.ports.add(port);
 	}
 
 
@@ -201,6 +231,11 @@ public class Player {
 
 	public int getVictoryPoints() {
 		return victoryPoints;
+	}
+	
+	public void setResources(ResourceList rl)
+	{
+		this.resources = rl;
 	}
 	
 	
