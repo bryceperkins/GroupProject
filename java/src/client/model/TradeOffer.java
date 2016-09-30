@@ -7,14 +7,7 @@ public class TradeOffer {
 
     private PlayerIndex sender;
     private PlayerIndex reciever;
-    private TradeOfferResourceList offer;
-
-    /**
-     * Extension of ResourceList which allows negative resource values
-     */
-    private class TradeOfferResourceList extends ResourceList {
-
-    }
+    private ResourceList offer;
 
 	public PlayerIndex getSender() {
 		return sender;
@@ -24,8 +17,20 @@ public class TradeOffer {
 		return reciever;
 	}
 
-	public TradeOfferResourceList getOffer() {
+	public ResourceList getOffer() {
 		return offer;
+	}
+
+	public void setSender(PlayerIndex sender) {
+		this.sender = sender;
+	}
+
+	public void setReciever(PlayerIndex reciever) {
+		this.reciever = reciever;
+	}
+
+	public void setOffer(ResourceList offer) {
+		this.offer = offer;
 	}
     
     

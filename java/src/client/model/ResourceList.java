@@ -18,15 +18,16 @@ public class ResourceList{
 	 * @post Will return true if this ResourceList contains the resources specified.
 	 */
 	public boolean hasResources(ResourceList resource_list){
-        return true;
+        return false;
+        
     }
 
 	public void addResources(ResourceList addList) {
-		this.brick = addList.brick;
-		this.ore = addList.ore;
-		this.sheep = addList.sheep;
-		this.wheat = addList.wheat;
-		this.wood = addList.wood;
+		this.brick += addList.brick;
+		this.ore += addList.ore;
+		this.sheep += addList.sheep;
+		this.wheat += addList.wheat;
+		this.wood += addList.wood;
 		
 	}
 

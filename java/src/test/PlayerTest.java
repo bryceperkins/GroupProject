@@ -17,7 +17,7 @@ public class PlayerTest {
 	@Before
 	public void setUp()
 	{
-		testPlayer = new Player("Alice", Color.puce, 1);
+		testPlayer = new Player(Color.puce, "Alice", 0, 0, 0);
 		superList = new ResourceList();
 		superList.setBrick(1000);
 		superList.setWheat(1000);
@@ -29,7 +29,7 @@ public class PlayerTest {
 	@After
 	public void tearDown()
 	{
-		testPlayer = new Player("Alice", Color.puce, 1);
+		testPlayer = new Player(Color.puce, "Alice", 0, 0, 0);
 	}
 	
 	@Test
@@ -63,9 +63,12 @@ public class PlayerTest {
 	{
 		testPlayer.addResources(superList);
 		TradeOffer trade_offer = new TradeOffer();
-
-		ResourceList emptyList = new ResourceList();
-		trade_offer.setOffer(emptyList);
+		
+		//trade request of one sheep for one brick
+		ResourceList resourceOffer = new ResourceList();
+		resourceOffer.setBrick(-1);
+		resourceOffer.setSheep(1);
+		trade_offer.setOffer(resourceOffer);
 		
 		assertEquals(true, testPlayer.canMakeTrade(trade_offer));
 	}
