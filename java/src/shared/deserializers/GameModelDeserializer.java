@@ -66,7 +66,7 @@ public class GameModelDeserializer implements JsonDeserializer<Game> {
 
         final ResourceType resourceType = ResourceType.valueOf(portObject.get("resource").getAsString());
         final HexLocation location = gson.fromJson(portObject.get("location"), HexLocation.class);
-        final Direction direction = Direction.valueOf(portObject.get("direction").getAsString());
+        final HexDirection direction = HexDirection.valueOf(portObject.get("direction").getAsString());
         final int ratio = portObject.get("ratio").getAsInt();
 
         port.setResource(resourceType);

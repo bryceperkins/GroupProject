@@ -1,5 +1,3 @@
-package test;
-
 import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
@@ -48,13 +46,13 @@ public class PlayerTest {
 		testPlayer.setResources(superList);
 		assertTrue(testPlayer.canBuildCity());
 	}
-	
+/*	
 	@Test
 	public void test_canBuildRoad_expect_false()
 	{
 		assertTrue(testPlayer.canBuildRoad());
 	}
-	
+*/	
 	@Test
 	public void test_canBuyDevCard_expect_true()
 	{
