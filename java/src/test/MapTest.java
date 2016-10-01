@@ -2,6 +2,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
@@ -36,23 +38,36 @@ public class MapTest {
     public void tearDown()
     {
     }
+    
     @Test
     public void test_canBuildCity_expect_false()
     {
-        //put a city down somewhere
-        assertEquals(false, testMap.canBuildCity(testPlayer,itemLocation));
+    	//put a city down somewhere
+        assertTrue(!testMap.canBuildCity(testPlayer,itemLocation));
     }
     
     @Test
-    public void test_canBuildSettlement_expect_true() {
-        assertEquals(true, testMap.canBuildSettlement(testPlayer,itemLocation));
+    public void test_canBuildSettlement_expect_true()
+    {
+    	
+        assertTrue(testMap.canBuildSettlement(testPlayer,itemLocation));
     }
     
-/*    
+    @Test
+    public void test_CanBuildCity_expect_true()
+    {
+    	List<Hex> h = testMap.getHexes();
+    	
+    	h.get(0).setLocation(new HexLocation(1,1));
+    	
+    	testMap.setHexes(h);
+    	
+    	assertTrue(testMap.canBuildCity(testPlayer, itemLocation));
+    }
+    
     @Test
     public void test_canBuildRoad_expect_false()
     {
-        assertEquals(false, testMap.canBuildRoad(testPlayer,itemLocation));
+        assertTrue(!testMap.canBuildRoad(testPlayer,itemLocation));
     } 
-*/
 }
