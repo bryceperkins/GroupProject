@@ -38,7 +38,6 @@ public class Game {
         players = new ArrayList<Player>();
         turnTracker = new TurnTracker();
         tradeOffer = new TradeOffer();
-        System.out.println("In Game Constructor");
     }
 
     /**

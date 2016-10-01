@@ -13,6 +13,7 @@ import shared.communication.servers.*;
 import shared.commands.*;
 import client.server.*;
 import client.model.*;
+import client.model.player.*;
 import shared.definitions.CatanColor;
 
 public class GameModelTest {
@@ -37,8 +38,8 @@ public class GameModelTest {
         assertEquals(expected, response);
 
     }
-/*
-    @Ignore("Live Test") @Test
+
+    @Test
     public void test_GameModelLive() {
         this.server = new ServerFacade("localhost", "8081");
         this.server.execute(new UserLogin(username, "sam"));
@@ -51,19 +52,25 @@ public class GameModelTest {
         gsonBuilder.registerTypeAdapter(Game.class, new GamesCreateDeserializer());
         Gson gson = gsonBuilder.create();
 
+        this.server.getServer().getDetails();
+
         boolean found = false;
         for (int i=0; i < array.size(); i++){
             game = gson.fromJson(array.get(i), Game.class);
-            if (game.getPlayers().size() < 4){
-                found = true;
-                this.server.execute(new GamesJoin(game.getId(), CatanColor.RED)); 
+            for (Player player: game.getPlayers()){
+                System.out.println("USER: " + player.getName() + " " + username);
+                if (player.getName().equals(username)) {
+                    System.out.println("FOUND " + game.getName());
+                    this.server.execute(new GamesJoin(game.getId(), CatanColor.RED)); 
+                    found = true;
+                    break;
+                }
             }
         }
-
-        if (found != true) {
-            return;
+        
+        if (found == true) {
+            this.server.execute(new GameModel());
+            assertEquals(200, this.server.getServer().getResponseCode());
         }
-
     }
-*/
 }
