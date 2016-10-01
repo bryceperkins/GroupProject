@@ -34,16 +34,22 @@ public class ResourceList{
 	 * @post Will return true if this ResourceList contains the resources specified.
 	 */
 	public boolean hasResources(ResourceList resource_list){
-        return false;
-        
+        if (this.brick < resource_list.getBrick() ||
+		this.ore < resource_list.getOre() ||
+		this.sheep < resource_list.getSheep() ||
+		this.wheat < resource_list.getWheat() ||
+		this.wood < resource_list.getWood()){
+			return false;
+		}
+		return true;
     }
 
 	public void addResources(ResourceList addList) {
-		this.brick += addList.brick;
-		this.ore += addList.ore;
-		this.sheep += addList.sheep;
-		this.wheat += addList.wheat;
-		this.wood += addList.wood;
+		this.brick += addList.getBrick();
+		this.ore += addList.getOre();
+		this.sheep += addList.getSheep();
+		this.wheat += addList.getWheat();
+		this.wood += addList.getWood();
 		
 	}
 
