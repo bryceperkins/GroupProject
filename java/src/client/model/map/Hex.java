@@ -8,6 +8,13 @@ public class Hex {
 	private Robber robber;
 	private int value;
 	private ResourceType resource;
+
+	public Hex(HexLocation location, Robber robber, int value, ResourceType resource){
+		this.location = location;
+		this.robber = robber;
+		this.value = value;
+		this.resource = resource;
+	};
 	
 	public boolean hasRobber()
 	{
