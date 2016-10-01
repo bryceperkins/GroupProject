@@ -2,25 +2,24 @@ package client.model.player;
 
 import java.util.ArrayList;
 import client.model.*;
-import client.model.player.*;
 import client.model.map.Port;
 
 public class Player {
-	private int citiesRemaining;
+	private int cities;
     private Color color;
-    private boolean didDiscard;
-    private int monumentsPlayed;    
+    private boolean discarded;
+    private int monuments;
     private String name;
     private DevCardList newDevCards;
     private DevCardList oldDevCards;
     private ArrayList<Port> ports;
     private int playerID;
-    private PlayerIndex index;
+    private PlayerIndex playerIndex;
     private boolean playedDevCard;
     private ResourceList resources;
-    private int roadsRemaining;
-    private int settlementsRemaining;
-    private int soldiersPlayed;
+    private int roads;
+    private int settlements;
+    private int soldiers;
     private int userID;
     private int victoryPoints;
 
@@ -30,20 +29,20 @@ public class Player {
 		this.color = color;
 		this.name = name;
 		this.playerID = playerID;
-		this.index = playerIndex;
+		this.playerIndex = playerIndex;
 		this.userID = userID;
 		
 		this.resources = new ResourceList();
         this.newDevCards = new DevCardList();
         this.oldDevCards = new DevCardList();
         this.ports = new ArrayList<Port>();
-        this.citiesRemaining = 4;
-        this.roadsRemaining = 15;
-        this.settlementsRemaining = 5;
-        this.monumentsPlayed = 0;
-        this.soldiersPlayed = 0;
+        this.cities = 4;
+        this.roads = 15;
+        this.settlements = 5;
+        this.monuments = 0;
+        this.soldiers = 0;
         this.victoryPoints = 0;
-        this.didDiscard = false;
+        this.discarded = false;
         this.playedDevCard = false;
     }
 
@@ -64,7 +63,7 @@ public class Player {
 		ResourceList temp = new ResourceList();
 		temp.setWheat(2);
 		temp.setOre(3);
-		return (citiesRemaining > 0) && resources.hasResources(temp);
+		return (cities > 0) && resources.hasResources(temp);
 	}
 	
 	/**
@@ -75,7 +74,7 @@ public class Player {
 		ResourceList temp = new ResourceList();
 		temp.setBrick(1);
 		temp.setWood(1);
-		return (roadsRemaining > 0) &&resources.hasResources(temp);
+		return (roads > 0) &&resources.hasResources(temp);
 	}
 	
 	/**
@@ -88,7 +87,7 @@ public class Player {
 		temp.setSheep(1);
 		temp.setWood(1);
 		temp.setBrick(1);
-		return (settlementsRemaining > 0) &&resources.hasResources(temp);
+		return (settlements > 0) &&resources.hasResources(temp);
 		}
 	
 	/**
@@ -157,7 +156,7 @@ public class Player {
 
 
 	public int getCitiesRemaining() {
-		return citiesRemaining;
+		return cities;
 	}
 
 
@@ -166,13 +165,13 @@ public class Player {
 	}
 
 
-	public boolean isDidDiscard() {
-		return didDiscard;
+	public boolean isDiscarded() {
+		return discarded;
 	}
 
 
-	public int getMonumentsPlayed() {
-		return monumentsPlayed;
+	public int getMonuments() {
+		return monuments;
 	}
 
 
@@ -206,7 +205,7 @@ public class Player {
 
 
 	public PlayerIndex getPlayerIndex() {
-		return index;
+		return playerIndex;
 	}
 
 
@@ -220,18 +219,18 @@ public class Player {
 	}
 
 
-	public int getRoadsRemaining() {
-		return roadsRemaining;
+	public int getRoads() {
+		return roads;
 	}
 
 
-	public int getSettlementsRemaining() {
-		return settlementsRemaining;
+	public int getSettlements() {
+		return settlements;
 	}
 
 
-	public int getSoldiersPlayed() {
-		return soldiersPlayed;
+	public int getSoldiers() {
+		return soldiers;
 	}
 
 

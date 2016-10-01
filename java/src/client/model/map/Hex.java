@@ -8,7 +8,7 @@ public class Hex {
 	private HexLocation location;
 	//private Robber robber;
 	private boolean hasRobber;
-	private int value;
+	private int number;
 	private ResourceType resource;
 
 	public Hex() {}
@@ -31,12 +31,12 @@ public class Hex {
 		this.hasRobber = hasRobber;
 	}
 
-	public int getValue() {
-		return value;
+	public int getNumber() {
+		return number;
 	}
 
-	public void setValue(int value) {
-		this.value = value;
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
 	public ResourceType getResource() {

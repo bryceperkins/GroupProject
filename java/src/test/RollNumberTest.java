@@ -23,6 +23,7 @@ public class RollNumberTest {
     public void tearDown() {
     }
 
+    @Ignore
     @Test
     public void test_RollNumber_mock() {
         command = new RollNumber(1, 1);

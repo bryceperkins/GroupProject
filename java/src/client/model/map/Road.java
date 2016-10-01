@@ -8,5 +8,5 @@ public class Road extends Piece{
 		super(index, location);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 }

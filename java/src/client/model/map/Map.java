@@ -10,8 +10,9 @@ public class Map {
 
 	private List<Hex> hexes;
 	private List<Port> ports;
-	private List<VertexLocation> settlements;
-	private List<VertexLocation> cities;
+	private List<Road> roads;
+	private List<Settlement> settlements;
+	private List<City> cities;
 	private int radius;
 	private Robber robber;
 
@@ -36,11 +37,11 @@ public class Map {
 		this.ports = ports;
 	}
 
-	public void setSettlements(List<VertexLocation> settlements) {
+	public void setSettlements(List<Settlement> settlements) {
 		this.settlements = settlements;
 	}
 
-	public void setCities(List<VertexLocation> cities) {
+	public void setCities(List<City> cities) {
 		this.cities = cities;
 	}
 
@@ -48,7 +49,39 @@ public class Map {
 		this.radius = radius;
 	}
 
-	public void setRobber(Robber robber) {
+	public List<Road> getRoads() {
+		return roads;
+	}
+
+	public void setRoads(List<Road> roads) {
+		this.roads = roads;
+	}
+
+	public List<Hex> getHexes() {
+        return hexes;
+    }
+
+    public List<Port> getPorts() {
+        return ports;
+    }
+
+    public List<Settlement> getSettlements() {
+        return settlements;
+    }
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public Robber getRobber() {
+        return robber;
+    }
+
+    public void setRobber(Robber robber) {
 		this.robber = robber;
 	}
 }

@@ -4,21 +4,21 @@ import client.model.PlayerIndex;
 
 public abstract class Piece {
 	
-	private PlayerIndex index;
+	private PlayerIndex owner;
 	private ItemLocation location;
-	
+
 	public Piece(PlayerIndex index, ItemLocation location) {
 		super();
-		this.index = index;
+		this.owner = index;
 		this.location = location;
 	}
 
-	public PlayerIndex getIndex() {
-		return index;
+	public PlayerIndex getOwner() {
+		return owner;
 	}
 
-	public void setIndex(PlayerIndex index) {
-		this.index = index;
+	public void setOwner(PlayerIndex index) {
+		this.owner = owner;
 	}
 
 	public ItemLocation getLocation() {
