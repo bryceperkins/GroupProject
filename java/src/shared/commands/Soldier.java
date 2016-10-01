@@ -3,7 +3,7 @@ package shared.commands;
 import shared.locations.*;
 import client.model.*;
 
-public class Soldier extends MoveCommand{
+public class Soldier extends DevCardCommand{
     private HexLocation location;
     private PlayerIndex victimIndex;
     /**
@@ -19,10 +19,6 @@ public class Soldier extends MoveCommand{
      *  @post Player being robbed (if any) has given you their resource cards
      *  @post Largest army awarded to player with most Solder cards
      */
-    public Soldier(int index, PlayerIndex victimIndex, HexLocation location){
-        super("Soldier", index);
-        this.location = location;
-        this.victimIndex = victimIndex;
-    };
+    public Soldier(HexLocation location, PlayerIndex victimIndex){};
 
 }

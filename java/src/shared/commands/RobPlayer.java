@@ -1,9 +1,9 @@
 package shared.commands;
 
-import shared.locations.*;
 import client.model.*;
+import shared.locations.*;
 
-public class Soldier extends MoveCommand{
+public class RobPlayer extends PlayingCommand{
     private HexLocation location;
     private PlayerIndex victimIndex;
     /**
@@ -17,12 +17,7 @@ public class Soldier extends MoveCommand{
      *  
      *  @post Robber has moved
      *  @post Player being robbed (if any) has given you their resource cards
-     *  @post Largest army awarded to player with most Solder cards
      */
-    public Soldier(int index, PlayerIndex victimIndex, HexLocation location){
-        super("Soldier", index);
-        this.location = location;
-        this.victimIndex = victimIndex;
-    };
+    public RobPlayer(HexLocation location, PlayerIndex victimIndex){};
 
 }
