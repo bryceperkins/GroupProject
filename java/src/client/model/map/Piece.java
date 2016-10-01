@@ -1,7 +1,5 @@
 package client.model.map;
 
-import client.model.player.*;
-
 public abstract class Piece {
 	
 	private int playerIndex;
