@@ -44,7 +44,6 @@ public class Game {
      * @return whether the game is completed
      */
     public boolean gameOver() {
-		System.out.println(winner + "+");
 		if (winner == PlayerIndex.None){
 			return false;
 		}
@@ -55,7 +54,6 @@ public class Game {
      * @return whether the game is ready to begin
      */
     public boolean canBeginGame() {
-		System.out.println(players.size());
         if (players.size() < 4){
 			return false;
 		}
