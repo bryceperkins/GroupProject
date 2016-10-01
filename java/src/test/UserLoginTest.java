@@ -33,13 +33,4 @@ public class UserLoginTest {
         assertEquals(response, server.execute(command));
     }
     
-<<<<<<< c63de33e0f183ef30c5b5786d3a7975844b7e163
-    @Ignore("Live Test")  @Test
-    public void test_UserLogin_live() {
-        this.server = new ServerFacade("localhost", "8081");
-        command = new UserLogin("Sam", "sam");
-        assertEquals("Success", server.execute(command));
-    }
-=======
->>>>>>> did a lot of stuff
 }

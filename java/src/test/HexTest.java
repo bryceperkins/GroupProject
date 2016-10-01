@@ -1,12 +1,3 @@
-<<<<<<< 5fb7bf6a333ee51b235d9e4cb5cf74e524ce54d5
-
-
-/*
-+ hasRobber(): boolean
-+ canPlaceRobber(): boolean
-*/
-
-=======
 package test;
 
 import static org.junit.Assert.*;
@@ -34,7 +25,7 @@ public class HexTest {
 		hexLocation = new HexLocation(1,1);	
 		hasRobber = true;
 		value = 5;
-		resource = ResourceType.Wood;
+		resource = ResourceType.wood;
 		testHex = new Hex(hexLocation,hasRobber,value,resource);
 	}
 	
@@ -44,7 +35,7 @@ public class HexTest {
 		hexLocation = new HexLocation(1,1);	
 		hasRobber = true;
 		value = 5;
-		resource = ResourceType.Wood;
+		resource = ResourceType.wood;
 		testHex = new Hex(hexLocation,hasRobber,value,resource);
 	}
 	
@@ -61,7 +52,6 @@ public class HexTest {
 	}
 
 }
->>>>>>> add tests
 
 
 

@@ -130,19 +130,19 @@ public class Player {
 		
 		switch (rt)
 		{
-		case Wood:
+		case wood:
 			temp.setWood(ratio);
 			break;
-		case Sheep:
+		case sheep:
 			temp.setSheep(ratio);
 			break;
-		case Brick:
+		case brick:
 			temp.setBrick(ratio);
 			break;
-		case Ore:
+		case ore:
 			temp.setOre(ratio);
 			break;
-		case Wheat:
+		case wheat:
 			temp.setWheat(ratio);
 			break;
 		}

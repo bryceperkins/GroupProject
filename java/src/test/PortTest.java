@@ -1,12 +1,3 @@
-<<<<<<< 5fb7bf6a333ee51b235d9e4cb5cf74e524ce54d5
-
-
-/*
-+ canTrade(TradeOfferResourceList)
-*/
-
-
-=======
 package test;
 
 import static org.junit.Assert.*;
@@ -53,4 +44,3 @@ public class PortTest {
 	}
 
 }
->>>>>>> add tests

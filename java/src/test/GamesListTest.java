@@ -41,24 +41,4 @@ public class GamesListTest {
         assertEquals(expected, response);
 
     }
-<<<<<<< c63de33e0f183ef30c5b5786d3a7975844b7e163
-/*
-    @Ignore("Live Test")  @Test
-    public void test_GamesListLive() {
-        this.server = new ServerFacade("localhost", "8081");
-        Command login = new UserLogin("bob", "bob");
-        command = new GamesList();
-        String response = server.execute(command);
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Game.class, new GamesCreateDeserializer());
-        Gson gson = gsonBuilder.create();
-
-        JsonParser parser = new JsonParser();
-        JsonArray array = parser.parse(response).getAsJsonArray();
-        assertTrue(array.size() > 0);
-    }
-*/
-=======
->>>>>>> did a lot of stuff
 }

@@ -11,6 +11,22 @@ public class Port {
 	private int ratio;
 	private Direction direction;
 
+	public ResourceType getResource() {
+		return resource;
+	}
+
+	public HexLocation getLocation() {
+		return location;
+	}
+
+	public int getRatio() {
+		return ratio;
+	}
+
+	public Direction getDirection() {
+		return direction;
+	}
+
 	public void setResource(ResourceType resource) {
 		this.resource = resource;
 	}

@@ -6,6 +6,7 @@ import org.junit.After;
 
 import com.google.gson.*;
 
+import shared.commands.GameModel;
 import shared.communication.*;
 import shared.deserializers.*;
 import shared.communication.servers.*;
