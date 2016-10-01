@@ -1,10 +1,28 @@
 package shared.definitions;
 
 import java.awt.Color;
+import com.google.gson.annotations.SerializedName;
 
 public enum CatanColor
 {
-	RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
+    @SerializeName("red")
+	RED, 
+    @SerializeName("orange")
+    ORANGE, 
+    @SerializeName("yellow")
+    YELLOW, 
+    @SerializeName("blue")
+    BLUE, 
+    @SerializeName("green")
+    GREEN, 
+    @SerializeName("purple")
+    PURPLE, 
+    @SerializeName("puce")
+    PUCE, 
+    @SerializeName("white")
+    WHITE, 
+    @SerializeName("brown")
+    BROWN;
 	
 	private Color color;
     private String value;

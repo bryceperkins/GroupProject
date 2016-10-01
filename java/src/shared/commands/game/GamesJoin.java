@@ -12,6 +12,6 @@ public class GamesJoin extends Command{
         method = "POST";
 
         this.id = id;
-        this.color = c.getValue();
+        this.color = c;
     }
 }
