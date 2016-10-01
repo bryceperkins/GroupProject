@@ -40,21 +40,15 @@ public class MapTest {
     public void test_canBuildCity_expect_false()
     {
         //put a city down somewhere
-        //assertEquals(false, testMap.canBuildCity(testPlayer,itemLocation));
+        assertEquals(false, testMap.canBuildCity(testPlayer,itemLocation));
     }
     
-/*    
     @Test
-    public void test_canBuildSettlement_expect_true()
-    {
-<<<<<<< HEAD
-        
-=======
-    	
->>>>>>> master
+    public void test_canBuildSettlement_expect_true() {
         assertEquals(true, testMap.canBuildSettlement(testPlayer,itemLocation));
     }
     
+/*    
     @Test
     public void test_canBuildRoad_expect_false()
     {
