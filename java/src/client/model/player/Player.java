@@ -15,7 +15,7 @@ public class Player {
     private DevCardList oldDevCards;
     private ArrayList<Port> ports;
     private int playerID;
-    private int playerIndex;
+    private PlayerIndex index;
     private boolean playedDevCard;
     private ResourceList resources;
     private int roadsRemaining;
@@ -24,14 +24,13 @@ public class Player {
     private int userID;
     private int victoryPoints;
 
-
     
-    public Player(Color color, String name, int playerID, int playerIndex, int userID) {
+    public Player(Color color, String name, int playerID, PlayerIndex playerIndex, int userID) {
 
 		this.color = color;
 		this.name = name;
 		this.playerID = playerID;
-		this.playerIndex = playerIndex;
+		this.index = playerIndex;
 		this.userID = userID;
 		
 		this.resources = new ResourceList();
@@ -194,8 +193,8 @@ public class Player {
 	}
 
 
-	public int getPlayerIndex() {
-		return playerIndex;
+	public PlayerIndex getPlayerIndex() {
+		return index;
 	}
 
 

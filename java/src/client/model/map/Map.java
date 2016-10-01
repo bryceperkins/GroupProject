@@ -3,6 +3,8 @@ package client.model.map;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import client.model.PlayerIndex;
+
 public class Map {
 	
 	
@@ -97,7 +99,7 @@ public class Map {
 		return !isSettlementTooClose && !isSettlementInLocation;
 	}
 	
-	public boolean canBuildCity(ItemLocation loc, int playerIndex)
+	public boolean canBuildCity(ItemLocation loc, PlayerIndex index)
 	{
 		/*
 		 * does location have settlement AND is this settlement owned by the same player
@@ -106,7 +108,7 @@ public class Map {
 		{
 			if(loc.equals(settlements.get(i).getLocation()))
 			{
-				if(settlements.get(i).getPlayerIndex() == playerIndex)
+				if(settlements.get(i).getIndex() == index)
 				{
 					return true;
 				}
