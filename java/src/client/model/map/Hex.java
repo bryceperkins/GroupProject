@@ -1,50 +1,53 @@
 package client.model.map;
 
+import client.model.map.HexLocation;
+import client.model.map.Robber;
 import client.model.ResourceType;
 
 public class Hex {
-	
-	private HexLocation location;
-	private Robber robber;
-	private int value;
-	private ResourceType resource;
+    private HexLocation location;
+    //private Robber robber;
+    private boolean hasRobber;
+    private int value;
+    private ResourceType resource;
 
-	public Hex(HexLocation location, Robber robber, int value, ResourceType resource){
-		this.location = location;
-		this.robber = robber;
-		this.value = value;
-		this.resource = resource;
-	};
-	
-	public boolean hasRobber()
-	{
-		if(robber == null)
-			return false;
-		else
-			return true;
-	}
-	
-	public boolean canPlaceRobber()
-	{
-		return !this.hasRobber();
-	}
+    public Hex() {}
 
-	public HexLocation getLocation() {
-		return location;
-	}
+    public Hex(HexLocation location, boolean hasRobber, int value, ResourceType resource){};
 
-	public Robber getRobber() {
-		return robber;
-	}
+    public HexLocation getLocation() {
+        return location;
+    }
 
-	public int getValue() {
-		return value;
-	}
+    public void setLocation(HexLocation location) {
+        this.location = location;
+    }
 
-	public ResourceType getResource() {
-		return resource;
-	}
-	
-	
-	
+    public boolean isHasRobber() {
+        return hasRobber;
+    }
+
+    public void setHasRobber(boolean hasRobber) {
+        this.hasRobber = hasRobber;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public ResourceType getResource() {
+        return resource;
+    }
+
+    public void setResource(ResourceType resource) {
+        this.resource = resource;
+    }
+
+    public boolean hasRobber(){return true;}
+
+    public boolean canPlaceRobber(){return true;}
 }

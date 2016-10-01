@@ -7,6 +7,7 @@ public enum CatanColor
 	RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
 	
 	private Color color;
+    private String value;
 	
 	static
 	{
@@ -19,11 +20,26 @@ public enum CatanColor
 		PUCE.color = new Color(204, 136, 153);
 		WHITE.color = new Color(223, 223, 223);
 		BROWN.color = new Color(161, 143, 112);
+
+        RED.value = "red";
+        ORANGE.value = "orange";
+        YELLOW.value = "yellow";
+        BLUE.value = "blue";
+        GREEN.value = "green";
+        PURPLE.value = "purple";
+        PUCE.value = "puce";
+        WHITE.value = "white";
+        BROWN.value = "brown";
 	}
 	
 	public Color getJavaColor()
 	{
 		return color;
+	}
+	
+    public String getValue()
+	{
+		return value;
 	}
 }
 

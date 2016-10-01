@@ -17,6 +17,7 @@ public class Game {
 
     private String name;
     private int version;
+    private int id;
     private PlayerIndex winner;
     private ResourceBank bank;
     private Chat chat;
@@ -25,29 +26,29 @@ public class Game {
     private List<Player> players;
     private TurnTracker turnTracker;
     private TradeOffer tradeOffer;
-	
-	public Game(){
-		name = "Test";
-		version = 1;
-		winner = PlayerIndex.None;
-		bank = new ResourceBank();
-		chat = new Chat();
-		log = new Log();
-		map = new Map();
-		players = new ArrayList<Player>();
-		turnTracker = new TurnTracker();
-		tradeOffer = new TradeOffer();
-		System.out.println("In Game Constructor");
-	}
+    
+    public Game(){
+        name = "Test";
+        version = 1;
+        winner = PlayerIndex.None;
+        bank = new ResourceBank();
+        chat = new Chat();
+        log = new Log();
+        map = new Map();
+        players = new ArrayList<Player>();
+        turnTracker = new TurnTracker();
+        tradeOffer = new TradeOffer();
+        System.out.println("In Game Constructor");
+    }
 
     /**
      * @return whether the game is completed
      */
     public boolean gameOver() {
-		if (winner == PlayerIndex.None){
-			return false;
-		}
-		return true;
+        if (winner == PlayerIndex.None){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -55,9 +56,9 @@ public class Game {
      */
     public boolean canBeginGame() {
         if (players.size() < 4){
-			return false;
-		}
-		return true;
+            return false;
+        }
+        return true;
     }
 
     public String getName() {
@@ -68,6 +69,14 @@ public class Game {
         this.name = name;
     }
 
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
     public int getVersion() {
         return version;
     }
@@ -76,10 +85,10 @@ public class Game {
         return winner;
     }
 
-	public void setWinner(PlayerIndex index){
-		this.winner = index;
-	}
-	
+    public void setWinner(PlayerIndex index){
+        this.winner = index;
+    }
+    
     public ResourceBank getBank() {
         return bank;
     }
@@ -111,6 +120,33 @@ public class Game {
     public TradeOffer getTradeOffer() {
         return tradeOffer;
     }
+    
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
+    public void setBank(ResourceBank bank) {
+        this.bank = bank;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
+    }
+
+    public void setLog(Log log) {
+        this.log = log;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
+    public void setTurnTracker(TurnTracker turnTracker) {
+        this.turnTracker = turnTracker;
+    }
+
+    public void setTradeOffer(TradeOffer tradeOffer) {
+        this.tradeOffer = tradeOffer;
+    }
 
 }

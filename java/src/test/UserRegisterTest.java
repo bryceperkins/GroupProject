@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
+import org.junit.Ignore;
 
 import shared.communication.*;
 import shared.communication.servers.*;
@@ -28,7 +29,7 @@ public class UserRegisterTest {
     @Test
     public void test_UserRegister_expected_mock_json() {
         command = new UserRegister("test", "test");
-        String response = "{\"username\":\"test\",\"password\":\"test\"}";
+        String response = "Success";
         assertEquals(response, server.execute(command));
     }
     

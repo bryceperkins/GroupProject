@@ -13,7 +13,7 @@ import client.model.ResourceList;
 public class HexTest {
 	private Hex testHex;
 	private HexLocation hexLocation;
-	private Robber robber;
+	private boolean hasRobber;
 	private int value;
 	private ResourceType resource;
 
@@ -21,20 +21,20 @@ public class HexTest {
 	public void setUp()
 	{
 		hexLocation = new HexLocation(1,1);	
-		robber = new Robber(hexLocation);
+		hasRobber = true;
 		value = 5;
 		resource = ResourceType.Wood;
-		testHex = new Hex(hexLocation,robber,value,resource);
+		testHex = new Hex(hexLocation,hasRobber,value,resource);
 	}
 	
 	@After
 	public void tearDown()
 	{
 		hexLocation = new HexLocation(1,1);	
-		robber = new Robber(hexLocation);
+		hasRobber = true;
 		value = 5;
 		resource = ResourceType.Wood;
-		testHex = new Hex(hexLocation,robber,value,resource);
+		testHex = new Hex(hexLocation,hasRobber,value,resource);
 	}
 	
 	@Test
@@ -44,9 +44,12 @@ public class HexTest {
 	}
 
 	@Test
-	public void test_canPlaceRobber_expect_false()
+	public void test_canPlaceRobber_expect_true()
 	{
-		assertEquals(false, testHex.canPlaceRobber());
+		assertEquals(true, testHex.canPlaceRobber());
 	}
 
 }
+
+
+

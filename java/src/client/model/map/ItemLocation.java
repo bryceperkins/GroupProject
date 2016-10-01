@@ -4,9 +4,9 @@ import client.model.HexDirection;
 
 public class ItemLocation {
 	private HexLocation location;
-	private HexDirection direction;
+	private Direction direction;
 	
-	public ItemLocation(HexLocation location, HexDirection direction) {
+	public ItemLocation(HexLocation location, Direction direction) {
 		super();
 		this.location = location;
 		this.direction = direction;
@@ -34,10 +34,10 @@ public class ItemLocation {
 	public void setLocation(HexLocation location) {
 		this.location = location;
 	}
-	public HexDirection getDirection() {
+	public Direction getDirection() {
 		return direction;
 	}
-	public void setDirection(HexDirection direction) {
+	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
 	
