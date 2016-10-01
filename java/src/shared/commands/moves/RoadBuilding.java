@@ -2,10 +2,11 @@ package shared.commands;
 
 import shared.locations.*;
 import client.model.*;
+import com.google.gson.*;
 
 public class RoadBuilding extends MoveCommand {
-    private EdgeLocation spot1;
-    private EdgeLocation spot2;
+    private JsonObject spot1;
+    private JsonObject spot2;
     /**
      *  RoadBuilding
      *
@@ -26,7 +27,11 @@ public class RoadBuilding extends MoveCommand {
      *  @post 2 new roads appear
      *  @post longest road gained if necessary
      */
-    public RoadBuilding(PlayerIndex index, EdgeLocation spot1, EdgeLocation spot2){
+    public RoadBuilding(PlayerIndex index, EdgeLocation s1, EdgeLocation s2){
         super("Road_Building", index.getIndex());
+        JsonObject spot1 = new JsonObject();
+        spot1.addProperty("x", s1.getHexLoc().getX());
+        spot1.addProperty("y", s1.getHexLoc().getY());
+        spot1.addProperty("direction", s1.getDir().toString());
     };
 }
