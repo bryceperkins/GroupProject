@@ -6,6 +6,8 @@ import shared.definitions.*;
 import shared.locations.*;
 import client.model.map.*;
 import client.model.player.*;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Game model class containing all local information provided by
@@ -20,22 +22,44 @@ public class Game {
     private Chat chat;
     private Log log;
     private Map map;
-    private HashMap<String, Player> players;
+    private List<Player> players;
     private TurnTracker turnTracker;
     private TradeOffer tradeOffer;
+	
+	public Game(){
+		name = "Test";
+		version = 1;
+		winner = PlayerIndex.None;
+		bank = new ResourceBank();
+		chat = new Chat();
+		log = new Log();
+		map = new Map();
+		players = new ArrayList<Player>();
+		turnTracker = new TurnTracker();
+		tradeOffer = new TradeOffer();
+		System.out.println("In Game Constructor");
+	}
 
     /**
      * @return whether the game is completed
      */
     public boolean gameOver() {
-        return true;
+		System.out.println(winner + "+");
+		if (winner == PlayerIndex.None){
+			return false;
+		}
+		return true;
     }
 
     /**
      * @return whether the game is ready to begin
      */
     public boolean canBeginGame() {
-        return true;
+		System.out.println(players.size());
+        if (players.size() < 4){
+			return false;
+		}
+		return true;
     }
 
     public String getName() {
@@ -54,6 +78,10 @@ public class Game {
         return winner;
     }
 
+	public void setWinner(PlayerIndex index){
+		this.winner = index;
+	}
+	
     public ResourceBank getBank() {
         return bank;
     }
@@ -70,11 +98,11 @@ public class Game {
         return map;
     }
 
-    public void setPlayers(HashMap<String, Player> players) {
+    public void setPlayers(List<Player> players) {
         this.players = players;
     }
 
-    public HashMap<String, Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
