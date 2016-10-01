@@ -5,7 +5,7 @@ import client.model.*;
 
 public class Soldier extends MoveCommand{
     private HexLocation location;
-    private PlayerIndex victimIndex;
+    private int victimIndex;
     /**
      *  Relocate the robber and rob another player
      *
@@ -22,7 +22,7 @@ public class Soldier extends MoveCommand{
     public Soldier(int index, PlayerIndex victimIndex, HexLocation location){
         super("Soldier", index);
         this.location = location;
-        this.victimIndex = victimIndex;
+        this.victimIndex = victimIndex.getIndex();
     };
 
 }

@@ -9,7 +9,7 @@ public class YearOfPlenty extends MoveCommand {
      *  Gain two resources from the bank
      *
      *  @param resource1 - First resource
-     *  @param resource2 - Second resourceL
+     *  @param resource2 - Second resource
      *
      *  @pre The resources are in the bank
      *
