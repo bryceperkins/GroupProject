@@ -1,9 +1,10 @@
 package shared.commands;
 
 import shared.definitions.*;
+import client.model.PlayerIndex;
 
 public class Monopoly extends MoveCommand{
-    private String resource;
+    private ResourceType resource;
     /**
      *  Monopoly
      *
@@ -13,8 +14,8 @@ public class Monopoly extends MoveCommand{
      *
      *  @post You gain the amount of specified resource the other players lost
      */
-    public Monopoly(int index, ResourceType resource){
+    public Monopoly(PlayerIndex index, ResourceType resource){
         super("Monopoly", index);
-        this.resource = resource.toString();
+        this.resource = resource;
     };
 }

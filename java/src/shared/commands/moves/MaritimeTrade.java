@@ -1,10 +1,11 @@
 package shared.commands;
 
 import shared.definitions.*;
+import client.model.PlayerIndex;
 
 public class MaritimeTrade extends MoveCommand{
-    private String inputResource;
-    private String outputResource;
+    private ResourceType inputResource;
+    private ResourceType outputResource;
     private int ratio;
     /**
      *  Perform a trade with the Bank
@@ -18,10 +19,10 @@ public class MaritimeTrade extends MoveCommand{
      *  
      *  @post trade has been performed
      */
-    public MaritimeTrade(int index, int ratio, ResourceType inputResource, ResourceType outputResource){
+    public MaritimeTrade(PlayerIndex index, int ratio, ResourceType inputResource, ResourceType outputResource){
         super("maritimeTrade", index);
         this.ratio = ratio;
-        this.inputResource = inputResource.toString();
-        this.outputResource = outputResource.toString();
+        this.inputResource = inputResource;
+        this.outputResource = outputResource;
     };
 }

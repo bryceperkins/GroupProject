@@ -27,6 +27,8 @@ public class RoadBuilding extends MoveCommand {
      *  @post longest road gained if necessary
      */
     public RoadBuilding(PlayerIndex index, EdgeLocation spot1, EdgeLocation spot2){
-        super("Road_Building", index.getIndex());
+        super("Road_Building", index);
+        this.spot1 = spot1;
+        this.spot2 = spot2;
     };
 }

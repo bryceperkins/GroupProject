@@ -1,10 +1,11 @@
 package shared.commands;
 
 import shared.definitions.*;
+import client.model.PlayerIndex;
 
 public class YearOfPlenty extends MoveCommand {
-    private String resource1;
-    private String resource2;
+    private ResourceType resource1;
+    private ResourceType resource2;
     /**
      *  Gain two resources from the bank
      *
@@ -15,9 +16,9 @@ public class YearOfPlenty extends MoveCommand {
      *
      *  @post You gained the two specified resources
      */
-    public YearOfPlenty(int index, ResourceType resource1, ResourceType resource2){
+    public YearOfPlenty(PlayerIndex index, ResourceType resource1, ResourceType resource2){
         super("Year_of_Plenty", index);
-        this.resource1 = resource1.toString();
-        this.resource2 = resource2.toString();
+        this.resource1 = resource1;
+        this.resource2 = resource2;
     };
 }

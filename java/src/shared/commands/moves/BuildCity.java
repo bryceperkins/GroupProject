@@ -17,7 +17,8 @@ public class BuildCity extends MoveCommand{
      *  @post settlement returned
      *  @post city is on the map
      */
-    public BuildCity(int index, VertexLocation location){
+    public BuildCity(PlayerIndex index, VertexLocation location){
         super("buildCity", index);
+        this.location = location;
     };
 }

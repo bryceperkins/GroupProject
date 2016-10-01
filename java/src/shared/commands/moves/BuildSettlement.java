@@ -21,7 +21,7 @@ public class BuildSettlement extends MoveCommand{
      *  @post resources lost
      *  @post Settlement is on the map
      */
-    public BuildSettlement(int index, Boolean free, VertexLocation location){
+    public BuildSettlement(PlayerIndex index, VertexLocation location, Boolean free){
         super("buildSettlement", index);
         this.free = free;
         this.location = location;

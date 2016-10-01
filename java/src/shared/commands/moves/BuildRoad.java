@@ -23,7 +23,7 @@ public class BuildRoad extends MoveCommand {
      *  @post Settlement is on the map
      *  @post longest road gained if necessary
      */
-    public BuildRoad(int index, Boolean free, EdgeLocation location){
+    public BuildRoad(PlayerIndex index, EdgeLocation location, Boolean free){
         super("buildRoad", index);
         this.free = free;
         this.location = location;

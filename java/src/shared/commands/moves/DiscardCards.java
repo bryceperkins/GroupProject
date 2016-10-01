@@ -6,8 +6,8 @@ import client.model.*;
 public class DiscardCards extends MoveCommand {
     private ResourceList discardedCards;
 
-    public DiscardCards(int index, ResourceList cards){
-        super("discardCard", index);
+    public DiscardCards(PlayerIndex index, ResourceList cards){
+        super("discardCards", index);
         this.discardedCards = cards;
     };
 }

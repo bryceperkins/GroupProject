@@ -22,10 +22,10 @@ public class Mock implements iServer {
         Gson gson = new Gson();
         String response;
         String endpoint = command.getEndPoint();
-
         String json = gson.toJson(command);
+
+        System.out.println(command.getMethod() + " " + endpoint);
         System.out.println(json);
-        System.out.println(endpoint);
 
         switch (endpoint) {
             case "/game/listAI":

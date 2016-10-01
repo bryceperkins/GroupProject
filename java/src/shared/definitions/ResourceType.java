@@ -1,21 +1,28 @@
 package shared.definitions;
 
+import com.google.gson.annotations.SerializedName;
+
 public enum ResourceType
 {
-	WOOD, BRICK, SHEEP, WHEAT, ORE;
+    @SerializedName("wood")
+	WOOD("wood"),
+    @SerializedName("brick")
+    BRICK("brick"), 
+    @SerializedName("sheep")
+    SHEEP("sheep"), 
+    @SerializedName("wheat")
+    WHEAT("wheat"), 
+    @SerializedName("ore")
+    ORE("ore");
 
-    private String value;
+    private transient String value;
 
-    static {
-        WOOD.value = "wood";
-        BRICK.value = "brick";
-        SHEEP.value = "sheep";
-        WHEAT.value = "wheat";
-        ORE.value = "ore";
+    ResourceType(String value) {
+        this.value = value;
     }
 
-    public String toString() {
+    public String getValue() {
         return value;
     }
-}
 
+}

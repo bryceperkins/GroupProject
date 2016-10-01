@@ -1,5 +1,7 @@
 package shared.commands;
 
+import client.model.PlayerIndex;
+
 public class Monument extends MoveCommand{
     /**
      *  Play the monument DevCard
@@ -8,7 +10,7 @@ public class Monument extends MoveCommand{
      *
      *  @post You gain a victory point
      */
-    public Monument(int index){
+    public Monument(PlayerIndex index){
         super("Monument", index);
     };
 }

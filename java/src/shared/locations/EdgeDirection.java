@@ -1,12 +1,23 @@
 package shared.locations;
 
+import com.google.gson.annotations.SerializedName;
+
 public enum EdgeDirection
 {
+    @SerializedName("NW")
+	NorthWest,
+    @SerializedName("N")
+    North, 
+    @SerializedName("NE")
+    NorthEast, 
+    @SerializedName("SE")
+    SouthEast, 
+    @SerializedName("S")
+    South, 
+    @SerializedName("SW")
+    SouthWest;
 	
-	NorthWest, North, NorthEast, SouthEast, South, SouthWest;
-	
-	private EdgeDirection opposite;
-    private String value;
+	private transient EdgeDirection opposite;
 	
 	static
 	{
@@ -16,19 +27,8 @@ public enum EdgeDirection
 		SouthEast.opposite = NorthWest;
 		South.opposite = North;
 		SouthWest.opposite = NorthEast;
-        
-        NorthWest.value = "NW";
-        NorthEast.value = "NE";
-        North.value = "N";
-        SouthWest.value = "SW";
-        SouthEast.value = "SE";
-        South.value = "S";
 	}
 
-    public String toString(){
-        return value;
-    }
-	
 	public EdgeDirection getOppositeDirection()
 	{
 		return opposite;

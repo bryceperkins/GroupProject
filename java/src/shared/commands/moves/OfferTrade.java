@@ -15,7 +15,7 @@ public class OfferTrade extends MoveCommand{
      *  
      *  @post trade is offered to the other player
      */
-    public OfferTrade(int index, ResourceList offer, PlayerIndex receiver){
+    public OfferTrade(PlayerIndex index, ResourceList offer, PlayerIndex receiver){
         super("offerTrade", index);
         this.offer = offer;
         this.receiver = receiver.getIndex();

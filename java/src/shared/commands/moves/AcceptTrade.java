@@ -1,6 +1,7 @@
 package shared.commands;
 
 import client.server.*;
+import client.model.*;
 
 public class AcceptTrade extends MoveCommand{
     private Boolean willAccept;
@@ -15,7 +16,7 @@ public class AcceptTrade extends MoveCommand{
      *  @post resources exchanged
      *  @post trade offere removed
      */
-    public AcceptTrade(int index, Boolean accept){
+    public AcceptTrade(PlayerIndex index, Boolean accept){
         super("acceptTrade", index);
         this.willAccept = accept;
     };

@@ -1,8 +1,10 @@
 package shared.commands;
 
+import client.model.PlayerIndex;
+
 public class BuyDevCard extends MoveCommand{
 
-    public BuyDevCard(int index){
+    public BuyDevCard(PlayerIndex index){
         super("buyDevCard", index);
     };
 }

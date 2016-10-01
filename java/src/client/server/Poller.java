@@ -39,6 +39,7 @@ public class Poller extends Thread {
                 this.response = this.server.execute(new GameModel());
             }
             if (this.response != "True") {
+                // TODO this should send to the game manager when it's ready
                 System.out.println("Got a JSON model");
             }
             this.sleep(2000);
