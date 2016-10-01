@@ -44,14 +44,22 @@ public class Game {
      * @return whether the game is completed
      */
     public boolean gameOver() {
-        return true;
+		System.out.println(winner + "+");
+		if (winner == PlayerIndex.None){
+			return false;
+		}
+		return true;
     }
 
     /**
      * @return whether the game is ready to begin
      */
     public boolean canBeginGame() {
-        return true;
+		System.out.println(players.size());
+        if (players.size() < 4){
+			return false;
+		}
+		return true;
     }
 
     public String getName() {
