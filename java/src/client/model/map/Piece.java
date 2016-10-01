@@ -1,22 +1,24 @@
 package client.model.map;
 
+import client.model.PlayerIndex;
+
 public abstract class Piece {
 	
-	private int playerIndex;
+	private PlayerIndex index;
 	private ItemLocation location;
 	
-	public Piece(int playerIndex, ItemLocation location) {
+	public Piece(PlayerIndex index, ItemLocation location) {
 		super();
-		this.playerIndex = playerIndex;
+		this.index = index;
 		this.location = location;
 	}
 
-	public int getPlayerIndex() {
-		return playerIndex;
+	public PlayerIndex getIndex() {
+		return index;
 	}
 
-	public void setPlayerIndex(int playerIndex) {
-		this.playerIndex = playerIndex;
+	public void setIndex(PlayerIndex index) {
+		this.index = index;
 	}
 
 	public ItemLocation getLocation() {
