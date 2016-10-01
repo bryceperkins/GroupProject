@@ -1,6 +1,7 @@
 package shared.commands;
 
 import shared.locations.*;
+import client.model.*;
 
 public class RoadBuilding extends MoveCommand {
     private EdgeLocation spot1;
@@ -25,7 +26,7 @@ public class RoadBuilding extends MoveCommand {
      *  @post 2 new roads appear
      *  @post longest road gained if necessary
      */
-    public RoadBuilding(int index, EdgeLocation spot1, EdgeLocation spot2){
-        super("Road_Building", index);
+    public RoadBuilding(PlayerIndex index, EdgeLocation spot1, EdgeLocation spot2){
+        super("Road_Building", index.getIndex());
     };
 }

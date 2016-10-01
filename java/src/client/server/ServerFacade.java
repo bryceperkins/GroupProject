@@ -37,5 +37,8 @@ public class ServerFacade {
     public void setServer(String host, String port) {
         this.server = new HTTP(host, port);
     }
+    public iServer getServer() {
+        return this.server;
+    }
 }
 
