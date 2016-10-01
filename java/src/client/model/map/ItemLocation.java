@@ -1,12 +1,12 @@
 package client.model.map;
 
-import client.model.HexDirection;
+import shared.locations.*;
 
 public class ItemLocation {
 	private HexLocation location;
-	private Direction direction;
+	private VertexDirection direction;
 	
-	public ItemLocation(HexLocation location, Direction direction) {
+	public ItemLocation(HexLocation location, VertexDirection direction) {
 		super();
 		this.location = location;
 		this.direction = direction;
@@ -34,10 +34,10 @@ public class ItemLocation {
 	public void setLocation(HexLocation location) {
 		this.location = location;
 	}
-	public Direction getDirection() {
+	public VertexDirection getDirection() {
 		return direction;
 	}
-	public void setDirection(Direction direction) {
+	public void setDirection(VertexDirection direction) {
 		this.direction = direction;
 	}
 	
