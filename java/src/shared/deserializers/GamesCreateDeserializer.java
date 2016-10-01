@@ -10,13 +10,6 @@ import client.model.player.*;
 import client.model.*;
 
 public class GamesCreateDeserializer implements JsonDeserializer<Game> {
-    /**
-     *  deserialize
-     *
-     *  Pull apart objects that contain nested objects that are not easily deserialized. Specifically used for the create game object which pulls apart an empty game which is returned when a new game is created.
-     *
-     *  @param json - The element containing nested objects that need to be parsed.
-     */
 
 
 
