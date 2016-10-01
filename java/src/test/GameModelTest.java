@@ -44,6 +44,10 @@ public class GameModelTest {
         this.server = new ServerFacade("localhost", "8081");
         this.server.execute(new UserLogin(username, "sam"));
         this.response = this.server.execute(new GamesList());
+        if (this.response == null){
+            System.out.println("Unable to connect to the server");
+            return;
+        }
         
         JsonParser parser = new JsonParser();
         JsonArray array = parser.parse(this.response).getAsJsonArray();
