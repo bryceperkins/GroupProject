@@ -1,24 +1,47 @@
 package client.server;
 
-public class Poller {
+import shared.commands.GameModel;
+import client.server.ServerFacade;
+
+public class Poller extends Thread {
+    private ServerFacade server;
     /**
      * Polls the Server on a regular basis, retrieving a new model.
      */
     private int interval;
-    private int version;
+    private int version = 0;
+    private int count = 0;
+    private String response;
 
     public Poller(){
+        this(new ServerFacade("localhost", "8081"));
     }
-    /**
-     * @param interval - how often the server should be polled.
-     */
-    public Poller(int interval){
+    public Poller(ServerFacade server){
+        this.server = server;
     }
-    /**
-     * poll
-     *
-     * Polls the server for the current version of the model.  Updates version if different.
-     */
-    public void poll(){
+    public void setVersion(int version) {
+        this.version = version;
+    }
+    public int getCount(){
+        return this.count;
+    }
+    public void run() {
+        try {
+            poll();
+        } catch (InterruptedException e) { }
+    }
+    public String poll() throws InterruptedException{
+        while (true) {
+            count++;
+            if ( this.version > 0 ) {
+                this.response = this.server.execute(new GameModel(this.version));
+            } else {
+                this.response = this.server.execute(new GameModel());
+            }
+            if (this.response != "True") {
+                System.out.println("Got a JSON model");
+            }
+            this.sleep(2000);
+        }
     }
 }

@@ -64,7 +64,6 @@
 
     <target name="make-java-doc" description="Generate the Java docs">
         <echo> Making Java documentation </echo>
-        <delete dir="${javadoc.dir}"/>
         <javadoc destdir="${javadoc.dir}" Package="true">
             <tag name="pre" description="Pre-conditions for this call"/>
             <tag name="post" description="Post-conditions as a result of the call"/>

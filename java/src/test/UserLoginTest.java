@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
+import org.junit.Ignore;
 
 import shared.communication.*;
 import shared.communication.servers.*;
@@ -28,14 +29,14 @@ public class UserLoginTest {
     @Test
     public void test_UserLogin_expected_mock_json() {
         command = new UserLogin("test", "test");
-        String response = "{\"username\":\"test\",\"password\":\"test\"}";
+        String response = "Success";
         assertEquals(response, server.execute(command));
     }
     
-    @Test
+    @Ignore("Live Test")  @Test
     public void test_UserLogin_live() {
         this.server = new ServerFacade("localhost", "8081");
-        command = new UserLogin("bob", "bob");
+        command = new UserLogin("Sam", "sam");
         assertEquals("Success", server.execute(command));
     }
 }
