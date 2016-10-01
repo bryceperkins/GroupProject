@@ -1,3 +1,5 @@
+package test;
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -45,7 +47,11 @@ public class MapTest {
     @Test
     public void test_canBuildSettlement_expect_true()
     {
+<<<<<<< HEAD
         
+=======
+    	
+>>>>>>> master
         assertEquals(true, testMap.canBuildSettlement(testPlayer,itemLocation));
     }
     
