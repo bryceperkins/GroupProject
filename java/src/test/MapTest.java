@@ -4,10 +4,9 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
+import shared.locations.VertexDirection;
+
 import client.model.map.*;
-import client.model.map.Map;
-import client.model.map.ItemLocation;
-import client.model.map.Direction;
 import client.model.*;
 import client.model.player.*;
 import client.model.ResourceList;
@@ -17,7 +16,7 @@ public class MapTest {
     private ResourceList superList;
     private Player testPlayer;
     private HexLocation hexLocation;
-    private Direction direction;
+    private VertexDirection direction;
     private ItemLocation itemLocation;
 
     
@@ -26,7 +25,7 @@ public class MapTest {
     {
         testPlayer = new Player(Color.green,"Alice", 1, PlayerIndex.Player1 ,1);
         hexLocation = new HexLocation(1,1);
-        direction = Direction.N;
+        direction = VertexDirection.West;
         itemLocation = new ItemLocation(hexLocation,direction);
         testMap = new Map(); 
     }
@@ -35,22 +34,25 @@ public class MapTest {
     public void tearDown()
     {
     }
-    
     @Test
-    public void test_canBuildCity_expect_true()
+    public void test_canBuildCity_expect_false()
     {
-        assertEquals(true, testMap.canBuildCity(testPlayer,itemLocation));
+        //put a city down somewhere
+        //assertEquals(false, testMap.canBuildCity(testPlayer,itemLocation));
     }
     
+/*    
     @Test
     public void test_canBuildSettlement_expect_true()
     {
+        
         assertEquals(true, testMap.canBuildSettlement(testPlayer,itemLocation));
     }
     
     @Test
-    public void test_canBuildRoad_expect_true()
+    public void test_canBuildRoad_expect_false()
     {
-        assertEquals(true, testMap.canBuildRoad(testPlayer,itemLocation));
+        assertEquals(false, testMap.canBuildRoad(testPlayer,itemLocation));
     } 
+*/
 }
