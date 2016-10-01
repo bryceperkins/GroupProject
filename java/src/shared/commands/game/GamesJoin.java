@@ -4,7 +4,7 @@ import shared.definitions.CatanColor;
 
 public class GamesJoin extends Command{
     private int id;
-    private String color;
+    private CatanColor color;
 
     public GamesJoin(int id, CatanColor c) {
         super();

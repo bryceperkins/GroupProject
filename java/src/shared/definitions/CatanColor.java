@@ -5,23 +5,23 @@ import com.google.gson.annotations.SerializedName;
 
 public enum CatanColor
 {
-    @SerializeName("red")
+    @SerializedName("red")
 	RED, 
-    @SerializeName("orange")
+    @SerializedName("orange")
     ORANGE, 
-    @SerializeName("yellow")
+    @SerializedName("yellow")
     YELLOW, 
-    @SerializeName("blue")
+    @SerializedName("blue")
     BLUE, 
-    @SerializeName("green")
+    @SerializedName("green")
     GREEN, 
-    @SerializeName("purple")
+    @SerializedName("purple")
     PURPLE, 
-    @SerializeName("puce")
+    @SerializedName("puce")
     PUCE, 
-    @SerializeName("white")
+    @SerializedName("white")
     WHITE, 
-    @SerializeName("brown")
+    @SerializedName("brown")
     BROWN;
 	
 	private Color color;
