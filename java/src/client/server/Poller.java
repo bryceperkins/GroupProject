@@ -12,15 +12,19 @@ public class Poller extends Thread {
     private int version = 0;
     private int count = 0;
     private String response;
+    private iCommand command;
 
     public Poller(){
         this(new ServerProxy("localhost", "8081"));
     }
     public Poller(ServerProxy server){
-        this.server = server;
+        setServer(server);
     }
     public void setVersion(int version) {
         this.version = version;
+    }
+    public void setServer(ServerProxy server) {
+        this.server = server;
     }
     public int getCount(){
         return this.count;
@@ -34,10 +38,11 @@ public class Poller extends Thread {
         while (true) {
             count++;
             if ( this.version > 0 ) {
-                this.response = this.server.execute(new GameModel(this.version));
+                this.command = new GameModel(this.version);
             } else {
-                this.response = this.server.execute(new GameModel());
+                this.command = new GameModel();
             }
+            this.response = this.server.execute(command);
             if (this.response != "True") {
                 // TODO this should send to the game manager when it's ready
                 System.out.println("Got a JSON model");

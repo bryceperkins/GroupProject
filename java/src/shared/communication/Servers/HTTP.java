@@ -63,7 +63,7 @@ public class HTTP implements iServer {
      *
      *  @return Response object from the server
      */
-    public String submit(Command command) {
+    public String submit(iCommand command) {
         Gson gson = new Gson();
         String response = null;
         try {

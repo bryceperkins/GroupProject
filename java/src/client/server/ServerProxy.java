@@ -5,7 +5,6 @@ import java.io.*;
 import java.net.*;
 
 import shared.communication.servers.*;
-import shared.commands.*;
 
 public class ServerProxy {
     private static iServer server;
@@ -26,7 +25,7 @@ public class ServerProxy {
      * 
      * @see Server
      */
-    public String execute(Command command)
+    public String execute(iCommand command)
     {
         String response = this.server.submit(command);
         return response;

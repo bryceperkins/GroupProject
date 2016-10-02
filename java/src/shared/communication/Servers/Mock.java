@@ -18,7 +18,7 @@ public class Mock implements iServer {
         return 200;
     }
 
-    public String submit(Command command) {
+    public String submit(iCommand command) {
         Gson gson = new Gson();
         String response;
         String endpoint = command.getEndPoint();
