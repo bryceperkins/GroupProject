@@ -16,7 +16,7 @@ import client.model.*;
 import shared.definitions.CatanColor;
 
 public class GamesJoinTest {
-    private static ServerFacade server; 
+    private static ServerProxy server; 
     private Command command;
     private Game game;
     private String response;
@@ -26,7 +26,7 @@ public class GamesJoinTest {
     @Before
     public void setUp() {
         this.c = CatanColor.RED;
-        this.server = new ServerFacade("localhost", "8081");
+        this.server = new ServerProxy("localhost", "8081");
         this.server.execute(new UserLogin("Sam", "sam"));
     }
 
@@ -36,7 +36,7 @@ public class GamesJoinTest {
 
     @Test
     public void test_GamesJoinMock() {
-        this.server = new ServerFacade();
+        this.server = new ServerProxy();
         this.response = server.execute(new GamesJoin(1, this.c));
         this.expected = "Success";
         assertEquals(expected, response);

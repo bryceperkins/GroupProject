@@ -17,14 +17,14 @@ import client.model.player.*;
 import shared.definitions.CatanColor;
 
 public class GameModelTest {
-    private ServerFacade server; 
+    private ServerProxy server; 
     private Game game;
     private String response;
     private String username = "Sam";
 
     @Before
     public void setUp() {
-        this.server = new ServerFacade();
+        this.server = new ServerProxy();
     }
 
     @After
@@ -41,7 +41,7 @@ public class GameModelTest {
 
     @Test
     public void test_GameModelLive() {
-        this.server = new ServerFacade("localhost", "8081");
+        this.server = new ServerProxy("localhost", "8081");
         this.server.execute(new UserLogin(username, "sam"));
         this.response = this.server.execute(new GamesList());
         if (this.response == null){

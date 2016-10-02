@@ -7,14 +7,14 @@ import java.net.*;
 import shared.communication.servers.*;
 import shared.commands.*;
 
-public class ServerFacade {
+public class ServerProxy {
     private static iServer server;
     
-    public ServerFacade() {
+    public ServerProxy() {
         setServer();
     }
 
-    public ServerFacade(String host, String port) {
+    public ServerProxy(String host, String port) {
         setServer(host, port);
     }
 

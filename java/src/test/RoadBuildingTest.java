@@ -13,12 +13,12 @@ import client.server.*;
 import client.model.*;
 
 public class RoadBuildingTest {
-    private ServerFacade server; 
+    private ServerProxy server; 
     private Command command;
 
     @Before
     public void setUp() {
-        this.server = new ServerFacade();
+        this.server = new ServerProxy();
     }
 
     @After

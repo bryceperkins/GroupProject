@@ -13,12 +13,12 @@ import client.server.*;
 import client.model.*;
 
 public class SoldierTest {
-    private ServerFacade server; 
+    private ServerProxy server; 
     private Command command;
 
     @Before
     public void setUp() {
-        this.server = new ServerFacade();
+        this.server = new ServerProxy();
     }
 
     @After
@@ -35,7 +35,7 @@ public class SoldierTest {
     @Ignore("Live Test") @Test
     public void test_Soldier_live() {
         command = new Soldier(PlayerIndex.Player2, PlayerIndex.Player1, new HexLocation(1,1));
-        this.server = new ServerFacade("localhost", "8081");
+        this.server = new ServerProxy("localhost", "8081");
         this.server.execute(command);
         int code = this.server.getServer().getResponseCode();
 

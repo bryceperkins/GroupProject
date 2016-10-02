@@ -12,12 +12,12 @@ import client.server.*;
 
 public class UserRegisterTest {
     private User testUser;
-    private ServerFacade server; 
+    private ServerProxy server; 
     private Command command;
 
     @Before
     public void setUp() {
-        this.server = new ServerFacade();
+        this.server = new ServerProxy();
     }
 
     @After

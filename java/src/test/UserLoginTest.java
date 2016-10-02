@@ -12,12 +12,12 @@ import client.server.*;
 
 public class UserLoginTest {
     private User testUser;
-    private ServerFacade server; 
+    private ServerProxy server; 
     private Command command;
 
     @Before
     public void setUp() {
-        this.server = new ServerFacade();
+        this.server = new ServerProxy();
     }
 
     @After
@@ -35,7 +35,7 @@ public class UserLoginTest {
     
     @Ignore("Live Test")  @Test
     public void test_UserLogin_live() {
-        this.server = new ServerFacade("localhost", "8081");
+        this.server = new ServerProxy("localhost", "8081");
         command = new UserLogin("Sam", "sam");
         assertEquals("Success", server.execute(command));
     }

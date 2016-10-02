@@ -1,10 +1,10 @@
 package client.server;
 
 import shared.commands.GameModel;
-import client.server.ServerFacade;
+import client.server.ServerProxy;
 
 public class Poller extends Thread {
-    private ServerFacade server;
+    private ServerProxy server;
     /**
      * Polls the Server on a regular basis, retrieving a new model.
      */
@@ -14,9 +14,9 @@ public class Poller extends Thread {
     private String response;
 
     public Poller(){
-        this(new ServerFacade("localhost", "8081"));
+        this(new ServerProxy("localhost", "8081"));
     }
-    public Poller(ServerFacade server){
+    public Poller(ServerProxy server){
         this.server = server;
     }
     public void setVersion(int version) {

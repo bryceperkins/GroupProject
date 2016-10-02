@@ -13,12 +13,12 @@ import client.server.*;
 import client.model.PlayerIndex;
 
 public class YearOfPlentyTest {
-    private ServerFacade server; 
+    private ServerProxy server; 
     private Command command;
 
     @Before
     public void setUp() {
-        this.server = new ServerFacade();
+        this.server = new ServerProxy();
     }
 
     @After
@@ -35,7 +35,7 @@ public class YearOfPlentyTest {
     @Ignore("Live test") @Test
     public void test_YearOfPlenty_live() {
         command = new YearOfPlenty(PlayerIndex.Player1, ResourceType.WOOD, ResourceType.ORE);
-        this.server = new ServerFacade("localhost", "8081");
+        this.server = new ServerProxy("localhost", "8081");
         String response = this.server.execute(command);
         this.server.getServer().getResponseCode();
     }

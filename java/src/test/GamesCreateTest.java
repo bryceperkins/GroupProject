@@ -15,13 +15,13 @@ import client.server.*;
 import client.model.*;
 
 public class GamesCreateTest {
-    private ServerFacade server; 
+    private ServerProxy server; 
     private Command command;
     private Game game;
 
     @Before
     public void setUp() {
-        this.server = new ServerFacade();
+        this.server = new ServerProxy();
     }
 
     @After
@@ -38,7 +38,7 @@ public class GamesCreateTest {
 
     @Ignore("Live Test")  @Test
     public void skip_test_GamesCreateLive() {
-        this.server = new ServerFacade("localhost", "8081");
+        this.server = new ServerProxy("localhost", "8081");
         Command login = new UserLogin("bob", "bob");
         String response = server.execute(new GamesCreate("test", true, true, true));
 

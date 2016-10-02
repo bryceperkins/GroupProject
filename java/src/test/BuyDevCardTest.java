@@ -12,12 +12,12 @@ import client.server.*;
 import client.model.PlayerIndex;
 
 public class BuyDevCardTest {
-    private ServerFacade server; 
+    private ServerProxy server; 
     private Command command;
 
     @Before
     public void setUp() {
-        this.server = new ServerFacade();
+        this.server = new ServerProxy();
     }
 
     @After

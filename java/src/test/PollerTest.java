@@ -17,7 +17,7 @@ import shared.definitions.CatanColor;
 
 public class PollerTest {
     private Poller poller;
-    private ServerFacade server; 
+    private ServerProxy server; 
     private Game game;
     private String response;
     private String username = "Sam";
@@ -32,7 +32,7 @@ public class PollerTest {
 
     @Test
     public void test_Poller_mock() {
-        this.server = new ServerFacade();
+        this.server = new ServerProxy();
         Poller p = new Poller(this.server); 
         p.start();
         try {
@@ -45,7 +45,7 @@ public class PollerTest {
 /*
     @Ignore("Live Test")  @Test
     public void test_Poller_Live() {
-        this.server = new ServerFacade("localhost", "8081");
+        this.server = new ServerProxy("localhost", "8081");
         this.server.execute(new UserLogin(username, "sam"));
         this.response = this.server.execute(new GamesList());
         
