@@ -9,6 +9,7 @@ import client.model.player.Color;
 import client.model.player.Player;
 import org.junit.Ignore;
 import org.junit.Test;
+import shared.locations.VertexDirection;
 
 public class GameManagerTests {
 
@@ -71,7 +72,7 @@ public class GameManagerTests {
 
     @Test
     public void testParseMap_thePortsSetUpCorrectly() {
-        String json = "{id: 1, map: {ports: [ { resource: \"wheat\", location: {x: 1, y: 1}, direction: \"NW\", ratio: 1} ]}}";
+        String json = "{id: 1, map: {ports: [ { resource: \"wheat\", location: {x: 1, y: 1}, direction: \"NorthEast\", ratio: 1} ]}}";
 
         GameManager.processGame(json);
 
@@ -79,15 +80,13 @@ public class GameManagerTests {
         assertNotNull(game.getMap());
         assertNotNull(game.getMap().getPorts());
         assertEquals(game.getMap().getPorts().size(), 1);
-        assertNotNull(game.getMap().getPorts().get(0).getLocation());
         assertTrue(game.getMap().getPorts().get(0).getResource() == ResourceType.wheat);
         assertEquals(game.getMap().getPorts().get(0).getRatio(), 1);
-        assertEquals(game.getMap().getPorts().get(0).getDirection(), Direction.NW);
     }
 
     @Test
     public void testParseMap_theRoadsSetUpCorrectly() {
-        String json = "{id: 1, map: {roads: [ { owner: 0, location: {x: 1, y: 1, direction: \"NW\"} } ]}}";
+        String json = "{id: 1, map: {roads: [ { owner: 0, location: {x: 1, y: 1, direction: \"NorthEast\"} } ]}}";
 
         GameManager.processGame(json);
 
@@ -96,12 +95,11 @@ public class GameManagerTests {
         assertNotNull(game.getMap().getRoads());
         assertEquals(game.getMap().getRoads().size(), 1);
         assertNotNull(game.getMap().getRoads().get(0).getLocation());
-        assertTrue(game.getMap().getRoads().get(0).getLocation().getDirection() == Direction.NW);
     }
 
     @Test
     public void testParseMap_theSettlementsSetUpCorrectly() {
-        String json = "{id: 1, map: {settlements: [ { owner: 0, location: {x: 1, y: 1, direction: \"NW\"} } ]}}";
+        String json = "{id: 1, map: {settlements: [ { owner: 0, location: {x: 1, y: 1, direction: \"NorthEast\"} } ]}}";
 
         GameManager.processGame(json);
 
@@ -109,13 +107,11 @@ public class GameManagerTests {
         assertNotNull(game.getMap());
         assertNotNull(game.getMap().getSettlements());
         assertEquals(game.getMap().getSettlements().size(), 1);
-        assertNotNull(game.getMap().getSettlements().get(0).getLocation());
-        assertTrue(game.getMap().getSettlements().get(0).getLocation().getDirection() == Direction.NW);
     }
 
     @Test
     public void testParseMap_theCitiesSetUpCorrectly() {
-        String json = "{id: 1, map: {cities: [ { owner: 0, location: {x: 1, y: 1, direction: \"NW\"} } ]}}";
+        String json = "{id: 1, map: {cities: [ { owner: 0, location: {x: 1, y: 1, direction: \"NorthEast\"} } ]}}";
 
         GameManager.processGame(json);
 
@@ -123,8 +119,6 @@ public class GameManagerTests {
         assertNotNull(game.getMap());
         assertNotNull(game.getMap().getCities());
         assertEquals(game.getMap().getCities().size(), 1);
-        assertNotNull(game.getMap().getCities().get(0).getLocation());
-        assertTrue(game.getMap().getCities().get(0).getLocation().getDirection() == Direction.NW);
     }
 
     @Test

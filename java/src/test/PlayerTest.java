@@ -33,31 +33,31 @@ public class PlayerTest {
 	public void true_test(){
 		assertTrue(true);
 	}
-	/*
+
 	@Test
 	public void test_canBuildCity_expect_false()
 	{
-		assertEquals(false, testPlayer.canBuildCity());
+		assertTrue(!testPlayer.canBuildCity());
 	}
 	
 	@Test
 	public void test_canBuildSettlement_expect_true()
 	{
 		testPlayer.setResources(superList);
-		assertEquals(true, testPlayer.canBuildCity());
+		assertTrue(testPlayer.canBuildCity());
 	}
-	
+/*	
 	@Test
 	public void test_canBuildRoad_expect_false()
 	{
-		assertEquals(false, testPlayer.canBuildRoad());
+		assertTrue(testPlayer.canBuildRoad());
 	}
-	
+*/	
 	@Test
 	public void test_canBuyDevCard_expect_true()
 	{
 		testPlayer.setResources(superList);
-		assertEquals(true, testPlayer.canBuyDevCard());
+		assertTrue(testPlayer.canBuyDevCard());
 	}
 	
 	@Test
@@ -72,7 +72,7 @@ public class PlayerTest {
 		resourceOffer.setSheep(1);
 		trade_offer.setOffer(resourceOffer);
 		
-		assertEquals(true, testPlayer.canMakeTrade(trade_offer));
+		assertTrue(testPlayer.canMakeTrade(trade_offer));
 	}
 	
 	@Test 
@@ -82,21 +82,21 @@ public class PlayerTest {
 		ResourceList tempList = new ResourceList();
 		tempList.setBrick(3);
 		testPlayer.setResources(tempList);
-		assertEquals(false, testPlayer.canMakeMaritimeTrade(ResourceType.Brick));
+		assertTrue(!testPlayer.canMakeMaritimeTrade(ResourceType.brick));
 	}
 	
 	@Test
 	public void test_canMakeMaritimeTradeWithPorts_true()
 	{
-		Port port = new Port(ResourceType.Brick, new HexLocation(0,0), 3, HexDirection.N);
+		Port port = new Port(ResourceType.brick, new HexLocation(0,0), 3, HexDirection.N);
 		testPlayer.addPort(port);
 		ResourceList tempList = new ResourceList();
 		tempList.setBrick(3);
 		testPlayer.setResources(tempList);
 		
-		assertEquals(true, testPlayer.canMakeMaritimeTrade(ResourceType.Brick));
+		assertEquals(true, testPlayer.canMakeMaritimeTrade(ResourceType.brick));
 		
 		
 	}
-	*/
+
 }

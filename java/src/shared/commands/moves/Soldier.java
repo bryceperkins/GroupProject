@@ -19,7 +19,7 @@ public class Soldier extends MoveCommand{
      *  @post Player being robbed (if any) has given you their resource cards
      *  @post Largest army awarded to player with most Solder cards
      */
-    public Soldier(int index, HexLocation location, PlayerIndex victimIndex){
+    public Soldier(int index, PlayerIndex victimIndex, HexLocation location){
         super("Soldier", index);
         this.location = location;
         this.victimIndex = victimIndex;

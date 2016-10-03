@@ -1,3 +1,4 @@
 Makefile
-demo/logs/*
-java/build/*
+**.class
+**.html
+docs

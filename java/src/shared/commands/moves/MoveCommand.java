@@ -12,6 +12,5 @@ public abstract class MoveCommand extends Command {
         method = "POST";
         this.type = type;
         this.playerIndex = index;
-        
     }
 }

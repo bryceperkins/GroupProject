@@ -8,46 +8,102 @@ import shared.locations.*;
 
 public class Map {
 
-	private List<Hex> hexes;
-	private List<Port> ports;
+    private List<Hex> hexes;
+    private List<Port> ports;
 	private List<Road> roads;
-	private List<Settlement> settlements;
-	private List<City> cities;
-	private int radius;
-	private Robber robber;
+    private List<Settlement> settlements;
+    private List<City> cities;
+    private int radius;
+    private Robber robber;
+    
+    
 
-	/**
-	 * for each hex that has integer diceRoll as a hexValue, 
-	 * the resource of the hex will be given to each player that is on an adjacent hex intersection
-	 * @param diceRoll integer that dictates which hex will produce resources this round. Dice roll must be between 2-12
-	 */
-	public void gatherResources(Integer diceRoll){}
-
-	public boolean canBuildRoad(Player player, ItemLocation itemLocation){return true;}
-
-	public boolean canBuildSettlement(Player player, ItemLocation itemLocation){return true;}
-
-	public boolean canBuildCity(Player player,ItemLocation itemLocation){return true; }
-
-	public void setHexes(List<Hex> hexes) {
-		this.hexes = hexes;
+    public Map() {
+    	
+		super();
+		this.hexes = new ArrayList<Hex>();
+		this.ports = new ArrayList<Port>();
+		this.settlements = new ArrayList<Settlement>();
+		this.cities = new ArrayList<City>();
+		this.radius = 3;
+		this.robber = new Robber(new HexLocation(3,3));
+		
+		for(int i = 0; i < 20; i++)
+		{
+			hexes.add(new Hex());
+		}
 	}
 
-	public void setPorts(List<Port> ports) {
-		this.ports = ports;
-	}
+	public boolean canBuildRoad(Player player, ItemLocation itemLocation){
+    	return true;
+    	}
 
-	public void setSettlements(List<Settlement> settlements) {
-		this.settlements = settlements;
-	}
-
-	public void setCities(List<City> cities) {
-		this.cities = cities;
-	}
-
-	public void setRadius(int radius) {
-		this.radius = radius;
-	}
+    public boolean canBuildSettlement(Player player, ItemLocation itemLocation){
+    	/*
+    	 * does vertex have settlement or city on it
+    	 * does the vertex right next to it have a city/settlement on it
+    	 */
+    	
+    	if(checkVertex(itemLocation.getLocation(), itemLocation.getDirection()) == false)
+    		return false;
+    	
+    	switch (itemLocation.getDirection())
+    	{
+    	case West: 
+    		return checkVertex(itemLocation.getLocation(), VertexDirection.NorthWest) &&
+    				checkVertex(itemLocation.getLocation(), VertexDirection.SouthWest) &&
+    				checkVertex(new HexLocation(itemLocation.getLocation().getX() -1, itemLocation.getLocation().getY() + 1), VertexDirection.East);
+    	case NorthWest:
+    		return checkVertex(itemLocation.getLocation(), VertexDirection.NorthEast) &&
+    				checkVertex(itemLocation.getLocation(), VertexDirection.West) &&
+    				checkVertex(new HexLocation(itemLocation.getLocation().getX() -1, itemLocation.getLocation().getY() + 1), VertexDirection.NorthEast);
+    	
+    	case NorthEast:
+    		return checkVertex(itemLocation.getLocation(), VertexDirection.NorthWest) &&
+    				checkVertex(itemLocation.getLocation(), VertexDirection.SouthEast) &&
+    				checkVertex(new HexLocation(itemLocation.getLocation().getX() +1, itemLocation.getLocation().getY() + 1), VertexDirection.NorthWest);
+    	
+    	case East:
+    		return checkVertex(itemLocation.getLocation(), VertexDirection.SouthEast) &&
+    				checkVertex(itemLocation.getLocation(), VertexDirection.NorthEast) &&
+    				checkVertex(new HexLocation(itemLocation.getLocation().getX() +1, itemLocation.getLocation().getY() + 1), VertexDirection.SouthEast);
+    	
+    	case SouthEast:
+    		return checkVertex(itemLocation.getLocation(), VertexDirection.East) &&
+    				checkVertex(itemLocation.getLocation(), VertexDirection.SouthWest) &&
+    				checkVertex(new HexLocation(itemLocation.getLocation().getX() +1, itemLocation.getLocation().getY() - 1), VertexDirection.SouthWest);
+    	
+    	case SouthWest:
+    		return checkVertex(itemLocation.getLocation(), VertexDirection.West) &&
+    				checkVertex(itemLocation.getLocation(), VertexDirection.SouthEast) &&
+    				checkVertex(new HexLocation(itemLocation.getLocation().getX() -1, itemLocation.getLocation().getY() - 1), VertexDirection.West);
+    	
+    	}
+    	
+    	return false;
+    	}
+    
+    private boolean checkVertex(HexLocation loc, VertexDirection dir)
+    {
+    	for(int i = 0; i < settlements.size(); i++)
+    	{
+    		if(settlements.get(i).getLocation().equals(loc) && 
+    				settlements.get(i).getLocation().getDirection() == dir)
+    		{
+    			return false;
+    		}
+    	}
+    	for(int i = 0; i < cities.size(); i++)
+    	{
+    		if(cities.get(i).getLocation().equals(loc) && 
+    				cities.get(i).getLocation().getDirection() == dir)
+    		{
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+    }
 
 	public List<Road> getRoads() {
 		return roads;
@@ -57,31 +113,70 @@ public class Map {
 		this.roads = roads;
 	}
 
-	public List<Hex> getHexes() {
-        return hexes;
+	public boolean canBuildCity(Player player, ItemLocation itemLocation){
+
+    	for(int i = 0; i < settlements.size(); i++)
+    	{
+    		if(settlements.get(i).getLocation().equals(itemLocation.getLocation()) && 
+    				settlements.get(i).getLocation().getDirection() == itemLocation.getDirection())
+    		{
+    			if(settlements.get(i).getOwner() == player.getPlayerIndex())
+    				return true;
+    			else
+    				return false;
+    		}
+    	}
+    	
+    	return false;
+    	}
+
+    public void setHexes(List<Hex> hexes) {
+        this.hexes = hexes;
     }
 
-    public List<Port> getPorts() {
-        return ports;
+    public void setPorts(List<Port> ports) {
+        this.ports = ports;
     }
 
-    public List<Settlement> getSettlements() {
-        return settlements;
+    public void setSettlements(List<Settlement> settlements) {
+        this.settlements = settlements;
     }
 
-    public List<City> getCities() {
-        return cities;
+    public void setCities(List<City> cities) {
+        this.cities = cities;
     }
 
-    public int getRadius() {
-        return radius;
-    }
-
-    public Robber getRobber() {
-        return robber;
+    public void setRadius(int radius) {
+        this.radius = radius;
     }
 
     public void setRobber(Robber robber) {
-		this.robber = robber;
+        this.robber = robber;
+    }
+
+	public List<Hex> getHexes() {
+		return hexes;
 	}
+
+	public List<Port> getPorts() {
+		return ports;
+	}
+
+	public List<Settlement> getSettlements() {
+		return settlements;
+	}
+
+	public List<City> getCities() {
+		return cities;
+	}
+
+	public int getRadius() {
+		return radius;
+	}
+
+	public Robber getRobber() {
+		return robber;
+	}
+    
+    
 }

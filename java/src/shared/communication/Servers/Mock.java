@@ -14,6 +14,10 @@ import shared.commands.*;
 public class Mock implements iServer {
     public Mock(){ }
 
+    public int getResponseCode() {
+        return 200;
+    }
+
     public String submit(Command command) {
         Gson gson = new Gson();
         String response;

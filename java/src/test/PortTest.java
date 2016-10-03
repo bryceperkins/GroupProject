@@ -6,8 +6,8 @@ import org.junit.After;
 
 import client.model.ResourceList;
 import client.model.ResourceType;
-import client.model.map.Port;
 import client.model.map.*;
+import client.model.*;
 
 public class PortTest {
 	private Port testPort;	
@@ -15,7 +15,7 @@ public class PortTest {
 	private ResourceType resource;
 	private HexLocation location;
 	private int ratio;
-	private Direction direction; 
+	private HexDirection direction; 
 
 	@Before
 	public void setUp()
