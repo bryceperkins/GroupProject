@@ -90,8 +90,8 @@ public class HTTP implements iServer {
             
             String cookie = connection.getHeaderField(this.COOKIES_HEADER);
             if (cookie != null) {
-                this.cookies.getCookieStore().remove(null, HttpCookie.parse(cookie).get(0));
-                this.cookies.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
+                this.cookies.getCookieStore().remove(url.toURI(), HttpCookie.parse(cookie).get(0));
+                this.cookies.getCookieStore().add(url.toURI(), HttpCookie.parse(cookie).get(0));
             }
 
         }

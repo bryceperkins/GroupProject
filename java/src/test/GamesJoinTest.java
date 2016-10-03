@@ -34,7 +34,7 @@ public class GamesJoinTest {
     @Test
     public void test_GamesJoinMock() {
         CatanColor c = CatanColor.RED;
-        this.server = new ServerFacade();
+        this.server = new ServerProxy();
         this.response = server.execute(new GamesJoin(1, c));
         this.expected = "{\"id\":1,\"color\":\"red\"}";
         assertEquals(expected, response);

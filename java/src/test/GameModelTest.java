@@ -33,7 +33,7 @@ public class GameModelTest {
     @Ignore
     @Test
     public void test_GameModelMock() {
-        this.server = new ServerFacade();
+        this.server = new ServerProxy();
         String response = server.execute(new GameModel());
         String expected = "{}";
         assertEquals(expected, response);
