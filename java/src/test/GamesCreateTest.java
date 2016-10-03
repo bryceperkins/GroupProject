@@ -35,19 +35,4 @@ public class GamesCreateTest {
         assertEquals(expected, response);
 
     }
-
-    @Ignore("Live Test")  @Test
-    public void skip_test_GamesCreateLive() {
-        this.server = new ServerProxy("localhost", "8081");
-        Command login = new UserLogin("bob", "bob");
-        String response = server.execute(new GamesCreate("test", true, true, true));
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Game.class, new GamesCreateDeserializer());
-        Gson gson = gsonBuilder.create();
-
-        JsonParser parser = new JsonParser();
-        game = gson.fromJson(response, Game.class);
-        assertEquals("test", game.getName());
-    }
 }

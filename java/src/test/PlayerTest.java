@@ -82,19 +82,19 @@ public class PlayerTest {
 		ResourceList tempList = new ResourceList();
 		tempList.setBrick(3);
 		testPlayer.setResources(tempList);
-		assertTrue(!testPlayer.canMakeMaritimeTrade(ResourceType.Brick));
+		assertTrue(!testPlayer.canMakeMaritimeTrade(ResourceType.brick));
 	}
 	
 	@Test
 	public void test_canMakeMaritimeTradeWithPorts_true()
 	{
-		Port port = new Port(ResourceType.Brick, new HexLocation(0,0), 3, HexDirection.N);
+		Port port = new Port(ResourceType.brick, new HexLocation(0,0), 3, HexDirection.N);
 		testPlayer.addPort(port);
 		ResourceList tempList = new ResourceList();
 		tempList.setBrick(3);
 		testPlayer.setResources(tempList);
 		
-		assertEquals(true, testPlayer.canMakeMaritimeTrade(ResourceType.Brick));
+		assertEquals(true, testPlayer.canMakeMaritimeTrade(ResourceType.brick));
 		
 		
 	}

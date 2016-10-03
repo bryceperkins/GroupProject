@@ -1,9 +1,6 @@
 package client.model;
 
-import java.util.HashMap;
-
-import shared.definitions.*;
-import shared.locations.*;
+import java.util.List;
 import client.model.map.*;
 import client.model.player.*;
 import java.util.List;
@@ -112,6 +109,8 @@ public class Game {
         return players;
     }
 
+    public Player getPlayer(PlayerIndex id) { return players.get(id.getIndex()); }
+
     public TurnTracker getTurnTracker() {
         return turnTracker;
     }
@@ -120,32 +119,4 @@ public class Game {
         return tradeOffer;
     }
     
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public void setBank(ResourceBank bank) {
-        this.bank = bank;
-    }
-
-    public void setChat(Chat chat) {
-        this.chat = chat;
-    }
-
-    public void setLog(Log log) {
-        this.log = log;
-    }
-
-    public void setMap(Map map) {
-        this.map = map;
-    }
-
-    public void setTurnTracker(TurnTracker turnTracker) {
-        this.turnTracker = turnTracker;
-    }
-
-    public void setTradeOffer(TradeOffer tradeOffer) {
-        this.tradeOffer = tradeOffer;
-    }
-
 }

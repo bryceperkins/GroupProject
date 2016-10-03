@@ -1,9 +1,9 @@
 import static org.junit.Assert.*;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
-import org.junit.Ignore;
 
 import com.google.gson.*;
 
@@ -21,31 +21,23 @@ public class GamesJoinTest {
     private Game game;
     private String response;
     private String expected;
-    private CatanColor c;
 
     @Before
     public void setUp() {
-        this.c = CatanColor.RED;
-        this.server = new ServerProxy("localhost", "8081");
-        this.server.execute(new UserLogin("Sam", "sam"));
     }
 
     @After
     public void tearDown() {
     }
 
+    @Ignore
     @Test
     public void test_GamesJoinMock() {
-        this.server = new ServerProxy();
-        this.response = server.execute(new GamesJoin(1, this.c));
-        this.expected = "Success";
+        CatanColor c = CatanColor.RED;
+        this.server = new ServerFacade();
+        this.response = server.execute(new GamesJoin(1, c));
+        this.expected = "{\"id\":1,\"color\":\"red\"}";
         assertEquals(expected, response);
 
-    }
-
-    @Ignore("Live Test") @Test
-    public void test_GamesJoinLive() {
-        this.response = this.server.execute(new GamesJoin(3, this.c));
-        assertEquals("Success", this.response);
     }
 }

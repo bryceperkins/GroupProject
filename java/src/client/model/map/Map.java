@@ -10,6 +10,7 @@ public class Map {
 
     private List<Hex> hexes;
     private List<Port> ports;
+	private List<Road> roads;
     private List<Settlement> settlements;
     private List<City> cities;
     private int radius;
@@ -104,14 +105,22 @@ public class Map {
     	return true;
     }
 
-    public boolean canBuildCity(Player player,ItemLocation itemLocation){
+	public List<Road> getRoads() {
+		return roads;
+	}
+
+	public void setRoads(List<Road> roads) {
+		this.roads = roads;
+	}
+
+	public boolean canBuildCity(Player player, ItemLocation itemLocation){
 
     	for(int i = 0; i < settlements.size(); i++)
     	{
     		if(settlements.get(i).getLocation().equals(itemLocation.getLocation()) && 
     				settlements.get(i).getLocation().getDirection() == itemLocation.getDirection())
     		{
-    			if(settlements.get(i).getIndex() == player.getPlayerIndex())
+    			if(settlements.get(i).getOwner() == player.getPlayerIndex())
     				return true;
     			else
     				return false;

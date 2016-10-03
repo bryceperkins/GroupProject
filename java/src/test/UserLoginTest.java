@@ -33,10 +33,4 @@ public class UserLoginTest {
         assertEquals(response, server.execute(command));
     }
     
-    @Ignore("Live Test")  @Test
-    public void test_UserLogin_live() {
-        this.server = new ServerProxy("localhost", "8081");
-        command = new UserLogin("Sam", "sam");
-        assertEquals("Success", server.execute(command));
-    }
 }

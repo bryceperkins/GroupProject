@@ -24,6 +24,7 @@ public class RollNumberTest {
     public void tearDown() {
     }
 
+    @Ignore
     @Test
     public void test_RollNumber_mock() {
         command = new RollNumber(PlayerIndex.Player1, 5);

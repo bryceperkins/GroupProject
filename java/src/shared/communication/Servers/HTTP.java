@@ -72,13 +72,13 @@ public class HTTP implements iServer {
 
             connection.setRequestProperty("Cookie", getCookies());    
 
-            if(command.getMethod().equals("POST")){
+            if(command.getMethod() == "POST"){
                 connection.setDoOutput(true);
             }
             
             connection.connect();
             
-            if(command.getMethod().equals("POST")){
+            if(command.getMethod() == "POST"){
                 OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
                 out.write(gson.toJson(command));
                 out.close();
@@ -89,8 +89,9 @@ public class HTTP implements iServer {
             response = org.apache.commons.io.IOUtils.toString(connection.getInputStream());
             
             String cookie = connection.getHeaderField(this.COOKIES_HEADER);
-            if (cookie != null){
-                this.cookies.getCookieStore().add(url.toURI(), HttpCookie.parse(cookie).get(0));
+            if (cookie != null) {
+                this.cookies.getCookieStore().remove(null, HttpCookie.parse(cookie).get(0));
+                this.cookies.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
             }
 
         }

@@ -9,4 +9,5 @@ public class Settlement extends Piece{
 
 	}
 
+
 }

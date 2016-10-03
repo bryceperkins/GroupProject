@@ -6,13 +6,13 @@ import client.model.PlayerIndex;
 public class Road{
 	
 	private PlayerIndex index;
-	private VertexLocation loc;
-	private VertexDirection dir;
+	private VertexLocation location;
+	private VertexDirection direction;
 	
 	public Road(PlayerIndex index, VertexLocation loc, VertexDirection dir) {
 		this.index = index;
-		this.loc = loc;
-		this.dir = dir;
+		this.location = loc;
+		this.direction = dir;
 	}
 
 	public PlayerIndex getIndex() {
@@ -23,20 +23,20 @@ public class Road{
 		this.index = index;
 	}
 
-	public VertexLocation getLoc() {
-		return loc;
+	public VertexLocation getLocation() {
+		return location;
 	}
 
-	public void setLoc(VertexLocation loc) {
-		this.loc = loc;
+	public void setLocation(VertexLocation loc) {
+		this.location = loc;
 	}
 
-	public VertexDirection getDir() {
-		return dir;
+	public VertexDirection getDirection() {
+		return direction;
 	}
 
-	public void setDir(VertexDirection dir) {
-		this.dir = dir;
+	public void setDirection(VertexDirection dir) {
+		this.direction = dir;
 	}
 	
 	
