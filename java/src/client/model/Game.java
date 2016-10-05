@@ -16,7 +16,7 @@ public class Game {
     private int version;
     private int id;
     private PlayerIndex winner;
-    private ResourceBank bank;
+    private ResourceList bank;
     private Chat chat;
     private Log log;
     private Map map;
@@ -28,7 +28,7 @@ public class Game {
         name = "Test";
         version = 1;
         winner = PlayerIndex.None;
-        bank = new ResourceBank();
+        bank = new ResourceList(19, 19, 19, 19, 19);
         chat = new Chat();
         log = new Log();
         map = new Map();
@@ -85,7 +85,7 @@ public class Game {
         this.winner = index;
     }
     
-    public ResourceBank getBank() {
+    public ResourceList getBank() {
         return bank;
     }
 
