@@ -26,6 +26,7 @@ public class GameManager {
         return gson.fromJson(jsonElement, Game.class);
     }
 
+
     /**
      * Updates or creates a game on the client from the provided JSON
      * @pre a valid json object is given as reflected in the documentation

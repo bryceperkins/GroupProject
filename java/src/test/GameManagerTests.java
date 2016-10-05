@@ -21,6 +21,11 @@ public class GameManagerTests {
 
         Game game = GameManager.getGame(1);
         assertNotNull(game.getBank());
+        assertEquals(game.getBank().getBrick(), 5);
+        assertEquals(game.getBank().getOre(), 5);
+        assertEquals(game.getBank().getSheep(), 5);
+        assertEquals(game.getBank().getWheat(), 5);
+        assertEquals(game.getBank().getWood(), 5);
     }
 
     @Test
