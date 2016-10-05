@@ -85,17 +85,8 @@ public class HTTP implements iServer {
             
             String cookie = connection.getHeaderField(this.COOKIES_HEADER);
             if (cookie != null) {
-                boolean found = false;
                 HttpCookie tmp = HttpCookie.parse(cookie).get(0);
-                for (HttpCookie c: this.cookies.getCookieStore().getCookies()){
-                    if (c.getName().equals(tmp.getName()) && c.getValue().equals(tmp.getValue())){
-                        found = true; 
-                        break;
-                    }
-                }
-                if (found == false) {
-                    this.cookies.getCookieStore().add(null, tmp);
-                }
+                this.cookies.getCookieStore().add(null, tmp);
             }
 
         }
