@@ -1,4 +1,7 @@
 Makefile
 **.class
 **.html
-docs
+**docs/
+**.iml
+**build/
+**dist/

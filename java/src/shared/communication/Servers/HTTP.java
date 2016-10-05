@@ -45,11 +45,8 @@ public class HTTP implements iServer {
 
     public String getCookies() {
         StringBuilder tmp = new StringBuilder();
-        for (int i = 0; i < cookies.getCookieStore().getCookies().size(); i++){
-            if(i > 0){
-                tmp.append("; ");
-            }
-            tmp.append(cookies.getCookieStore().getCookies().get(i));
+        for (HttpCookie cookie: this.cookies.getCookieStore().getCookies()){
+            tmp.append(cookie);
         }
         return tmp.toString();
     }
@@ -70,8 +67,6 @@ public class HTTP implements iServer {
             URL url = new URL(URL_PREFIX + command.getEndPoint());
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
-            connection.setRequestProperty("Cookie", getCookies());    
-
             if(command.getMethod() == "POST"){
                 connection.setDoOutput(true);
             }
@@ -90,12 +85,21 @@ public class HTTP implements iServer {
             
             String cookie = connection.getHeaderField(this.COOKIES_HEADER);
             if (cookie != null) {
-                this.cookies.getCookieStore().remove(url.toURI(), HttpCookie.parse(cookie).get(0));
-                this.cookies.getCookieStore().add(url.toURI(), HttpCookie.parse(cookie).get(0));
+                boolean found = false;
+                HttpCookie tmp = HttpCookie.parse(cookie).get(0);
+                for (HttpCookie c: this.cookies.getCookieStore().getCookies()){
+                    if (c.getName().equals(tmp.getName()) && c.getValue().equals(tmp.getValue())){
+                        found = true; 
+                        break;
+                    }
+                }
+                if (found == false) {
+                    this.cookies.getCookieStore().add(null, tmp);
+                }
             }
 
         }
-        catch (IOException|URISyntaxException e) {
+        catch (IOException e) {
             System.out.println("Err: " + e);
         }
         return response;

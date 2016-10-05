@@ -7,7 +7,8 @@ import org.junit.After;
 
 import com.google.gson.*;
 
-import shared.commands.GameModel;
+import java.util.*;
+
 import shared.communication.*;
 import shared.deserializers.*;
 import shared.communication.servers.*;
@@ -37,5 +38,50 @@ public class GameModelTest {
         String response = server.execute(new GameModel());
         assertEquals(expected, response);
 
+    }
+    
+    @Test
+    public void test_GameModelLive() {
+        this.server = new ServerProxy("localhost", "8081");
+        this.server.execute(new UserLogin("Sam", "sam"));
+        String response = this.server.execute(new GamesList());
+        if (response == null) {
+            System.out.println("Server is not running");
+            return;
+        }
+        
+        JsonParser parser = new JsonParser();
+        JsonArray array = parser.parse(response).getAsJsonArray();
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Game.class, new GamesCreateDeserializer());
+        Gson gson = gsonBuilder.create();
+
+        boolean found = false;
+        for (int i=0; i < array.size(); i++){
+            game = gson.fromJson(array.get(i), Game.class);
+            System.out.println("Game: " + game.getName());
+            List<Player> players = game.getPlayers();
+            for (Player player: players){
+                if (player.getName().equals("Sam")) {
+                    found = true;
+                    this.server.execute(new GamesJoin(game.getId(), CatanColor.PUCE)); 
+                    break;
+                }
+            }
+            if (found == true) { 
+                break; 
+            }
+        }
+
+        if (found != true) {
+            System.out.println("No empty games found");
+            return;
+        }
+
+        
+        response = this.server.execute(new GameModel());
+        game = gson.fromJson(response, Game.class);
+        assertEquals(4, game.getPlayers().size());
     }
 }

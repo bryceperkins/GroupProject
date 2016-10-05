@@ -21,10 +21,15 @@ public class GamesCreateDeserializer implements JsonDeserializer<Game> {
 
         // Pull off the known elements - We know a title exists and is a string
         final JsonElement jsonTitle = jsonObject.get("title");
-        game.setName(jsonTitle.getAsString());
+        if (jsonTitle != null) {
+            game.setName(jsonTitle.getAsString());
+        }
 
         // Pull off the known elements - We know ID  exists and is an int
-        game.setId(jsonObject.get("id").getAsInt());
+        final JsonElement jsonID = jsonObject.get("id");
+        if (jsonID != null) {
+            game.setId(jsonID.getAsInt());
+        }
 
         // Handle the nested players
         Gson gson = new Gson();

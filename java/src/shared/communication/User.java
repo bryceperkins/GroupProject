@@ -28,7 +28,7 @@ public class User{
     }
 
     public String getUserName() {
-        return this.name;
+        return this.name.toString();
     }
     
     public void setPassword(String password) {
@@ -43,13 +43,12 @@ public class User{
     public  String getPassword() {
         return this.password;
     }
-    
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
-    }
 
-    public int getPlayerID() {
+    public int getPlayerID(){
         return this.playerID;
     }
-
+    
+    public void setPlayerID(int id){
+        this.playerID = id;
+    }
 }
