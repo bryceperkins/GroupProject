@@ -1,10 +1,12 @@
 package shared.commands;
 
+import shared.definitions.AIType;
+
 
 public class GameAddAI extends Command{
-    private String AIType;
+    private AIType AIType;
 
-    public GameAddAI(String aitype) {
+    public GameAddAI(AIType aitype) {
         super();
         endpoint = "/game/addai";
         method = "POST";

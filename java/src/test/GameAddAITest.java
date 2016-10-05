@@ -8,6 +8,7 @@ import org.junit.Ignore;
 import shared.communication.*;
 import shared.communication.servers.*;
 import shared.commands.*;
+import shared.definitions.*;
 import client.server.*;
 
 public class GameAddAITest {
@@ -28,7 +29,7 @@ public class GameAddAITest {
 
     @Test
     public void test_GameAddAI_expected_mock_json() {
-        command = new GameAddAI("LARGEST_ARMY");
+        command = new GameAddAI(AIType.LARGEST_ARMY);
         String response = "Success";
         assertEquals(response, server.execute(command));
     }
