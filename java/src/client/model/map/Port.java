@@ -1,8 +1,8 @@
 package client.model.map;
 
 import client.model.HexDirection;
-import client.model.ResourceType;
-import client.model.map.HexLocation;
+import shared.definitions.ResourceType;
+import shared.locations.HexLocation;
 import client.model.ResourceList;
 
 public class Port {

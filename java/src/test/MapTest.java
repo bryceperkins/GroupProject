@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.After;
 
 import shared.locations.VertexDirection;
+import shared.locations.HexLocation;
 
 import client.model.map.*;
 import client.model.*;

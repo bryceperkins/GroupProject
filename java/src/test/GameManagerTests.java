@@ -3,7 +3,7 @@ import static org.junit.Assert.*;
 import client.model.Game;
 import client.model.GameManager;
 import client.model.PlayerIndex;
-import client.model.ResourceType;
+import shared.definitions.ResourceType;
 import client.model.map.Direction;
 import client.model.player.Color;
 import client.model.player.Player;
@@ -71,7 +71,7 @@ public class GameManagerTests {
         assertNotNull(game.getMap().getHexes());
         assertEquals(game.getMap().getHexes().size(), 1);
         assertNotNull(game.getMap().getHexes().get(0).getLocation());
-        assertTrue(game.getMap().getHexes().get(0).getResource() == ResourceType.wheat);
+        assertTrue(game.getMap().getHexes().get(0).getResource() == ResourceType.WHEAT);
         assertEquals(game.getMap().getHexes().get(0).getNumber(), 1);
     }
 
@@ -85,7 +85,7 @@ public class GameManagerTests {
         assertNotNull(game.getMap());
         assertNotNull(game.getMap().getPorts());
         assertEquals(game.getMap().getPorts().size(), 1);
-        assertTrue(game.getMap().getPorts().get(0).getResource() == ResourceType.wheat);
+        assertTrue(game.getMap().getPorts().get(0).getResource() == ResourceType.WHEAT);
         assertEquals(game.getMap().getPorts().get(0).getRatio(), 1);
     }
 

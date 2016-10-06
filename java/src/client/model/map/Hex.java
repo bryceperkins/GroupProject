@@ -1,8 +1,8 @@
 package client.model.map;
 
-import client.model.map.HexLocation;
+import shared.locations.HexLocation;
 import client.model.map.Robber;
-import client.model.ResourceType;
+import shared.definitions.ResourceType;
 
 public class Hex {
 	private HexLocation location;

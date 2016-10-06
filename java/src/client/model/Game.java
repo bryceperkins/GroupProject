@@ -101,6 +101,10 @@ public class Game {
         return map;
     }
 
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
     public void setPlayers(List<Player> players) {
         this.players = players;
     }

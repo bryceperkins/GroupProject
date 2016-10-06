@@ -6,9 +6,11 @@ import org.junit.After;
 
 import client.model.*;
 import client.model.map.Hex;
-import client.model.map.HexLocation;
 import client.model.map.Robber;
 import client.model.ResourceList;
+
+import shared.locations.HexLocation;
+import shared.definitions.ResourceType;
 
 public class HexTest {
 	private Hex testHex;
@@ -23,7 +25,7 @@ public class HexTest {
 		hexLocation = new HexLocation(1,1);	
 		hasRobber = true;
 		value = 5;
-		resource = ResourceType.wood;
+		resource = ResourceType.WOOD;
 		testHex = new Hex(hexLocation,hasRobber,value,resource);
 	}
 	
@@ -33,7 +35,7 @@ public class HexTest {
 		hexLocation = new HexLocation(1,1);	
 		hasRobber = true;
 		value = 5;
-		resource = ResourceType.wood;
+		resource = ResourceType.WOOD;
 		testHex = new Hex(hexLocation,hasRobber,value,resource);
 	}
 	

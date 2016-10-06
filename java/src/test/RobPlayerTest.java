@@ -12,6 +12,8 @@ import client.model.map.*;
 import client.server.*;
 import client.model.PlayerIndex;
 
+import shared.locations.HexLocation;
+
 public class RobPlayerTest {
     private ServerProxy server; 
     private Command command;
