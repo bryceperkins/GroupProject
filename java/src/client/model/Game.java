@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Game model class containing all local information provided by
  * the server for a given game.
  */
-public class Game {
+public class Game implements PostProcessor {
 
     private String name;
     private int version;
@@ -122,5 +122,9 @@ public class Game {
     public TradeOffer getTradeOffer() {
         return tradeOffer;
     }
-    
+
+    @Override
+    public void postDeserializationSetup(Game game) {
+        map.postDeserializationSetup(game);
+    }
 }

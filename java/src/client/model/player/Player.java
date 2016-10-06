@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import client.model.*;
 import client.model.map.Port;
 import shared.definitions.ResourceType;
+import com.google.gson.annotations.SerializedName;
 
 public class Player {
-	private int cities;
+	@SerializedName("cities")
+	private int citiesRemaining;
     private Color color;
-    private boolean discarded;
-    private int monuments;
+	@SerializedName("discarded")
+    private boolean didDiscard;
+	@SerializedName("monuments")
+    private int monumentsPlayed;
     private String name;
     private DevCardList newDevCards;
     private DevCardList oldDevCards;
@@ -18,9 +22,12 @@ public class Player {
     private PlayerIndex playerIndex;
     private boolean playedDevCard;
     private ResourceList resources;
-    private int roads;
-    private int settlements;
-    private int soldiers;
+	@SerializedName("roads")
+    private int roadsRemaining;
+	@SerializedName("settlements")
+    private int settlementsRemaining;
+	@SerializedName("soldiers")
+    private int soldiersPlayed;
     private int userID;
     private int victoryPoints;
 
@@ -37,13 +44,13 @@ public class Player {
         this.newDevCards = new DevCardList();
         this.oldDevCards = new DevCardList();
         this.ports = new ArrayList<Port>();
-        this.cities = 4;
-        this.roads = 15;
-        this.settlements = 5;
-        this.monuments = 0;
-        this.soldiers = 0;
+        this.citiesRemaining = 4;
+        this.roadsRemaining = 15;
+        this.settlementsRemaining = 5;
+        this.monumentsPlayed = 0;
+        this.soldiersPlayed = 0;
         this.victoryPoints = 0;
-        this.discarded = false;
+        this.didDiscard = false;
         this.playedDevCard = false;
     }
 
@@ -64,7 +71,7 @@ public class Player {
 		ResourceList temp = new ResourceList();
 		temp.setWheat(2);
 		temp.setOre(3);
-		return (cities > 0) && resources.hasResources(temp);
+		return (citiesRemaining > 0) && resources.hasResources(temp);
 	}
 	
 	/**
@@ -75,7 +82,7 @@ public class Player {
 		ResourceList temp = new ResourceList();
 		temp.setBrick(1);
 		temp.setWood(1);
-		return (roads > 0) &&resources.hasResources(temp);
+		return (roadsRemaining > 0) &&resources.hasResources(temp);
 	}
 	
 	/**
@@ -88,7 +95,7 @@ public class Player {
 		temp.setSheep(1);
 		temp.setWood(1);
 		temp.setBrick(1);
-		return (settlements > 0) &&resources.hasResources(temp);
+		return (settlementsRemaining > 0) &&resources.hasResources(temp);
 		}
 	
 	/**
@@ -157,7 +164,7 @@ public class Player {
 
 
 	public int getCitiesRemaining() {
-		return cities;
+		return citiesRemaining;
 	}
 
 
@@ -166,13 +173,13 @@ public class Player {
 	}
 
 
-	public boolean isDiscarded() {
-		return discarded;
+	public boolean didDiscard() {
+		return didDiscard;
 	}
 
 
-	public int getMonuments() {
-		return monuments;
+	public int getMonumentsPlayed() {
+		return monumentsPlayed;
 	}
 
 
@@ -220,18 +227,18 @@ public class Player {
 	}
 
 
-	public int getRoads() {
-		return roads;
+	public int getRoadsRemaining() {
+		return roadsRemaining;
 	}
 
 
-	public int getSettlements() {
-		return settlements;
+	public int getSettlementsRemaining() {
+		return settlementsRemaining;
 	}
 
 
-	public int getSoldiers() {
-		return soldiers;
+	public int getSoldiersPlayed() {
+		return soldiersPlayed;
 	}
 
 

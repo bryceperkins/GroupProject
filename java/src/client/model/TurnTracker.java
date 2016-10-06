@@ -1,5 +1,7 @@
 package client.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Keeps track of the current turn and game state for a given game
  */
@@ -7,7 +9,9 @@ public class TurnTracker {
 
     private PlayerIndex currentTurn;
     private GameStatus status;
+    @SerializedName("longestRoad")
     private PlayerIndex longestRoadOwner;
+    @SerializedName("longestArmy")
     private PlayerIndex largestArmyOwner;
 
     public PlayerIndex getCurrentTurn() {
@@ -29,7 +33,7 @@ public class TurnTracker {
     /**
      * The different possible states of the game
      */
-    private enum GameStatus {
+    public enum GameStatus {
         Rolling, Robbing, Playing, Discarding, FirstRound, SecondRound;
     }
 

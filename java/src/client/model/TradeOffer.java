@@ -6,15 +6,15 @@ package client.model;
 public class TradeOffer {
 
     private PlayerIndex sender;
-    private PlayerIndex reciever;
+    private PlayerIndex receiver;
     private ResourceList offer;
 
 	public PlayerIndex getSender() {
 		return sender;
 	}
 
-	public PlayerIndex getReciever() {
-		return reciever;
+	public PlayerIndex getReceiver() {
+		return receiver;
 	}
 
 	public ResourceList getOffer() {
@@ -25,8 +25,8 @@ public class TradeOffer {
 		this.sender = sender;
 	}
 
-	public void setReciever(PlayerIndex reciever) {
-		this.reciever = reciever;
+	public void setReceiver(PlayerIndex receiver) {
+		this.receiver = receiver;
 	}
 
 	public void setOffer(ResourceList offer) {

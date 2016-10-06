@@ -6,7 +6,7 @@ import client.model.player.*;
 import client.model.*;
 import shared.locations.*;
 
-public class Map {
+public class Map implements PostProcessor {
 
     private List<Hex> hexes;
     private List<Port> ports;
@@ -26,12 +26,8 @@ public class Map {
 		this.settlements = new ArrayList<Settlement>();
 		this.cities = new ArrayList<City>();
 		this.radius = 3;
-		this.robber = new Robber(new HexLocation(3,3));
-		
-		for(int i = 0; i < 20; i++)
-		{
-			hexes.add(new Hex());
-		}
+		this.robber = new Robber(3, 3);
+
 	}
 
 	public boolean canBuildRoad(Player player, ItemLocation itemLocation){
@@ -177,6 +173,12 @@ public class Map {
 	public Robber getRobber() {
 		return robber;
 	}
-    
-    
+
+
+	@Override
+	public void postDeserializationSetup(Game game) {
+		for (Hex h : hexes) {
+			h.postDeserializationSetup(game);
+		}
+	}
 }

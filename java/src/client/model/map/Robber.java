@@ -2,28 +2,12 @@ package client.model.map;
 
 import shared.locations.HexLocation;
 
-public class Robber {
-	
-	private HexLocation location;
+public class Robber extends HexLocation {
 
-	public Robber(HexLocation location) {
-		super();
-		this.location = location;
-	}
+    public Robber(int x, int y) {
+        super.setX(x);
+        super.setY(y);
+    }
 
-	public HexLocation getLocation() {
-		return location;
-	}
-
-	public void setLocation(HexLocation location) {
-		this.location = location;
-	}
-
-	public int getX() {
-		return location.getX();
-	}
-
-	public int getY() {
-		return getY();
-	}
 }
+

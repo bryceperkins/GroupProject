@@ -9,4 +9,16 @@ public class MessageLine{
 	private String message;
 	private String source;
 	private PlayerIndex player;
+
+	public String getMessage() {
+		return message;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public PlayerIndex getPlayer() {
+		return player;
+	}
 }
