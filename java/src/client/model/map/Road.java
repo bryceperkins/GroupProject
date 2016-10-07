@@ -7,12 +7,10 @@ public class Road{
 	
 	private PlayerIndex index;
 	private VertexLocation location;
-	private VertexDirection direction;
-	
-	public Road(PlayerIndex index, VertexLocation loc, VertexDirection dir) {
+
+	public Road(PlayerIndex index, VertexLocation location) {
 		this.index = index;
-		this.location = loc;
-		this.direction = dir;
+		this.location = location;
 	}
 
 	public PlayerIndex getIndex() {
@@ -31,14 +29,6 @@ public class Road{
 		this.location = loc;
 	}
 
-	public VertexDirection getDirection() {
-		return direction;
-	}
-
-	public void setDirection(VertexDirection dir) {
-		this.direction = dir;
-	}
-	
 	
 	
 }

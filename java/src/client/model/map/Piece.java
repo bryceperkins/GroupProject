@@ -1,13 +1,14 @@
 package client.model.map;
 
 import client.model.PlayerIndex;
+import shared.locations.VertexLocation;
 
 public abstract class Piece {
 	
 	private PlayerIndex owner;
-	private ItemLocation location;
+	private VertexLocation location;
 
-	public Piece(PlayerIndex index, ItemLocation location) {
+	public Piece(PlayerIndex index, VertexLocation location) {
 		super();
 		this.owner = index;
 		this.location = location;
@@ -21,11 +22,11 @@ public abstract class Piece {
 		this.owner = owner;
 	}
 
-	public ItemLocation getLocation() {
+	public VertexLocation getLocation() {
 		return location;
 	}
 
-	public void setLocation(ItemLocation location) {
+	public void setLocation(VertexLocation location) {
 		this.location = location;
 	}
 	

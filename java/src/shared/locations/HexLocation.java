@@ -14,13 +14,15 @@ public class HexLocation
 		setX(x);
 		setY(y);
 	}
-	
+
+	public HexLocation() {}
+
 	public int getX()
 	{
 		return x;
 	}
 	
-	private void setX(int x)
+	public void setX(int x)
 	{
 		this.x = x;
 	}
@@ -30,7 +32,7 @@ public class HexLocation
 		return y;
 	}
 	
-	private void setY(int y)
+	public void setY(int y)
 	{
 		this.y = y;
 	}
@@ -50,24 +52,19 @@ public class HexLocation
 		result = prime * result + y;
 		return result;
 	}
-	
+
 	@Override
-	public boolean equals(Object obj)
-	{
-		if(this == obj)
-			return true;
-		if(obj == null)
-			return false;
-		if(getClass() != obj.getClass())
-			return false;
-		HexLocation other = (HexLocation)obj;
-		if(x != other.x)
-			return false;
-		if(y != other.y)
-			return false;
-		return true;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof HexLocation)) return false;
+
+		HexLocation that = (HexLocation) o;
+
+		if (x != that.x) return false;
+		return y == that.y;
+
 	}
-	
+
 	public HexLocation getNeighborLoc(EdgeDirection dir)
 	{
 		switch (dir)

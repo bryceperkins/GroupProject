@@ -23,9 +23,11 @@ public class GameManager {
     private static Game createGame(String json) {
         Gson gson = new Gson();
         JsonElement jsonElement = new JsonParser().parse(json);
-        return gson.fromJson(jsonElement, Game.class);
-    }
+        Game game = gson.fromJson(jsonElement, Game.class);
+        game.postDeserializationSetup(game);
 
+        return game;
+    }
 
     /**
      * Updates or creates a game on the client from the provided JSON
@@ -38,8 +40,10 @@ public class GameManager {
         int index = gameIndex(game.getId());
         if (index >= 0) {
             games.set(index, game);
+            activeGameIndex = index;
         } else {
             games.add(game);
+            activeGameIndex = games.size() - 1;
         }
     }
 

@@ -5,7 +5,6 @@ package shared.locations;
  */
 public class VertexLocation
 {
-	
 	private transient HexLocation hexLoc;
 	private VertexDirection direction;
     private int x;
@@ -18,7 +17,15 @@ public class VertexLocation
         this.x = hexLoc.getX();
         this.y = hexLoc.getY();
 	}
-	
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
 	public HexLocation getHexLoc()
 	{
 		return hexLoc;
@@ -37,7 +44,7 @@ public class VertexLocation
 	{
 		return direction;
 	}
-	
+
 	private void setDir(VertexDirection direction)
 	{
 		this.direction = direction;
@@ -80,7 +87,11 @@ public class VertexLocation
 			return false;
 		return true;
 	}
-	
+
+	public VertexDirection getDirection() {
+		return direction;
+	}
+
 	/**
 	 * Returns a canonical (i.e., unique) value for this vertex location. Since
 	 * each vertex has three different locations on a map, this method converts
