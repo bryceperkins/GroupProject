@@ -45,10 +45,6 @@ public class VertexLocation
 		return direction;
 	}
 
-	public VertexDirection getDirection() {
-		return direction;
-	}
-
 	private void setDir(VertexDirection direction)
 	{
 		this.direction = direction;
