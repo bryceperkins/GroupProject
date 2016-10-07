@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.google.gson.*;
+
 import client.model.player.*;
 import client.model.*;
+import client.model.map.*;
+import shared.locations.*;
+import shared.definitions.ResourceType;
 
 public class GamesCreateDeserializer implements JsonDeserializer<Game> {
 
@@ -35,20 +39,28 @@ public class GamesCreateDeserializer implements JsonDeserializer<Game> {
         Gson gson = new Gson();
 
         // Multiple players exist, read it into a generic array 
-        final JsonArray jsonPlayersArray = jsonObject.get("players").getAsJsonArray();
-        
-        // Create the HashMap that holds players as specified in the Game Model.
-        final List<Player> players = new ArrayList<>();
+        Map map = new Map();
+        final JsonElement jsonMap = jsonObject.get("map");
+        final JsonArray hexArray = jsonMap.getAsJsonObject().get("hexes").getAsJsonArray();
+        final List<Hex> hexes = new ArrayList<>();
+        for (int i = 0; i < hexArray.size(); i++) {
+            HexLocation hex = gson.fromJson(hexArray.get(i), HexLocation.class);
+            JsonElement number = jsonObject.get("number");
+            JsonElement resource = jsonObject.get("resource");
+            Hex h = new Hex(hex, false, number.getAsInt(), ResourceType.valueOf(resource.getAsString()));
+            hexes.add(h);
+        }
 
-        // Add each player to the HashMap
+        final JsonArray jsonPlayersArray = jsonObject.get("players").getAsJsonArray();
+        final List<Player> players = new ArrayList<>();
         for (int i = 0; i < jsonPlayersArray.size(); i++) {
-            // Gson cast each item in the list to a Player
             Player player = gson.fromJson(jsonPlayersArray.get(i), Player.class);
             players.add(player);
         }
 
-        // Create the final Game object
         game.setPlayers(players);
+        map.setHexes(hexes);
+        game.setMap(map);
         return game;
     }
 }

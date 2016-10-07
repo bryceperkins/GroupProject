@@ -5,9 +5,11 @@ import org.junit.Before;
 import org.junit.After;
 
 import client.model.ResourceList;
-import client.model.ResourceType;
+import shared.definitions.ResourceType;
 import client.model.map.*;
 import client.model.*;
+
+import shared.locations.HexLocation;
 
 public class PortTest {
 	private Port testPort;	

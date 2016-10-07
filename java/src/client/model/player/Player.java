@@ -3,6 +3,7 @@ package client.model.player;
 import java.util.ArrayList;
 import client.model.*;
 import client.model.map.Port;
+import shared.definitions.ResourceType;
 
 public class Player {
 	private int cities;
@@ -129,19 +130,19 @@ public class Player {
 		
 		switch (rt)
 		{
-		case wood:
+		case WOOD:
 			temp.setWood(ratio);
 			break;
-		case sheep:
+		case SHEEP:
 			temp.setSheep(ratio);
 			break;
-		case brick:
+		case BRICK:
 			temp.setBrick(ratio);
 			break;
-		case ore:
+		case ORE:
 			temp.setOre(ratio);
 			break;
-		case wheat:
+		case WHEAT:
 			temp.setWheat(ratio);
 			break;
 		}

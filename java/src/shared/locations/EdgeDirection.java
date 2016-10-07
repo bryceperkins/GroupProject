@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public enum EdgeDirection
 {
     @SerializedName("NW")
-	NorthWest,
+    NorthWest,
     @SerializedName("N")
     North, 
     @SerializedName("NE")
