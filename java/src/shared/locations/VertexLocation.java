@@ -91,7 +91,11 @@ public class VertexLocation
 			return false;
 		return true;
 	}
-	
+
+	public VertexDirection getDirection() {
+		return direction;
+	}
+
 	/**
 	 * Returns a canonical (i.e., unique) value for this vertex location. Since
 	 * each vertex has three different locations on a map, this method converts
