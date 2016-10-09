@@ -7,6 +7,8 @@ import client.login.*;
 import client.join.*;
 import client.misc.*;
 import client.base.*;
+import client.server.*;
+import client.model.*;
 
 /**
  * Main entry point for the Catan program
@@ -16,6 +18,7 @@ public class Catan extends JFrame
 {
 	
 	private CatanPanel catanPanel;
+    private static GameManager manager = new GameManager();
 	
 	public Catan()
 	{
@@ -43,6 +46,22 @@ public class Catan extends JFrame
 	
 	public static void main(final String[] args)
 	{
+        String host = "localhost";
+        String port = "8081";
+
+        for(String arg: args){
+            try {
+                Integer.parseInt(arg);
+                port = arg;
+            } catch (NumberFormatException e) {
+                if (arg.equals("${host}") || arg.equals("${port}")){
+                    continue;
+                }
+                host = arg;
+            }
+        }
+        ServerProxy server = new ServerProxy(host, port);
+        manager.setServer(server);
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -95,10 +114,11 @@ public class Catan extends JFrame
 						joinController.start();
 					}
 				});
+                loginController.setManager(manager);
 				loginView.setController(loginController);
 				loginView.setController(loginController);
 				
-				loginController.start();
+                loginController.start();
 			}
 		});
 	}

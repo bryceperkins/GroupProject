@@ -2,6 +2,10 @@ package client.login;
 
 import client.base.*;
 import client.misc.*;
+import client.server.*;
+import client.model.*;
+
+import shared.commands.*;
 
 import java.net.*;
 import java.io.*;
@@ -18,6 +22,7 @@ public class LoginController extends Controller implements ILoginController {
 
 	private IMessageView messageView;
 	private IAction loginAction;
+    private GameManager manager;
 	
 	/**
 	 * LoginController constructor
@@ -58,36 +63,64 @@ public class LoginController extends Controller implements ILoginController {
 	 * @return The action to be executed when the user logs in
 	 */
 	public IAction getLoginAction() {
-		
 		return loginAction;
 	}
 
 	@Override
 	public void start() {
-		
 		getLoginView().showModal();
 	}
 
+    private void error(String message) {
+        this.messageView.setTitle("Error");
+        this.messageView.setMessage(message);
+        this.messageView.setAction(new IAction() {
+            @Override
+            public void execute()
+            {
+                start();
+            }
+        });
+        this.messageView.showModal();
+    }
+
 	@Override
 	public void signIn() {
-		
-		// TODO: log in user
-		
+        String username = getLoginView().getLoginUsername();
+        String password = getLoginView().getLoginPassword();
+        String response = this.manager.getServer().execute(new UserLogin(username, password));
 
-		// If log in succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+        getLoginView().closeModal();
+
+        if (!response.equals("Success")){
+            error("Failed to login.");
+        } else {
+            loginAction.execute();
+        }
 	}
 
 	@Override
 	public void register() {
-		
-		// TODO: register new user (which, if successful, also logs them in)
-		
-		// If register succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+        String username = getLoginView().getRegisterUsername();
+        String pass1 = getLoginView().getRegisterPassword();
+        String pass2 = getLoginView().getRegisterPasswordRepeat();
+        String response;
+
+        getLoginView().closeModal();
+        if (pass1.equals(pass2)) {
+            response = this.manager.getServer().execute(new UserRegister(username, pass1));
+            if (!response.equals("Success")){
+                error("Failed to register user");
+            }
+        }
+        else {
+            error("Passwords do not match");
+        }
 	}
+
+    public void setManager(GameManager manager){
+        this.manager = manager;
+    }
 
 }
 
