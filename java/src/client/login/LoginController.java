@@ -117,12 +117,12 @@ public class LoginController extends Controller implements ILoginController {
                 response = this.manager.getServer().execute(new UserRegister(username, pass1));
                 if (!response.equals("Success")){
                     error("Failed to register user");
-                    return;
                 }
-                loginAction.execute();
+                else {
+                    loginAction.execute();
+                }
             } catch (NullPointerException e) {
                 error("Invalid username or password");
-                return;
             }
         }
         else {
