@@ -88,15 +88,20 @@ public class LoginController extends Controller implements ILoginController {
 	public void signIn() {
         String username = getLoginView().getLoginUsername();
         String password = getLoginView().getLoginPassword();
-        String response = this.manager.getServer().execute(new UserLogin(username, password));
+        String response = "";
+        try {
+            response = this.manager.getServer().execute(new UserLogin(username, password));
+            getLoginView().closeModal();
 
-        getLoginView().closeModal();
-
-        if (!response.equals("Success")){
-            error("Failed to login.");
-        } else {
-            loginAction.execute();
+            if (!response.equals("Success")){
+                error("Failed to login.");
+            } else {
+                loginAction.execute();
+            }
+        } catch (NullPointerException e) {
+            error("Invalid username or password");
         }
+
 	}
 
 	@Override
@@ -104,11 +109,15 @@ public class LoginController extends Controller implements ILoginController {
         String username = getLoginView().getRegisterUsername();
         String pass1 = getLoginView().getRegisterPassword();
         String pass2 = getLoginView().getRegisterPasswordRepeat();
-        String response;
+        String response = "";
 
         getLoginView().closeModal();
         if (pass1.equals(pass2)) {
-            response = this.manager.getServer().execute(new UserRegister(username, pass1));
+            try {
+                response = this.manager.getServer().execute(new UserRegister(username, pass1));
+            } catch (NullPointerException e) {
+                error("Invalid username or password");
+            }
             if (!response.equals("Success")){
                 error("Failed to register user");
             }
