@@ -4,6 +4,9 @@ import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
+import client.model.*;
+import client.model.player.*;
+import java.util.*;
 
 
 /**
@@ -107,12 +110,17 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void createNewGame() {
-		
+
 		getNewGameView().closeModal();
 	}
 
 	@Override
 	public void startJoinGame(GameInfo game) {
+		//TODO
+		//grey/disable chosen colors
+		for(int i = 0; i < game.getPlayers().size(); i++){
+			getSelectColorView().setColorEnabled(game.getPlayers().get(i).getColor(), false);
+		}
 
 		getSelectColorView().showModal();
 	}
@@ -125,11 +133,20 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
+
 		
-		// If join succeeded
-		getSelectColorView().closeModal();
-		getJoinGameView().closeModal();
-		joinAction.execute();
+		if(GameManager.userCanJoinGame(GameManager.getActiveGame())){
+			// If join succeeded
+			getSelectColorView().closeModal();
+		 	getJoinGameView().closeModal();
+			joinAction.execute();
+		}else{
+			getMessageView().setMessage("Failed to join game");
+			getMessageView().setTitle("Join game failed");
+			getMessageView().showModal();
+		}
+
+		
 	}
 
 }
