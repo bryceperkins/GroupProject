@@ -1,6 +1,7 @@
 package client.model;
 
 import java.util.ArrayList;
+import client.data.PlayerInfo;
 import client.model.*;
 import client.server.ServerProxy;
 import client.model.player.Player;
@@ -88,6 +89,11 @@ public class GameManager {
         return (index < 0) ? null : games.get(index);
     }
 
+    public static void addGame(Game game) {
+        games.add(game);
+        System.out.println(game.getName() + " " + game.getId());
+    }
+
     private static int gameIndex(int id) {
         for (int i = 0; i < games.size(); i++) {
             if (games.get(i).getId() == id) {
@@ -102,4 +108,8 @@ public class GameManager {
         return activePlayer;
     }
 
+    public PlayerInfo getCurrentPlayerInfo() {
+        User user = this.server.getServer().getDetails();
+        return user.getPlayerInfo();
+    }
 }

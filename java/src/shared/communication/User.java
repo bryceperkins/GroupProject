@@ -2,20 +2,25 @@ package shared.communication;
 /**
  * A container for a User.
  */
+import client.data.*;
+
 public class User{
     private String name;
     private String password;
     private int playerID;
+    private PlayerInfo player;
 
     public User() {}
     /**
      * @param name - the users name used to log in to the server
      * @param password - the users password used to log in to the server
-     *
+         *
      */
     public User(String name, String password) {
         setUserName(name);
         setPassword(password);
+        this.player = new PlayerInfo();
+        this.player.setName(getUserName());
     }
     
     public void setUserName(String name) {
@@ -50,5 +55,9 @@ public class User{
     
     public void setPlayerID(int id){
         this.playerID = id;
+    }
+
+    public PlayerInfo getPlayerInfo(){
+        return this.player;
     }
 }

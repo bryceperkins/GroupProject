@@ -1,15 +1,17 @@
 package client.model.player;
 
 import java.util.ArrayList;
+import client.data.*;
 import client.model.*;
 import client.model.map.Port;
 import shared.definitions.ResourceType;
+import shared.definitions.CatanColor;
 import com.google.gson.annotations.SerializedName;
 
 public class Player {
 	@SerializedName("cities")
 	private int citiesRemaining;
-    private Color color;
+    private CatanColor color;
 	@SerializedName("discarded")
     private boolean didDiscard;
 	@SerializedName("monuments")
@@ -32,7 +34,7 @@ public class Player {
     private int victoryPoints;
 
     
-    public Player(Color color, String name, int playerID, PlayerIndex playerIndex, int userID) {
+    public Player(CatanColor color, String name, int playerID, PlayerIndex playerIndex, int userID) {
 
 		this.color = color;
 		this.name = name;
@@ -168,7 +170,7 @@ public class Player {
 	}
 
 
-	public Color getColor() {
+	public CatanColor getColor() {
 		return color;
 	}
 
@@ -255,7 +257,17 @@ public class Player {
 	{
 		this.resources = rl;
 	}
-	
-	
-	
+
+    public PlayerInfo toPlayerInfo(){
+        PlayerInfo player = new PlayerInfo();
+        player.setId(this.playerID);
+        player.setName(this.name);
+        if (this.getPlayerIndex() != null){
+            player.setPlayerIndex(this.playerIndex.getIndex());
+        }
+        if (this.getColor() != null){
+            player.setColor(this.color);
+        }
+        return player;
+    }
 }

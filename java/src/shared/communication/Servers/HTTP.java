@@ -10,6 +10,7 @@ import com.google.gson.*;
 
 import client.server.*;
 import shared.commands.*;
+import shared.communication.*;
 
 /**
  *  Handles all Post requests from the Client to the Server
@@ -39,8 +40,16 @@ public class HTTP implements iServer {
         return this.URL_PREFIX;
     }
 
-    public String getDetails() {
-        return getCookies();
+    public User getDetails() {
+        User user = new User();
+        Gson gson = new Gson();
+        for (HttpCookie cookie: cookies.getCookieStore().getCookies()){
+            URLDecoder d = new URLDecoder();
+            if (cookie.getName().equals("catan.user")){
+                user = gson.fromJson(d.decode(cookie.getValue()), User.class);
+            }
+        }
+        return user;
     }
 
     public String getCookies() {

@@ -89,9 +89,9 @@ public class LoginController extends Controller implements ILoginController {
         String username = getLoginView().getLoginUsername();
         String password = getLoginView().getLoginPassword();
         String response = "";
+        getLoginView().closeModal();
         try {
             response = this.manager.getServer().execute(new UserLogin(username, password));
-            getLoginView().closeModal();
 
             if (!response.equals("Success")){
                 error("Failed to login.");

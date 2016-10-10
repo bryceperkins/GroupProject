@@ -8,6 +8,7 @@ import org.junit.After;
 
 import shared.locations.VertexDirection;
 import shared.locations.HexLocation;
+import shared.definitions.CatanColor;
 
 import client.model.map.*;
 import client.model.*;
@@ -26,7 +27,7 @@ public class MapTest {
     @Before
     public void setUp()
     {
-        testPlayer = new Player(Color.green,"Alice", 1, PlayerIndex.Player1 ,1);
+        testPlayer = new Player(CatanColor.GREEN,"Alice", 1, PlayerIndex.Player1 ,1);
         hexLocation = new HexLocation(1,1);
         direction = VertexDirection.West;
         itemLocation = new ItemLocation(hexLocation,direction);

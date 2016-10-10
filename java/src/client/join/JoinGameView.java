@@ -1,5 +1,7 @@
 package client.join;
 
+import java.util.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -7,6 +9,8 @@ import javax.swing.*;
 
 import client.base.*;
 import client.data.*;
+import client.model.*;
+import client.model.player.*;
 
 /**
  * Implementation for the join game view, which lets the user select a game to

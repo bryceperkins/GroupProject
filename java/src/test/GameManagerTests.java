@@ -3,7 +3,7 @@ import static org.junit.Assert.*;
 import client.model.*;
 import client.model.map.*;
 import shared.definitions.ResourceType;
-import client.model.player.Color;
+import shared.definitions.CatanColor;
 import client.model.player.DevCardList;
 import client.model.player.Player;
 import org.junit.Ignore;
@@ -176,7 +176,7 @@ public class GameManagerTests {
         assertTrue(player.getName().equals("John"));
         assertTrue(player.didDiscard());
         assertTrue(player.getCitiesRemaining() == 1);
-        assertTrue(player.getColor() == Color.red);
+        assertTrue(player.getColor() == CatanColor.RED);
         assertTrue(player.getMonumentsPlayed() == 1);
         assertNotNull(player.getNewDevCards());
         assertNotNull(player.getOldDevCards());

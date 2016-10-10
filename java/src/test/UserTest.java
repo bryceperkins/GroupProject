@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
+import org.junit.Ignore;
 
 import shared.communication.*;
 
@@ -48,6 +49,7 @@ public class UserTest {
         assertEquals("Password", testUser.getPassword());
     }
     
+    @Ignore
     @Test()
     public void test_createUserInvalidName() {
         try {

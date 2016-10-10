@@ -4,11 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import client.model.*;
 import client.model.map.*;
-import client.model.player.Color;
 import client.model.player.Player;
 
 import shared.locations.HexLocation;
 import shared.definitions.ResourceType;
+import shared.definitions.CatanColor;
 
 public class PlayerTest {
 	private Player testPlayer;
@@ -17,7 +17,7 @@ public class PlayerTest {
 	@Before
 	public void setUp()
 	{
-		testPlayer = new Player(Color.puce, "Alice", 0, PlayerIndex.Player1, 0);
+		testPlayer = new Player(CatanColor.PUCE, "Alice", 0, PlayerIndex.Player1, 0);
 		superList = new ResourceList();
 		superList.setBrick(1000);
 		superList.setWheat(1000);
@@ -29,7 +29,7 @@ public class PlayerTest {
 	@After
 	public void tearDown()
 	{
-		testPlayer = new Player(Color.puce, "Alice", 0, PlayerIndex.Player1, 0);
+		testPlayer = new Player(CatanColor.PUCE, "Alice", 0, PlayerIndex.Player1, 0);
 	}
 	
 	@Test

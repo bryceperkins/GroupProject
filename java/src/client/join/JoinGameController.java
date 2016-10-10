@@ -1,9 +1,16 @@
 package client.join;
 
+import com.google.gson.*;
+
+import java.util.*;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
+import client.model.*;
+import client.model.player.*;
+import shared.commands.*;
+import shared.deserializers.*;
 
 
 /**
@@ -15,6 +22,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
+    private GameManager manager;
 	
 	/**
 	 * JoinGameController constructor
@@ -87,15 +95,38 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		this.messageView = messageView;
 	}
 
+    public void update(){
+        JsonParser parser = new JsonParser();
+
+        String response = this.manager.getServer().execute(new GamesList());
+        JsonArray gamesArray = parser.parse(response).getAsJsonArray();
+
+        for (JsonElement e: gamesArray){
+            System.out.println(e.toString());
+            manager.processGame(e.toString());
+        }
+
+        int gameSize = manager.getGames().size();
+        GameInfo[] games = new GameInfo[gameSize];
+        List<Game> mGames = manager.getGames();
+
+        for (int i=0; i < gameSize; i++){
+            Game game = mGames.get(i);
+            games[i] = game.toGameInfo();
+        }
+
+        getJoinGameView().setGames(games, manager.getCurrentPlayerInfo());
+    }
+
 	@Override
 	public void start() {
-		
-		getJoinGameView().showModal();
+        update();
+        getJoinGameView().showModal();
 	}
 
 	@Override
 	public void startCreateNewGame() {
-		
+	 	
 		getNewGameView().showModal();
 	}
 
@@ -115,7 +146,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void startJoinGame(GameInfo game) {
 
 		getSelectColorView().showModal();
-	}
+    }
 
 	@Override
 	public void cancelJoinGame() {
@@ -132,5 +163,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		joinAction.execute();
 	}
 
-}
+    public void setManager(GameManager manager){
+        this.manager = manager;
+    }
 
+}
