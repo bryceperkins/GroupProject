@@ -39,7 +39,8 @@ public class GameModelTest {
         assertEquals(expected, response);
 
     }
-    
+   
+    @Ignore
     @Test
     public void test_GameModelLive() {
         this.server = new ServerProxy("localhost", "8081");
