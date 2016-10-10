@@ -101,7 +101,9 @@ public class HTTP implements iServer {
         }
         catch (IOException e) {
             System.out.println("Err: " + e);
-            return "Failed";
+            if (response == null){
+                return "Failed";
+            }
         }
         return response;
     }

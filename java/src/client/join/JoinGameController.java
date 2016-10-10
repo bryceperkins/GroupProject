@@ -100,10 +100,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
         String response = this.manager.getServer().execute(new GamesList());
         JsonArray gamesArray = parser.parse(response).getAsJsonArray();
+        
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Game.class, new GamesCreateDeserializer());
+        Gson gson = gsonBuilder.create();
 
         for (JsonElement e: gamesArray){
-            System.out.println(e.toString());
-            manager.processGame(e.toString());
+            Game game = gson.fromJson(e, Game.class);
+            manager.processGame(gson.toJson(game));
         }
 
         int gameSize = manager.getGames().size();
@@ -114,7 +118,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             Game game = mGames.get(i);
             games[i] = game.toGameInfo();
         }
-
         getJoinGameView().setGames(games, manager.getCurrentPlayerInfo());
     }
 
@@ -126,25 +129,40 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startCreateNewGame() {
-	 	
 		getNewGameView().showModal();
 	}
 
 	@Override
 	public void cancelCreateNewGame() {
-		
 		getNewGameView().closeModal();
 	}
 
 	@Override
 	public void createNewGame() {
-		
+        JsonParser parser = new JsonParser();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Game.class, new GamesCreateDeserializer());
+        Gson gson = gsonBuilder.create();
+
+        String response = manager.getServer().execute(new GamesList());
+        JsonArray gamesArray = parser.parse(response).getAsJsonArray();
+
+        String title = getNewGameView().getTitle();
+        boolean randomNumbers = getNewGameView().getRandomlyPlaceNumbers();
+        boolean randomHexes = getNewGameView().getRandomlyPlaceHexes();
+        boolean randomPorts = getNewGameView().getUseRandomPorts();
+
+        response = manager.getServer().execute(new GamesCreate(title, randomHexes, randomPorts, randomNumbers));
+        if (response != "Failed"){
+            Game game = gson.fromJson(response, Game.class);
+            manager.addGame(game);
+            update();
+        }
 		getNewGameView().closeModal();
 	}
 
 	@Override
 	public void startJoinGame(GameInfo game) {
-
 		getSelectColorView().showModal();
     }
 

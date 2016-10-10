@@ -91,7 +91,6 @@ public class GameManager {
 
     public static void addGame(Game game) {
         games.add(game);
-        System.out.println(game.getName() + " " + game.getId());
     }
 
     private static int gameIndex(int id) {
