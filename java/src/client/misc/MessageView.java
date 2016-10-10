@@ -22,6 +22,8 @@ public class MessageView extends OverlayView implements IMessageView {
 	private JButton closeButton;
 	private JPanel buttonPanel;
 	private JLabel message;
+
+    private IAction action;
 	
 	
 
@@ -53,13 +55,13 @@ public class MessageView extends OverlayView implements IMessageView {
 		buttonPanel.add(closeButton);		
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
-
+	
 	private ActionListener actionListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
 			if (e.getSource() == closeButton) {
 				closeModal();
+                action.execute();
 			}
 		}	
 	};
@@ -73,6 +75,10 @@ public class MessageView extends OverlayView implements IMessageView {
 	public void setMessage(String message) {
 		this.message.setText(String.format("<html><div style=\"width:%dpx;\">%s</div><html>", 500, message));
 	}
+
+    public void setAction(IAction action) {
+        this.action = action;
+    }
 	
 }
 

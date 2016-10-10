@@ -92,6 +92,7 @@ public class HTTP implements iServer {
         }
         catch (IOException e) {
             System.out.println("Err: " + e);
+            return "Failed";
         }
         return response;
     }

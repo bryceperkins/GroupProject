@@ -3,7 +3,9 @@ package client.resources;
 import java.util.*;
 
 import client.base.*;
-
+import client.model.*;
+import java.util.Random;
+import client.model.player.*;
 
 /**
  * Implementation for the resource bar controller
@@ -67,6 +69,23 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			IAction action = elementActions.get(element);
 			action.execute();
 		}
+	}
+
+	public void initializeValues(Game game){
+
+		Player player = game.getPlayer(GameManager.getActivePlayerIndex());
+		ResourceList resources = player.getResources();
+
+		getView().setElementAmount(ResourceBarElement.WOOD, resources.getWood());
+		getView().setElementAmount(ResourceBarElement.BRICK, resources.getBrick());
+		getView().setElementAmount(ResourceBarElement.SHEEP, resources.getSheep());
+		getView().setElementAmount(ResourceBarElement.WHEAT, resources.getWheat());
+		getView().setElementAmount(ResourceBarElement.ORE, resources.getOre());
+		getView().setElementAmount(ResourceBarElement.ROAD, player.getRoadsRemaining());
+		getView().setElementAmount(ResourceBarElement.SETTLEMENT, player.getSettlementsRemaining());
+		getView().setElementAmount(ResourceBarElement.CITY, player.getCitiesRemaining());
+		getView().setElementAmount(ResourceBarElement.SOLDIERS, player.getSoldiersPlayed());
+
 	}
 
 }

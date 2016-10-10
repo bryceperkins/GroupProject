@@ -2,6 +2,7 @@ package client.model;
 
 import java.util.ArrayList;
 import client.model.*;
+import client.server.ServerProxy;
 import client.model.player.Player;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -15,10 +16,12 @@ import shared.communication.User;
 public class GameManager {
 
     private static Game activeGame;
-
+    private static ServerProxy server;
     private static ArrayList<Game> games = new ArrayList<>();
     private static int activeGameIndex = -1;
     private static PlayerIndex activePlayer;
+
+    public GameManager () {}
 
     private static Game createGame(String json) {
         Gson gson = new Gson();
@@ -27,6 +30,14 @@ public class GameManager {
         game.postDeserializationSetup(game);
 
         return game;
+    }
+
+    public void setServer(ServerProxy server){
+        this.server = server;
+    }
+
+    public ServerProxy getServer(){
+        return this.server;
     }
 
     /**
