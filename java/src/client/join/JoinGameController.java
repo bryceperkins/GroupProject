@@ -105,19 +105,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         gsonBuilder.registerTypeAdapter(Game.class, new GamesCreateDeserializer());
         Gson gson = gsonBuilder.create();
 
-        for (JsonElement e: gamesArray){
-            Game game = gson.fromJson(e, Game.class);
+        GameInfo[] games = new GameInfo[gamesArray.size()];
+        for (int i=0; i < gamesArray.size(); i++){
+            Game game = gson.fromJson(gamesArray.get(i), Game.class);
             manager.processGame(gson.toJson(game));
-        }
-
-        int gameSize = manager.getGames().size();
-        GameInfo[] games = new GameInfo[gameSize];
-        List<Game> mGames = manager.getGames();
-
-        for (int i=0; i < gameSize; i++){
-            Game game = mGames.get(i);
             games[i] = game.toGameInfo();
         }
+
         getJoinGameView().setGames(games, manager.getCurrentPlayerInfo());
     }
 

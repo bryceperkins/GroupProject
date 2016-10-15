@@ -6,6 +6,7 @@ import client.model.map.*;
 import client.model.player.*;
 import java.util.List;
 import java.util.ArrayList;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Game model class containing all local information provided by
@@ -13,6 +14,7 @@ import java.util.ArrayList;
  */
 public class Game implements PostProcessor {
 
+    @SerializedName("title")
     private String name;
     private int version;
     private int id;
