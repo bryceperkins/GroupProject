@@ -1,6 +1,7 @@
 package client.model;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import client.data.PlayerInfo;
 import client.model.*;
 import client.server.ServerProxy;
@@ -14,22 +15,23 @@ import shared.communication.User;
  * Facade class which statically manages the client's games and updates
  * the model based on the results from the server
  */
-public class GameManager {
+public class GameManager extends Observable{
 
-    private static Game activeGame;
+    private static final GameManager INSTANCE = new GameManager();
     private static ServerProxy server;
     private static ArrayList<Game> games = new ArrayList<>();
     private static int activeGameIndex = -1;
     private static PlayerIndex activePlayer;
+    private PlayerInfo playerInfo;
+    private static Poller poller;
 
-    public GameManager () {}
+    private GameManager () {}
 
     private static Game createGame(String json) {
         Gson gson = new Gson();
         JsonElement jsonElement = new JsonParser().parse(json);
         Game game = gson.fromJson(jsonElement, Game.class);
         game.postDeserializationSetup(game);
-
         return game;
     }
 
@@ -37,8 +39,16 @@ public class GameManager {
         this.server = server;
     }
 
-    public ServerProxy getServer(){
-        return this.server;
+    public static Poller getPoller(){
+        return poller;
+    }
+
+    public void setPoller(Poller p){
+        this.poller = p;
+    }
+
+    public static ServerProxy getServer(){
+        return server;
     }
 
     /**
@@ -72,7 +82,11 @@ public class GameManager {
      * @return The model of the game active on the client, or null if no game is active
      */
     public static Game getActiveGame() {
-        return activeGame;
+        return getGame(activeGameIndex);
+    }
+    
+    public static void setActiveGame(int id) {
+        activeGameIndex = id;
     }
 
     public static ArrayList<Game> getGames() {
@@ -90,7 +104,10 @@ public class GameManager {
     }
 
     public static void addGame(Game game) {
-        games.add(game);
+        if(game.getId() >= games.size()){
+            System.out.println("AddGame: " + game.getName() + " " + game.getPlayers().size());
+            games.add(game.getId(), game);
+        }
     }
 
     private static int gameIndex(int id) {
@@ -108,7 +125,16 @@ public class GameManager {
     }
 
     public PlayerInfo getCurrentPlayerInfo() {
-        User user = this.server.getServer().getDetails();
-        return user.getPlayerInfo();
+        return this.playerInfo;
+    }
+    public void updatePlayerInfo() {
+        this.playerInfo = this.server.getServer().getDetails().toPlayerInfo();
+    }
+    public static GameManager getInstance() {
+        return INSTANCE;
+    }
+    public void update(){
+        setChanged();
+        notifyObservers();
     }
 }

@@ -181,7 +181,7 @@ public class GameManagerTests {
         assertNotNull(player.getNewDevCards());
         assertNotNull(player.getOldDevCards());
         assertEquals(player.getPlayerIndex(), PlayerIndex.Player1);
-        assertTrue(player.getPlayerId() == 1);
+        //assertTrue(player.getPlayerId() == 1);
         assertNotNull(player.getResources());
         assertTrue(player.isPlayedDevCard());
         assertTrue(player.getSoldiersPlayed() == 1);

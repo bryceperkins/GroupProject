@@ -11,15 +11,18 @@ import com.google.gson.annotations.SerializedName;
 public class Player {
 	@SerializedName("cities")
 	private int citiesRemaining;
+    @SerializedName("color")
     private CatanColor color;
 	@SerializedName("discarded")
     private boolean didDiscard;
 	@SerializedName("monuments")
     private int monumentsPlayed;
+    @SerializedName("name")
     private String name;
     private DevCardList newDevCards;
     private DevCardList oldDevCards;
     private ArrayList<Port> ports;
+    @SerializedName("id")
     private int playerID;
     private PlayerIndex playerIndex;
     private boolean playedDevCard;
@@ -54,6 +57,10 @@ public class Player {
         this.victoryPoints = 0;
         this.didDiscard = false;
         this.playedDevCard = false;
+    }
+    
+    public void setColor(CatanColor color){
+        this.color = color;
     }
 
 	/**
@@ -257,16 +264,19 @@ public class Player {
 	{
 		this.resources = rl;
 	}
+    public void setPlayerID(int id){
+        this.playerID = id;
+    }
 
     public PlayerInfo toPlayerInfo(){
         PlayerInfo player = new PlayerInfo();
-        player.setId(this.playerID);
-        player.setName(this.name);
+        player.setId(getPlayerID());
+        player.setName(getName());
         if (this.getPlayerIndex() != null){
             player.setPlayerIndex(this.playerIndex.getIndex());
         }
         if (this.getColor() != null){
-            player.setColor(this.color);
+            player.setColor(getColor());
         }
         return player;
     }

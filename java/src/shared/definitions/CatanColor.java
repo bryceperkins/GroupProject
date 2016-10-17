@@ -6,26 +6,30 @@ import com.google.gson.annotations.SerializedName;
 public enum CatanColor
 {
     @SerializedName("red")
-	RED, 
+	RED("red"), 
     @SerializedName("orange")
-    ORANGE, 
+    ORANGE("orange"), 
     @SerializedName("yellow")
-    YELLOW, 
+    YELLOW("yellow"), 
     @SerializedName("blue")
-    BLUE, 
+    BLUE("blue"), 
     @SerializedName("green")
-    GREEN, 
+    GREEN("green"), 
     @SerializedName("purple")
-    PURPLE, 
+    PURPLE("purple"), 
     @SerializedName("puce")
-    PUCE, 
+    PUCE("puce"), 
     @SerializedName("white")
-    WHITE, 
+    WHITE("white"), 
     @SerializedName("brown")
-    BROWN;
+    BROWN("brown");
 	
-	private Color color;
-    private String value;
+	private transient Color color;
+    private transient String value;
+
+    CatanColor(String value) {
+        this.value = value;
+    }
 	
 	static
 	{
@@ -38,16 +42,6 @@ public enum CatanColor
 		PUCE.color = new Color(204, 136, 153);
 		WHITE.color = new Color(223, 223, 223);
 		BROWN.color = new Color(161, 143, 112);
-
-        RED.value = "red";
-        ORANGE.value = "orange";
-        YELLOW.value = "yellow";
-        BLUE.value = "blue";
-        GREEN.value = "green";
-        PURPLE.value = "purple";
-        PUCE.value = "puce";
-        WHITE.value = "white";
-        BROWN.value = "brown";
 	}
 	
 	public Color getJavaColor()

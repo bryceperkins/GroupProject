@@ -139,21 +139,15 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 
 		//Add all the above
 		this.add(gamePanel, BorderLayout.CENTER);
-
-		tempJoinButton = new JButton("Temporary Join Button");
-		tempJoinButton.addActionListener(actionListener);
-		Font buttonFont = tempJoinButton.getFont();
-		buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
-		tempJoinButton.setFont(buttonFont);
-
 		createButton = new JButton("Create Game");
+        Font buttonFont = createButton.getFont();
+        buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
 		createButton.addActionListener(actionListener);
 		createButton.setFont(buttonFont);
 
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		buttonPanel.add(createButton);
-		buttonPanel.add(tempJoinButton);		
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
 
@@ -189,7 +183,6 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 			{
 				try
 				{
-					//System.out.println(e.getActionCommand());
 					int gameId = Integer.parseInt(e.getActionCommand());
 					GameInfo game = null;
 					for (GameInfo g : games)

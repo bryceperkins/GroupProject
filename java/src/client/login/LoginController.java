@@ -22,7 +22,7 @@ public class LoginController extends Controller implements ILoginController {
 
 	private IMessageView messageView;
 	private IAction loginAction;
-    private GameManager manager;
+    private GameManager manager = GameManager.getInstance();
 	
 	/**
 	 * LoginController constructor
@@ -92,10 +92,11 @@ public class LoginController extends Controller implements ILoginController {
         getLoginView().closeModal();
         try {
             response = this.manager.getServer().execute(new UserLogin(username, password));
-
             if (!response.equals("Success")){
                 error("Failed to login.");
             } else {
+                this.manager.getPoller().start();
+                this.manager.updatePlayerInfo();
                 loginAction.execute();
             }
         } catch (NullPointerException e) {
@@ -119,6 +120,8 @@ public class LoginController extends Controller implements ILoginController {
                     error("Failed to register user");
                 }
                 else {
+                    this.manager.getPoller().start();
+                    this.manager.updatePlayerInfo();
                     loginAction.execute();
                 }
             } catch (NullPointerException e) {
@@ -129,10 +132,4 @@ public class LoginController extends Controller implements ILoginController {
             error("Passwords do not match");
         }
 	}
-
-    public void setManager(GameManager manager){
-        this.manager = manager;
-    }
-
 }
-

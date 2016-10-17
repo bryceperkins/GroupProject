@@ -16,13 +16,17 @@ import shared.deserializers.*;
 /**
  * Implementation for the join game controller
  */
-public class JoinGameController extends Controller implements IJoinGameController {
+public class JoinGameController extends Controller implements IJoinGameController, Observer {
 
 	private INewGameView newGameView;
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
-    private GameManager manager;
+    private GameManager manager = GameManager.getInstance();
+    private GameInfo selected;
+    private boolean active = false;
+	
+	
 	
 	/**
 	 * JoinGameController constructor
@@ -40,6 +44,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
+        manager.addObserver(this);
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -95,41 +100,41 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		this.messageView = messageView;
 	}
 
-    public void update(){
-        JsonParser parser = new JsonParser();
-
-        String response = this.manager.getServer().execute(new GamesList());
-        JsonArray gamesArray = parser.parse(response).getAsJsonArray();
-        
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Game.class, new GamesCreateDeserializer());
-        Gson gson = gsonBuilder.create();
-
-        GameInfo[] games = new GameInfo[gamesArray.size()];
-        for (int i=0; i < gamesArray.size(); i++){
-            Game game = gson.fromJson(gamesArray.get(i), Game.class);
-            manager.processGame(gson.toJson(game));
-            games[i] = game.toGameInfo();
+    public void update(Observable ob, Object o){
+        GameInfo[] games = new GameInfo[manager.getGames().size()];
+        for (int i=0; i < manager.getGames().size(); i++){
+            games[i] = manager.getGames().get(i).toGameInfo();
         }
-
         getJoinGameView().setGames(games, manager.getCurrentPlayerInfo());
+        if(this.active){
+            getJoinGameView().showModal();
+        }
     }
 
 	@Override
 	public void start() {
-        update();
-        getJoinGameView().showModal();
+        this.active = true;
+        this.manager.getPoller().setCommand(new GamesList());
 	}
 
 	@Override
 	public void startCreateNewGame() {
+        this.active = false;
 		getNewGameView().showModal();
 	}
 
 	@Override
 	public void cancelCreateNewGame() {
+        this.active = true;
 		getNewGameView().closeModal();
 	}
+    
+    private void error(String message, IAction action) {
+        this.messageView.setTitle("Error");
+        this.messageView.setMessage(message);
+        this.messageView.setAction(action);
+        this.messageView.showModal();
+    }
 
 	@Override
 	public void createNewGame() {
@@ -149,34 +154,53 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         response = manager.getServer().execute(new GamesCreate(title, randomHexes, randomPorts, randomNumbers));
         if (response != "Failed"){
             Game game = gson.fromJson(response, Game.class);
-            manager.addGame(game);
-            update();
+            manager.getServer().execute(new GamesJoin(game.getId(), CatanColor.RED));
         }
+        this.active = true;
 		getNewGameView().closeModal();
 	}
 
 	@Override
 	public void startJoinGame(GameInfo game) {
+        this.active = false;
+        this.selected = game;
+        for(CatanColor color: CatanColor.values()){
+            getSelectColorView().setColorEnabled(color, true);
+        }
+        for(PlayerInfo player: game.getPlayers()){
+            if(player.getName().equals(manager.getCurrentPlayerInfo().getName())){
+                continue;
+            }
+            getSelectColorView().setColorEnabled(player.getColor(), false);
+        }
 		getSelectColorView().showModal();
     }
 
 	@Override
 	public void cancelJoinGame() {
-	
+        this.active = true;
 		getJoinGameView().closeModal();
 	}
 
 	@Override
 	public void joinGame(CatanColor color) {
-		
-		// If join succeeded
-		getSelectColorView().closeModal();
-		getJoinGameView().closeModal();
-		joinAction.execute();
+        String response = manager.getServer().execute(new GamesJoin(this.selected.getId(), color));
+        manager.setActiveGame(this.selected.getId());
+        getSelectColorView().closeModal();
+        if (response != "Failed"){
+            getJoinGameView().closeModal();
+            joinAction.execute();
+        }
+        else{
+            error("Failed to join Game", new IAction() {
+                @Override
+                public void execute()
+                {
+                    start();
+                }
+            });
+                
+        }
 	}
-
-    public void setManager(GameManager manager){
-        this.manager = manager;
-    }
 
 }

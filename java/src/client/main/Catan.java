@@ -18,7 +18,7 @@ public class Catan extends JFrame
 {
 	
 	private CatanPanel catanPanel;
-    private static GameManager manager = new GameManager();
+    private static GameManager manager = GameManager.getInstance();
 	
 	public Catan()
 	{
@@ -61,7 +61,9 @@ public class Catan extends JFrame
             }
         }
         ServerProxy server = new ServerProxy(host, port);
+        Poller poller = new Poller(server);
         manager.setServer(server);
+        manager.setPoller(poller);
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -97,8 +99,6 @@ public class Catan extends JFrame
 						playerWaitingController.start();
 					}
 				});
-                joinController.setManager(manager);
-
 				joinView.setController(joinController);
 				newGameView.setController(joinController);
 				selectColorView.setController(joinController);
@@ -116,7 +116,6 @@ public class Catan extends JFrame
 						joinController.start();
 					}
 				});
-                loginController.setManager(manager);
 				loginView.setController(loginController);
 				loginView.setController(loginController);
 				

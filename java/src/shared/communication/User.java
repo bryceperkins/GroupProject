@@ -19,8 +19,6 @@ public class User{
     public User(String name, String password) {
         setUserName(name);
         setPassword(password);
-        this.player = new PlayerInfo();
-        this.player.setName(getUserName());
     }
     
     public void setUserName(String name) {
@@ -57,7 +55,10 @@ public class User{
         this.playerID = id;
     }
 
-    public PlayerInfo getPlayerInfo(){
-        return this.player;
+    public PlayerInfo toPlayerInfo(){
+        PlayerInfo player = new PlayerInfo();
+        player.setId(this.playerID);
+        player.setName(this.name);
+        return player;
     }
 }

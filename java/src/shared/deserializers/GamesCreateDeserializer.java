@@ -12,11 +12,9 @@ import client.model.*;
 import client.model.map.*;
 import shared.locations.*;
 import shared.definitions.ResourceType;
+import shared.definitions.CatanColor;
 
 public class GamesCreateDeserializer implements JsonDeserializer<Game> {
-
-
-
     @Override
     public Game deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
         // Break the JSON apart piece by piece.  Cast the whole thing as a generic jsonObject
@@ -41,14 +39,13 @@ public class GamesCreateDeserializer implements JsonDeserializer<Game> {
         // Multiple players exist, read it into a generic array 
         final JsonArray jsonPlayersArray = jsonObject.get("players").getAsJsonArray();
         final List<Player> players = new ArrayList<>();
-        for (int i = 0; i < jsonPlayersArray.size(); i++) {
-            Player player = gson.fromJson(jsonPlayersArray.get(i), Player.class);
+        for (JsonElement j: jsonPlayersArray) {
+            Player player = gson.fromJson(j, Player.class);
             if(player.getName() == null){
                 continue;
             }
             players.add(player);
         }
-
         game.setPlayers(players);
         return game;
     }

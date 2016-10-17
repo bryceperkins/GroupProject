@@ -42,6 +42,6 @@ public class PointsController extends Controller implements IPointsController {
 		getPointsView().setPoints(5);
 		//</temp>
 	}
-	
+
 }
 
