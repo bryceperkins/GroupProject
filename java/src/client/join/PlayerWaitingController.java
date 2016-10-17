@@ -51,7 +51,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         PlayerInfo[] players = new PlayerInfo[game.getPlayers().size()];
 
         for(int i=0; i < game.getPlayers().size(); i++){
-            System.out.println(game.getPlayers().get(i).getName());
             players[i] = game.getPlayers().get(i).toPlayerInfo();
         }
 

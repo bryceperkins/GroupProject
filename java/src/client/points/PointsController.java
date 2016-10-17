@@ -1,6 +1,9 @@
 package client.points;
 
 import client.base.*;
+import client.*;
+import client.model.player.*;
+import client.model.*;
 
 
 /**
@@ -8,6 +11,7 @@ import client.base.*;
  */
 public class PointsController extends Controller implements IPointsController {
 
+    private GameManager manager = GameManager.getInstance();
 	private IGameFinishedView finishedView;
 	
 	/**
@@ -38,9 +42,17 @@ public class PointsController extends Controller implements IPointsController {
 	}
 
 	private void initFromModel() {
-		//<temp>		
-		getPointsView().setPoints(5);
-		//</temp>
+        if(manager.getActivePlayer() != null){
+            int victoryPoints = manager.getActivePlayer().getVictoryPoints();
+            getPointsView().setPoints(victoryPoints);
+        }
+	}
+
+	public void setEndGameWinner(){//probably pass in winner's ID or have some way of getting it
+		//will need some way to check if current player is the winner
+		Game game = manager.getActiveGame();
+		//getFinishedView().setWinner(game.getPlayer(game.getWinner()).getName());
+		getFinishedView().showModal();
 	}
 
 }
