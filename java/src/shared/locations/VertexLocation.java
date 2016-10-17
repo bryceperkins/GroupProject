@@ -30,7 +30,7 @@ public class VertexLocation
 	{
 		return hexLoc;
 	}
-	
+
 	private void setHexLoc(HexLocation hexLoc)
 	{
 		if(hexLoc == null)
@@ -39,7 +39,7 @@ public class VertexLocation
 		}
 		this.hexLoc = hexLoc;
 	}
-	
+
 	public VertexDirection getDir()
 	{
 		return direction;

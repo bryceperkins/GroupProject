@@ -2,13 +2,21 @@ package client.model.player;
 
 import java.util.ArrayList;
 import client.data.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import client.model.*;
+import client.model.map.City;
+import client.model.map.Map;
 import client.model.map.Port;
+import client.model.map.Settlement;
 import shared.definitions.ResourceType;
 import shared.definitions.CatanColor;
 import com.google.gson.annotations.SerializedName;
+import shared.locations.HexLocation;
 
-public class Player {
+public class Player implements PostProcessor {
 	@SerializedName("cities")
 	private int citiesRemaining;
     @SerializedName("color")
@@ -33,18 +41,15 @@ public class Player {
     private int settlementsRemaining;
 	@SerializedName("soldiers")
     private int soldiersPlayed;
-    private int userID;
     private int victoryPoints;
 
     
-    public Player(CatanColor color, String name, int playerID, PlayerIndex playerIndex, int userID) {
-
+    public Player(CatanColor color, String name, int playerID, PlayerIndex playerIndex) {
 		this.color = color;
 		this.name = name;
 		this.playerID = playerID;
 		this.playerIndex = playerIndex;
-		this.userID = userID;
-		
+
 		this.resources = new ResourceList();
         this.newDevCards = new DevCardList();
         this.oldDevCards = new DevCardList();
@@ -251,10 +256,6 @@ public class Player {
 	}
 
 
-	public int getUserID() {
-		return userID;
-	}
-
 
 	public int getVictoryPoints() {
 		return victoryPoints;
@@ -264,6 +265,7 @@ public class Player {
 	{
 		this.resources = rl;
 	}
+
     public void setPlayerID(int id){
         this.playerID = id;
     }
@@ -280,4 +282,37 @@ public class Player {
         }
         return player;
     }
+
+	@Override
+	public void postDeserializationSetup(Game game) {
+		Map map = game.getMap();
+
+		// get player ports
+        ports = new ArrayList<>();
+
+		System.out.println("Player index is " + playerIndex.toString());
+
+		// Puts locations of all player cities and settlements into a set
+		Set<HexLocation> playerLocations = new HashSet<>();
+		for (City city : map.getCities()) {
+			if (city.getOwner().equals(playerIndex)) {
+				playerLocations.add(city.getLocation().getHexLoc());
+			}
+		}
+		for (Settlement settlement : map.getSettlements()) {
+			if (settlement.getOwner().equals(playerIndex)) {
+				playerLocations.add(settlement.getLocation().getHexLoc());
+			}
+		}
+
+        System.out.println(map.getSettlements().stream().map(city -> city.getOwner()).collect(Collectors.toList()));
+		System.out.println(playerLocations);
+		System.out.println("Size of playerLocations is " + playerLocations.size());
+
+		for (Port p : map.getPorts()) {
+			if (playerLocations.contains(p.getLocation())) {
+				ports.add(p);
+			}
+		}
+	}
 }

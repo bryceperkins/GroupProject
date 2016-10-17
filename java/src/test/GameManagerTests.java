@@ -10,6 +10,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import shared.locations.VertexDirection;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class GameManagerTests {
 
     @Test
@@ -35,7 +38,12 @@ public class GameManagerTests {
 
         Game game = GameManager.getGame(1);
         assertNotNull(game.getChat());
-        assertNotNull(game.getChat().getLines());
+        Chat chat = game.getChat();
+        assertNotNull(chat.getLines());
+        assertTrue(chat.getLines().size() == 1);
+        MessageLine message = chat.getLines().get(0);
+        assertEquals(message.getSource(), PlayerIndex.Player2);
+        assertEquals(message.getMessage(), "A message");
     }
 
     @Test
@@ -112,6 +120,7 @@ public class GameManagerTests {
         assertEquals(road.getLocation().getX(), 1);
         assertEquals(road.getLocation().getY(), 1);
         assertEquals(road.getLocation().getDirection(), VertexDirection.NorthEast);
+        assertEquals(road.getOwner(), PlayerIndex.Player1);
     }
 
     @Test
@@ -187,8 +196,19 @@ public class GameManagerTests {
         assertTrue(player.getSoldiersPlayed() == 1);
         assertTrue(player.getVictoryPoints() == 1);
         assertTrue(player.getSettlementsRemaining() == 1);
+    }
 
-        // Check nesting
+    @Test
+    public void testParsePlayerPostProcessing_itSetsUpThePorts() {
+        String json = "{id: 1, players: [{ playerIndex: 0 }], map: { cities: [ { location: { x: 2, y: 2 }, owner: 0 } ], settlements: [{ location: { x: 2, y: 2 }, owner: 0 }, { location: { x: 0, y: 0 }, owner: 0 }, { location: { x: 2, y: 2 }, owner: 1 } ], ports: [ { location: { x: 2, y: 2 } } ] }}";
+
+        GameManager.processGame(json);
+
+        Game game = GameManager.getGame(1);
+        assertNotNull(game.getPlayers().get(0));
+        Player player = game.getPlayers().get(0);
+        assertNotNull(player.getPorts());
+        assertEquals(player.getPorts().size(), 2);
     }
 
     @Test

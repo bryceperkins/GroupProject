@@ -1,7 +1,5 @@
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
@@ -27,7 +25,7 @@ public class MapTest {
     @Before
     public void setUp()
     {
-        testPlayer = new Player(CatanColor.GREEN,"Alice", 1, PlayerIndex.Player1 ,1);
+        testPlayer = new Player(CatanColor.GREEN,"Alice", 1, PlayerIndex.Player1);
         hexLocation = new HexLocation(1,1);
         direction = VertexDirection.West;
         itemLocation = new ItemLocation(hexLocation,direction);

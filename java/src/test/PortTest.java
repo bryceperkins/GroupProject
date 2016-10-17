@@ -10,6 +10,7 @@ import client.model.map.*;
 import client.model.*;
 
 import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
 public class PortTest {
 	private Port testPort;	

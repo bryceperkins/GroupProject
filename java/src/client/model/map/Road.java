@@ -5,20 +5,20 @@ import client.model.PlayerIndex;
 
 public class Road{
 	
-	private PlayerIndex index;
+	private PlayerIndex owner;
 	private VertexLocation location;
 
-	public Road(PlayerIndex index, VertexLocation location) {
-		this.index = index;
+	public Road(PlayerIndex owner, VertexLocation location) {
+		this.owner = owner;
 		this.location = location;
 	}
 
-	public PlayerIndex getIndex() {
-		return index;
+	public PlayerIndex getOwner() {
+		return owner;
 	}
 
-	public void setIndex(PlayerIndex index) {
-		this.index = index;
+	public void setOwner(PlayerIndex owner) {
+		this.owner = owner;
 	}
 
 	public VertexLocation getLocation() {
