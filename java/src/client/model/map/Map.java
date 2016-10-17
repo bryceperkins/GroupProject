@@ -180,5 +180,11 @@ public class Map implements PostProcessor {
 		for (Hex h : hexes) {
 			h.postDeserializationSetup(game);
 		}
+		for (City c : cities) {
+			c.postDeserializationSetup(game);
+		}
+		for (Settlement s : settlements) {
+			s.postDeserializationSetup(game);
+		}
 	}
 }

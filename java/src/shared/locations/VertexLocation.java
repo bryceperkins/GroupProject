@@ -1,9 +1,12 @@
 package shared.locations;
 
+import client.model.Game;
+import client.model.PostProcessor;
+
 /**
  * Represents the location of a vertex on a hex map
  */
-public class VertexLocation
+public class VertexLocation implements PostProcessor
 {
 	private transient HexLocation hexLoc;
 	private VertexDirection direction;
@@ -129,6 +132,13 @@ public class VertexLocation
 			default:
 				assert false;
 				return null;
+		}
+	}
+
+	@Override
+	public void postDeserializationSetup(Game game) {
+		if (hexLoc == null) {
+			hexLoc = new HexLocation(x, y);
 		}
 	}
 }

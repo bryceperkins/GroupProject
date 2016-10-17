@@ -290,8 +290,6 @@ public class Player implements PostProcessor {
 		// get player ports
         ports = new ArrayList<>();
 
-		System.out.println("Player index is " + playerIndex.toString());
-
 		// Puts locations of all player cities and settlements into a set
 		Set<HexLocation> playerLocations = new HashSet<>();
 		for (City city : map.getCities()) {
@@ -305,10 +303,7 @@ public class Player implements PostProcessor {
 			}
 		}
 
-        System.out.println(map.getSettlements().stream().map(city -> city.getOwner()).collect(Collectors.toList()));
-		System.out.println(playerLocations);
-		System.out.println("Size of playerLocations is " + playerLocations.size());
-
+		// Check player locations against port locations
 		for (Port p : map.getPorts()) {
 			if (playerLocations.contains(p.getLocation())) {
 				ports.add(p);
