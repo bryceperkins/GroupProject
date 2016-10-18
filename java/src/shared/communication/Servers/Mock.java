@@ -7,6 +7,7 @@ import com.google.gson.*;
 
 import client.server.*;
 import shared.commands.*;
+import shared.communication.*;
 
 /**
  *  Handles all Post requests from the Client to the Server
@@ -65,7 +66,7 @@ public class Mock implements iServer {
         return response;
     }
 
-    public String getDetails(){
-        return "Mock";
+    public User getDetails(){
+        return new User();
     }
 }

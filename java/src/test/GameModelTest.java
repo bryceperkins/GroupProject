@@ -39,7 +39,6 @@ public class GameModelTest {
         assertEquals(expected, response);
 
     }
-   
     @Ignore
     @Test
     public void test_GameModelLive() {

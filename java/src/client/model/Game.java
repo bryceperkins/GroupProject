@@ -1,10 +1,12 @@
 package client.model;
 
+import client.data.*;
 import java.util.List;
 import client.model.map.*;
 import client.model.player.*;
 import java.util.List;
 import java.util.ArrayList;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Game model class containing all local information provided by
@@ -12,6 +14,7 @@ import java.util.ArrayList;
  */
 public class Game implements PostProcessor {
 
+    @SerializedName("title")
     private String name;
     private int version;
     private int id;
@@ -24,17 +27,17 @@ public class Game implements PostProcessor {
     private TurnTracker turnTracker;
     private TradeOffer tradeOffer;
     
-    public Game(){
-        name = "Test";
-        version = 1;
-        winner = PlayerIndex.None;
-        bank = new ResourceList(19, 19, 19, 19, 19);
+    public Game(){ 
+        //name = "Test";
+        //version = 1;
+        //winner = PlayerIndex.None;
+        //bank = new ResourceList(19, 19, 19, 19, 19);
         chat = new Chat();
         log = new Log();
         map = new Map();
         players = new ArrayList<Player>();
         turnTracker = new TurnTracker();
-        tradeOffer = new TradeOffer();
+        tradeOffer = new TradeOffer(); 
     }
 
     /**
@@ -126,5 +129,16 @@ public class Game implements PostProcessor {
     @Override
     public void postDeserializationSetup(Game game) {
         map.postDeserializationSetup(game);
+    }
+
+    public GameInfo toGameInfo(){
+        GameInfo game = new GameInfo();
+        game.setId(getId());
+        game.setTitle(getName());
+        System.out.println("Game: " + getId() + " " + getPlayers().size());
+        for(Player player: getPlayers()){
+            game.addPlayer(player.toPlayerInfo());
+        }
+        return game;
     }
 }

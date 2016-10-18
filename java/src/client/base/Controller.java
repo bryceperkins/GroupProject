@@ -1,5 +1,7 @@
 package client.base;
 
+import java.util.Observable;
+
 /**
  * Base class for controllers
  */
@@ -23,6 +25,8 @@ public abstract class Controller implements IController
 	{
 		return this.view;
 	}
+    public void update(Observable o, Object arg){
+    }
 	
 }
 

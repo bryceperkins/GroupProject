@@ -34,6 +34,7 @@ public class PollerTest {
     public void test_Poller_mock() {
         this.server = new ServerProxy();
         Poller p = new Poller(this.server); 
+        p.setCommand(new GameModel());
         p.start();
         try {
             Thread.sleep(5000);
