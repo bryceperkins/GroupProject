@@ -129,6 +129,9 @@ public class Game implements PostProcessor {
     @Override
     public void postDeserializationSetup(Game game) {
         map.postDeserializationSetup(game);
+        for (Player player : players) {
+            player.postDeserializationSetup(game);
+        }
     }
 
     public GameInfo toGameInfo(){

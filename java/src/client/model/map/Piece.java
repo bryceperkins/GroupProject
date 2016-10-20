@@ -1,9 +1,11 @@
 package client.model.map;
 
+import client.model.Game;
 import client.model.PlayerIndex;
+import client.model.PostProcessor;
 import shared.locations.VertexLocation;
 
-public abstract class Piece {
+public abstract class Piece implements PostProcessor {
 	
 	private PlayerIndex owner;
 	private VertexLocation location;
@@ -29,6 +31,9 @@ public abstract class Piece {
 	public void setLocation(VertexLocation location) {
 		this.location = location;
 	}
-	
-	
+
+	@Override
+	public void postDeserializationSetup(Game game) {
+		location.postDeserializationSetup(game);
+	}
 }

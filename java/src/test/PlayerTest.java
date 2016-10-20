@@ -17,7 +17,7 @@ public class PlayerTest {
 	@Before
 	public void setUp()
 	{
-		testPlayer = new Player(CatanColor.PUCE, "Alice", 0, PlayerIndex.Player1, 0);
+		testPlayer = new Player(CatanColor.PUCE, "Alice", 0, PlayerIndex.Player1);
 		superList = new ResourceList();
 		superList.setBrick(1000);
 		superList.setWheat(1000);
@@ -29,7 +29,7 @@ public class PlayerTest {
 	@After
 	public void tearDown()
 	{
-		testPlayer = new Player(CatanColor.PUCE, "Alice", 0, PlayerIndex.Player1, 0);
+		testPlayer = new Player(CatanColor.PUCE, "Alice", 0, PlayerIndex.Player1);
 	}
 	
 	@Test

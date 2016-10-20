@@ -24,10 +24,10 @@ public class GameTest {
     @Before
     public void setUp() {
         test_players = new ArrayList<Player>();
-        test_player1 = new Player(CatanColor.PUCE,"Alice", 1, PlayerIndex.Player1, 1);
-        test_player2 = new Player(CatanColor.PUCE, "Alice", 2, PlayerIndex.Player2, 2);
-        test_player3 = new Player(CatanColor.PUCE,"Alice", 3, PlayerIndex.Player3, 3);
-        test_player4 = new Player(CatanColor.PUCE, "Alice", 4, PlayerIndex.Player4, 4);
+        test_player1 = new Player(CatanColor.PUCE,"Alice", 1, PlayerIndex.Player1);
+        test_player2 = new Player(CatanColor.PUCE, "Alice", 2, PlayerIndex.Player2);
+        test_player3 = new Player(CatanColor.PUCE,"Alice", 3, PlayerIndex.Player3);
+        test_player4 = new Player(CatanColor.PUCE, "Alice", 4, PlayerIndex.Player4);
         test_game = new Game();
         test_game.setWinner(PlayerIndex.None);
         test_players.add(test_player1);
