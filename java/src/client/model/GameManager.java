@@ -47,7 +47,7 @@ public class GameManager extends Observable{
         this.poller = p;
     }
 
-    public static ServerProxy getServer(){
+    public ServerProxy getServer(){
         return server;
     }
 

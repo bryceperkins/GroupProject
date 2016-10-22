@@ -13,6 +13,7 @@ import java.util.*;
 import java.lang.reflect.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import shared.commands.UserLogin;
 
 
 /**

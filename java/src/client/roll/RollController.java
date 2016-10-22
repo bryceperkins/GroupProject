@@ -3,7 +3,11 @@ package client.roll;
 import client.base.*;
 import client.model.*;
 import client.model.player.*;
+import shared.commands.RollNumber;
+
 import java.util.Random;
+
+import static com.sun.tools.javac.util.Assert.error;
 
 /**
  * Implementation for the roll controller
@@ -11,6 +15,7 @@ import java.util.Random;
 public class RollController extends Controller implements IRollController {
 
 	private IRollResultView resultView;
+	private GameManager manager = GameManager.getInstance();
 
 	/**
 	 * RollController constructor
@@ -19,7 +24,6 @@ public class RollController extends Controller implements IRollController {
 	 * @param resultView Roll result view
 	 */
 	public RollController(IRollView view, IRollResultView resultView) {
-
 		super(view);
 		
 		setResultView(resultView);
@@ -39,16 +43,20 @@ public class RollController extends Controller implements IRollController {
 	@Override
 	public void rollDice() {
 		Random rand = new Random();
-		final int rollResult =  rand.nextInt(11) + 2;
+		int die1 = rand.nextInt(6) + 1;
+		int die2 = rand.nextInt(6) + 1;
+        int rollResult = die1 + die2;
 
 		getRollView().closeModal();
 
-		//TODO
-		//send rollResult to server
-		
-		resultView.setRollValue(rollResult);
+		String result = manager.getServer().execute(new RollNumber(manager.getCurrentPlayerInfo().getPlayerIndex(), rollResult));
+		if (!result.equals("Failed")) {
+			resultView.setRollValue(rollResult);
+			resultView.showModal();
+		} else {
+			error("failed to join game");
+		}
 
-		getResultView().showModal();
 	}
 
 }
