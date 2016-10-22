@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 public class ModelProxy {
 
+    private static GameManager manager = GameManager.getInstance();
+
     private final static int PLAYERS_NEEDED = 4;
 
     /**
@@ -16,7 +18,7 @@ public class ModelProxy {
      * @return whether or not the game is ready to begin (if it has 4 players)
      */
     public static boolean canBeginGame(int gameIndex) {
-        Game game = GameManager.getGames().get(gameIndex);
+        Game game = manager.getGames().get(gameIndex);
         return game.getPlayers().size() == PLAYERS_NEEDED;
     }
 
@@ -24,7 +26,7 @@ public class ModelProxy {
      * @return whether the active player can build a settlement (not location-specific)
      */
     public static boolean playerCanBuildSettlement() {
-        Player player = GameManager.getActivePlayer();
+        Player player = manager.getActivePlayer();
         return (player == null) ? false : player.canBuildSettlement();
     }
 
@@ -32,7 +34,7 @@ public class ModelProxy {
      * @return whether the active player can build a city (not location-specific)
      */
     public static boolean playerCanBuildCity() {
-        Player player = GameManager.getActivePlayer();
+        Player player = manager.getActivePlayer();
         return (player == null) ? false : player.canBuildCity();
     }
 
@@ -40,7 +42,7 @@ public class ModelProxy {
      * @return whether the active player can build a road (not location-specific)
      */
     public static boolean playerCanBuildRoad() {
-        Player player = GameManager.getActivePlayer();
+        Player player = manager.getActivePlayer();
         return (player == null) ? false : player.canBuildRoad();
     }
 
@@ -48,7 +50,7 @@ public class ModelProxy {
      * @return whether the active player can buy a dev card
      */
     public static boolean canBuyDevCard() {
-        Player player = GameManager.getActivePlayer();
+        Player player = manager.getActivePlayer();
         return (player == null) ? false : player.canBuyDevCard();
     }
 
@@ -56,9 +58,9 @@ public class ModelProxy {
      * @return whether it is the active player's turn
      */
     public static boolean isPlayerTurn() {
-        Game game = GameManager.getActiveGame();
+        Game game = manager.getActiveGame();
         if (game == null) { return false; }
-        return game.getTurnTracker().getCurrentTurn() == GameManager.getActivePlayerIndex();
+        return game.getTurnTracker().getCurrentTurn() == manager.getActivePlayerIndex();
     }
 
     /**
@@ -66,7 +68,7 @@ public class ModelProxy {
      * @return whether the player has at least the resources in the provided resource list
      */
     public static boolean playerHasResources(ResourceList resources) {
-        Player player = GameManager.getActivePlayer();
+        Player player = manager.getActivePlayer();
         return (player == null) ? false : player.hasResources(resources);
     }
 
@@ -75,9 +77,9 @@ public class ModelProxy {
      * @return whether a settlement can be build at a specficied location (not player-specific)
      */
     public static boolean canBuildSettlementAtLocation(ItemLocation location) {
-        Game game = GameManager.getActiveGame();
+        Game game = manager.getActiveGame();
         if (game == null) { return false; }
-        Player player = GameManager.getActivePlayer();
+        Player player = manager.getActivePlayer();
         return game.getMap().canBuildSettlement(player, location);
     }
 
@@ -86,9 +88,9 @@ public class ModelProxy {
      * @return whether a settlement can be build at a specficied location (not player-specific)
      */
     public static boolean canBuildCityAtLocation(ItemLocation location) {
-        Game game = GameManager.getActiveGame();
+        Game game = manager.getActiveGame();
         if (game == null) { return false; }
-        Player player = GameManager.getActivePlayer();
+        Player player = manager.getActivePlayer();
         return game.getMap().canBuildCity(player, location);
     }
 
@@ -97,9 +99,9 @@ public class ModelProxy {
      * @return whether a settlement can be build at a specficied location (not player-specific)
      */
     public static boolean canBuildRoadAtLocation(ItemLocation location) {
-        Game game = GameManager.getActiveGame();
+        Game game = manager.getActiveGame();
         if (game == null) { return false; }
-        Player player = GameManager.getActivePlayer();
+        Player player = manager.getActivePlayer();
         return game.getMap().canBuildRoad(player, location);
     }
 
@@ -109,7 +111,7 @@ public class ModelProxy {
      * @return whether a user can join a game at a certain index
      */
     public static boolean userCanJoinGame(User user, int gameIndex) {
-        Game game = GameManager.getGames().get(gameIndex);
+        Game game = manager.getGames().get(gameIndex);
         if (game == null) { return false; }
 
         List<Integer> playerIds = game.getPlayers().stream().map(player -> player.getPlayerId()).collect(Collectors.toList());
@@ -125,7 +127,7 @@ public class ModelProxy {
     }
 
     public static boolean playerCanMakeMaritimeTrade(TradeOffer offer) {
-        Player player = GameManager.getActivePlayer();
+        Player player = manager.getActivePlayer();
         return (player == null) ? false : player.canMakeTrade(offer);
     }
 

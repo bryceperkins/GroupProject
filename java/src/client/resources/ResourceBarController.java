@@ -73,7 +73,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	public void initializeValues(Game game){
 
-		Player player = game.getPlayer(GameManager.getActivePlayerIndex());
+		Player player = game.getPlayer(GameManager.getInstance().getActivePlayerIndex());
 		ResourceList resources = player.getResources();
 
 		getView().setElementAmount(ResourceBarElement.WOOD, resources.getWood());

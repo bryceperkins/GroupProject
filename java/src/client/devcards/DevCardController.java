@@ -69,7 +69,7 @@ public class DevCardController extends Controller implements IDevCardController 
 		//check if player has played card this turn, it the players turn
 		//and current state
 
-		Player player = GameManager.getActivePlayer();
+		Player player = GameManager.getInstance().getActivePlayer();
 		DevCardList oldDevCards = player.getOldDevCards();
 		DevCardList newDevCards = player.getNewDevCards();
 

@@ -11,13 +11,15 @@ import shared.locations.VertexDirection;
 
 public class GameManagerTests {
 
+    GameManager manager = GameManager.getInstance();
+
     @Test
     public void testParseGameModel_itSetsUpTheBankCorrectly() {
         String json = "{\"id\": 1, \"bank\": { \"brick\": 5, \"ore\": 5, \"sheep\": 5, \"wheat\": 5, \"wood\": 5 }}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getBank());
         assertEquals(game.getBank().getBrick(), 5);
         assertEquals(game.getBank().getOre(), 5);
@@ -30,9 +32,9 @@ public class GameManagerTests {
     public void testParseGameModel_itSetsUpTheChatCorrectly() {
         String json = "{\"id\": 1, \"chat\": { \"lines\": [ { \"message\": \"A message\", \"source\": 1 } ] } }";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getChat());
         Chat chat = game.getChat();
         assertNotNull(chat.getLines());
@@ -46,9 +48,9 @@ public class GameManagerTests {
     public void testParseLog_theLogAndLinesAreNotNull() {
         String json = "{id: 1, log: { lines: [ { message: \"A message\", source: 1 } ] } }";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getLog());
         assertNotNull(game.getLog().getLines());
     }
@@ -57,9 +59,9 @@ public class GameManagerTests {
     public void testParseMap_theMapItselfIsNotNull() {
         String json = "{id: 1, map: {}}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getMap());
     }
 
@@ -67,9 +69,9 @@ public class GameManagerTests {
     public void testParseMap_theHexesSetUpCorrectly() {
         String json = "{id: 1, map: {hexes: [ {location: {x: 1, y: 1}, resource: \"wheat\", number: 1} ], robber: {x: 1, y:1}}}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getMap());
         assertNotNull(game.getMap().getHexes());
         assertEquals(game.getMap().getHexes().size(), 1);
@@ -86,9 +88,9 @@ public class GameManagerTests {
     public void testParseMap_thePortsSetUpCorrectly() {
         String json = "{id: 1, map: {ports: [ { resource: \"wheat\", location: {x: 1, y: 1}, direction: \"NE\", ratio: 1} ]}}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getMap());
         assertNotNull(game.getMap().getPorts());
         assertEquals(game.getMap().getPorts().size(), 1);
@@ -105,9 +107,9 @@ public class GameManagerTests {
     public void testParseMap_theRoadsSetUpCorrectly() {
         String json = "{id: 1, map: {roads: [ { owner: 0, location: {x: 1, y: 1, direction: \"NE\"} } ]}}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getMap());
         assertNotNull(game.getMap().getRoads());
         assertEquals(game.getMap().getRoads().size(), 1);
@@ -123,9 +125,9 @@ public class GameManagerTests {
     public void testParseMap_theSettlementsSetUpCorrectly() {
         String json = "{id: 1, map: {settlements: [ { owner: 0, location: {x: 1, y: 1, direction: \"NE\"} } ]}}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getMap());
         assertNotNull(game.getMap().getSettlements());
         assertEquals(game.getMap().getSettlements().size(), 1);
@@ -141,9 +143,9 @@ public class GameManagerTests {
     public void testParseMap_theCitiesSetUpCorrectly() {
         String json = "{id: 1, map: {cities: [ { owner: 0, location: {x: 1, y: 1, direction: \"NE\"} } ]}}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getMap());
         assertNotNull(game.getMap().getCities());
         assertEquals(game.getMap().getCities().size(), 1);
@@ -159,9 +161,9 @@ public class GameManagerTests {
     public void testParseMap_theRobbersAndRadiusAreSet() {
         String json = "{id: 1, map: {radius: 5, robber: {x: 1, y: 1}}}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getMap());
         assertEquals(game.getMap().getRadius(), 5);
         assertNotNull(game.getMap().getRobber());
@@ -173,9 +175,9 @@ public class GameManagerTests {
     public void testParsePlayer_itSetsUpThePlayer() {
         String json = "{id: 1, players: [ { cities: 1, color: \"red\", discarded: true, monuments: 1, name: \"John\", newDevCards: {monopoly: 1, monument: 1, roadBuilding: 1, soldiers: 1, yearOfPlenty: 1}, oldDevCards: {monopoly: 1, monument: 1, roadBuilding: 1, soldiers: 1, yearOfPlenty: 1}, playerIndex: 0, playedDevCard: true, playerID: 1, resources: {brick: 1, wood: 1, ore: 1, sheep: 1, wheat: 1}, roads: 1, settlements: 1, soldiers: 1, victoryPoints: 1 } ]}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getPlayers().get(0));
         Player player = game.getPlayers().get(0);
         assertTrue(player.getName().equals("John"));
@@ -198,9 +200,9 @@ public class GameManagerTests {
     public void testParsePlayerPostProcessing_itSetsUpThePorts() {
         String json = "{id: 1, players: [{ playerIndex: 0 }], map: { cities: [ { location: { x: 2, y: 2 }, owner: 0 } ], settlements: [{ location: { x: 2, y: 2 }, owner: 0 }, { location: { x: 0, y: 0 }, owner: 0 }, { location: { x: 2, y: 2 }, owner: 1 } ], ports: [ { location: { x: 2, y: 2 } } ] }}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getPlayers().get(0));
         Player player = game.getPlayers().get(0);
         assertNotNull(player.getPorts());
@@ -211,9 +213,9 @@ public class GameManagerTests {
     public void testParsePlayer_itSetsUpNewDevCards() {
         String json = "{id: 1, players: [ { newDevCards: {monopoly: 1, monument: 1, roadBuilding: 1, soldier: 1, yearOfPlenty: 1 }} ]}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getPlayers().get(0));
         DevCardList newDevCards = game.getPlayer(PlayerIndex.Player1).getNewDevCards();
         assertEquals(newDevCards.getMonopoly(), 1);
@@ -227,9 +229,9 @@ public class GameManagerTests {
     public void testParsePlayer_itSetsUpOldDevCards() {
         String json = "{id: 1, players: [ { oldDevCards: {monopoly: 1, monument: 1, roadBuilding: 1, soldier: 1, yearOfPlenty: 1 }} ]}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getPlayers().get(0));
         DevCardList oldDevCards = game.getPlayer(PlayerIndex.Player1).getOldDevCards();
         assertEquals(oldDevCards.getMonopoly(), 1);
@@ -243,9 +245,9 @@ public class GameManagerTests {
     public void testParsePlayer_itSetsUpResources() {
         String json = "{id: 1, players: [ { resources: { brick: 1, sheep: 1, wood: 1, ore: 1, wheat: 1 }} ]}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getPlayers().get(0));
         ResourceList resources = game.getPlayer(PlayerIndex.Player1).getResources();
         assertEquals(resources.getBrick(), 1);
@@ -259,9 +261,9 @@ public class GameManagerTests {
     public void testParseGameModel_itSetsUpTheTradeOffer() {
         String json = "{id: 1, tradeOffer: { sender: 1, receiver: 2, offer: { brick: 1, sheep: 1, wood: 1, ore: 1, wheat: 1 }}}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getTradeOffer());
         TradeOffer tradeOffer = game.getTradeOffer();
         assertEquals(tradeOffer.getSender(), PlayerIndex.Player2);
@@ -279,9 +281,9 @@ public class GameManagerTests {
     public void testParseGameModel_itSetsUpTheTurnTracker() {
         String json = "{id: 1, turnTracker: { currentTurn: 0, status: 'FirstRound', longestRoad: 1, longestArmy: 1 }}";
 
-        GameManager.processGame(json);
+        manager.processGame(json);
 
-        Game game = GameManager.getGame(1);
+        Game game = manager.getGame(1);
         assertNotNull(game.getTurnTracker());
         TurnTracker turnTracker = game.getTurnTracker();
         assertEquals(turnTracker.getStatus(), TurnTracker.GameStatus.FirstRound);

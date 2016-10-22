@@ -18,12 +18,11 @@ import shared.communication.User;
 public class GameManager extends Observable{
 
     private static final GameManager INSTANCE = new GameManager();
-    private static ServerProxy server;
-    private static ArrayList<Game> games = new ArrayList<>();
-    private static int activeGameIndex = -1;
-    private static PlayerIndex activePlayer;
+    private ServerProxy server;
+    private ArrayList<Game> games = new ArrayList<>();
     private PlayerInfo playerInfo;
-    private static Poller poller;
+    private Poller poller;
+    private int activeGameIndex;
 
     private GameManager () {}
 
@@ -39,7 +38,7 @@ public class GameManager extends Observable{
         this.server = server;
     }
 
-    public static Poller getPoller(){
+    public Poller getPoller(){
         return poller;
     }
 
@@ -57,7 +56,7 @@ public class GameManager extends Observable{
      * @post the game is updated or added if it did not previously exist
      * @param json JSON containing the Game model to update to
      */
-    public static void processGame(String json) {
+    public void processGame(String json) {
         Game game = createGame(json);
         int index = gameIndex(game.getId());
         if (index >= 0) {
@@ -70,47 +69,38 @@ public class GameManager extends Observable{
     }
 
     /**
-     * @param game the game to join
-     * @pre the game exists 
-     * @return whether or not the user can join the specified game
-     */
-    public static boolean userCanJoinGame(Game game) {
-        return true;
-    }
-
-    /**
      * @return The model of the game active on the client, or null if no game is active
      */
-    public static Game getActiveGame() {
+    public Game getActiveGame() {
         return getGame(activeGameIndex);
     }
     
-    public static void setActiveGame(int id) {
+    public void setActiveGame(int id) {
         activeGameIndex = id;
     }
 
-    public static ArrayList<Game> getGames() {
+    public ArrayList<Game> getGames() {
         return games;
     }
 
-    public static Player getActivePlayer() {
+    public Player getActivePlayer() {
         Game game = getActiveGame();
-        return (game == null) ? null : game.getPlayer(activePlayer);
+        return (game == null) ? null : game.getPlayer(getActivePlayerIndex());
     }
 
-    public static Game getGame(int id) {
+    public Game getGame(int id) {
         int index = gameIndex(id);
         return (index < 0) ? null : games.get(index);
     }
 
-    public static void addGame(Game game) {
+    public void addGame(Game game) {
         if(game.getId() >= games.size()){
             System.out.println("AddGame: " + game.getName() + " " + game.getPlayers().size());
             games.add(game.getId(), game);
         }
     }
 
-    private static int gameIndex(int id) {
+    private int gameIndex(int id) {
         for (int i = 0; i < games.size(); i++) {
             if (games.get(i).getId() == id) {
                 return i;
@@ -120,19 +110,22 @@ public class GameManager extends Observable{
         return -1;
     }
 
-    public static PlayerIndex getActivePlayerIndex() {
-        return activePlayer;
+    public PlayerIndex getActivePlayerIndex() {
+        return playerInfo.getPlayerIndex();
     }
 
     public PlayerInfo getCurrentPlayerInfo() {
         return this.playerInfo;
     }
+
     public void updatePlayerInfo() {
         this.playerInfo = this.server.getServer().getDetails().toPlayerInfo();
     }
+
     public static GameManager getInstance() {
         return INSTANCE;
     }
+
     public void update(){
         setChanged();
         notifyObservers();
