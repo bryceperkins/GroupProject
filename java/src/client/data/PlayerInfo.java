@@ -1,5 +1,6 @@
 package client.data;
 
+import client.model.PlayerIndex;
 import shared.definitions.*;
 
 /**
@@ -18,7 +19,7 @@ public class PlayerInfo
 {
 	
 	private int id;
-	private int playerIndex;
+	private PlayerIndex playerIndex;
 	private String name;
 	private CatanColor color;
 	
@@ -40,14 +41,14 @@ public class PlayerInfo
 		this.id = id;
 	}
 	
-	public int getPlayerIndex()
+	public PlayerIndex getPlayerIndex()
 	{
 		return playerIndex;
 	}
 	
 	public void setPlayerIndex(int playerIndex)
 	{
-		this.playerIndex = playerIndex;
+		this.playerIndex = PlayerIndex.valueOf(playerIndex);
 	}
 	
 	public String getName()
