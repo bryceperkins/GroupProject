@@ -64,7 +64,7 @@ public class Poller extends Thread {
                 this.manager.update();
                 this.response = new_response;
             }
-            this.sleep(2000);
+            this.sleep(500);
         }
     }
 }

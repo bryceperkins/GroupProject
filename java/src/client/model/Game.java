@@ -116,7 +116,9 @@ public class Game implements PostProcessor {
         return players;
     }
 
-    public Player getPlayer(PlayerIndex id) { return players.get(id.getIndex()); }
+    public Player getPlayer(PlayerIndex id) {
+        return players.get(id.getIndex());
+    }
 
     public TurnTracker getTurnTracker() {
         return turnTracker;

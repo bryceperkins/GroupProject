@@ -3,6 +3,7 @@ package client.model;
 import client.model.map.ItemLocation;
 import client.model.player.Player;
 import shared.communication.User;
+import shared.definitions.CatanColor;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +13,41 @@ public class ModelProxy {
     private static GameManager manager = GameManager.getInstance();
 
     private final static int PLAYERS_NEEDED = 4;
+
+    public static int getPlayerPoints(PlayerIndex player) {
+        Game game = manager.getActiveGame();
+        return (game == null) ? null : game.getPlayer(player).getVictoryPoints();
+    }
+
+    public static CatanColor getPlayerColor(PlayerIndex player) {
+        Game game = manager.getActiveGame();
+        return (game == null) ? null : game.getPlayer(player).getColor();
+    }
+
+    public static PlayerIndex getLargestArmyOwner() {
+        Game game = manager.getActiveGame();
+        return (game == null) ? null : game.getTurnTracker().getLargestArmyOwner();
+    }
+
+    public static PlayerIndex getLargestRoadOwner() {
+        Game game = manager.getActiveGame();
+        return (game == null) ? null : game.getTurnTracker().getLongestRoadOwner();
+    }
+
+    public static PlayerIndex getCurrentTurn() {
+        Game game = manager.getActiveGame();
+        return (game == null) ? null : game.getTurnTracker().getCurrentTurn();
+    }
+
+    public static String getPlayerName(PlayerIndex player) {
+        Game game = manager.getActiveGame();
+        return (game == null) ? null : game.getPlayer(player).getName();
+    }
+
+    public static TurnTracker.GameStatus getGameStatus() {
+        Game game = manager.getActiveGame();
+        return (game == null) ? null : game.getTurnTracker().getStatus();
+    }
 
     /**
      * @param gameIndex the index of the game in question
@@ -130,7 +166,5 @@ public class ModelProxy {
         Player player = manager.getActivePlayer();
         return (player == null) ? false : player.canMakeTrade(offer);
     }
-
-
 
 }
