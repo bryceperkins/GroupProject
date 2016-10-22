@@ -43,7 +43,9 @@ public class RollController extends Controller implements IRollController {
 	@Override
 	public void rollDice() {
 		Random rand = new Random();
-		final int rollResult = rand.nextInt(11) + 2;
+		int die1 = rand.nextInt(6) + 1;
+		int die2 = rand.nextInt(6) + 1;
+        int rollResult = die1 + die2;
 
 		getRollView().closeModal();
 
