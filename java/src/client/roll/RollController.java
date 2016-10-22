@@ -7,6 +7,8 @@ import shared.commands.RollNumber;
 
 import java.util.Random;
 
+import static com.sun.tools.javac.util.Assert.error;
+
 /**
  * Implementation for the roll controller
  */
@@ -45,10 +47,14 @@ public class RollController extends Controller implements IRollController {
 
 		getRollView().closeModal();
 
-		manager.getServer().execute(new RollNumber(manager.getCurrentPlayerInfo().getPlayerIndex(), rollResult));
+		String result = manager.getServer().execute(new RollNumber(manager.getCurrentPlayerInfo().getPlayerIndex(), rollResult));
+		if (!result.equals("Failed")) {
+			resultView.setRollValue(rollResult);
+			resultView.showModal();
+		} else {
+			error("failed to join game");
+		}
 
-		resultView.setRollValue(rollResult);
-		resultView.showModal();
 	}
 
 }

@@ -169,6 +169,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         }
         for(PlayerInfo player: game.getPlayers()){
             if(player.getName().equals(manager.getCurrentPlayerInfo().getName())){
+				manager.getCurrentPlayerInfo().setPlayerIndex(game.getPlayers().indexOf(player));
                 continue;
             }
             getSelectColorView().setColorEnabled(player.getColor(), false);
@@ -187,7 +188,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         String response = manager.getServer().execute(new GamesJoin(this.selected.getId(), color));
         manager.setActiveGame(this.selected.getId());
         getSelectColorView().closeModal();
-        if (response != "Failed"){
+        if (!response.equals("Failed")){
             getJoinGameView().closeModal();
             joinAction.execute();
         }
