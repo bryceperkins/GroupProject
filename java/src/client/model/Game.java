@@ -117,6 +117,14 @@ public class Game implements PostProcessor {
     }
 
     public Player getPlayer(PlayerIndex id) { return players.get(id.getIndex()); }
+	
+	public Player getPlayerByName(String userName) {
+		for (int i = 0; i < players.size(); i++){
+			System.out.println("UserName: " + userName + ", PlayerName: " + players.get(i).getName());
+			if (players.get(i).getName().equals(userName)) return players.get(i);
+		}
+		return null;
+	}
 
     public TurnTracker getTurnTracker() {
         return turnTracker;
