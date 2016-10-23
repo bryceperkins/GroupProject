@@ -1,6 +1,6 @@
 package client.model;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Contains all log messages and their sources
@@ -10,6 +10,10 @@ public class Log{
 
     private List<MessageLine> lines;
 
+	public Log(){
+		lines = new ArrayList<MessageLine>();
+	}
+	
     public List<MessageLine> getLines() {
         return lines;
     }
