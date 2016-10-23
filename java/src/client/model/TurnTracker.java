@@ -2,6 +2,9 @@ package client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Keeps track of the current turn and game state for a given game
  */
@@ -34,7 +37,28 @@ public class TurnTracker {
      * The different possible states of the game
      */
     public enum GameStatus {
-        Rolling, Robbing, Playing, Discarding, FirstRound, SecondRound;
+        Rolling("Roll the Dice", false),
+        Robbing("Place the Robber", false),
+        Playing("Finish Turn", true),
+        Discarding("Discard Cards", false),
+        FirstRound("Finish Turn", true),
+        SecondRound("Finish Turn", true);
+
+        private String prompt;
+        private boolean buttonEnabled;
+
+        GameStatus(String prompt, boolean enabled) {
+            this.prompt = prompt;
+            this.buttonEnabled = enabled;
+        }
+
+        public String getPrompt() {
+            return prompt;
+        }
+
+        public boolean isButtonEnabled() {
+            return buttonEnabled;
+        }
     }
 
 }
