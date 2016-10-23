@@ -116,8 +116,6 @@ public class Game implements PostProcessor {
         return players;
     }
 
-    public Player getPlayer(PlayerIndex id) { return players.get(id.getIndex()); }
-	
 	public Player getPlayerByName(String userName) {
 		for (int i = 0; i < players.size(); i++){
 			System.out.println("UserName: " + userName + ", PlayerName: " + players.get(i).getName());
@@ -125,7 +123,11 @@ public class Game implements PostProcessor {
 		}
 		return null;
 	}
-
+	
+    public Player getPlayer(PlayerIndex id) {
+        return players.get(id.getIndex());
+    }
+	
     public TurnTracker getTurnTracker() {
         return turnTracker;
     }
@@ -146,7 +148,6 @@ public class Game implements PostProcessor {
         GameInfo game = new GameInfo();
         game.setId(getId());
         game.setTitle(getName());
-        System.out.println("Game: " + getId() + " " + getPlayers().size());
         for(Player player: getPlayers()){
             game.addPlayer(player.toPlayerInfo());
         }

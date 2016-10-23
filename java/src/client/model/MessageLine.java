@@ -1,17 +1,18 @@
+
 package client.model;
 
 import client.model.Game;
 import client.model.player.Player;
-
-/**
- * Contains a message body and the message's source.
- */
 
 public class MessageLine {
 	
 	private String message;
 	private String source;
 
+/**
+ * Contains a message body and the message's source.
+ */
+	
 	public MessageLine(String source, String message){
 		this.source = source;
 		this.message = message;

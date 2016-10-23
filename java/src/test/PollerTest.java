@@ -41,7 +41,7 @@ public class PollerTest {
         } catch (InterruptedException e) {
         }
         p.interrupt();
-        assertEquals(3, p.getCount());
+        assertEquals(10, p.getCount());
     }
 /*
     @Ignore("Live Test")  @Test

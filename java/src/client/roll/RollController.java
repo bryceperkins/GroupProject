@@ -5,6 +5,8 @@ import client.model.*;
 import client.model.player.*;
 import shared.commands.RollNumber;
 
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
 import static com.sun.tools.javac.util.Assert.error;
@@ -12,7 +14,7 @@ import static com.sun.tools.javac.util.Assert.error;
 /**
  * Implementation for the roll controller
  */
-public class RollController extends Controller implements IRollController {
+public class RollController extends Controller implements IRollController, Observer {
 
 	private IRollResultView resultView;
 	private GameManager manager = GameManager.getInstance();
@@ -27,6 +29,7 @@ public class RollController extends Controller implements IRollController {
 		super(view);
 		
 		setResultView(resultView);
+		manager.addObserver(this);
 	}
 	
 	public IRollResultView getResultView() {
@@ -59,5 +62,16 @@ public class RollController extends Controller implements IRollController {
 
 	}
 
+	@Override
+	public void update(Observable o, Object arg) {
+		super.update(o, arg);
+
+        if (ModelProxy.getCurrentTurn() != null) {
+            if (ModelProxy.getCurrentTurn().equals(manager.getActivePlayerIndex())
+                    && ModelProxy.getGameStatus().equals(TurnTracker.GameStatus.Rolling)) {
+                getRollView().showModal();
+            }
+        }
+	}
 }
 
