@@ -70,8 +70,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     public void startGame(){
         getView().closeModal();
         manager.deleteObserver(this);
-        manager.setActiveGame(manager.getServer().getServer().getDetails().getGameID());
         manager.processGame(manager.getServer().execute(new GameModel()));
+        manager.setActiveGame(manager.getServer().getServer().getDetails().getGameID());
         manager.getPoller().setCommand(new GameModel());
     }
 }
