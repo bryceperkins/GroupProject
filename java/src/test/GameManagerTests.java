@@ -30,7 +30,7 @@ public class GameManagerTests {
 
     @Test
     public void testParseGameModel_itSetsUpTheChatCorrectly() {
-        String json = "{\"id\": 1, \"chat\": { \"lines\": [ { \"message\": \"A message\", \"source\": 1 } ] } }";
+        String json = "{\"id\": 1, \"chat\": { \"lines\": [ { \"source\": \"Sam\", \"message\": \"A message.\" } ] } }";
 
         manager.processGame(json);
 
@@ -40,8 +40,8 @@ public class GameManagerTests {
         assertNotNull(chat.getLines());
         assertTrue(chat.getLines().size() == 1);
         MessageLine message = chat.getLines().get(0);
-        assertEquals(message.getSource(), PlayerIndex.Player2);
-        assertEquals(message.getMessage(), "A message");
+        assertEquals(message.getSource(), "Sam");
+        assertEquals(message.getMessage(), "A message.");
     }
 
     @Test

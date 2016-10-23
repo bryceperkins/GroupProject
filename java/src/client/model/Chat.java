@@ -1,6 +1,6 @@
 package client.model;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Contains all chat messages and their sources
@@ -10,6 +10,9 @@ public class Chat{
 	
 	private List<MessageLine> lines;
 	
+	public Chat(){
+		lines = new ArrayList<MessageLine>();
+	}
 	/**
 	 * Adds a on object containing a message and its source to Chat.
 	 * @param message_line an object containing a message and its source
