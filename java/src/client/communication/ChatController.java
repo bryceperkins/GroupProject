@@ -31,7 +31,6 @@ public class ChatController extends Controller implements IChatController, Obser
 		List<LogEntry> chat_entries = new ArrayList<LogEntry>();
 		for (int i = 0; i < lines.size(); i++){
 			MessageLine line = lines.get(i);
-			System.out.println("Source: " + line.getSource() + " Message: " + line.getMessage());
 			Player player = game.getPlayerByName(line.getSource());
 			LogEntry entry = new LogEntry(player.getColor(),line.getMessage());
 			chat_entries.add(entry);

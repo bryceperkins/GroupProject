@@ -22,11 +22,11 @@ public class GameManager extends Observable{
     private ArrayList<Game> games = new ArrayList<>();
     private PlayerInfo playerInfo;
     private Poller poller;
-    private int activeGameIndex;
+    private int activeGameIndex = -1;
 
     private GameManager () {}
 
-    private static Game createGame(String json) {
+    private Game createGame(String json) {
         Gson gson = new Gson();
         JsonElement jsonElement = new JsonParser().parse(json);
         Game game = gson.fromJson(jsonElement, Game.class);
@@ -65,6 +65,7 @@ public class GameManager extends Observable{
         } else {
             games.add(game);
             activeGameIndex = games.size() - 1;
+            System.out.println("added new game");
         }
     }
 
@@ -75,8 +76,13 @@ public class GameManager extends Observable{
         return getGame(activeGameIndex);
     }
     
+    public int getActiveGameIndex() {
+        return activeGameIndex;
+    }
+    
     public void setActiveGame(int id) {
         activeGameIndex = id;
+        update();
     }
 
     public ArrayList<Game> getGames() {
@@ -95,8 +101,10 @@ public class GameManager extends Observable{
 
     public void addGame(Game game) {
         if(game.getId() >= games.size()){
-            System.out.println("AddGame: " + game.getName() + " " + game.getPlayers().size());
             games.add(game.getId(), game);
+        }
+        else{
+            games.set(game.getId(), game);
         }
     }
 
@@ -110,6 +118,9 @@ public class GameManager extends Observable{
         return -1;
     }
 
+    /**
+     * @return the current player's index or NULL when user is not yet signed in
+     */
     public PlayerIndex getActivePlayerIndex() {
         return playerInfo.getPlayerIndex();
     }
