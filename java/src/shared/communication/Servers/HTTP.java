@@ -48,6 +48,9 @@ public class HTTP implements iServer {
             if (cookie.getName().equals("catan.user")){
                 user = gson.fromJson(d.decode(cookie.getValue()), User.class);
             }
+            if (cookie.getName().equals("catan.game")){
+                user.setGameID(Integer.parseInt(d.decode(cookie.getValue())));
+            }
         }
         return user;
     }

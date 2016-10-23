@@ -4,12 +4,13 @@ import client.base.*;
 import client.*;
 import client.model.player.*;
 import client.model.*;
+import java.util.*;
 
 
 /**
  * Implementation for the points controller
  */
-public class PointsController extends Controller implements IPointsController {
+public class PointsController extends Controller implements IPointsController, Observer {
 
     private GameManager manager = GameManager.getInstance();
 	private IGameFinishedView finishedView;
@@ -41,19 +42,37 @@ public class PointsController extends Controller implements IPointsController {
 		this.finishedView = finishedView;
 	}
 
+	public void update(Observable ob, Object o){
+		if(manager.getActivePlayer() != null){
+			Player player = manager.getActivePlayer();
+            int victoryPoints = player.getVictoryPoints();
+			Game game = manager.getActiveGame();
+			if (game.getWinner().getIndex() != -1){
+				setEndGameWinner();
+			}
+			getPointsView().setPoints(victoryPoints);
+        }
+	}
+	
 	private void initFromModel() {
-        if(manager.getActivePlayer() != null){
-            int victoryPoints = manager.getActivePlayer().getVictoryPoints();
-            getPointsView().setPoints(victoryPoints);
+		if(manager.getActivePlayer() != null){
+			Player player = manager.getActivePlayer();
+			int victory_points = player.getVictoryPoints();
+			Game game = manager.getActiveGame();
+			if (game.getWinner().getIndex() != -1){
+				setEndGameWinner();
+			}
+			getPointsView().setPoints(victory_points);
         }
 	}
 
-	public void setEndGameWinner(){//probably pass in winner's ID or have some way of getting it
-		//will need some way to check if current player is the winner
+	public void setEndGameWinner(){
 		Game game = manager.getActiveGame();
-		//getFinishedView().setWinner(game.getPlayer(game.getWinner()).getName());
+		Player player = manager.getActivePlayer();
+		boolean is_local_player = false;
+		if (game.getWinner() == player.getPlayerIndex()) is_local_player = true;
+		getFinishedView().setWinner(game.getPlayer(game.getWinner()).getName(), is_local_player);
 		getFinishedView().showModal();
 	}
-
 }
 
