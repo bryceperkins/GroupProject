@@ -48,7 +48,6 @@ public class Poller extends Thread {
         while (true) {
             count++;
             new_response = this.server.execute(command);
-            System.out.println(new_response);
             if (this.manager.getServer() == null){ }
             else if (this.command.getEndPoint().equals("/game/model")){
                 this.manager.processGame(new_response);
@@ -61,8 +60,8 @@ public class Poller extends Thread {
                 }
             }
             if (!new_response.equals(this.response)){
-                this.manager.update();
                 this.response = new_response;
+                manager.update();
             }
             this.sleep(2000);
         }

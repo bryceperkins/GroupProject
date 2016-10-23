@@ -75,6 +75,10 @@ public class GameManager extends Observable{
         return getGame(activeGameIndex);
     }
     
+    public int getActiveGameIndex() {
+        return activeGameIndex;
+    }
+    
     public void setActiveGame(int id) {
         activeGameIndex = id;
     }
@@ -95,8 +99,10 @@ public class GameManager extends Observable{
 
     public void addGame(Game game) {
         if(game.getId() >= games.size()){
-            System.out.println("AddGame: " + game.getName() + " " + game.getPlayers().size());
             games.add(game.getId(), game);
+        }
+        else{
+            games.set(game.getId(), game);
         }
     }
 
