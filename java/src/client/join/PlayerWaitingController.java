@@ -40,6 +40,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         String[] ais = gson.fromJson(response, String[].class);
         getView().setAIChoices(ais);
         getView().showModal();
+        if(this.game.canBeginGame()){
+            startGame();
+        }
 	}
 
 	@Override

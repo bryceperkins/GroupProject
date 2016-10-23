@@ -102,6 +102,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		super.update(o, arg);
 
 		if (manager.getActiveGame() != null) {
+            if(manager.getActiveGame().getPlayers().size() < 4){
+                return;
+            }
 			if (setup) {
                 updateGameState();
 				updatePlayers();
