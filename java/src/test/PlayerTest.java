@@ -91,7 +91,7 @@ public class PlayerTest {
 	@Test
 	public void test_canMakeMaritimeTradeWithPorts_true()
 	{
-		Port port = new Port(PortType.BRICK, new HexLocation(0,0), 3, EdgeDirection.North);
+		Port port = new Port(ResourceType.BRICK, new HexLocation(0,0), 3, EdgeDirection.North);
 		testPlayer.addPort(port);
 		ResourceList tempList = new ResourceList();
 		tempList.setBrick(3);

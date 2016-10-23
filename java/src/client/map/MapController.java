@@ -142,7 +142,8 @@ public class MapController extends Controller implements IMapController,Observer
 		for(Hex hex: hexes){
 			//System.out.println("hex number: " +hex.getNumber());
 			//System.out.println("hex robber: " +hex.hasRobber());
-			getView().addHex(hex.getLocation(), hex.getHexType());
+			System.out.println("hex resource: " +hex.getResource());
+			getView().addHex(hex.getLocation(), HexType.fromResourceType(hex.getResource()));
 			if(hex.getNumber() !=0){
 				getView().addNumber(hex.getLocation(), hex.getNumber());
 			}
@@ -153,7 +154,7 @@ public class MapController extends Controller implements IMapController,Observer
 		if(ports != null && ports.size() > 0)
 			for(Port port: ports){
 				EdgeLocation edge = new EdgeLocation(port.getLocation(), port.getDirection());
-				getView().addPort(edge, port.getType());
+				getView().addPort(edge, PortType.fromResourceType(port.getType()));
 			}
 
 		List<Player> players = game.getPlayers();

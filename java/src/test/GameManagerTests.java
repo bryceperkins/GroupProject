@@ -79,7 +79,7 @@ public class GameManagerTests {
         assertNotNull(hex.getLocation());
         assertEquals(hex.getLocation().getX(), 1);
         assertEquals(hex.getLocation().getY(), 1);
-        assertTrue(hex.getHexType() == HexType.WHEAT);
+        assertTrue(HexType.fromResourceType(hex.getResource()) == HexType.WHEAT);
         assertEquals(hex.getNumber(), 1);
         assertTrue(hex.hasRobber());
     }
@@ -95,7 +95,7 @@ public class GameManagerTests {
         assertNotNull(game.getMap().getPorts());
         assertEquals(game.getMap().getPorts().size(), 1);
         Port port = game.getMap().getPorts().get(0);
-        assertTrue(port.getType() == PortType.WHEAT);
+        assertTrue(PortType.fromResourceType(port.getType()) == PortType.WHEAT);
         assertEquals(port.getRatio(), 1);
         assertEquals(port.getDirection(), HexDirection.NE);
         assertNotNull(port.getLocation());

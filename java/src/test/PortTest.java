@@ -15,7 +15,7 @@ import shared.locations.VertexLocation;
 public class PortTest {
 	private Port testPort;	
 	private ResourceList superList;
-	private PortType type;
+	private ResourceType type;
 	private HexLocation location;
 	private int ratio;
 	private EdgeDirection direction; 

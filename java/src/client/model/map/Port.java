@@ -6,12 +6,12 @@ import client.model.ResourceList;
 
 public class Port {
 
-    private PortType type;
+    private ResourceType type;
     private HexLocation location;
     private int ratio;
     private EdgeDirection direction;
 
-    public void setType(PortType getType) {
+    public void setType(ResourceType getType) {
         this.type = type;
     }
 
@@ -29,29 +29,29 @@ public class Port {
 
     public Port() {}
 
-    public Port(PortType r, HexLocation hexLocation, int ratio,
+    public Port(ResourceType r, HexLocation hexLocation, int ratio,
 			EdgeDirection dir) {
 		this.type = r;
 		this.location = hexLocation;
 		this.ratio = ratio;
 		this.direction = dir;
-		
+
 	}
 
 	public boolean canTrade(ResourceList resourceList){return true;}
 
-    public PortType getType() {
+    public ResourceType getType() {
         return type;
     }
-    
+
     public HexLocation getLocation() {
         return location;
     }
-    
+
     public int getRatio() {
         return ratio;
     }
-    
+
     public EdgeDirection getDirection() {
         return direction;
     }

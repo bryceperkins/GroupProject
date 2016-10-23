@@ -17,7 +17,7 @@ public class HexTest {
 	private HexLocation hexLocation;
 	private boolean hasRobber;
 	private int value;
-	private HexType hexType;
+	private ResourceType resource;
 
 	@Before
 	public void setUp()
@@ -25,8 +25,8 @@ public class HexTest {
 		hexLocation = new HexLocation(1,1);	
 		hasRobber = true;
 		value = 5;
-		hexType = HexType.WOOD;
-		testHex = new Hex(hexLocation,hasRobber,value,hexType);
+		resource = ResourceType.WOOD;
+		testHex = new Hex(hexLocation,hasRobber,value,resource);
 	}
 	
 	@After
@@ -35,8 +35,8 @@ public class HexTest {
 		hexLocation = new HexLocation(1,1);	
 		hasRobber = true;
 		value = 5;
-		hexType = HexType.WOOD;
-		testHex = new Hex(hexLocation,hasRobber,value,hexType);
+		resource = ResourceType.WOOD;
+		testHex = new Hex(hexLocation,hasRobber,value,resource);
 	}
 	
 	@Test
