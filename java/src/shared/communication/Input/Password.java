@@ -29,13 +29,15 @@ public class Password implements Input{
      * @return boolean
      */
     public boolean valid(String password) {
-        String [] invalid = {"'", "\"" };
+        boolean isValid = true;
+
+        String [] invalid = {"'", "\"", ")", "(", "<", ">"};
         for (int i = 0; i < invalid.length; i++) {
             if (password.contains(invalid[i])) {
-                return false;
+                isValid = false;;
             }
         }
-        return true;
+        return isValid;
     }
 
     public String toString() {
