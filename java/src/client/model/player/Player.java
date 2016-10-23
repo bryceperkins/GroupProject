@@ -11,10 +11,9 @@ import client.model.map.City;
 import client.model.map.Map;
 import client.model.map.Port;
 import client.model.map.Settlement;
-import shared.definitions.ResourceType;
-import shared.definitions.CatanColor;
+import shared.definitions.*;
 import com.google.gson.annotations.SerializedName;
-import shared.locations.HexLocation;
+import shared.locations.*;
 
 public class Player implements PostProcessor {
 	@SerializedName("cities")
@@ -41,15 +40,18 @@ public class Player implements PostProcessor {
     private int settlementsRemaining;
 	@SerializedName("soldiers")
     private int soldiersPlayed;
+    private int userID;
     private int victoryPoints;
 
     
-    public Player(CatanColor color, String name, int playerID, PlayerIndex playerIndex) {
+ public Player(CatanColor color, String name, int playerID, PlayerIndex playerIndex, int userID) {
+
 		this.color = color;
 		this.name = name;
 		this.playerID = playerID;
 		this.playerIndex = playerIndex;
-
+		this.userID = userID;
+		
 		this.resources = new ResourceList();
         this.newDevCards = new DevCardList();
         this.oldDevCards = new DevCardList();
@@ -135,14 +137,14 @@ public class Player implements PostProcessor {
 		return resources.hasResources(offer.getOffer());
 	}
 	
-	public boolean canMakeMaritimeTrade(ResourceType rt)
+	public boolean canMakeMaritimeTrade(PortType rt)
 	{
 		int ratio = 4;
 		ResourceList temp = new ResourceList();
 		
 		for(int i = 0; i < ports.size(); i++)
 		{
-			if(ports.get(i).getResource() == rt)
+			if(ports.get(i).getType() == rt)
 			{
 				ratio = ports.get(i).getRatio();
 				break;
@@ -166,6 +168,8 @@ public class Player implements PostProcessor {
 		case WHEAT:
 			temp.setWheat(ratio);
 			break;
+		case THREE:
+			temp.setThree();
 		}
 		
 		return resources.hasResources(temp);
@@ -196,35 +200,29 @@ public class Player implements PostProcessor {
 		return monumentsPlayed;
 	}
 
-
 	public String getName() {
 		return name;
 	}
 
-
 	public DevCardList getNewDevCards() {
 		return newDevCards;
+	}
+
+	public int getPlayerID() {
+		return playerID;
 	}
 
 	public int getPlayerId() {
 		return playerID;
 	}
 
-
 	public DevCardList getOldDevCards() {
 		return oldDevCards;
 	}
 
-
 	public ArrayList<Port> getPorts() {
 		return ports;
 	}
-
-
-	public int getPlayerID() {
-		return playerID;
-	}
-
 
 	public PlayerIndex getPlayerIndex() {
 		return playerIndex;
@@ -254,8 +252,6 @@ public class Player implements PostProcessor {
 	public int getSoldiersPlayed() {
 		return soldiersPlayed;
 	}
-
-
 
 	public int getVictoryPoints() {
 		return victoryPoints;

@@ -93,4 +93,12 @@ public class ResourceList{
 		this.wood = wood;
 	}
 
+	public void setThree(){
+		this.brick =3;
+		this.ore =3;
+		this.sheep =3;
+		this.wheat =3;
+		this.wood =3;
+	}
+
 }

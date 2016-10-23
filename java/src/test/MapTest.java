@@ -4,10 +4,9 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
-import shared.locations.VertexDirection;
-import shared.locations.HexLocation;
+import shared.locations.*;
+import shared.definitions.*;
 import shared.definitions.CatanColor;
-
 import client.model.map.*;
 import client.model.*;
 import client.model.player.*;
@@ -25,7 +24,7 @@ public class MapTest {
     @Before
     public void setUp()
     {
-        testPlayer = new Player(CatanColor.GREEN,"Alice", 1, PlayerIndex.Player1);
+        testPlayer = new Player(CatanColor.GREEN,"Alice", 1, PlayerIndex.Player1 ,1);
         hexLocation = new HexLocation(1,1);
         direction = VertexDirection.West;
         itemLocation = new ItemLocation(hexLocation,direction);
@@ -63,6 +62,7 @@ public class MapTest {
     	
     	assertTrue(testMap.canBuildCity(testPlayer, itemLocation));
     }
+
     @Test
     public void test_canBuildRoad_expect_false()
     {

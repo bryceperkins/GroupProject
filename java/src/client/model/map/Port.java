@@ -1,19 +1,18 @@
 package client.model.map;
 
-import client.model.HexDirection;
-import shared.definitions.ResourceType;
-import shared.locations.HexLocation;
+import shared.definitions.*;
+import shared.locations.*;
 import client.model.ResourceList;
 
 public class Port {
 
-    private ResourceType resource;
+    private PortType type;
     private HexLocation location;
     private int ratio;
-    private HexDirection direction;
+    private EdgeDirection direction;
 
-    public void setResource(ResourceType resource) {
-        this.resource = resource;
+    public void setType(PortType getType) {
+        this.type = type;
     }
 
     public void setLocation(HexLocation location) {
@@ -24,15 +23,15 @@ public class Port {
         this.ratio = ratio;
     }
 
-    public void setDirection(HexDirection direction) {
+    public void setDirection(EdgeDirection direction) {
         this.direction = direction;
     }
 
     public Port() {}
 
-    public Port(ResourceType r, HexLocation hexLocation, int ratio,
-			HexDirection dir) {
-		this.resource = r;
+    public Port(PortType r, HexLocation hexLocation, int ratio,
+			EdgeDirection dir) {
+		this.type = r;
 		this.location = hexLocation;
 		this.ratio = ratio;
 		this.direction = dir;
@@ -41,8 +40,8 @@ public class Port {
 
 	public boolean canTrade(ResourceList resourceList){return true;}
 
-    public ResourceType getResource() {
-        return resource;
+    public PortType getType() {
+        return type;
     }
     
     public HexLocation getLocation() {
@@ -53,7 +52,7 @@ public class Port {
         return ratio;
     }
     
-    public HexDirection getDirection() {
+    public EdgeDirection getDirection() {
         return direction;
     }
 }

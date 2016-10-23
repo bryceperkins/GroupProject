@@ -5,25 +5,25 @@ import org.junit.Before;
 import org.junit.After;
 
 import client.model.ResourceList;
-import shared.definitions.ResourceType;
+import shared.definitions.*;
 import client.model.map.*;
 import client.model.*;
 
-import shared.locations.HexLocation;
+import shared.locations.*;
 import shared.locations.VertexLocation;
 
 public class PortTest {
 	private Port testPort;	
 	private ResourceList superList;
-	private ResourceType resource;
+	private PortType type;
 	private HexLocation location;
 	private int ratio;
-	private HexDirection direction; 
+	private EdgeDirection direction; 
 
 	@Before
 	public void setUp()
 	{
-		testPort = new Port(resource,location, ratio, direction);
+		testPort = new Port(type,location, ratio, direction);
 		superList = new ResourceList();
 		superList.setBrick(1000);
 		superList.setWheat(1000);
@@ -35,7 +35,7 @@ public class PortTest {
 	@After
 	public void tearDown()
 	{
-		testPort = new Port(resource,location, ratio, direction);
+		testPort = new Port(type,location, ratio, direction);
 	}
 	
 	@Test

@@ -10,14 +10,14 @@ import client.model.map.Robber;
 import client.model.ResourceList;
 
 import shared.locations.HexLocation;
-import shared.definitions.ResourceType;
+import shared.definitions.*;
 
 public class HexTest {
 	private Hex testHex;
 	private HexLocation hexLocation;
 	private boolean hasRobber;
 	private int value;
-	private ResourceType resource;
+	private HexType hexType;
 
 	@Before
 	public void setUp()
@@ -25,8 +25,8 @@ public class HexTest {
 		hexLocation = new HexLocation(1,1);	
 		hasRobber = true;
 		value = 5;
-		resource = ResourceType.WOOD;
-		testHex = new Hex(hexLocation,hasRobber,value,resource);
+		hexType = HexType.WOOD;
+		testHex = new Hex(hexLocation,hasRobber,value,hexType);
 	}
 	
 	@After
@@ -35,8 +35,8 @@ public class HexTest {
 		hexLocation = new HexLocation(1,1);	
 		hasRobber = true;
 		value = 5;
-		resource = ResourceType.WOOD;
-		testHex = new Hex(hexLocation,hasRobber,value,resource);
+		hexType = HexType.WOOD;
+		testHex = new Hex(hexLocation,hasRobber,value,hexType);
 	}
 	
 	@Test

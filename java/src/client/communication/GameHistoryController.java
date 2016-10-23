@@ -1,21 +1,27 @@
 package client.communication;
 
 import java.util.*;
-import java.util.List;
-
 import client.base.*;
 import shared.definitions.*;
 
+import shared.commands.*;
+import client.communication.*;
+import client.model.*;
+import client.model.player.*;
+import client.server.*;
 
 /**
  * Game history controller implementation
  */
-public class GameHistoryController extends Controller implements IGameHistoryController {
+public class GameHistoryController extends Controller implements IGameHistoryController, Observer {
+
+	private GameManager manager;
 
 	public GameHistoryController(IGameHistoryView view) {
 		
 		super(view);
-		
+		manager = GameManager.getInstance();
+		manager.addObserver(this);
 		initFromModel();
 	}
 	
@@ -25,23 +31,37 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		return (IGameHistoryView)super.getView();
 	}
 	
-	private void initFromModel() {
-		
-		//<temp>
-		
-		List<LogEntry> entries = new ArrayList<LogEntry>();
-		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-		
-		getView().setEntries(entries);
+	public void update(Observable ob, Object o){
+		if (manager.getActiveGame() != null){
+			Game game = manager.getActiveGame();
+			Log log = game.getLog();
+			List<MessageLine> lines = log.getLines();
+			System.out.println("Num Lines: " + lines.size());
+			List<LogEntry> log_entries = new ArrayList<LogEntry>();
+			for (int i = 0; i < lines.size(); i++){
+				MessageLine line = lines.get(i);
+				Player player = game.getPlayerByName(line.getSource());
+				LogEntry entry = new LogEntry(player.getColor(),line.getMessage());
+				log_entries.add(entry);
+			}
+			getView().setEntries(log_entries);
+		}
+	}
 	
-		//</temp>
+	private void initFromModel() {
+		if (manager.getActiveGame() != null){
+			Game game = manager.getActiveGame();
+			Log log = game.getLog();
+			List<MessageLine> lines = log.getLines();
+			List<LogEntry> log_entries = new ArrayList<LogEntry>();
+			for (int i = 0; i < lines.size(); i++){
+				MessageLine line = lines.get(i);
+				Player player = game.getPlayerByName(line.getSource());
+				LogEntry entry = new LogEntry(player.getColor(),line.getMessage());
+				log_entries.add(entry);
+			}
+			getView().setEntries(log_entries);
+		}
 	}
 	
 }

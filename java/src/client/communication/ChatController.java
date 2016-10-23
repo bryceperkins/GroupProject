@@ -26,16 +26,16 @@ public class ChatController extends Controller implements IChatController, Obser
 	public void update(Observable ob, Object o){
 		if (manager.getActiveGame() != null){
 			Game game = manager.getActiveGame();
-		Chat chat = game.getChat();
-		List<MessageLine> lines = chat.getLines();
-		List<LogEntry> chat_entries = new ArrayList<LogEntry>();
-		for (int i = 0; i < lines.size(); i++){
-			MessageLine line = lines.get(i);
-			Player player = game.getPlayerByName(line.getSource());
-			LogEntry entry = new LogEntry(player.getColor(),line.getMessage());
-			chat_entries.add(entry);
-		}
-		getView().setEntries(chat_entries);
+			Chat chat = game.getChat();
+			List<MessageLine> lines = chat.getLines();
+			List<LogEntry> chat_entries = new ArrayList<LogEntry>();
+			for (int i = 0; i < lines.size(); i++){
+				MessageLine line = lines.get(i);
+				Player player = game.getPlayerByName(line.getSource());
+				LogEntry entry = new LogEntry(player.getColor(),line.getMessage());
+				chat_entries.add(entry);
+			}
+			getView().setEntries(chat_entries);
 		}
 	}
 	

@@ -2,12 +2,12 @@ import static org.junit.Assert.*;
 
 import client.model.*;
 import client.model.map.*;
-import shared.definitions.ResourceType;
+import shared.definitions.*;
 import shared.definitions.CatanColor;
 import client.model.player.DevCardList;
 import client.model.player.Player;
 import org.junit.Test;
-import shared.locations.VertexDirection;
+import shared.locations.*;
 
 public class GameManagerTests {
 
@@ -30,7 +30,7 @@ public class GameManagerTests {
 
     @Test
     public void testParseGameModel_itSetsUpTheChatCorrectly() {
-        String json = "{\"id\": 1, \"chat\": { \"lines\": [ { \"source\": \"Sam\", \"message\": \"A message.\" } ] } }";
+        String json = "{\"id\": 1, \"chat\": { \"lines\": [ { \"message\": \"A message\", \"source\": 1 } ] } }";
 
         manager.processGame(json);
 
@@ -40,8 +40,8 @@ public class GameManagerTests {
         assertNotNull(chat.getLines());
         assertTrue(chat.getLines().size() == 1);
         MessageLine message = chat.getLines().get(0);
-        assertEquals(message.getSource(), "Sam");
-        assertEquals(message.getMessage(), "A message.");
+        assertEquals(message.getSource(), PlayerIndex.Player2);
+        assertEquals(message.getMessage(), "A message");
     }
 
     @Test
@@ -79,7 +79,7 @@ public class GameManagerTests {
         assertNotNull(hex.getLocation());
         assertEquals(hex.getLocation().getX(), 1);
         assertEquals(hex.getLocation().getY(), 1);
-        assertTrue(hex.getResource() == ResourceType.WHEAT);
+        assertTrue(hex.getHexType() == HexType.WHEAT);
         assertEquals(hex.getNumber(), 1);
         assertTrue(hex.hasRobber());
     }
@@ -95,7 +95,7 @@ public class GameManagerTests {
         assertNotNull(game.getMap().getPorts());
         assertEquals(game.getMap().getPorts().size(), 1);
         Port port = game.getMap().getPorts().get(0);
-        assertTrue(port.getResource() == ResourceType.WHEAT);
+        assertTrue(port.getType() == PortType.WHEAT);
         assertEquals(port.getRatio(), 1);
         assertEquals(port.getDirection(), HexDirection.NE);
         assertNotNull(port.getLocation());
@@ -117,7 +117,7 @@ public class GameManagerTests {
         assertNotNull(road.getLocation());
         assertEquals(road.getLocation().getX(), 1);
         assertEquals(road.getLocation().getY(), 1);
-        assertEquals(road.getLocation().getDirection(), VertexDirection.NorthEast);
+        assertEquals(road.getLocation().getDir(), EdgeDirection.NorthEast);
         assertEquals(road.getOwner(), PlayerIndex.Player1);
     }
 

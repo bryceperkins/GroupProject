@@ -6,8 +6,8 @@ import client.model.*;
 import client.model.map.*;
 import client.model.player.Player;
 
-import shared.locations.HexLocation;
-import shared.definitions.ResourceType;
+import shared.locations.*;
+import shared.definitions.*;
 import shared.definitions.CatanColor;
 
 public class PlayerTest {
@@ -17,7 +17,7 @@ public class PlayerTest {
 	@Before
 	public void setUp()
 	{
-		testPlayer = new Player(CatanColor.PUCE, "Alice", 0, PlayerIndex.Player1);
+		testPlayer = new Player(CatanColor.PUCE, "Alice", 0, PlayerIndex.Player1, 0);
 		superList = new ResourceList();
 		superList.setBrick(1000);
 		superList.setWheat(1000);
@@ -29,7 +29,7 @@ public class PlayerTest {
 	@After
 	public void tearDown()
 	{
-		testPlayer = new Player(CatanColor.PUCE, "Alice", 0, PlayerIndex.Player1);
+		testPlayer = new Player(CatanColor.PUCE, "Alice", 0, PlayerIndex.Player1, 0);
 	}
 	
 	@Test
@@ -85,19 +85,19 @@ public class PlayerTest {
 		ResourceList tempList = new ResourceList();
 		tempList.setBrick(3);
 		testPlayer.setResources(tempList);
-		assertTrue(!testPlayer.canMakeMaritimeTrade(ResourceType.BRICK));
+		assertTrue(!testPlayer.canMakeMaritimeTrade(PortType.BRICK));
 	}
 	
 	@Test
 	public void test_canMakeMaritimeTradeWithPorts_true()
 	{
-		Port port = new Port(ResourceType.BRICK, new HexLocation(0,0), 3, HexDirection.N);
+		Port port = new Port(PortType.BRICK, new HexLocation(0,0), 3, EdgeDirection.North);
 		testPlayer.addPort(port);
 		ResourceList tempList = new ResourceList();
 		tempList.setBrick(3);
 		testPlayer.setResources(tempList);
 		
-		assertEquals(true, testPlayer.canMakeMaritimeTrade(ResourceType.BRICK));
+		assertEquals(true, testPlayer.canMakeMaritimeTrade(PortType.BRICK));
 		
 		
 	}

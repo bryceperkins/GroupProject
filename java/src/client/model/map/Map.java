@@ -5,6 +5,7 @@ import java.util.*;
 import client.model.player.*;
 import client.model.*;
 import shared.locations.*;
+import client.model.map.*;
 
 public class Map implements PostProcessor {
 
@@ -30,9 +31,103 @@ public class Map implements PostProcessor {
 
 	}
 
-	public boolean canBuildRoad(Player player, ItemLocation itemLocation){
-    	return true;
-    	}
+	public boolean canBuildRoad(Player player, EdgeLocation edgeLocation){
+        int playerID = player.getPlayerID();
+        edgeLocation = edgeLocation.getNormalizedLocation();
+
+        for(Road road : roads){
+            if(road.getLocation().equals(edgeLocation))
+                return false;
+        }
+        edgeLocation = edgeLocation.getNormalizedLocation();
+        int locationX = edgeLocation.getHexLoc().getX();
+        int locationY = edgeLocation.getHexLoc().getY();
+        EdgeDirection locationDirection = edgeLocation.getDir();
+
+        //check four edge locations
+        EdgeLocation edge1 = null;
+        EdgeLocation edge2 = null;
+        EdgeLocation edge3 = null;
+        EdgeLocation edge4 = null;
+        HexLocation hex12;
+        HexLocation hex34;
+
+        switch(locationDirection){
+            case North:
+                hex12 = new HexLocation(locationX,locationY);
+                edge1 = new EdgeLocation(hex12,EdgeDirection.NorthEast);
+                edge2 = new EdgeLocation(hex12,EdgeDirection.NorthWest);
+
+                hex34 = new HexLocation(locationX,locationY-1);
+                edge3 = new EdgeLocation(hex34,EdgeDirection.SouthEast);
+                edge4 = new EdgeLocation(hex34,EdgeDirection.SouthWest);
+                break;
+            case NorthEast:
+                hex12 = new HexLocation(locationX,locationY);
+                edge1 = new EdgeLocation(hex12,EdgeDirection.North);
+                edge2 = new EdgeLocation(hex12,EdgeDirection.SouthEast);
+
+                hex34 = new HexLocation(locationX+1,locationY-1);
+                edge3 = new EdgeLocation(hex34,EdgeDirection.NorthWest);
+                edge4 = new EdgeLocation(hex34,EdgeDirection.South);
+                break;
+            case NorthWest:
+                hex12 = new HexLocation(locationX,locationY);
+                edge1 = new EdgeLocation(hex12,EdgeDirection.North);
+                edge2 = new EdgeLocation(hex12,EdgeDirection.SouthWest);
+
+                hex34 = new HexLocation(locationX-1,locationY);
+                edge3 = new EdgeLocation(hex34,EdgeDirection.NorthEast);
+                edge4 = new EdgeLocation(hex34,EdgeDirection.South);
+                break;
+            case South:
+                hex12 = new HexLocation(locationX,locationY);
+                edge1 = new EdgeLocation(hex12,EdgeDirection.SouthWest);
+                edge2 = new EdgeLocation(hex12,EdgeDirection.SouthEast);
+
+                hex34 = new HexLocation(locationX,locationY+1);
+                edge3 = new EdgeLocation(hex34,EdgeDirection.NorthWest);
+                edge4 = new EdgeLocation(hex34,EdgeDirection.NorthEast);
+                break;
+            case SouthEast:
+                hex12 = new HexLocation(locationX,locationY);
+                edge1 = new EdgeLocation(hex12,EdgeDirection.NorthEast);
+                edge2 = new EdgeLocation(hex12,EdgeDirection.South);
+
+                hex34 = new HexLocation(locationX,locationY+1);
+                edge3 = new EdgeLocation(hex34,EdgeDirection.North);
+                edge4 = new EdgeLocation(hex34,EdgeDirection.SouthWest);
+                break;
+            case SouthWest:
+                hex12 = new HexLocation(locationX,locationY);
+                edge1 = new EdgeLocation(hex12,EdgeDirection.NorthWest);
+                edge2 = new EdgeLocation(hex12,EdgeDirection.South);
+
+                hex34 = new HexLocation(locationX,locationY+1);
+                edge3 = new EdgeLocation(hex34,EdgeDirection.North);
+                edge4 = new EdgeLocation(hex34,EdgeDirection.SouthEast);
+                break;
+        }
+
+        edge1 = edge1.getNormalizedLocation();
+        edge2 = edge2.getNormalizedLocation();
+        edge3 = edge3.getNormalizedLocation();
+        edge4 = edge4.getNormalizedLocation();
+
+        if(checkForPlayerRoad(playerID,edge1) || checkForPlayerRoad(playerID,edge2) ||
+            checkForPlayerRoad(playerID,edge3) || checkForPlayerRoad(playerID,edge4))
+            return true;
+
+    	return false;
+    }
+
+    public boolean checkForPlayerRoad(int playerID, EdgeLocation edge){
+        for(Road road: roads){
+            if(road.getLocation().equals(edge) && road.getOwner().getIndex() == playerID)
+                return true;
+        }
+        return false;
+    }
 
     public boolean canBuildSettlement(Player player, ItemLocation itemLocation){
     	/*
@@ -124,7 +219,16 @@ public class Map implements PostProcessor {
     	}
     	
     	return false;
-    	}
+    }
+
+    public boolean canPlaceRobber(HexLocation hexLoc){
+        Robber robber = getRobber();
+
+        if(hexLoc.equals(robber))
+            return true;
+        else
+            return false;
+    }
 
     public void setHexes(List<Hex> hexes) {
         this.hexes = hexes;
@@ -173,7 +277,6 @@ public class Map implements PostProcessor {
 	public Robber getRobber() {
 		return robber;
 	}
-
 
 	@Override
 	public void postDeserializationSetup(Game game) {

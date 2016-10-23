@@ -5,21 +5,21 @@ import client.model.Game;
 import client.model.GameManager;
 import client.model.PostProcessor;
 import client.model.map.Robber;
-import shared.definitions.ResourceType;
+import shared.definitions.*;
 
 public class Hex implements PostProcessor {
 	private HexLocation location;
 	private boolean hasRobber;
 	private int number;
-	private ResourceType resource;
+	private HexType hexType;
 
 	public Hex() {}
 
-	public Hex(HexLocation location, boolean hasRobber, int value, ResourceType resource){
+	public Hex(HexLocation location, boolean hasRobber, int value, HexType hexType){
 		this.location = location;
 		this.hasRobber = hasRobber;
 		this.number = value;
-		this.resource = resource;
+		this.hexType = hexType;
 	}
 
 	public HexLocation getLocation() {
@@ -28,10 +28,6 @@ public class Hex implements PostProcessor {
 
 	public void setLocation(HexLocation location) {
 		this.location = location;
-	}
-
-	public boolean isHasRobber() {
-		return hasRobber;
 	}
 
 	public void setHasRobber(boolean hasRobber) {
@@ -46,12 +42,12 @@ public class Hex implements PostProcessor {
 		this.number = number;
 	}
 
-	public ResourceType getResource() {
-		return resource;
+	public HexType getHexType() {
+		return hexType;
 	}
 
-	public void setResource(ResourceType resource) {
-		this.resource = resource;
+	public void setHexType(HexType hexType) {
+		this.hexType = hexType;
 	}
 
 	public boolean hasRobber(){ return hasRobber; }
