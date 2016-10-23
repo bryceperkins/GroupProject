@@ -140,7 +140,6 @@ public class Game implements PostProcessor {
         GameInfo game = new GameInfo();
         game.setId(getId());
         game.setTitle(getName());
-        System.out.println("Game: " + getId() + " " + getPlayers().size());
         for(Player player: getPlayers()){
             game.addPlayer(player.toPlayerInfo());
         }

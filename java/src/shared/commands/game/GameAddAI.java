@@ -8,7 +8,7 @@ public class GameAddAI extends Command{
 
     public GameAddAI(AIType aitype) {
         super();
-        endpoint = "/game/addai";
+        endpoint = "/game/addAI";
         method = "POST";
 
         this.AIType = aitype;
