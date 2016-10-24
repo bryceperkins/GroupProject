@@ -168,13 +168,27 @@ public class MapController extends Controller implements IMapController,Observer
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		this.manager.getPoller().setCommand((iCommand) new BuildSettlement(this.manager.getActivePlayerIndex(), vertLoc, game.getState().isFirstRound() ||game.getState().isSecondRound()));
-		getView().placeSettlement(vertLoc, this.manager.getActivePlayer().getColor());
+		String result = manager.getServer().execute(new BuildSettlement(this.manager.getActivePlayerIndex(), vertLoc, game.getState().isFirstRound() ||game.getState().isSecondRound()));
+		if (!result.equals("Failed")) {
+			getView().placeSettlement(vertLoc, this.manager.getActivePlayer().getColor());
+		} else {
+			System.out.println("some error");
+			//error("failed to join game");
+		}
+		//this.manager.getPoller().setCommand((iCommand) new BuildSettlement(this.manager.getActivePlayerIndex(), vertLoc, game.getState().isFirstRound() ||game.getState().isSecondRound()));
+		//getView().placeSettlement(vertLoc, this.manager.getActivePlayer().getColor());
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
-		this.manager.getPoller().setCommand((iCommand) new BuildCity(this.manager.getActivePlayerIndex(),vertLoc));
-		getView().placeCity(vertLoc, this.manager.getActivePlayer().getColor());
+		String result = manager.getServer().execute(new BuildCity(this.manager.getActivePlayerIndex(),vertLoc));
+		if (!result.equals("Failed")) {
+			getView().placeCity(vertLoc, this.manager.getActivePlayer().getColor());
+		} else {
+			System.out.println("some error");
+			//error("failed to join game");
+		}
+		//this.manager.getPoller().setCommand((iCommand) new BuildCity(this.manager.getActivePlayerIndex(),vertLoc));
+		//getView().placeCity(vertLoc, this.manager.getActivePlayer().getColor());
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
@@ -220,12 +234,16 @@ public class MapController extends Controller implements IMapController,Observer
     	if (this.game != null){
     		System.out.println("received a game");
  			initFromModel(true);
+			System.out.println(this.game.getTurnTracker().getStatus());
 			if(this.game.getTurnTracker().getCurrentTurn() == this.manager.getActivePlayerIndex()){
 				State state = game.getState();
 				if(state.isFirstRound() || state.isSecondRound()){
+
 					startMove(PieceType.SETTLEMENT, true, true);
+					//end turn
 				}else if (state.isRobbing()){
 					startMove(PieceType.ROBBER, false, false);
+					//end turn
 				}
 			}
 
