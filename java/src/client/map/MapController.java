@@ -3,9 +3,10 @@ package client.map;
 import java.util.*;
 
 import client.server.iCommand;
+import shared.commands.*;
+import shared.commands.BuildCity;
 import shared.commands.BuildRoad;
 import shared.commands.BuildSettlement;
-import shared.commands.BuildCity;
 import shared.commands.Soldier;
 import shared.commands.moves.*;
 import shared.definitions.*;
@@ -16,6 +17,7 @@ import client.model.map.*;
 import client.model.*;
 import client.model.player.*;
 
+import static com.sun.tools.javac.util.Assert.error;
 
 
 /**
@@ -97,15 +99,13 @@ public class MapController extends Controller implements IMapController,Observer
 		List<Port> ports = game.getMap().getPorts();
 		if(ports != null && ports.size() > 0)
 			for(Port port: ports){
-				System.out.println("port Type: " +port.getType());
 				EdgeLocation edge = new EdgeLocation(port.getLocation(), port.getDirection());
-				getView().addPort(edge, PortType.fromResourceType(port.getType()));
+				getView().addPort(edge, PortType.fromResourceType(port.getResource()));
 			}
 
 		List<Player> players = game.getPlayers();
 		List<Road> roads = game.getMap().getRoads();
 		if(roads != null){
-			System.out.println("roads: " + roads.size());
 			for(Road road: roads){
 				CatanColor color = players.get(road.getOwner().getIndex()).getColor();
 				getView().placeRoad(road.getLocation(), color);
@@ -131,8 +131,8 @@ public class MapController extends Controller implements IMapController,Observer
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-
-		if(game.getMap().canBuildRoad(this.manager.getActivePlayer(),edgeLoc))
+		State state = game.getState();
+		if(game.getMap().canBuildRoad(this.manager.getActivePlayer(),edgeLoc)|| true)
 			return true;
 		else
 			return false;			
@@ -163,20 +163,29 @@ public class MapController extends Controller implements IMapController,Observer
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-		this.manager.getPoller().setCommand((iCommand) new BuildRoad(this.manager.getActivePlayerIndex(), edgeLoc, game.getState().isFirstRound() ||game.getState().isSecondRound()));
-		getView().placeRoad(edgeLoc, this.manager.getActivePlayer().getColor());
+		if(canPlaceRoad(edgeLoc)){
+			System.out.println("yes we can place a road here....");
+			String result = manager.getServer().execute(new BuildRoad(this.manager.getActivePlayerIndex(), edgeLoc, game.getState().isFirstRound() ||game.getState().isSecondRound()));
+			if (!result.equals("Failed")) {
+				getView().placeRoad(edgeLoc, this.manager.getActivePlayer().getColor());
+			} else {
+				System.out.println("some error");
+				//error("failed to join game");
+			}
+		}
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		String result = manager.getServer().execute(new BuildSettlement(this.manager.getActivePlayerIndex(), vertLoc, game.getState().isFirstRound() ||game.getState().isSecondRound()));
-		if (!result.equals("Failed")) {
-			getView().placeSettlement(vertLoc, this.manager.getActivePlayer().getColor());
-		} else {
-			System.out.println("some error");
-			//error("failed to join game");
+		if(canPlaceSettlement(vertLoc)){
+			System.out.println("yes we can place a settlement here....");
+			String result = manager.getServer().execute((iCommand) new BuildSettlement(this.manager.getActivePlayerIndex(), vertLoc, game.getState().isFirstRound() ||game.getState().isSecondRound()));
+			if (!result.equals("Failed")) {
+				getView().placeSettlement(vertLoc, this.manager.getActivePlayer().getColor());
+			} else {
+				System.out.println("some error");
+				//error("failed to join game");
+			}
 		}
-		//this.manager.getPoller().setCommand((iCommand) new BuildSettlement(this.manager.getActivePlayerIndex(), vertLoc, game.getState().isFirstRound() ||game.getState().isSecondRound()));
-		//getView().placeSettlement(vertLoc, this.manager.getActivePlayer().getColor());
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
@@ -238,8 +247,18 @@ public class MapController extends Controller implements IMapController,Observer
 			if(this.game.getTurnTracker().getCurrentTurn() == this.manager.getActivePlayerIndex()){
 				State state = game.getState();
 				if(state.isFirstRound() || state.isSecondRound()){
+					startMove(PieceType.ROAD, true, true);
+					//startMove(PieceType.SETTLEMENT, true, true);
 
-					startMove(PieceType.SETTLEMENT, true, true);
+					//String response = manager.getServer().execute(new shared.commands.FinishTurn(manager.getActivePlayerIndex()));
+
+					//if (response.equals("Failed")) {
+					//	System.out.println("Could not finish turn");
+					//} else {
+						//getView().updateGameState("Waiting for other Players", false);
+					//}
+
+
 					//end turn
 				}else if (state.isRobbing()){
 					startMove(PieceType.ROBBER, false, false);

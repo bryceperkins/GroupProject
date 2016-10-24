@@ -144,7 +144,7 @@ public class Player implements PostProcessor {
 		
 		for(int i = 0; i < ports.size(); i++)
 		{
-			if(PortType.fromResourceType(ports.get(i).getType()) == rt)
+			if(PortType.fromResourceType(ports.get(i).getResource()) == rt)
 			{
 				ratio = ports.get(i).getRatio();
 				break;
