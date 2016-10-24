@@ -2,6 +2,7 @@ package client.map;
 
 import java.util.*;
 
+import shared.commands.moves.*;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
@@ -130,7 +131,27 @@ public class MapController extends Controller implements IMapController,Observer
 	protected void initFromModel(boolean idk) {
 		getView().resetMap();
 
-		Game game = manager.getActiveGame();
+		// //place water hexes if they are not received from server
+		 getView().addHex(new HexLocation(-3, 3), HexType.WATER);
+		 getView().addHex(new HexLocation(-3, 2), HexType.WATER);
+		 getView().addHex(new HexLocation(-3, 1), HexType.WATER);
+		 getView().addHex(new HexLocation(-3, 0), HexType.WATER);
+		 getView().addHex(new HexLocation(-2, -1), HexType.WATER);
+		 getView().addHex(new HexLocation(-2, 3), HexType.WATER);
+		 getView().addHex(new HexLocation(-1, -2), HexType.WATER);
+		 getView().addHex(new HexLocation(-1, 3), HexType.WATER);
+		 getView().addHex(new HexLocation(0, 3), HexType.WATER);
+		 getView().addHex(new HexLocation(0, -3), HexType.WATER);
+		 getView().addHex(new HexLocation(1, -3), HexType.WATER);
+		 getView().addHex(new HexLocation(1, 2), HexType.WATER);
+		 getView().addHex(new HexLocation(2, -3), HexType.WATER);
+		 getView().addHex(new HexLocation(2, 1), HexType.WATER);
+		 getView().addHex(new HexLocation(3, -3), HexType.WATER);
+		 getView().addHex(new HexLocation(3, -2), HexType.WATER);
+		 getView().addHex(new HexLocation(3, -1), HexType.WATER);
+		 getView().addHex(new HexLocation(3, 0), HexType.WATER);
+
+		Game game = this.manager.getActiveGame();
 
 		if (game == null){
 			System.out.println("------------it is a null game-------");
@@ -140,9 +161,6 @@ public class MapController extends Controller implements IMapController,Observer
 		List<Hex> hexes = game.getMap().getHexes();
 		System.out.println("hexes size: " + hexes.size());
 		for(Hex hex: hexes){
-			//System.out.println("hex number: " +hex.getNumber());
-			//System.out.println("hex robber: " +hex.hasRobber());
-			System.out.println("hex resource: " +hex.getResource());
 			getView().addHex(hex.getLocation(), HexType.fromResourceType(hex.getResource()));
 			if(hex.getNumber() !=0){
 				getView().addNumber(hex.getLocation(), hex.getNumber());
@@ -150,19 +168,17 @@ public class MapController extends Controller implements IMapController,Observer
 		}
 
 		List<Port> ports = game.getMap().getPorts();
-		//System.out.println("ports: " + ports.size());
 		if(ports != null && ports.size() > 0)
 			for(Port port: ports){
+				System.out.println("port Type: " +port.getType());
 				EdgeLocation edge = new EdgeLocation(port.getLocation(), port.getDirection());
 				getView().addPort(edge, PortType.fromResourceType(port.getType()));
 			}
 
 		List<Player> players = game.getPlayers();
 		List<Road> roads = game.getMap().getRoads();
-		
 		if(roads != null){
 			System.out.println("roads: " + roads.size());
-
 			for(Road road: roads){
 				CatanColor color = players.get(road.getOwner().getIndex()).getColor();
 				getView().placeRoad(road.getLocation(), color);
@@ -170,7 +186,6 @@ public class MapController extends Controller implements IMapController,Observer
 		}
 
 		List<Settlement> settlements = game.getMap().getSettlements();
-		System.out.println("settlements: " + settlements.size());
 		if(settlements != null)
 			for(Settlement settlement: settlements){
 				CatanColor color = players.get(settlement.getOwner().getIndex()).getColor();
@@ -178,7 +193,6 @@ public class MapController extends Controller implements IMapController,Observer
 			}
 
 		List<City> cities = game.getMap().getCities();
-		System.out.println("cities: " + cities.size());
 		if(cities != null)
 			for(City city: cities){
 				CatanColor color = players.get(city.getOwner().getIndex()).getColor();
@@ -207,7 +221,7 @@ public class MapController extends Controller implements IMapController,Observer
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
 
-		if(game.getMap().canBuildCity(manager.getActivePlayer(), convertVertexLocationToItemLocation(vertLoc)))
+		if(game.getMap().canBuildCity(this.manager.getActivePlayer(), convertVertexLocationToItemLocation(vertLoc)))
 			return true;
 		else
 			return false;
@@ -234,14 +248,13 @@ public class MapController extends Controller implements IMapController,Observer
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
-		
+		//this.manager.getPoller().setCommand(new BuildCity(this.manager.getActivePlayerIndex(),vertLoc));
 		getView().placeCity(vertLoc, CatanColor.ORANGE);
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
 
 		getView().placeRobber(hexLoc);
-		
 		getRobView().showModal();
 	}
 	
@@ -259,7 +272,7 @@ public class MapController extends Controller implements IMapController,Observer
 	}
 	
 	public void playRoadBuildingCard() {	
-		getView().startDrop(PieceType.ROAD, manager.getActivePlayer().getColor(), true);
+		getView().startDrop(PieceType.ROAD, this.manager.getActivePlayer().getColor(), true);
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	
@@ -273,7 +286,7 @@ public class MapController extends Controller implements IMapController,Observer
 
     public void update(Observable o, Object arg){
 
-    	this.game = manager.getActiveGame();
+    	this.game = this.manager.getActiveGame();
 
     	if (game != null){
     		System.out.println("received a game");
