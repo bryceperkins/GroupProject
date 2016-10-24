@@ -2,6 +2,10 @@ package client.map;
 
 import java.util.*;
 
+import client.server.iCommand;
+import shared.commands.BuildRoad;
+import shared.commands.BuildSettlement;
+import shared.commands.BuildCity;
 import shared.commands.moves.*;
 import shared.definitions.*;
 import shared.locations.*;
@@ -47,85 +51,7 @@ public class MapController extends Controller implements IMapController,Observer
 	}
 	
 	protected void initFromModel() {
-		// Random rand = new Random();
 
-		// for (int x = 0; x <= 3; ++x) {
-			
-		// 	int maxY = 3 - x;			
-		// 	for (int y = -3; y <= maxY; ++y) {				
-		// 		int r = rand.nextInt(HexType.values().length);
-		// 		HexType hexType = HexType.values()[r];
-		// 		HexLocation hexLoc = new HexLocation(x, y);
-		// 		getView().addHex(hexLoc, hexType);
-		// 		getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-		// 				CatanColor.RED);
-		// 		getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-		// 				CatanColor.BLUE);
-		// 		getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-		// 				CatanColor.ORANGE);
-		// 		getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-		// 		getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
-		// 	}
-			
-		// 	if (x != 0) {
-		// 		int minY = x - 3;
-		// 		for (int y = minY; y <= 3; ++y) {
-		// 			int r = rand.nextInt(HexType.values().length);
-		// 			HexType hexType = HexType.values()[r];
-		// 			HexLocation hexLoc = new HexLocation(-x, y);
-		// 			getView().addHex(hexLoc, hexType);
-		// 			getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-		// 					CatanColor.RED);
-		// 			getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-		// 					CatanColor.BLUE);
-		// 			getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-		// 					CatanColor.ORANGE);
-		// 			getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-		// 			getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
-		// 		}
-		// 	}
-		// }
-		
-		// PortType portType = PortType.BRICK;
-		// getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
-		// getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
-		// getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
-		// getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
-		// getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
-		// getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
-		
-		// getView().placeRobber(new HexLocation(0, 0));
-		
-		// getView().addNumber(new HexLocation(-2, 0), 2);
-		// getView().addNumber(new HexLocation(-2, 1), 3);
-		// getView().addNumber(new HexLocation(-2, 2), 4);
-		// getView().addNumber(new HexLocation(-1, 0), 5);
-		// getView().addNumber(new HexLocation(-1, 1), 6);
-		// getView().addNumber(new HexLocation(1, -1), 8);
-		// getView().addNumber(new HexLocation(1, 0), 9);
-		// getView().addNumber(new HexLocation(2, -2), 10);
-		// getView().addNumber(new HexLocation(2, -1), 11);
-		// getView().addNumber(new HexLocation(2, 0), 12);
-		
-		// //place water hexes if they are not received from server
-		// getView().addHex(new HexLocation(-3, 3), HexType.WATER);
-		// getView().addHex(new HexLocation(-3, 2), HexType.WATER);
-		// getView().addHex(new HexLocation(-3, 1), HexType.WATER);
-		// getView().addHex(new HexLocation(-3, 0), HexType.WATER);		
-		// getView().addHex(new HexLocation(-2, -1), HexType.WATER);
-		// getView().addHex(new HexLocation(-2, 3), HexType.WATER);		
-		// getView().addHex(new HexLocation(-1, -2), HexType.WATER);
-		// getView().addHex(new HexLocation(-1, 3), HexType.WATER);		
-		// getView().addHex(new HexLocation(0, 3), HexType.WATER);
-		// getView().addHex(new HexLocation(0, -3), HexType.WATER);
-		// getView().addHex(new HexLocation(1, -3), HexType.WATER);
-		// getView().addHex(new HexLocation(1, 2), HexType.WATER);		
-		// getView().addHex(new HexLocation(2, -3), HexType.WATER);
-		// getView().addHex(new HexLocation(2, 1), HexType.WATER);		
-		// getView().addHex(new HexLocation(3, -3), HexType.WATER);
-		// getView().addHex(new HexLocation(3, -2), HexType.WATER);
-		// getView().addHex(new HexLocation(3, -1), HexType.WATER);
-		// getView().addHex(new HexLocation(3, 0), HexType.WATER);		
 	}
 
 	protected void initFromModel(boolean idk) {
@@ -236,20 +162,18 @@ public class MapController extends Controller implements IMapController,Observer
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-		
-		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		this.manager.getPoller().setCommand((iCommand) new BuildRoad(this.manager.getActivePlayerIndex(), edgeLoc, game.getState().isFirstRound() ||game.getState().isSecondRound()));
+		getView().placeRoad(edgeLoc, this.manager.getActivePlayer().getColor());
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		
-		State state = game.getState();
-
-		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+		this.manager.getPoller().setCommand((iCommand) new BuildSettlement(this.manager.getActivePlayerIndex(), vertLoc, game.getState().isFirstRound() ||game.getState().isSecondRound()));
+		getView().placeSettlement(vertLoc, this.manager.getActivePlayer().getColor());
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
-		//this.manager.getPoller().setCommand(new BuildCity(this.manager.getActivePlayerIndex(),vertLoc));
-		getView().placeCity(vertLoc, CatanColor.ORANGE);
+		this.manager.getPoller().setCommand((iCommand) new BuildCity(this.manager.getActivePlayerIndex(),vertLoc));
+		getView().placeCity(vertLoc, this.manager.getActivePlayer().getColor());
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
@@ -260,7 +184,7 @@ public class MapController extends Controller implements IMapController,Observer
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
 		
-		getView().startDrop(pieceType, CatanColor.ORANGE, true);
+		getView().startDrop(pieceType, this.manager.getActivePlayer().getColor(), true);
 	}
 	
 	public void cancelMove() {
@@ -268,10 +192,11 @@ public class MapController extends Controller implements IMapController,Observer
 	}
 	
 	public void playSoldierCard() {	
-		
+		getView().startDrop(PieceType.ROBBER, this.manager.getActivePlayer().getColor(),false);
 	}
 	
 	public void playRoadBuildingCard() {	
+		getView().startDrop(PieceType.ROAD, this.manager.getActivePlayer().getColor(), true);
 		getView().startDrop(PieceType.ROAD, this.manager.getActivePlayer().getColor(), true);
 	}
 	
@@ -288,9 +213,10 @@ public class MapController extends Controller implements IMapController,Observer
 
     	this.game = this.manager.getActiveGame();
 
-    	if (game != null){
+    	if (this.game != null){
     		System.out.println("received a game");
  			initFromModel(true);
+
     	}
     	else
     		System.out.println("received a null game");

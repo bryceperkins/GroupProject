@@ -101,18 +101,7 @@ public class State {
 				allFalse();
 				break;
 		}
-			
 
-
-		// this.canBuildCity = false;
-		// this.canBuildRoad = false;
-		// this.canBuildSettlement = false;
-
-		// this.isRoadFree = false;
-		// this.isSettlementFree = false;
-
-		// this.canBuyDevCard = false;
-		// this.canTrade=false;
 	}
 
 	public boolean canBuildCity() {
@@ -169,6 +158,22 @@ public class State {
 
 	public void setCanTrade(boolean canTrade) {
 		this.canTrade = canTrade;
+	}
+
+	public boolean isFirstRound() {
+		return firstRound;
+	}
+
+	public void setFirstRound(boolean firstRound) {
+		this.firstRound = firstRound;
+	}
+
+	public boolean isSecondRound() {
+		return secondRound;
+	}
+
+	public void setSecondRound(boolean secondRound) {
+		this.secondRound = secondRound;
 	}
 
 	public void allFalse(){
@@ -236,6 +241,9 @@ public class State {
 				this.canTrade = false;
 				this.canBuyDevCard = false;
 
+				this.firstRound = true;
+				this.secondRound = false;
+
 				break;
 			case SecondRound:
 				this.canBuildCity = false;
@@ -247,6 +255,9 @@ public class State {
 
 				this.canTrade = false;
 				this.canBuyDevCard = false;
+
+				this.firstRound = false;
+				this.secondRound = true;
 
 				break;
 			default:
