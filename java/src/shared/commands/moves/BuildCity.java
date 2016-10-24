@@ -19,6 +19,6 @@ public class BuildCity extends MoveCommand{
      */
     public BuildCity(PlayerIndex index, VertexLocation location){
         super("buildCity", index);
-        this.vertxLocation = location;
+        this.vertexLocation = location;
     };
 }
