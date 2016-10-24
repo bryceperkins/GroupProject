@@ -15,6 +15,7 @@ import java.util.*;
 public class MaritimeTradeController extends Controller implements IMaritimeTradeController, Observer {
 
 	private GameManager manager = GameManager.getInstance();
+	private	ModelProxy proxy = new ModelProxy();
 	private IMaritimeTradeOverlay tradeOverlay;
 	
 	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
@@ -47,9 +48,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void makeTrade() {
 		Game game = manager.getActiveGame();
-		ModelProxy proxy = new ModelProxy();
 		if (proxy.isPlayerTurn()){
 			Player player = manager.getActivePlayer();
+			pt = getTradeOverlay().
 			if (proxy.canMakeMaritimeTrade()
 			
 			MaritimeTrade trade = new MaritimeTrade(player.getPlayerIndex(), 
@@ -59,22 +60,27 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void cancelTrade() {
-
 		getTradeOverlay().closeModal();
 	}
 
 	public void update(Observable ob, Object o){
-		
+		Game game = manager.getActiveGame();
+		getTradeView().enableMaritimeTrade(proxy.isPlayerTurn() && game.getState().canTrade());
 	}
 	
 	@Override
 	public void setGetResource(ResourceType resource) {
-
+		
 	}
 
 	@Override
 	public void setGiveResource(ResourceType resource) {
-
+		Player player = manager.getActivePlayer();
+		List<Port> ports = player.getPorts();
+		for (int i = 0; i < ports.size(); i++){
+			if (ports.get(i).getType() == 
+		}
+		getTradeOverlay().selectGiveOption(resource, )
 	}
 
 	@Override
