@@ -307,6 +307,10 @@ public class MapView extends PanelView implements IMapView
 			}
 		}
 	}
+	@Override
+	public void resetMap(){
+		map.reset();
+	}
 	
 }
 

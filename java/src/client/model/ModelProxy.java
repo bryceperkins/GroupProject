@@ -3,6 +3,7 @@ package client.model;
 import client.model.map.ItemLocation;
 import client.model.player.Player;
 import shared.communication.User;
+import shared.locations.*;
 import shared.definitions.CatanColor;
 
 import java.util.List;
@@ -11,9 +12,8 @@ import java.util.stream.Collectors;
 public class ModelProxy {
 
     private static GameManager manager = GameManager.getInstance();
-
     private final static int PLAYERS_NEEDED = 4;
-
+    
     public static int getPlayerPoints(PlayerIndex player) {
         Game game = manager.getActiveGame();
         return (game == null) ? null : game.getPlayer(player).getVictoryPoints();
@@ -62,8 +62,9 @@ public class ModelProxy {
      * @return whether the active player can build a settlement (not location-specific)
      */
     public static boolean playerCanBuildSettlement() {
+        State state = new State(getGameStatus());
         Player player = manager.getActivePlayer();
-        return (player == null) ? false : player.canBuildSettlement();
+        return (state == null) ? false : state.canBuildSettlement() && (player == null) ? false : player.canBuildSettlement();
     }
 
     /**
@@ -134,7 +135,7 @@ public class ModelProxy {
      * @param location
      * @return whether a settlement can be build at a specficied location (not player-specific)
      */
-    public static boolean canBuildRoadAtLocation(ItemLocation location) {
+    public static boolean canBuildRoadAtLocation(EdgeLocation location) {
         Game game = manager.getActiveGame();
         if (game == null) { return false; }
         Player player = manager.getActivePlayer();

@@ -116,6 +116,10 @@ public class Game implements PostProcessor {
         return players;
     }
 
+    public Player getPlayer(PlayerIndex id) {
+        return players.get(id.getIndex());
+    }
+	
 	public Player getPlayerByName(String userName) {
 		for (int i = 0; i < players.size(); i++){
 			System.out.println("UserName: " + userName + ", PlayerName: " + players.get(i).getName());
@@ -123,13 +127,17 @@ public class Game implements PostProcessor {
 		}
 		return null;
 	}
-	
-    public Player getPlayer(PlayerIndex id) {
-        return players.get(id.getIndex());
-    }
-	
+
     public TurnTracker getTurnTracker() {
         return turnTracker;
+    }
+
+    public State getState(){
+        if (getTurnTracker().getStatus() == null)
+            return null;
+
+        State state = new State(getTurnTracker().getStatus());
+        return state;
     }
 
     public TradeOffer getTradeOffer() {

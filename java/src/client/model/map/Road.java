@@ -6,9 +6,9 @@ import client.model.PlayerIndex;
 public class Road{
 	
 	private PlayerIndex owner;
-	private VertexLocation location;
+	private EdgeLocation location;
 
-	public Road(PlayerIndex owner, VertexLocation location) {
+	public Road(PlayerIndex owner, EdgeLocation location) {
 		this.owner = owner;
 		this.location = location;
 	}
@@ -21,11 +21,11 @@ public class Road{
 		this.owner = owner;
 	}
 
-	public VertexLocation getLocation() {
+	public EdgeLocation getLocation() {
 		return location;
 	}
 
-	public void setLocation(VertexLocation loc) {
+	public void setLocation(EdgeLocation loc) {
 		this.location = loc;
 	}
 

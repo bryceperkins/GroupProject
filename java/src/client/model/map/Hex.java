@@ -30,7 +30,7 @@ public class Hex implements PostProcessor {
 		this.location = location;
 	}
 
-	public boolean isHasRobber() {
+	public boolean hasRobber() {
 		return hasRobber;
 	}
 
@@ -53,8 +53,6 @@ public class Hex implements PostProcessor {
 	public void setResource(ResourceType resource) {
 		this.resource = resource;
 	}
-
-	public boolean hasRobber(){ return hasRobber; }
 
 	public boolean canPlaceRobber(){ return true; }
 

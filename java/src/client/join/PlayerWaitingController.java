@@ -25,7 +25,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public IPlayerWaitingView getView() {
-
 		return (IPlayerWaitingView)super.getView();
 	}
 
@@ -40,7 +39,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         String[] ais = gson.fromJson(response, String[].class);
         getView().setAIChoices(ais);
         getView().showModal();
-        if(this.game.canBeginGame()){
+        if(this.game != null && this.game.canBeginGame()){
             startGame();
         }
 	}
@@ -52,7 +51,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	}
 
     public void update(Observable ob, Object o){
-        this.game = this.manager.getActiveGame();
+        this.game = manager.getGame(manager.getServer().getServer().getDetails().getGameID());
+        //this.game = this.manager.getActiveGame();
         int size = this.game.getPlayers().size();
         PlayerInfo[] players = new PlayerInfo[size];
 
@@ -69,9 +69,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
     public void startGame(){
         getView().closeModal();
-        this.manager.deleteObserver(this);
-        this.manager.processGame(this.manager.getServer().execute(new GameModel()));
-        this.manager.getPoller().setCommand(new GameModel());
+        manager.deleteObserver(this);
+        manager.processGame(manager.getServer().execute(new GameModel()));
+        manager.setActiveGame(manager.getServer().getServer().getDetails().getGameID());
+        manager.getPoller().setCommand(new GameModel());
     }
 }
 

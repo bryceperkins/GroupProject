@@ -10,7 +10,7 @@ import client.model.map.Robber;
 import client.model.ResourceList;
 
 import shared.locations.HexLocation;
-import shared.definitions.ResourceType;
+import shared.definitions.*;
 
 public class HexTest {
 	private Hex testHex;

@@ -9,6 +9,7 @@ public class User{
     private String password;
     private int playerID;
     private PlayerInfo player;
+    private int gameID;
 
     public User() {}
     /**
@@ -53,6 +54,14 @@ public class User{
     
     public void setPlayerID(int id){
         this.playerID = id;
+    }
+
+    public void setGameID(int id){
+        this.gameID=id;
+    }
+
+    public int getGameID(){
+        return this.gameID;
     }
 
     public PlayerInfo toPlayerInfo(){

@@ -1,5 +1,9 @@
 package shared.locations;
 
+import java.util.List;
+import java.util.ArrayList;
+
+
 /**
  * Represents the location of an edge on a hex map
  */
@@ -22,6 +26,14 @@ public class EdgeLocation
 	public HexLocation getHexLoc()
 	{
 		return hexLoc;
+	}
+
+	public int getX(){
+		return this.x;
+	}
+
+	public int getY(){
+		return this.y;
 	}
 	
 	private void setHexLoc(HexLocation hexLoc)

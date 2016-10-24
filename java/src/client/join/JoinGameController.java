@@ -186,7 +186,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void joinGame(CatanColor color) {
         String response = manager.getServer().execute(new GamesJoin(this.selected.getId(), color));
-        manager.setActiveGame(this.selected.getId());
+        //manager.setActiveGame(this.selected.getId());
         getSelectColorView().closeModal();
         if (!response.equals("Failed")){
             getJoinGameView().closeModal();
