@@ -167,5 +167,7 @@ public class ModelProxy {
         Player player = manager.getActivePlayer();
         return (player == null) ? false : player.canMakeMaritimeTrade(pt);
     }
+	
+	public static boolean
 
 }

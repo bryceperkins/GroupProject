@@ -265,7 +265,7 @@ public class Player implements PostProcessor {
     public void setPlayerID(int id){
         this.playerID = id;
     }
-
+	
     public PlayerInfo toPlayerInfo(){
         PlayerInfo player = new PlayerInfo();
         player.setId(getPlayerID());
