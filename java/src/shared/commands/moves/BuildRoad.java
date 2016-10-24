@@ -5,7 +5,7 @@ import shared.locations.*;
 
 public class BuildRoad extends MoveCommand {
     private Boolean free;
-    private EdgeLocation location;
+    private EdgeLocation roadLocation;
     /**
      *  Build a Road.
      *
@@ -26,6 +26,6 @@ public class BuildRoad extends MoveCommand {
     public BuildRoad(PlayerIndex index, EdgeLocation location, Boolean free){
         super("buildRoad", index);
         this.free = free;
-        this.location = location;
+        this.roadLocation = location;
     };
 }

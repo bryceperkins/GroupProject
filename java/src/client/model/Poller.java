@@ -60,6 +60,7 @@ public class Poller extends Thread {
                 }
             }
             if (!new_response.equals(this.response)){
+                System.out.println(this.response);
                 this.response = new_response;
                 manager.update();
             }
