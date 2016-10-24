@@ -4,7 +4,7 @@ import client.model.*;
 import shared.locations.*;
 
 public class BuildCity extends MoveCommand{
-    private VertexLocation location;
+    private VertexLocation vertexLocation;
     /**
      *  Build a city.
      *
@@ -19,6 +19,6 @@ public class BuildCity extends MoveCommand{
      */
     public BuildCity(PlayerIndex index, VertexLocation location){
         super("buildCity", index);
-        this.location = location;
+        this.vertexLocation = location;
     };
 }

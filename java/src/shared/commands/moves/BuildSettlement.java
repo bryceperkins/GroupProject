@@ -5,7 +5,7 @@ import shared.locations.*;
 
 public class BuildSettlement extends MoveCommand{
     private Boolean free;
-    private VertexLocation location;
+    private VertexLocation vertexLocation;
     /**
      *  Build a Settlement.
      *
@@ -24,6 +24,6 @@ public class BuildSettlement extends MoveCommand{
     public BuildSettlement(PlayerIndex index, VertexLocation location, Boolean free){
         super("buildSettlement", index);
         this.free = free;
-        this.location = location;
+        this.vertexLocation = location;
     };
 }
