@@ -1,11 +1,13 @@
 package client.model.map;
 
+import com.google.gson.annotations.SerializedName;
 import shared.definitions.*;
 import shared.locations.*;
 import client.model.ResourceList;
 
 public class Port {
 
+    @SerializedName("resource")
     private ResourceType type;
     private HexLocation location;
     private int ratio;

@@ -1,5 +1,8 @@
 package shared.locations;
 
+import client.model.Game;
+import client.model.PostProcessor;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -7,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Represents the location of an edge on a hex map
  */
-public class EdgeLocation
+public class EdgeLocation implements PostProcessor
 {
 	
 	private transient HexLocation hexLoc;
@@ -120,6 +123,13 @@ public class EdgeLocation
 			default:
 				assert false;
 				return null;
+		}
+	}
+
+	@Override
+	public void postDeserializationSetup(Game game) {
+		if (hexLoc == null) {
+			hexLoc = new HexLocation(x, y);
 		}
 	}
 }
