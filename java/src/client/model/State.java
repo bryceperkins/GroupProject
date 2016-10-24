@@ -20,87 +20,10 @@ public class State {
 
 	private boolean firstRound;
 	private boolean secondRound;
+	private boolean robbing;
 
 	public State(TurnTracker.GameStatus gameStatus) {
-		switch(gameStatus){
-			case Rolling:
-				allFalse();
-				break;
-			case Robbing:
-				this.canBuildCity = false;
-				this.canBuildRoad = false;
-				this.canBuildSettlement = false;
-
-				this.isRoadFree = false;
-				this.isSettlementFree = false;
-
-				this.canTrade = false;
-				this.canBuyDevCard = false;
-
-				this.firstRound = false;
-				this.secondRound = false;
-				break;
-			case Playing:
-				this.canBuildCity = true;
-				this.canBuildRoad = true;
-				this.canBuildSettlement = true;
-
-				this.isRoadFree = false;
-				this.isSettlementFree = false;
-
-				this.canTrade = false;
-				this.canBuyDevCard = false;
-
-				this.firstRound = false;
-				this.secondRound = false;
-				break;
-			case Discarding:
-				this.canBuildCity = false;
-				this.canBuildRoad = false;
-				this.canBuildSettlement = false;
-
-				this.isRoadFree = false;
-				this.isSettlementFree = false;
-
-				this.canTrade = false;
-				this.canBuyDevCard = false;
-
-				this.firstRound = false;
-				this.secondRound = false;
-				break;
-			case FirstRound:
-				this.canBuildCity = false;
-				this.canBuildRoad = false;
-				this.canBuildSettlement = false;
-
-				this.isRoadFree = false;
-				this.isSettlementFree = false;
-
-				this.canTrade = false;
-				this.canBuyDevCard = false;
-
-				this.firstRound = true;
-				this.secondRound = false;
-				break;
-			case SecondRound:
-				this.canBuildCity = false;
-				this.canBuildRoad = false;
-				this.canBuildSettlement = false;
-
-				this.isRoadFree = false;
-				this.isSettlementFree = false;
-
-				this.canTrade = false;
-				this.canBuyDevCard = false;
-
-				this.firstRound = false;
-				this.secondRound = true;
-
-				break;
-			default:
-				allFalse();
-				break;
-		}
+		updateState(gameStatus);
 
 	}
 
@@ -176,6 +99,14 @@ public class State {
 		this.secondRound = secondRound;
 	}
 
+	public boolean isRobbing() {
+		return robbing;
+	}
+
+	public void setRobbing(boolean robbing) {
+		this.robbing = robbing;
+	}
+
 	public void allFalse(){
 		this.canBuildCity = false;
 		this.canBuildRoad = false;
@@ -185,8 +116,11 @@ public class State {
 		this.isSettlementFree = false;
 
 		this.canTrade = false;
-		this.canBuyDevCard = false; 
+		this.canBuyDevCard = false;
 
+		this.firstRound = false;
+		this.secondRound = false;
+		this.robbing = false;
 	}
 
 	public void updateState(TurnTracker.GameStatus gameStatus){
@@ -204,6 +138,10 @@ public class State {
 
 				this.canTrade = false;
 				this.canBuyDevCard = false;
+
+				this.firstRound = false;
+				this.secondRound = false;
+				this.robbing = true;
 				break;
 			case Playing:
 				this.canBuildCity = true;
@@ -213,21 +151,16 @@ public class State {
 				this.isRoadFree = false;
 				this.isSettlementFree = false;
 
-				this.canTrade = false;
-				this.canBuyDevCard = false;
+				this.canTrade = true;
+				this.canBuyDevCard = true;
+
+				this.firstRound = false;
+				this.secondRound = false;
+				this.robbing = false;
 
 				break;
 			case Discarding:
-				this.canBuildCity = false;
-				this.canBuildRoad = false;
-				this.canBuildSettlement = false;
-
-				this.isRoadFree = false;
-				this.isSettlementFree = false;
-
-				this.canTrade = false;
-				this.canBuyDevCard = false;
-
+				allFalse();
 
 				break;
 			case FirstRound:
@@ -243,7 +176,7 @@ public class State {
 
 				this.firstRound = true;
 				this.secondRound = false;
-
+				this.robbing = false;
 				break;
 			case SecondRound:
 				this.canBuildCity = false;
@@ -258,7 +191,7 @@ public class State {
 
 				this.firstRound = false;
 				this.secondRound = true;
-
+				this.robbing = false;
 				break;
 			default:
 				allFalse();

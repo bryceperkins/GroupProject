@@ -6,6 +6,7 @@ import client.server.iCommand;
 import shared.commands.BuildRoad;
 import shared.commands.BuildSettlement;
 import shared.commands.BuildCity;
+import shared.commands.Soldier;
 import shared.commands.moves.*;
 import shared.definitions.*;
 import shared.locations.*;
@@ -191,7 +192,10 @@ public class MapController extends Controller implements IMapController,Observer
 		
 	}
 	
-	public void playSoldierCard() {	
+	public void playSoldierCard() {
+		//should we send this command with parameters or just send command
+		//without parameters to remove card and initiate a robbing.
+		//this.manager.getPoller().setCommand((iCommand) new Soldier());
 		getView().startDrop(PieceType.ROBBER, this.manager.getActivePlayer().getColor(),false);
 	}
 	
@@ -216,9 +220,16 @@ public class MapController extends Controller implements IMapController,Observer
     	if (this.game != null){
     		System.out.println("received a game");
  			initFromModel(true);
+			if(this.game.getTurnTracker().getCurrentTurn() == this.manager.getActivePlayerIndex()){
+				State state = game.getState();
+				if(state.isFirstRound() || state.isSecondRound()){
+					startMove(PieceType.SETTLEMENT, true, true);
+				}else if (state.isRobbing()){
+					startMove(PieceType.ROBBER, false, false);
+				}
+			}
 
-    	}
-    	else
+    	}else
     		System.out.println("received a null game");
   
     }
