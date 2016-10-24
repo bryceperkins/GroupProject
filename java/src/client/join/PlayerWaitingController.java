@@ -33,7 +33,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         Gson gson = new Gson();
         this.active = true;
         this.manager.addObserver(this);
-        //update(null, null);
+        update(null, null);
 
         String response = this.manager.getServer().execute(new GameListAI());
         String[] ais = gson.fromJson(response, String[].class);
