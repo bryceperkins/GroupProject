@@ -4,7 +4,7 @@ import client.model.map.ItemLocation;
 import client.model.player.Player;
 import shared.communication.User;
 import shared.locations.*;
-import shared.definitions.CatanColor;
+import shared.definitions.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -163,9 +163,9 @@ public class ModelProxy {
         return true;
     }
 
-    public static boolean playerCanMakeMaritimeTrade(TradeOffer offer) {
+    public static boolean playerCanMakeMaritimeTrade(PortType pt) {
         Player player = manager.getActivePlayer();
-        return (player == null) ? false : player.canMakeTrade(offer);
+        return (player == null) ? false : player.canMakeMaritimeTrade(pt);
     }
 
 }
