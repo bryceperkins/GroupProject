@@ -1,9 +1,11 @@
 package client.model.map;
 
+import client.model.Game;
+import client.model.PostProcessor;
 import shared.locations.*;
 import client.model.PlayerIndex;
 
-public class Road{
+public class Road implements PostProcessor {
 	
 	private PlayerIndex owner;
 	private EdgeLocation location;
@@ -29,6 +31,9 @@ public class Road{
 		this.location = loc;
 	}
 
-	
-	
+
+	@Override
+	public void postDeserializationSetup(Game game) {
+		location.postDeserializationSetup(game);
+	}
 }

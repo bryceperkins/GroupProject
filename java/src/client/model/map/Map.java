@@ -289,5 +289,8 @@ public class Map implements PostProcessor {
 		for (Settlement s : settlements) {
 			s.postDeserializationSetup(game);
 		}
+		for (Road r : roads) {
+            r.postDeserializationSetup(game);
+        }
 	}
 }
