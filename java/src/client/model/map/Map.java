@@ -28,6 +28,7 @@ public class Map implements PostProcessor {
 		this.cities = new ArrayList<City>();
 		this.radius = 3;
 		this.robber = new Robber(3, 3);
+        this.roads = new ArrayList<Road>();
 
 	}
 
