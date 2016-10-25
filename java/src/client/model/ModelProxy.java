@@ -1,10 +1,10 @@
 package client.model;
 
-import client.model.map.ItemLocation;
+import client.model.map.*;
 import client.model.player.Player;
 import shared.communication.User;
 import shared.locations.*;
-import shared.definitions.CatanColor;
+import shared.definitions.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -163,9 +163,19 @@ public class ModelProxy {
         return true;
     }
 
-    public static boolean playerCanMakeMaritimeTrade(TradeOffer offer) {
+    public static boolean playerCanMakeMaritimeTrade(PortType pt) {
         Player player = manager.getActivePlayer();
-        return (player == null) ? false : player.canMakeTrade(offer);
+        return (player == null) ? false : player.canMakeMaritimeTrade(pt);
     }
 
+	public static boolean playerHasThreePort(){
+		Player player = manager.getActivePlayer();
+		List<Port> ports = player.getPorts();
+		for (int i = 0; i < ports.size(); i++){
+			if (ports.get(i).getResource().getValue().equals("three")){
+				return true;
+			}
+		}
+		return false;
+	}
 }
