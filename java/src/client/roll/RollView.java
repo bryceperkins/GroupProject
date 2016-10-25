@@ -31,36 +31,54 @@ public class RollView extends OverlayView implements IRollView {
 	private JPanel buttonPanel;
 
 	public RollView() {
-		
+
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
-		
+
 		label = new JLabel("Roll View");
 		Font labelFont = label.getFont();
 		labelFont = labelFont.deriveFont(labelFont.getStyle(), LABEL_TEXT_SIZE);
 		label.setFont(labelFont);
 		this.add(label, BorderLayout.NORTH);
-		
-        try {
-            BufferedImage diceImg = ImageIO.read(new File("images/misc/dice.jpg"));
-            Image smallDiceImg = diceImg.getScaledInstance(300, 224, Image.SCALE_SMOOTH);
-            imageLabel = new JLabel(new ImageIcon(smallDiceImg));
-            this.add(imageLabel, BorderLayout.CENTER);
-        } catch (IOException ex) {
-            // Handle Exception Here
-        }
+
+		try {
+			BufferedImage diceImg = ImageIO.read(new File("images/misc/dice.jpg"));
+			Image smallDiceImg = diceImg.getScaledInstance(300, 224, Image.SCALE_SMOOTH);
+			imageLabel = new JLabel(new ImageIcon(smallDiceImg));
+			this.add(imageLabel, BorderLayout.CENTER);
+		} catch (IOException ex) {
+			// Handle Exception Here
+		}
 
 		rollButton = new JButton("Roll!");
 		rollButton.addActionListener(actionListener);
 		Font buttonFont = rollButton.getFont();
 		buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
 		rollButton.setFont(buttonFont);
-		
+
 		buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));		
-		buttonPanel.add(rollButton);		
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+		buttonPanel.add(rollButton);
 		this.add(buttonPanel, BorderLayout.SOUTH);
+	}
+
+	@Override
+	public void showModal() {
+		super.showModal();
+        System.out.println("in showModal() on RollView");
+
+		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run() {
+						closeModal();
+
+                        getController().rollDice();
+					}
+				},
+				5000
+		);
 	}
 
 	private ActionListener actionListener = new ActionListener() {
@@ -68,7 +86,7 @@ public class RollView extends OverlayView implements IRollView {
 		public void actionPerformed(ActionEvent e) {
 			
 			if (e.getSource() == rollButton) {
-				
+
 				closeModal();
 				
 				getController().rollDice();

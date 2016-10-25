@@ -17,7 +17,9 @@ public interface ITurnTrackerView extends IView
 	 *            The local player's color
 	 */
 	void setLocalPlayerColor(CatanColor value);
-	
+
+    void setStatusPanelColored(boolean colored);
+
 	/**
 	 * Initializes the properties for a player in the turn tracker display
 	 * 

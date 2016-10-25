@@ -4,6 +4,7 @@ import client.model.GameManager;
 import client.model.ModelProxy;
 import client.model.PlayerIndex;
 import client.model.TurnTracker;
+import client.points.GameFinishedView;
 import shared.commands.FinishTurn;
 import shared.definitions.CatanColor;
 import client.base.*;
@@ -88,12 +89,13 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	private void updateGameState() {
 		PlayerIndex currentTurn = ModelProxy.getCurrentTurn();
 		if (currentTurn != null) {
+			TurnTracker.GameStatus status = ModelProxy.getGameStatus();
 			if (currentTurn.equals(manager.getActivePlayerIndex())) {
-				TurnTracker.GameStatus status = ModelProxy.getGameStatus();
 				getView().updateGameState(status.getPrompt(), status.isButtonEnabled());
 			} else {
 				getView().updateGameState("Waiting for other Players", false);
 			}
+			getView().setStatusPanelColored(status.getPrompt().equals("Finish Turn"));
 		}
 	}
 
@@ -105,6 +107,13 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			if (setup) {
                 updateGameState();
 				updatePlayers();
+
+				PlayerIndex winnerInd = manager.getActiveGame().getWinner();
+				if (winnerInd != PlayerIndex.None) {
+					GameFinishedView gameFinishedView = new GameFinishedView();
+					gameFinishedView.setWinner(ModelProxy.getPlayerName(winnerInd), winnerInd.equals(manager.getActivePlayerIndex()));
+					gameFinishedView.showModal();
+				}
 			} else {
 				initFromModel();
 			}
