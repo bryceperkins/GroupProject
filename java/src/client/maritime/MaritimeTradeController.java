@@ -45,9 +45,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void startTrade() {
 		getTradeOverlay().showModal();
 		getTradeOverlay().reset();
+		getTradeOverlay().setTradeEnabled(false);
 		getTradeOverlay().setStateMessage("Choose what to give up");
 		Player player = manager.getActivePlayer();
-		ResourceType[] resource_types = null;
+		ResourceType[] resource_types = {};
 		int z = 0;
 		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.WOOD)){
 			resource_types[z] = ResourceType.WOOD;
@@ -98,11 +99,13 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void setGetResource(ResourceType resource) {
 		getTradeOverlay().selectGetOption(resource, 1);
 		resource_gotten = resource;
+		getTradeOverlay().setTradeEnabled(true);
 		getTradeOverlay().setStateMessage("Trade!");
 	}
 
 	@Override
 	public void setGiveResource(ResourceType resource) {
+		getTradeOverlay().setTradeEnabled(false);
 		Player player = manager.getActivePlayer();
 		List<Port> ports = player.getPorts();
 		int amount = 4;
@@ -113,15 +116,44 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 				amount = 2;
 			}
 		}
-		getTradeOverlay().selectGiveOption(resource, amount);
-		getTradeOverlay().setStateMessage("Choose what to get");
 		resource_given = resource;
 		resource_given_amount = amount;
+		getTradeOverlay().selectGiveOption(resource, amount);
+		getTradeOverlay().setStateMessage("Choose what to get");
+		ResourceType[] resource_types = {};
+		/*if (ResourceType.WOOD == resource){
+			resource_types = {ResourceType.BRICK,ResourceType.WHEAT,ResourceType.SHEEP,ResourceType.ORE};
+		} else if (ResourceType.BRICK == resource){
+			resource_types = {ResourceType.WOOD,ResourceType.WHEAT,ResourceType.SHEEP,ResourceType.ORE};
+		} else if (ResourceType.WHEAT == resource){
+			resource_types = {ResourceType.WOOD,ResourceType.BRICK,ResourceType.SHEEP,ResourceType.ORE};
+		} else if (ResourceType.SHEEP == resource){
+			resource_types = {ResourceType.WOOD,ResourceType.WHEAT,ResourceType.BRICK,ResourceType.ORE};
+		} else if (ResourceType.ORE == resource){
+			resource_types = {ResourceType.WOOD,ResourceType.WHEAT,ResourceType.SHEEP,ResourceType.BRICK};
+		}*/
+		getTradeOverlay().showGetOptions(resource_types);
+		
 	}
 
 	@Override
 	public void unsetGetValue() {
-		
+		getTradeOverlay().setTradeEnabled(false);
+		getTradeOverlay().selectGiveOption(resource_given, resource_given_amount);
+		getTradeOverlay().setStateMessage("Choose what to get");
+		ResourceType[] resource_types = {};
+		/*if (ResourceType.WOOD == resource){
+			resource_types = {ResourceType.BRICK,ResourceType.WHEAT,ResourceType.SHEEP,ResourceType.ORE};
+		} else if (ResourceType.BRICK == resource){
+			resource_types = {ResourceType.WOOD,ResourceType.WHEAT,ResourceType.SHEEP,ResourceType.ORE};
+		} else if (ResourceType.WHEAT == resource){
+			resource_types = {ResourceType.WOOD,ResourceType.BRICK,ResourceType.SHEEP,ResourceType.ORE};
+		} else if (ResourceType.SHEEP == resource){
+			resource_types = {ResourceType.WOOD,ResourceType.WHEAT,ResourceType.BRICK,ResourceType.ORE};
+		} else if (ResourceType.ORE == resource){
+			resource_types = {ResourceType.WOOD,ResourceType.WHEAT,ResourceType.SHEEP,ResourceType.BRICK};
+		}*/
+		getTradeOverlay().showGetOptions(resource_types);
 	}
 
 	@Override
@@ -129,7 +161,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().reset();
 		getTradeOverlay().setStateMessage("Choose what to give up");
 		Player player = manager.getActivePlayer();
-		ResourceType[] resource_types = null;
+		ResourceType[] resource_types = {};
 		int z = 0;
 		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.WOOD)){
 			resource_types[z] = ResourceType.WOOD;
