@@ -7,6 +7,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import client.model.GameManager;
+import client.model.ModelProxy;
+import client.model.PlayerIndex;
+import client.points.GameFinishedView;
 import shared.definitions.ResourceType;
 import client.discard.DiscardController;
 import client.discard.DiscardView;
@@ -84,7 +88,10 @@ public class CatanPanel extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				rollView.showModal();
+				PlayerIndex winnerInd = PlayerIndex.Player2;
+				GameFinishedView gameFinishedView = new GameFinishedView();
+				gameFinishedView.setWinner(ModelProxy.getPlayerName(winnerInd), winnerInd.equals(GameManager.getInstance().getActivePlayerIndex()));
+				gameFinishedView.showModal();
 			}
 		});
 		this.add(testButton, BorderLayout.SOUTH);
