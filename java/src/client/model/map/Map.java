@@ -32,7 +32,7 @@ public class Map implements PostProcessor {
 
 	}
 
-	public boolean canBuildRoad(Player player, EdgeLocation edgeLocation, Boolean isDisconnected){
+	public boolean canBuildRoad(Player player, EdgeLocation edgeLocation, State state){
         int playerID = player.getPlayerID();
         edgeLocation = edgeLocation.getNormalizedLocation();
 
@@ -40,7 +40,9 @@ public class Map implements PostProcessor {
             if(road.getLocation().equals(edgeLocation))
                 return false;
         }
-        if(isDisconnected)
+        if(isWaterEdge(edgeLocation))
+            return false;
+        if(state.isFirstRound()||state.isSecondRound())
             return true;
         edgeLocation = edgeLocation.getNormalizedLocation();
         int locationX = edgeLocation.getHexLoc().getX();
@@ -145,6 +147,34 @@ public class Map implements PostProcessor {
     	return false;
     }
 
+    public boolean isWaterEdge(EdgeLocation edge){
+        edge = edge.getNormalizedLocation();
+        int x = edge.getX();
+        int y = edge.getY();
+        for (Hex hex: hexes){
+            if(hex.getLocation().equals(edge.getHexLoc())){return false;}
+        }
+        EdgeDirection dir = edge.getDir();
+        if(x > 3 || x < -3 || y > 3){return true;}
+        if(dir == EdgeDirection.North || dir == EdgeDirection.South)
+            if(x == 3 || x == -3){return true;}
+        if(dir == EdgeDirection.NorthWest || dir == EdgeDirection.SouthEast){
+            if(y == 3 || y == -3){return true;}
+        }
+        if(dir == EdgeDirection.NorthEast || dir == EdgeDirection.SouthWest){
+            if(x == -3 && y == 0){return true;}
+            if(x == -2 && y == -1){return true;}
+            if(x == -1 && y == -2){return true;}
+            if(x == 0 && y == -3){return true;}
+            if(x == 0 && y == 3){return true;}
+            if(x == 1 && y == 2){return true;}
+            if(x == 2 && y == 1){return true;}
+            if(x == 3 && y == 0){return true;}
+        }
+
+        return false;
+    }
+
     public boolean checkForPlayerRoad(int playerID, EdgeLocation edge){
         for(Road road: roads){
             if(road.getLocation().equals(edge) && road.getOwner().getIndex() == playerID)
@@ -164,12 +194,14 @@ public class Map implements PostProcessor {
         return false;
     }
 
-    public boolean canBuildSettlement(Player player, ItemLocation itemLocation){
+    public boolean canBuildSettlement(Player player, ItemLocation itemLocation, State state){
     	/*
     	 * does vertex have settlement or city on it
     	 * does the vertex right next to it have a city/settlement on it
     	 */
-    	
+    	//if(state == null)
+    	//    state = new State();
+    	if(isWaterEdge(itemLocation.getLocation()))
     	if(checkVertex(itemLocation.getLocation(), itemLocation.getDirection()) == false)
     		return false;
     	
@@ -207,7 +239,39 @@ public class Map implements PostProcessor {
     	}
     	
     	return false;
-    	}
+    }
+
+    public boolean isWaterEdge(HexLocation hexLoc){
+        int x = hexLoc.getX();
+        int y = hexLoc.getY();
+
+        if(x == -3 && y == 3){return true;}
+        if(x == -3 && y == 2){return true;}
+        if(x == -3 && y == 1){return true;}
+        if(x == -3 && y == 0){return true;}
+
+        if(x == -2 && y == -1){return true;}
+        if(x == -2 && y == 3){return true;}
+
+        if(x == -1 && y == -2){return true;}
+        if(x == -1 && y == 3){return true;}
+
+        if(x == 0 && y == 3){return true;}
+        if(x == 0 && y == -3){return true;}
+
+        if(x == 1 && y == -3){return true;}
+        if(x == 1 && y == 2){return true;}
+
+        if(x == 2 && y == -3){return true;}
+        if(x == 2 && y == 1){return true;}
+
+        if(x == 3 && y == -3){return true;}
+        if(x == 3 && y == -2){return true;}
+        if(x == 3 && y == -1){return true;}
+        if(x == 3 && y == 0){return true;}
+
+        return false;
+    }
     
     private boolean checkVertex(HexLocation loc, VertexDirection dir)
     {

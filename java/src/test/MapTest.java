@@ -19,7 +19,7 @@ public class MapTest {
     private HexLocation hexLocation;
     private VertexDirection direction;
     private ItemLocation itemLocation;
-
+    private GameManager manager = GameManager.getInstance();
     
     @Before
     public void setUp()
@@ -46,8 +46,8 @@ public class MapTest {
     @Test
     public void test_canBuildSettlement_expect_true()
     {
-    	
-        assertTrue(testMap.canBuildSettlement(testPlayer,itemLocation));
+
+        assertTrue(testMap.canBuildSettlement(testPlayer,itemLocation,manager.getActiveGame().getState()));
     }
     
 /*    
