@@ -8,6 +8,7 @@ import client.model.*;
 import client.model.player.*;
 import client.server.*;
 import java.util.*;
+import client.model.map.*;
 
 /**
  * Implementation for the maritime trade controller
@@ -16,6 +17,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	private GameManager manager = GameManager.getInstance();
 	private IMaritimeTradeOverlay tradeOverlay;
+	private ResourceType resource_given = null;
+	private ResourceType resource_gotten = null;
+	private int resource_given_amount = 0;
 	
 	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
 		
@@ -43,41 +47,27 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().reset();
 		getTradeOverlay().setStateMessage("Choose what to give up");
 		Player player = manager.getActivePlayer();
-		ResourceType[] resource_types;
-		if (ModelProxy.playerCanMakeMaritimeTrade(WOOD)){
-			resource_types.add(WOOD);
-		} else if (ModelProxy.playerHasThreePort && player.hasResources(new ResourceList(0,0,0,0,3))){
-			resource_types.add(WOOD);
-		} else if (player.hasResources(new ResourceList(0,0,0,0,4))){
-			resource_types.add(WOOD);
+		ResourceType[] resource_types = null;
+		int z = 0;
+		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.WOOD)){
+			resource_types[z] = ResourceType.WOOD;
+			z++;
+		} 
+		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.BRICK)){
+			resource_types[z] = ResourceType.BRICK;
+			z++;
 		}
-		if (ModelProxy.playerCanMakeMaritimeTrade(BRICK)){
-			resource_types.add(BRICK);
-		} else if (ModelProxy.playerHasThreePort && player.hasResources(new ResourceList(3,0,0,0,0))){
-			resource_types.add(BRICK);
-		} else if (player.hasResources(new ResourceList(4,0,0,0,0))){
-			resource_types.add(BRICK);
+		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.ORE)){
+			resource_types[z] = ResourceType.ORE;
+			z++;
 		}
-		if (ModelProxy.playerCanMakeMaritimeTrade(ORE)){
-			resource_types.add(ORE);
-		} else if (ModelProxy.playerHasThreePort && player.hasResources(new ResourceList(0,3,0,0,0))){
-			resource_types.add(ORE);
-		} else if (player.hasResources(new ResourceList(0,4,0,0,0))){
-			resource_types.add(ORE);
+		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.SHEEP)){
+			resource_types[z] = ResourceType.SHEEP;
+			z++;
 		}
-		if (ModelProxy.playerCanMakeMaritimeTrade(SHEEP)){
-			resource_types.add(SHEEP);
-		} else if (ModelProxy.playerHasThreePort && player.hasResources(new ResourceList(0,0,3,0,0))){
-			resource_types.add(SHEEP);
-		} else if (player.hasResources(new ResourceList(0,0,4,0,0))){
-			resource_types.add(SHEEP);
-		}
-		if (ModelProxy.playerCanMakeMaritimeTrade(WHEAT)){
-			resource_types.add(WHEAT);
-		} else if (ModelProxy.playerHasThreePort && player.hasResources(new ResourceList(0,0,0,3,0))){
-			resource_types.add(WHEAT);
-		} else if (player.hasResources(new ResourceList(0,0,0,4,0))){
-			resource_types.add(WHEAT);
+		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.WHEAT)){
+			resource_types[z] = ResourceType.WHEAT;
+			z++;
 		}
 		getTradeOverlay().showGiveOptions(resource_types);
 	}
@@ -85,13 +75,11 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	//public MaritimeTrade(PlayerIndex index, int ratio, ResourceType inputResource, ResourceType outputResource)
 	@Override
 	public void makeTrade() {
-		Game game = manager.getActiveGame();
 		if (ModelProxy.isPlayerTurn()){
 			Player player = manager.getActivePlayer();
-			pt = getTradeOverlay().
-			if (ModelProxy.canMakeMaritimeTrade()
-			
-			MaritimeTrade trade = new MaritimeTrade(player.getPlayerIndex(), 
+			MaritimeTrade trade = new MaritimeTrade(player.getPlayerIndex(), resource_given_amount, resource_given, resource_gotten);
+			ServerProxy server = manager.getServer();
+			server.execute(trade);
 		}
 		getTradeOverlay().closeModal();
 	}
@@ -109,7 +97,8 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void setGetResource(ResourceType resource) {
 		getTradeOverlay().selectGetOption(resource, 1);
-		getTradeOverlay().setStateMessage("Trade!")
+		resource_gotten = resource;
+		getTradeOverlay().setStateMessage("Trade!");
 	}
 
 	@Override
@@ -118,15 +107,16 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		List<Port> ports = player.getPorts();
 		int amount = 4;
 		for (int i = 0; i < ports.size(); i++){
-			if (ports.get(i).getType() == THREE){
-				amount = 3;
-			} else if (ports.get(i).getType() == resource) {
+			if (ports.get(i).getResource().equals(resource)){
+				if (amount > 3) amount = 3;
+			} else if (ports.get(i).getResource() == resource) {
 				amount = 2;
 			}
 		}
 		getTradeOverlay().selectGiveOption(resource, amount);
 		getTradeOverlay().setStateMessage("Choose what to get");
-		
+		resource_given = resource;
+		resource_given_amount = amount;
 	}
 
 	@Override
@@ -137,44 +127,29 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void unsetGiveValue() {
 		getTradeOverlay().reset();
-		getTradeOverlay().hideGetValues();
 		getTradeOverlay().setStateMessage("Choose what to give up");
 		Player player = manager.getActivePlayer();
-		ResourceType[] resource_types;
-		if (ModelProxy.playerCanMakeMaritimeTrade(WOOD)){
-			resource_types.add(WOOD);
-		} else if (ModelProxy.playerHasThreePort && player.hasResources(new ResourceList(0,0,0,0,3))){
-			resource_types.add(WOOD);
-		} else if (player.hasResources(new ResourceList(0,0,0,0,4))){
-			resource_types.add(WOOD);
+		ResourceType[] resource_types = null;
+		int z = 0;
+		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.WOOD)){
+			resource_types[z] = ResourceType.WOOD;
+			z++;
+		} 
+		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.BRICK)){
+			resource_types[z] = ResourceType.BRICK;
+			z++;
 		}
-		if (ModelProxy.playerCanMakeMaritimeTrade(BRICK)){
-			resource_types.add(BRICK);
-		} else if (ModelProxy.playerHasThreePort && player.hasResources(new ResourceList(3,0,0,0,0))){
-			resource_types.add(BRICK);
-		} else if (player.hasResources(new ResourceList(4,0,0,0,0))){
-			resource_types.add(BRICK);
+		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.ORE)){
+			resource_types[z] = ResourceType.ORE;
+			z++;
 		}
-		if (ModelProxy.playerCanMakeMaritimeTrade(ORE)){
-			resource_types.add(ORE);
-		} else if (ModelProxy.playerHasThreePort && player.hasResources(new ResourceList(0,3,0,0,0))){
-			resource_types.add(ORE);
-		} else if (player.hasResources(new ResourceList(0,4,0,0,0))){
-			resource_types.add(ORE);
+		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.SHEEP)){
+			resource_types[z] = ResourceType.SHEEP;
+			z++;
 		}
-		if (ModelProxy.playerCanMakeMaritimeTrade(SHEEP)){
-			resource_types.add(SHEEP);
-		} else if (ModelProxy.playerHasThreePort && player.hasResources(new ResourceList(0,0,3,0,0))){
-			resource_types.add(SHEEP);
-		} else if (player.hasResources(new ResourceList(0,0,4,0,0))){
-			resource_types.add(SHEEP);
-		}
-		if (ModelProxy.playerCanMakeMaritimeTrade(WHEAT)){
-			resource_types.add(WHEAT);
-		} else if (ModelProxy.playerHasThreePort && player.hasResources(new ResourceList(0,0,0,3,0))){
-			resource_types.add(WHEAT);
-		} else if (player.hasResources(new ResourceList(0,0,0,4,0))){
-			resource_types.add(WHEAT);
+		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.WHEAT)){
+			resource_types[z] = ResourceType.WHEAT;
+			z++;
 		}
 		getTradeOverlay().showGiveOptions(resource_types);
 	}

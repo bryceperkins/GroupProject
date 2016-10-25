@@ -1,6 +1,6 @@
 package client.model;
 
-import client.model.map.ItemLocation;
+import client.model.map.*;
 import client.model.player.Player;
 import shared.communication.User;
 import shared.locations.*;
@@ -167,7 +167,15 @@ public class ModelProxy {
         Player player = manager.getActivePlayer();
         return (player == null) ? false : player.canMakeMaritimeTrade(pt);
     }
-	
-	public static boolean
 
+	public static boolean playerHasThreePort(){
+		Player player = manager.getActivePlayer();
+		List<Port> ports = player.getPorts();
+		for (int i = 0; i < ports.size(); i++){
+			if (ports.get(i).getResource().getValue().equals("three")){
+				return true;
+			}
+		}
+		return false;
+	}
 }
