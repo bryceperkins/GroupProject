@@ -62,7 +62,7 @@ public class ModelProxy {
      * @return whether the active player can build a settlement (not location-specific)
      */
     public static boolean playerCanBuildSettlement() {
-        State state = new State(getGameStatus());
+        State state = getGameStatus() == null ? null : new State(getGameStatus());
         Player player = manager.getActivePlayer();
         return (state == null) ? false : state.canBuildSettlement() && (player == null) ? false : player.canBuildSettlement();
     }

@@ -7,18 +7,21 @@ import client.model.*;
 import java.util.Random;
 import client.model.player.*;
 
+import javax.annotation.Resource;
+
 /**
  * Implementation for the resource bar controller
  */
-public class ResourceBarController extends Controller implements IResourceBarController {
+public class ResourceBarController extends Controller implements IResourceBarController, Observer {
 
 	private Map<ResourceBarElement, IAction> elementActions;
+	private GameManager manager = GameManager.getInstance();
 	
 	public ResourceBarController(IResourceBarView view) {
-
 		super(view);
 		
 		elementActions = new HashMap<ResourceBarElement, IAction>();
+		manager.addObserver(this);
 	}
 
 	@Override
@@ -33,7 +36,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	 * @param action The action to be executed
 	 */
 	public void setElementAction(ResourceBarElement element, IAction action) {
-
 		elementActions.put(element, action);
 	}
 
@@ -71,22 +73,49 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		}
 	}
 
-	public void initializeValues(Game game){
+	private void updateValues() {
+        if (manager.getActiveGame() != null
+				&& manager.getActivePlayer() != null
+				&& manager.getActivePlayer().getResources() != null) {
+			System.out.println("Updating Values");
+			Player player = manager.getActivePlayer();
+			ResourceList resources = player.getResources();
 
-		Player player = game.getPlayer(GameManager.getInstance().getActivePlayerIndex());
-		ResourceList resources = player.getResources();
-
-		getView().setElementAmount(ResourceBarElement.WOOD, resources.getWood());
-		getView().setElementAmount(ResourceBarElement.BRICK, resources.getBrick());
-		getView().setElementAmount(ResourceBarElement.SHEEP, resources.getSheep());
-		getView().setElementAmount(ResourceBarElement.WHEAT, resources.getWheat());
-		getView().setElementAmount(ResourceBarElement.ORE, resources.getOre());
-		getView().setElementAmount(ResourceBarElement.ROAD, player.getRoadsRemaining());
-		getView().setElementAmount(ResourceBarElement.SETTLEMENT, player.getSettlementsRemaining());
-		getView().setElementAmount(ResourceBarElement.CITY, player.getCitiesRemaining());
-		getView().setElementAmount(ResourceBarElement.SOLDIERS, player.getSoldiersPlayed());
-
+			getView().setElementAmount(ResourceBarElement.WOOD, resources.getWood());
+			getView().setElementAmount(ResourceBarElement.BRICK, resources.getBrick());
+			getView().setElementAmount(ResourceBarElement.SHEEP, resources.getSheep());
+			getView().setElementAmount(ResourceBarElement.WHEAT, resources.getWheat());
+			getView().setElementAmount(ResourceBarElement.ORE, resources.getOre());
+			getView().setElementAmount(ResourceBarElement.ROAD, player.getRoadsRemaining());
+			getView().setElementAmount(ResourceBarElement.SETTLEMENT, player.getSettlementsRemaining());
+			getView().setElementAmount(ResourceBarElement.CITY, player.getCitiesRemaining());
+			getView().setElementAmount(ResourceBarElement.SOLDIERS, player.getSoldiersPlayed());
+		}
 	}
 
+	private void updateClickability() {
+		if (manager.getActiveGame() != null
+				&& manager.getActivePlayer() != null
+				&& manager.getActivePlayer().getResources() != null) {
+			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, ModelProxy.playerCanBuildSettlement());
+			getView().setElementEnabled(ResourceBarElement.CITY, ModelProxy.playerCanBuildCity());
+			getView().setElementEnabled(ResourceBarElement.ROAD, ModelProxy.playerCanBuildRoad());
+			getView().setElementEnabled(ResourceBarElement.BUY_CARD, ModelProxy.canBuyDevCard());
+
+			if (!ModelProxy.isPlayerTurn()) {
+				for (ResourceBarElement e : ResourceBarElement.values()) {
+					getView().setElementEnabled(e, false);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		super.update(o, arg);
+
+		updateValues();
+		updateClickability();
+	}
 }
 

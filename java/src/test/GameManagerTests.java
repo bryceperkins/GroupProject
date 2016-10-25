@@ -30,7 +30,7 @@ public class GameManagerTests {
 
     @Test
     public void testParseGameModel_itSetsUpTheChatCorrectly() {
-        String json = "{\"id\": 1, \"chat\": { \"lines\": [ { \"message\": \"A message\", \"source\": 1 } ] } }";
+        String json = "{\"id\": 1, \"chat\": { \"lines\": [ { \"message\": \"A message\", \"source\": 'Sam' } ] } }";
 
         manager.processGame(json);
 
@@ -40,7 +40,7 @@ public class GameManagerTests {
         assertNotNull(chat.getLines());
         assertTrue(chat.getLines().size() == 1);
         MessageLine message = chat.getLines().get(0);
-        assertEquals(message.getSource(), PlayerIndex.Player2);
+        assertEquals(message.getSource(), "Sam");
         assertEquals(message.getMessage(), "A message");
     }
 
@@ -95,9 +95,9 @@ public class GameManagerTests {
         assertNotNull(game.getMap().getPorts());
         assertEquals(game.getMap().getPorts().size(), 1);
         Port port = game.getMap().getPorts().get(0);
-        assertTrue(PortType.fromResourceType(port.getType()) == PortType.WHEAT);
+        assertTrue(PortType.fromResourceType(port.getResource()) == PortType.WHEAT);
         assertEquals(port.getRatio(), 1);
-        assertEquals(port.getDirection(), HexDirection.NE);
+        assertEquals(port.getDirection(), EdgeDirection.NorthEast);
         assertNotNull(port.getLocation());
         assertEquals(port.getLocation().getX(), 1);
         assertEquals(port.getLocation().getY(), 1);
