@@ -52,7 +52,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
     public void update(Observable ob, Object o){
         this.game = manager.getGame(manager.getServer().getServer().getDetails().getGameID());
-        //this.game = this.manager.getActiveGame();
         int size = this.game.getPlayers().size();
         PlayerInfo[] players = new PlayerInfo[size];
 

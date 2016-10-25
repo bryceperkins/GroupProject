@@ -32,7 +32,7 @@ public class Map implements PostProcessor {
 
 	}
 
-	public boolean canBuildRoad(Player player, EdgeLocation edgeLocation){
+	public boolean canBuildRoad(Player player, EdgeLocation edgeLocation, Boolean isDisconnected){
         int playerID = player.getPlayerID();
         edgeLocation = edgeLocation.getNormalizedLocation();
 
@@ -40,6 +40,8 @@ public class Map implements PostProcessor {
             if(road.getLocation().equals(edgeLocation))
                 return false;
         }
+        if(isDisconnected)
+            return true;
         edgeLocation = edgeLocation.getNormalizedLocation();
         int locationX = edgeLocation.getHexLoc().getX();
         int locationY = edgeLocation.getHexLoc().getY();

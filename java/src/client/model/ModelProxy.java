@@ -96,7 +96,7 @@ public class ModelProxy {
      */
     public static boolean isPlayerTurn() {
         Game game = manager.getActiveGame();
-        if (game == null) { return false; }
+        if (game == null || game.getTurnTracker() == null) { return false; }
         return game.getTurnTracker().getCurrentTurn() == manager.getActivePlayerIndex();
     }
 
@@ -139,7 +139,7 @@ public class ModelProxy {
         Game game = manager.getActiveGame();
         if (game == null) { return false; }
         Player player = manager.getActivePlayer();
-        return game.getMap().canBuildRoad(player, location);
+        return game.getMap().canBuildRoad(player, location, game.getState().isFirstRound() || game.getState().isSecondRound());
     }
 
     /**

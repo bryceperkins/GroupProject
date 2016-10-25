@@ -45,33 +45,35 @@ public class RollController extends Controller implements IRollController, Obser
 	
 	@Override
 	public void rollDice() {
-		Random rand = new Random();
-		int die1 = rand.nextInt(6) + 1;
-		int die2 = rand.nextInt(6) + 1;
-        int rollResult = die1 + die2;
+		if (ModelProxy.isPlayerTurn() && ModelProxy.getGameStatus().equals(TurnTracker.GameStatus.Rolling)) {
+			System.out.println("rollDice");
+			Random rand = new Random();
+			int die1 = rand.nextInt(6) + 1;
+			int die2 = rand.nextInt(6) + 1;
+			int rollResult = die1 + die2;
 
-		getRollView().closeModal();
+			getRollView().closeModal();
 
-		String result = manager.getServer().execute(new RollNumber(manager.getCurrentPlayerInfo().getPlayerIndex(), rollResult));
-		if (!result.equals("Failed")) {
-			resultView.setRollValue(rollResult);
-			resultView.showModal();
-		} else {
-			error("failed to join game");
+			String result = manager.getServer().execute(new RollNumber(manager.getCurrentPlayerInfo().getPlayerIndex(), rollResult));
+			if (!result.equals("Failed")) {
+				resultView.setRollValue(rollResult);
+				resultView.showModal();
+			} else {
+				error("failed to join game");
+			}
+
 		}
-
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		super.update(o, arg);
 
-        if (ModelProxy.getCurrentTurn() != null) {
-            if (ModelProxy.getCurrentTurn().equals(manager.getActivePlayerIndex())
-                    && ModelProxy.getGameStatus().equals(TurnTracker.GameStatus.Rolling)) {
-                getRollView().showModal();
-            }
-        }
+		if (ModelProxy.getCurrentTurn() != null && ModelProxy.isPlayerTurn()
+				&& ModelProxy.getGameStatus().equals(TurnTracker.GameStatus.Rolling)) {
+			System.out.println("in update on RollController");
+			getRollView().showModal();
+		}
 	}
 }
 
