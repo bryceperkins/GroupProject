@@ -3,7 +3,9 @@ package client.turntracker;
 import java.awt.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
+import client.model.ModelProxy;
 import shared.definitions.*;
 import client.base.*;
 import client.catan.*;
@@ -24,6 +26,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 	private JLabel [] playerArmy;
 	private Image longestRoadImage;
 	private Image largestArmyImage;
+    private CatanColor localPlayerColor = CatanColor.WHITE;
 
 	private final int NUM_PLAYERS = 4;
 	private final int FONT_SIZE = 13;
@@ -71,8 +74,17 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 
 	@Override
 	public void setLocalPlayerColor(CatanColor value) {
-		
+		localPlayerColor = value;
 		titlePanel.setLocalPlayerColor(value);
+	}
+
+	@Override
+	public void setStatusPanelColored(boolean colored) {
+        if (colored) {
+            gameStatePanel.setButtonColor(localPlayerColor);
+		} else {
+			gameStatePanel.setButtonColor(CatanColor.WHITE);
+		}
 	}
 
 	@Override
