@@ -52,6 +52,9 @@ public class Map implements PostProcessor {
         EdgeLocation edge4 = null;
         HexLocation hex12;
         HexLocation hex34;
+        VertexLocation vertLoc1 = null;
+        VertexLocation vertLoc2 = null;
+
 
         switch(locationDirection){
             case North:
@@ -62,6 +65,8 @@ public class Map implements PostProcessor {
                 hex34 = new HexLocation(locationX,locationY-1);
                 edge3 = new EdgeLocation(hex34,EdgeDirection.SouthEast);
                 edge4 = new EdgeLocation(hex34,EdgeDirection.SouthWest);
+                vertLoc1 = new VertexLocation(hex12, VertexDirection.NorthEast);
+                vertLoc2 = new VertexLocation(hex12, VertexDirection.NorthWest);
                 break;
             case NorthEast:
                 hex12 = new HexLocation(locationX,locationY);
@@ -71,6 +76,8 @@ public class Map implements PostProcessor {
                 hex34 = new HexLocation(locationX+1,locationY-1);
                 edge3 = new EdgeLocation(hex34,EdgeDirection.NorthWest);
                 edge4 = new EdgeLocation(hex34,EdgeDirection.South);
+                vertLoc1 = new VertexLocation(hex12, VertexDirection.NorthEast);
+                vertLoc2 = new VertexLocation(hex12, VertexDirection.East);
                 break;
             case NorthWest:
                 hex12 = new HexLocation(locationX,locationY);
@@ -80,6 +87,8 @@ public class Map implements PostProcessor {
                 hex34 = new HexLocation(locationX-1,locationY);
                 edge3 = new EdgeLocation(hex34,EdgeDirection.NorthEast);
                 edge4 = new EdgeLocation(hex34,EdgeDirection.South);
+                vertLoc1 = new VertexLocation(hex12, VertexDirection.West);
+                vertLoc2 = new VertexLocation(hex12, VertexDirection.NorthWest);
                 break;
             case South:
                 hex12 = new HexLocation(locationX,locationY);
@@ -89,6 +98,8 @@ public class Map implements PostProcessor {
                 hex34 = new HexLocation(locationX,locationY+1);
                 edge3 = new EdgeLocation(hex34,EdgeDirection.NorthWest);
                 edge4 = new EdgeLocation(hex34,EdgeDirection.NorthEast);
+                vertLoc1 = new VertexLocation(hex12, VertexDirection.SouthEast);
+                vertLoc2 = new VertexLocation(hex12, VertexDirection.SouthWest);
                 break;
             case SouthEast:
                 hex12 = new HexLocation(locationX,locationY);
@@ -98,6 +109,8 @@ public class Map implements PostProcessor {
                 hex34 = new HexLocation(locationX,locationY+1);
                 edge3 = new EdgeLocation(hex34,EdgeDirection.North);
                 edge4 = new EdgeLocation(hex34,EdgeDirection.SouthWest);
+                vertLoc1 = new VertexLocation(hex12, VertexDirection.SouthEast);
+                vertLoc2 = new VertexLocation(hex12, VertexDirection.East);
                 break;
             case SouthWest:
                 hex12 = new HexLocation(locationX,locationY);
@@ -107,6 +120,8 @@ public class Map implements PostProcessor {
                 hex34 = new HexLocation(locationX,locationY+1);
                 edge3 = new EdgeLocation(hex34,EdgeDirection.North);
                 edge4 = new EdgeLocation(hex34,EdgeDirection.SouthEast);
+                vertLoc1 = new VertexLocation(hex12, VertexDirection.SouthWest);
+                vertLoc2 = new VertexLocation(hex12, VertexDirection.West);
                 break;
         }
 
@@ -119,12 +134,29 @@ public class Map implements PostProcessor {
             checkForPlayerRoad(playerID,edge3) || checkForPlayerRoad(playerID,edge4))
             return true;
 
+        vertLoc1 = vertLoc1.getNormalizedLocation();
+        vertLoc2 = vertLoc2.getNormalizedLocation();
+        if(checkForPlayerBuildings(playerID,vertLoc1) || checkForPlayerBuildings(playerID,vertLoc2))
+            return true;
+
+
     	return false;
     }
 
     public boolean checkForPlayerRoad(int playerID, EdgeLocation edge){
         for(Road road: roads){
             if(road.getLocation().equals(edge) && road.getOwner().getIndex() == playerID)
+                return true;
+        }
+        return false;
+    }
+    public boolean checkForPlayerBuildings(int playerID, VertexLocation vertex){
+        for(Settlement settlement: settlements){
+            if(settlement.getLocation().equals(vertex) && settlement.getOwner().getIndex() == playerID)
+                return true;
+        }
+        for(City city: cities){
+            if(city.getLocation().equals(vertex) && city.getOwner().getIndex() == playerID)
                 return true;
         }
         return false;

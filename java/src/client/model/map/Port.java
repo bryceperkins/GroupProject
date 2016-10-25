@@ -7,14 +7,15 @@ import client.model.ResourceList;
 
 public class Port {
 
+
     @SerializedName("resource")
-    private ResourceType type;
+    private ResourceType resource;
     private HexLocation location;
     private int ratio;
     private EdgeDirection direction;
 
-    public void setType(ResourceType getType) {
-        this.type = type;
+    public void setResource(ResourceType resource) {
+        this.resource = resource;
     }
 
     public void setLocation(HexLocation location) {
@@ -33,7 +34,7 @@ public class Port {
 
     public Port(ResourceType r, HexLocation hexLocation, int ratio,
 			EdgeDirection dir) {
-		this.type = r;
+		this.resource = r;
 		this.location = hexLocation;
 		this.ratio = ratio;
 		this.direction = dir;
@@ -42,8 +43,8 @@ public class Port {
 
 	public boolean canTrade(ResourceList resourceList){return true;}
 
-    public ResourceType getType() {
-        return type;
+    public ResourceType getResource() {
+        return resource;
     }
 
     public HexLocation getLocation() {
