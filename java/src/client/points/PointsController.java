@@ -47,7 +47,7 @@ public class PointsController extends Controller implements IPointsController, O
 		Game game = manager.getActiveGame();
 		if(player != null && game != null){
             int victory_points = player.getVictoryPoints();
-			if (game.getWinner() != null && game.getWinner().getIndex() != 0){
+			if (game.getWinner() != PlayerIndex.None){
 				setEndGameWinner();
 			}
 			getPointsView().setPoints(victory_points);
@@ -59,7 +59,7 @@ public class PointsController extends Controller implements IPointsController, O
 		Game game = manager.getActiveGame();
 		if(player != null && game != null){
             int victory_points = player.getVictoryPoints();
-			if (game.getWinner() != null && game.getWinner().getIndex() != 0){
+			if (game.getWinner() != PlayerIndex.None){
 				setEndGameWinner();
 			}
 			getPointsView().setPoints(victory_points);
@@ -71,7 +71,7 @@ public class PointsController extends Controller implements IPointsController, O
 		Player player = manager.getActivePlayer();
 		if (game != null){
 			boolean is_local_player = false;
-			if (game.getWinner().equals(player.getPlayerIndex())) is_local_player = true;
+			if (game.getWinner() == player.getPlayerIndex()) is_local_player = true;
 			getFinishedView().setWinner(game.getPlayer(game.getWinner()).getName(), is_local_player);
 			getFinishedView().showModal();
 		}
