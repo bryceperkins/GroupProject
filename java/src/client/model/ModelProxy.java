@@ -139,7 +139,7 @@ public class ModelProxy {
         Game game = manager.getActiveGame();
         if (game == null) { return false; }
         Player player = manager.getActivePlayer();
-        return game.getMap().canBuildRoad(player, location);
+        return game.getMap().canBuildRoad(player, location, game.getState().isFirstRound() || game.getState().isSecondRound());
     }
 
     /**
