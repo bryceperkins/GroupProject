@@ -15,7 +15,7 @@ import client.model.map.*;
  */
 public class MaritimeTradeController extends Controller implements IMaritimeTradeController, Observer {
 
-	private GameManager manager = GameManager.getInstance();
+	private GameManager manager;
 	private IMaritimeTradeOverlay tradeOverlay;
 	private ResourceType resource_given = null;
 	private ResourceType resource_gotten = null;
@@ -24,7 +24,8 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
 		
 		super(tradeView);
-
+		manager = GameManager.getInstance();
+		manager.addObserver(this);
 		setTradeOverlay(tradeOverlay);
 	}
 	
