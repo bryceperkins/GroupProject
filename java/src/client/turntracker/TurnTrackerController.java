@@ -88,12 +88,13 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	private void updateGameState() {
 		PlayerIndex currentTurn = ModelProxy.getCurrentTurn();
 		if (currentTurn != null) {
+			TurnTracker.GameStatus status = ModelProxy.getGameStatus();
 			if (currentTurn.equals(manager.getActivePlayerIndex())) {
-				TurnTracker.GameStatus status = ModelProxy.getGameStatus();
 				getView().updateGameState(status.getPrompt(), status.isButtonEnabled());
 			} else {
 				getView().updateGameState("Waiting for other Players", false);
 			}
+			getView().setStatusPanelColored(status.getPrompt().equals("Finish Turn"));
 		}
 	}
 
