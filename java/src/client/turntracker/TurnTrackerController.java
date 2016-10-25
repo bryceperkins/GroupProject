@@ -4,6 +4,7 @@ import client.model.GameManager;
 import client.model.ModelProxy;
 import client.model.PlayerIndex;
 import client.model.TurnTracker;
+import client.points.GameFinishedView;
 import shared.commands.FinishTurn;
 import shared.definitions.CatanColor;
 import client.base.*;
@@ -106,6 +107,13 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			if (setup) {
                 updateGameState();
 				updatePlayers();
+
+				PlayerIndex winnerInd = manager.getActiveGame().getWinner();
+				if (winnerInd != PlayerIndex.None) {
+					GameFinishedView gameFinishedView = new GameFinishedView();
+					gameFinishedView.setWinner(ModelProxy.getPlayerName(winnerInd), winnerInd.equals(manager.getActivePlayerIndex()));
+					gameFinishedView.showModal();
+				}
 			} else {
 				initFromModel();
 			}
