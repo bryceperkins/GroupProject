@@ -25,7 +25,7 @@ public class PointsController extends Controller implements IPointsController, O
 		
 		super(view);
 		manager = GameManager.getInstance();
-		//manager.addObserver(this);
+		manager.addObserver(this);
 		initFromModel();
 		setFinishedView(finishedView);
 	}
@@ -47,9 +47,6 @@ public class PointsController extends Controller implements IPointsController, O
 		Game game = manager.getActiveGame();
 		if(player != null && game != null){
             int victory_points = player.getVictoryPoints();
-			/*if (game.getWinner() != PlayerIndex.None){
-				setEndGameWinner();
-			}*/
 			getPointsView().setPoints(victory_points);
         }
 	}
@@ -59,9 +56,6 @@ public class PointsController extends Controller implements IPointsController, O
 		Game game = manager.getActiveGame();
 		if(player != null && game != null){
             int victory_points = player.getVictoryPoints();
-			/*if (game.getWinner() != PlayerIndex.None){
-				setEndGameWinner();
-			}*/
 			getPointsView().setPoints(victory_points);
         }
 	}
