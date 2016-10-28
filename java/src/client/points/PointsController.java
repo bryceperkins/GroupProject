@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class PointsController extends Controller implements IPointsController, Observer {
 
-    private GameManager manager = GameManager.getInstance();
+    private GameManager manager;
 	private IGameFinishedView finishedView;
 	
 	/**
@@ -24,10 +24,10 @@ public class PointsController extends Controller implements IPointsController, O
 	public PointsController(IPointsView view, IGameFinishedView finishedView) {
 		
 		super(view);
-		
-		setFinishedView(finishedView);
-		
+		manager = GameManager.getInstance();
+		manager.addObserver(this);
 		initFromModel();
+		setFinishedView(finishedView);
 	}
 	
 	public IPointsView getPointsView() {
@@ -43,36 +43,32 @@ public class PointsController extends Controller implements IPointsController, O
 	}
 
 	public void update(Observable ob, Object o){
-		if(manager.getActivePlayer() != null){
-			Player player = manager.getActivePlayer();
-            int victoryPoints = player.getVictoryPoints();
-			Game game = manager.getActiveGame();
-			if (game.getWinner().getIndex() != -1){
-				setEndGameWinner();
-			}
-			getPointsView().setPoints(victoryPoints);
+		Player player = manager.getActivePlayer();
+		Game game = manager.getActiveGame();
+		if(player != null && game != null){
+            int victory_points = player.getVictoryPoints();
+			getPointsView().setPoints(victory_points);
         }
 	}
 	
 	private void initFromModel() {
-		if(manager.getActivePlayer() != null){
-			Player player = manager.getActivePlayer();
-			int victory_points = player.getVictoryPoints();
-			Game game = manager.getActiveGame();
-			if (game.getWinner().getIndex() != -1){
-				setEndGameWinner();
-			}
+		Player player = manager.getActivePlayer();
+		Game game = manager.getActiveGame();
+		if(player != null && game != null){
+            int victory_points = player.getVictoryPoints();
 			getPointsView().setPoints(victory_points);
         }
 	}
 
 	public void setEndGameWinner(){
-		Game game = manager.getActiveGame();
+		/*Game game = manager.getActiveGame();
 		Player player = manager.getActivePlayer();
-		boolean is_local_player = false;
-		if (game.getWinner() == player.getPlayerIndex()) is_local_player = true;
-		getFinishedView().setWinner(game.getPlayer(game.getWinner()).getName(), is_local_player);
-		getFinishedView().showModal();
+		if (game != null){
+			boolean is_local_player = false;
+			if (game.getWinner() == player.getPlayerIndex()) is_local_player = true;
+			getFinishedView().setWinner(game.getPlayer(game.getWinner()).getName(), is_local_player);
+			getFinishedView().showModal();
+		}*/
 	}
 }
 

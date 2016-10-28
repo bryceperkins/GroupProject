@@ -36,7 +36,6 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 			Game game = manager.getActiveGame();
 			Log log = game.getLog();
 			List<MessageLine> lines = log.getLines();
-			System.out.println("Num Lines: " + lines.size());
 			List<LogEntry> log_entries = new ArrayList<LogEntry>();
 			for (int i = 0; i < lines.size(); i++){
 				MessageLine line = lines.get(i);

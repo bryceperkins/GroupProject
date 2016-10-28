@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import shared.definitions.*;
 import shared.locations.*;
 import client.model.ResourceList;
+import client.model.map.*;
 
 public class Port {
 

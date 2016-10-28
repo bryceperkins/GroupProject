@@ -4,6 +4,7 @@ import client.data.*;
 import java.util.List;
 import client.model.map.*;
 import client.model.player.*;
+import client.model.*;
 import java.util.List;
 import java.util.ArrayList;
 import com.google.gson.annotations.SerializedName;
@@ -18,7 +19,7 @@ public class Game implements PostProcessor {
     private String name;
     private int version;
     private int id;
-    private PlayerIndex winner;
+	private PlayerIndex winner;
     private ResourceList bank;
     private Chat chat;
     private Log log;
@@ -122,7 +123,6 @@ public class Game implements PostProcessor {
 	
 	public Player getPlayerByName(String userName) {
 		for (int i = 0; i < players.size(); i++){
-			System.out.println("UserName: " + userName + ", PlayerName: " + players.get(i).getName());
 			if (players.get(i).getName().equals(userName)) return players.get(i);
 		}
 		return null;

@@ -43,6 +43,17 @@ public class ResourceList{
 		}
 		return true;
     }
+	
+	public boolean hasOneResource(ResourceList resource_list){
+        if (this.brick < resource_list.getBrick() &&
+		this.ore < resource_list.getOre() &&
+		this.sheep < resource_list.getSheep() &&
+		this.wheat < resource_list.getWheat() &&
+		this.wood < resource_list.getWood()){
+			return false;
+		}
+		return true;
+    }
 
 	public void addResources(ResourceList addList) {
 		this.brick += addList.getBrick();

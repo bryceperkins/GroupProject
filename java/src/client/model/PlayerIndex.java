@@ -41,4 +41,11 @@ public enum PlayerIndex {
     public int getIndex() {
         return index;
     }
+	public static PlayerIndex createPlayerAtIndex(int index){
+		if (index == 0) return PlayerIndex.Player1;
+		if (index == 1) return PlayerIndex.Player2;
+		if (index == 2) return PlayerIndex.Player3;
+		if (index == 3) return PlayerIndex.Player4;
+		return PlayerIndex.None;
+	}
 }

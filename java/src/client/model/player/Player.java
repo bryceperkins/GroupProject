@@ -144,10 +144,9 @@ public class Player implements PostProcessor {
 		
 		for(int i = 0; i < ports.size(); i++)
 		{
-			if(PortType.fromResourceType(ports.get(i).getResource()) == rt)
+			if(PortType.fromResourceType(ports.get(i).getResource()) == rt && ports.get(i).getRatio() < ratio)
 			{
 				ratio = ports.get(i).getRatio();
-				break;
 			}
 		}
 		
@@ -170,6 +169,7 @@ public class Player implements PostProcessor {
 			break;
 		case THREE:
 			temp.setThree();
+			return resources.hasOneResource(temp);
 		}
 		
 		return resources.hasResources(temp);
@@ -265,7 +265,7 @@ public class Player implements PostProcessor {
     public void setPlayerID(int id){
         this.playerID = id;
     }
-
+	
     public PlayerInfo toPlayerInfo(){
         PlayerInfo player = new PlayerInfo();
         player.setId(getPlayerID());
