@@ -147,7 +147,6 @@ public class Player implements PostProcessor {
 			if(PortType.fromResourceType(ports.get(i).getResource()) == rt && ports.get(i).getRatio() < ratio)
 			{
 				ratio = ports.get(i).getRatio();
-				break;
 			}
 		}
 		
@@ -170,6 +169,7 @@ public class Player implements PostProcessor {
 			break;
 		case THREE:
 			temp.setThree();
+			return resources.hasOneResource(temp);
 		}
 		
 		return resources.hasResources(temp);
