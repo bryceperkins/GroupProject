@@ -117,74 +117,114 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
+		boolean canIncrease=true;
+		boolean canDecrease=true;
+		Player player = manager.getActivePlayer();
+		ResourceList resources = player.getResources();
+		
 		if (resource==ResourceType.WOOD){
 			wood--;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(wood));
+			if (resources.getWood() <= wood && send_wood){
+				canIncrease=false;
+			}
 			if (wood <= 0){
-				getTradeOverlay().setResourceAmountChangeEnabled(resource,true,false);
+				canDecrease=false;
 			}
 		}else if (resource==ResourceType.WHEAT){
 			wheat--;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(wheat));
-			if (wheat() <= 0){
-				getTradeOverlay().setResourceAmountChangeEnabled(resource,true,false);
+			if (resources.getWheat() <= wheat && send_wheat){
+				canIncrease=false;
+			}
+			if (wheat <= 0){
+				canDecrease=false;
 			}
 		}else if (resource==ResourceType.BRICK){
 			brick--;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(brick));
+			if (resources.getBrick() <= brick && send_brick){
+				canIncrease=false;
+			}
 			if (brick <= 0){
-				getTradeOverlay().setResourceAmountChangeEnabled(resource,true,false);
+				canDecrease=false;
 			}
 		}else if (resource==ResourceType.SHEEP){
 			sheep--;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(sheep));
+			if (resources.getSheep() <= sheep && send_sheep){
+				canIncrease=false;
+			}
 			if (sheep <= 0){
-				getTradeOverlay().setResourceAmountChangeEnabled(resource,true,false);
+				canDecrease=false;
 			}
 		}else if (resource==ResourceType.ORE){
 			ore--;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(ore));
+			if (resources.getOre() <= ore && send_ore){
+				canIncrease=false;
+			}
 			if (ore <= 0){
-				getTradeOverlay().setResourceAmountChangeEnabled(resource,true,false);
+				canDecrease=false;
 			}
 		}
+		getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,canDecrease);
 	}
 
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
+		boolean canIncrease=true;
+		boolean canDecrease=true;
 		Player player = manager.getActivePlayer();
 		ResourceList resources = player.getResources();
+		
 		if (resource==ResourceType.WOOD){
 			wood++;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(wood));
-			if (resources.getWood() <= wood){
-				getTradeOverlay().setResourceAmountChangeEnabled(resource,false,true);
+			if (resources.getWood() <= wood && send_wood){
+				canIncrease=false;
+			}
+			if (wood <= 0){
+				canDecrease=false;
 			}
 		}else if (resource==ResourceType.WHEAT){
 			wheat++;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(wheat));
-			if (resources.getWheat() <= wheat){
-				getTradeOverlay().setResourceAmountChangeEnabled(resource,false,true);
+			if (resources.getWheat() <= wheat && send_wheat){
+				canIncrease=false;
+			}
+			if (wheat <= 0){
+				canDecrease=false;
 			}
 		}else if (resource==ResourceType.BRICK){
 			brick++;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(brick));
-			if (resources.getBrick() <= brick){
-				getTradeOverlay().setResourceAmountChangeEnabled(resource,false,true);
+			if (resources.getBrick() <= brick && send_brick){
+				canIncrease=false;
+			}
+			if (brick <= 0){
+				canDecrease=false;
 			}
 		}else if (resource==ResourceType.SHEEP){
 			sheep++;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(sheep));
-			if (resources.getSheep() <= sheep){
-				getTradeOverlay().setResourceAmountChangeEnabled(resource,false,true);
+			if (resources.getSheep() <= sheep && send_sheep){
+				canIncrease=false;
+			}
+			if (sheep <= 0){
+				canDecrease=false;
 			}
 		}else if (resource==ResourceType.ORE){
 			ore++;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(ore));
-			if (resources.getOre() <= ore){
-				getTradeOverlay().setResourceAmountChangeEnabled(resource,false,true);
+			if (resources.getOre() <= ore && send_ore){
+				canIncrease=false;
+			}
+			if (ore <= 0){
+				canDecrease=false;
 			}
 		}
+		getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,canDecrease);
 	}
 
 	@Override
@@ -196,11 +236,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
-		unsetResouce(ResourceType.WOOD);
-		unsetResouce(ResourceType.BRICK);
-		unsetResouce(ResourceType.SHEEP);
-		unsetResouce(ResourceType.WHEAT);
-		unsetResouce(ResourceType.ORE);
+		/*this.unsetResouce(ResourceType.WOOD);
+		this.unsetResouce(ResourceType.BRICK);
+		this.unsetResouce(ResourceType.SHEEP);
+		this.unsetResouce(ResourceType.WHEAT);
+		this.unsetResouce(ResourceType.ORE);*/
 		player_index=playerIndex;
 	}
 
@@ -211,6 +251,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		boolean canIncrease = true;
 		if (resource==ResourceType.WOOD){
 			wood=0;
+			send_wood=false;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(wood));
 			if (resources.getWood() <= wood){
 				canIncrease=false;
@@ -218,6 +259,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,false);
 		}else if (resource==ResourceType.WHEAT){
 			wheat=0;
+			send_wheat=false;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(wheat));
 			if (resources.getWheat() <= wheat){
 				canIncrease=false;
@@ -225,6 +267,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,false);
 		}else if (resource==ResourceType.BRICK){
 			brick=0;
+			send_brick=false;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(brick));
 			if (resources.getBrick() <= brick){
 				canIncrease=false;
@@ -232,6 +275,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,false);
 		}else if (resource==ResourceType.SHEEP){
 			sheep=0;
+			send_sheep=false;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(sheep));
 			if (resources.getSheep() <= sheep){
 				canIncrease=false;
@@ -239,6 +283,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,false);
 		}else if (resource==ResourceType.ORE){
 			ore=0;
+			send_ore=false;
 			getTradeOverlay().setResourceAmount(resource, String.valueOf(ore));
 			if (resources.getOre() <= ore){
 				canIncrease=false;
@@ -249,7 +294,50 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void setResourceToSend(ResourceType resource) {
-		
+		Player player = manager.getActivePlayer();
+		ResourceList resources = player.getResources();
+		boolean canIncrease = true;
+		if (resource==ResourceType.WOOD){
+			wood=0;
+			send_wood=true;
+			getTradeOverlay().setResourceAmount(resource, String.valueOf(wood));
+			if (resources.getWood() <= wood){
+				canIncrease=false;
+			}
+			getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,false);
+		}else if (resource==ResourceType.WHEAT){
+			wheat=0;
+			send_wheat=true;
+			getTradeOverlay().setResourceAmount(resource, String.valueOf(wheat));
+			if (resources.getWheat() <= wheat){
+				canIncrease=false;
+			}
+			getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,false);
+		}else if (resource==ResourceType.BRICK){
+			brick=0;
+			send_brick=true;
+			getTradeOverlay().setResourceAmount(resource, String.valueOf(brick));
+			if (resources.getBrick() <= brick){
+				canIncrease=false;
+			}
+			getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,false);
+		}else if (resource==ResourceType.SHEEP){
+			sheep=0;
+			send_sheep=true;
+			getTradeOverlay().setResourceAmount(resource, String.valueOf(sheep));
+			if (resources.getSheep() <= sheep){
+				canIncrease=false;
+			}
+			getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,false);
+		}else if (resource==ResourceType.ORE){
+			ore=0;
+			send_ore=true;
+			getTradeOverlay().setResourceAmount(resource, String.valueOf(ore));
+			if (resources.getOre() <= ore){
+				canIncrease=false;
+			}
+			getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,false);
+		}
 	}
 
 	@Override
