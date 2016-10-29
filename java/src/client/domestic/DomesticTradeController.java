@@ -1,15 +1,23 @@
 package client.domestic;
 
+import client.misc.*;
 import shared.definitions.*;
 import client.base.*;
-import client.misc.*;
-
+import client.data.PlayerInfo;
+import shared.commands.*;
+import client.communication.*;
+import client.model.*;
+import client.model.player.*;
+import client.server.*;
+import java.util.*;
+import client.model.map.*;
 
 /**
  * Domestic trade controller implementation
  */
-public class DomesticTradeController extends Controller implements IDomesticTradeController {
+public class DomesticTradeController extends Controller implements IDomesticTradeController, Observer {
 
+	private GameManager manager;
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
@@ -27,6 +35,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 		super(tradeView);
 		
+		manager = GameManager.getInstance();
+		manager.addObserver(this);
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
@@ -61,15 +71,40 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.acceptOverlay = acceptOverlay;
 	}
 
+	public void update(Observable ob, Object o){
+		Game game = manager.getActiveGame();
+		getTradeView().enableDomesticTrade(ModelProxy.isPlayerTurn() && game.getState().canTrade());
+	}
+	
 	@Override
 	public void startTrade() {
-
 		getTradeOverlay().showModal();
+		getTradeOverlay().reset();
+		getTradeOverlay().setTradeEnabled(false);
+		getTradeOverlay().setStateMessage("Set the trade you want to make");
+		Player player = manager.getActivePlayer();
+		Game game = manager.getActiveGame();
+		//Creates list of who you can trade with
+		List<PlayerInfo> players_info = new ArrayList<PlayerInfo>();
+		for (Player p: game.getPlayers()){
+			if (p.getPlayerIndex().getIndex() != player.getPlayerIndex().getIndex()){
+				PlayerInfo info = new PlayerInfo();
+				info.setId(p.getPlayerID());
+				info.setPlayerIndex(p.getPlayerIndex().getIndex());
+				info.setName(p.getName());
+				info.setColor(p.getColor());
+				players_info.add(info);
+			}
+		}
+		PlayerInfo[] info_array = Arrays.copyOf(players_info.toArray(), players_info.toArray().length, PlayerInfo[].class);
+		getTradeOverlay().setPlayers(info_array);
+		
 	}
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-
+		Player player = manager.getActivePlayer();
+		
 	}
 
 	@Override
@@ -91,7 +126,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
-
+		
 	}
 
 	@Override
