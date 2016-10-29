@@ -43,7 +43,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
-		player_index = 0;
+		player_index = -1;
 		wood=0;
 		wheat=0;
 		brick=0;
@@ -169,6 +169,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			}
 		}
 		getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,canDecrease);
+		if (wood == 0 && wheat==0 && sheep==0 && ore==0 && brick==0){
+			getTradeOverlay().setStateMessage("Set the trade you want to make");
+		} else if ((wood != 0 || wheat!=0 || sheep!=0 || ore!=0 || brick!=0) && player_index == -1){
+			getTradeOverlay().setStateMessage("Who would you like to trade with");
+		} else {
+			getTradeOverlay().setStateMessage("Make trade");
+			getTradeOverlay().setTradeEnabled(true);
+		}
 	}
 
 	@Override
@@ -225,23 +233,43 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			}
 		}
 		getTradeOverlay().setResourceAmountChangeEnabled(resource,canIncrease,canDecrease);
+		if (wood == 0 && wheat==0 && sheep==0 && ore==0 && brick==0){
+			getTradeOverlay().setStateMessage("Set the trade you want to make");
+		} else if ((wood != 0 || wheat!=0 || sheep!=0 || ore!=0 || brick!=0) && player_index == -1){
+			getTradeOverlay().setStateMessage("Who would you like to trade with");
+		} else {
+			getTradeOverlay().setStateMessage("Make trade");
+			getTradeOverlay().setTradeEnabled(true);
+		}
 	}
 
 	@Override
 	public void sendTradeOffer() {
-
+		if (ModelProxy.isPlayerTurn()){
+			Player player = manager.getActivePlayer();
+			TradeOffer trade_offer = new TradeOffer();
+			trade_offer.setSender(player.getPlayerIndex());
+			trade_offer.setReciever(PlayerIndex.valueOf(player_index));
+			trade_offer.setOffer(new ResourceList(brick, ore, sheep, wheat, wood));
+			OfferTrade offer = new OfferTrade(player.getPlayerIndex(), trade_offer, PlayerIndex.valueOf(player_index));
+			ServerProxy server = manager.getServer();
+			server.execute(offer);
+		}
 		getTradeOverlay().closeModal();
 //		getWaitOverlay().showModal();
 	}
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
-		/*this.unsetResouce(ResourceType.WOOD);
-		this.unsetResouce(ResourceType.BRICK);
-		this.unsetResouce(ResourceType.SHEEP);
-		this.unsetResouce(ResourceType.WHEAT);
-		this.unsetResouce(ResourceType.ORE);*/
 		player_index=playerIndex;
+		if (wood == 0 && wheat==0 && sheep==0 && ore==0 && brick==0){
+			getTradeOverlay().setStateMessage("Set the trade you want to make");
+		} else if ((wood != 0 || wheat!=0 || sheep!=0 || ore!=0 || brick!=0) && player_index == -1){
+			getTradeOverlay().setStateMessage("Who would you like to trade with");
+		} else {
+			getTradeOverlay().setStateMessage("Make trade");
+			getTradeOverlay().setTradeEnabled(true);
+		}
 	}
 
 	@Override
@@ -354,6 +382,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}else if (resource==ResourceType.ORE){
 			ore=0;
 		}
+		if (wood == 0 && wheat==0 && sheep==0 && ore==0 && brick==0){
+			getTradeOverlay().setStateMessage("Set the trade you want to make");
+		} else if ((wood != 0 || wheat!=0 || sheep!=0 || ore!=0 || brick!=0) && player_index == -1){
+			getTradeOverlay().setStateMessage("Who would you like to trade with");
+		} else {
+			getTradeOverlay().setStateMessage("Make trade");
+			getTradeOverlay().setTradeEnabled(true);
+		}
 	}
 
 	@Override
@@ -364,7 +400,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
-
+		Player player = manager.getActivePlayer();
+		AcceptTrade trade = new AcceptTrade(player.getPlayerIndex(), Boolean.valueOf(willAccept));
+		ServerProxy server = manager.getServer();
+		server.execute(trade);
 		getAcceptOverlay().closeModal();
 	}
 
