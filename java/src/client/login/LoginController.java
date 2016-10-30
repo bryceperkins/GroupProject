@@ -114,6 +114,10 @@ public class LoginController extends Controller implements ILoginController {
         String response = "";
 
         getLoginView().closeModal();
+        if (pass1.length() < 5){
+            error("Password is too short");
+            return;
+        }
         if (pass1.equals(pass2)) {
             try {
                 response = this.manager.getServer().execute(new UserRegister(username, pass1));

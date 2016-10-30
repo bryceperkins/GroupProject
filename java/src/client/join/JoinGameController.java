@@ -24,7 +24,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IAction joinAction;
     private GameManager manager = GameManager.getInstance();
     private GameInfo selected;
-    private boolean active = false;
+    private boolean active;
 	
 	
 	
@@ -44,7 +44,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
-		manager.addObserver(this);
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -113,20 +112,23 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
-        this.active = true;
+        this.active = true; 
+		manager.addObserver(this);
         this.manager.getPoller().setCommand(new GamesList());
+        getJoinGameView().showModal();
 	}
 
 	@Override
 	public void startCreateNewGame() {
-        this.active = false;
+        this.active = false; 
+        getJoinGameView().closeModal();
 		getNewGameView().showModal();
 	}
 
 	@Override
 	public void cancelCreateNewGame() {
-        this.active = true;
 		getNewGameView().closeModal();
+        start();
 	}
     
     private void error(String message, IAction action) {
@@ -138,31 +140,27 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void createNewGame() {
-        JsonParser parser = new JsonParser();
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Game.class, new GamesCreateDeserializer());
-        Gson gson = gsonBuilder.create();
-
-        String response = manager.getServer().execute(new GamesList());
-        JsonArray gamesArray = parser.parse(response).getAsJsonArray();
+        getJoinGameView().closeModal();
 
         String title = getNewGameView().getTitle();
         boolean randomNumbers = getNewGameView().getRandomlyPlaceNumbers();
         boolean randomHexes = getNewGameView().getRandomlyPlaceHexes();
         boolean randomPorts = getNewGameView().getUseRandomPorts();
 
-        response = manager.getServer().execute(new GamesCreate(title, randomHexes, randomPorts, randomNumbers));
+        String response = manager.getServer().execute(new GamesCreate(title, randomHexes, randomPorts, randomNumbers));
         if (response != "Failed"){
-            Game game = gson.fromJson(response, Game.class);
+            Game game = new Gson().fromJson(response, Game.class);
             manager.getServer().execute(new GamesJoin(game.getId(), CatanColor.RED));
         }
-        this.active = true;
 		getNewGameView().closeModal();
+        start();
 	}
 
 	@Override
 	public void startJoinGame(GameInfo game) {
-        this.active = false;
+        this.active = false; 
+        getJoinGameView().closeModal();
+
         this.selected = game;
         for(CatanColor color: CatanColor.values()){
             getSelectColorView().setColorEnabled(color, true);
@@ -179,15 +177,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void cancelJoinGame() {
-        this.active = true;
 		getJoinGameView().closeModal();
+        start();
 	}
 
 	@Override
 	public void joinGame(CatanColor color) {
-        String response = manager.getServer().execute(new GamesJoin(this.selected.getId(), color));
-        //manager.setActiveGame(this.selected.getId());
+		manager.deleteObserver(this);
         getSelectColorView().closeModal();
+
+        String response = manager.getServer().execute(new GamesJoin(this.selected.getId(), color));
         if (!response.equals("Failed")){
             getJoinGameView().closeModal();
             joinAction.execute();
