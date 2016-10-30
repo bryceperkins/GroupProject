@@ -33,212 +33,123 @@ public class Map implements PostProcessor {
 	}
 
 	public boolean canBuildRoad(Player player, EdgeLocation edgeLocation, State state){
-        int playerID = player.getPlayerID();
-        edgeLocation = edgeLocation.getNormalizedLocation();
+        EdgeLocation normalizedEdgeLocation = edgeLocation.getNormalizedLocation(); //when do i ever not normalize before using an edge....
 
-        for(Road road : roads){
-            if(road.getLocation().equals(edgeLocation))
+        for (Road road : roads) {
+            if (road.getLocation().getNormalizedLocation().equals(normalizedEdgeLocation)) {
                 return false;
+            }
         }
-        if(isWaterEdge(edgeLocation))
+
+        HexLocation neighborLoc = normalizedEdgeLocation.getHexLoc().getNeighborLoc(normalizedEdgeLocation.getDir());
+        Hex hex = getHexByHexLocation((normalizedEdgeLocation.getHexLoc()));
+        Hex neighborHex = getHexByHexLocation(neighborLoc);
+
+        if((!hexes.contains(hex) && !isWaterEdge(normalizedEdgeLocation.getHexLoc()))
+                || (!hexes.contains(neighborHex) && !isWaterEdge(neighborLoc))
+                || (isWaterEdge(neighborLoc) && isWaterEdge(normalizedEdgeLocation.getHexLoc()))){
             return false;
-        if(state.isFirstRound()||state.isSecondRound())
-            return true;
-        edgeLocation = edgeLocation.getNormalizedLocation();
-        int locationX = edgeLocation.getHexLoc().getX();
-        int locationY = edgeLocation.getHexLoc().getY();
-        EdgeDirection locationDirection = edgeLocation.getDir();
-
-        //check four edge locations
-        EdgeLocation edge1 = null;
-        EdgeLocation edge2 = null;
-        EdgeLocation edge3 = null;
-        EdgeLocation edge4 = null;
-        HexLocation hex12;
-        HexLocation hex34;
-        VertexLocation vertLoc1 = null;
-        VertexLocation vertLoc2 = null;
-
-
-        switch(locationDirection){
-            case North:
-                hex12 = new HexLocation(locationX,locationY);
-                edge1 = new EdgeLocation(hex12,EdgeDirection.NorthEast);
-                edge2 = new EdgeLocation(hex12,EdgeDirection.NorthWest);
-
-                hex34 = new HexLocation(locationX,locationY-1);
-                edge3 = new EdgeLocation(hex34,EdgeDirection.SouthEast);
-                edge4 = new EdgeLocation(hex34,EdgeDirection.SouthWest);
-                vertLoc1 = new VertexLocation(hex12, VertexDirection.NorthEast);
-                vertLoc2 = new VertexLocation(hex12, VertexDirection.NorthWest);
-                break;
-            case NorthEast:
-                hex12 = new HexLocation(locationX,locationY);
-                edge1 = new EdgeLocation(hex12,EdgeDirection.North);
-                edge2 = new EdgeLocation(hex12,EdgeDirection.SouthEast);
-
-                hex34 = new HexLocation(locationX+1,locationY-1);
-                edge3 = new EdgeLocation(hex34,EdgeDirection.NorthWest);
-                edge4 = new EdgeLocation(hex34,EdgeDirection.South);
-                vertLoc1 = new VertexLocation(hex12, VertexDirection.NorthEast);
-                vertLoc2 = new VertexLocation(hex12, VertexDirection.East);
-                break;
-            case NorthWest:
-                hex12 = new HexLocation(locationX,locationY);
-                edge1 = new EdgeLocation(hex12,EdgeDirection.North);
-                edge2 = new EdgeLocation(hex12,EdgeDirection.SouthWest);
-
-                hex34 = new HexLocation(locationX-1,locationY);
-                edge3 = new EdgeLocation(hex34,EdgeDirection.NorthEast);
-                edge4 = new EdgeLocation(hex34,EdgeDirection.South);
-                vertLoc1 = new VertexLocation(hex12, VertexDirection.West);
-                vertLoc2 = new VertexLocation(hex12, VertexDirection.NorthWest);
-                break;
-            case South:
-                hex12 = new HexLocation(locationX,locationY);
-                edge1 = new EdgeLocation(hex12,EdgeDirection.SouthWest);
-                edge2 = new EdgeLocation(hex12,EdgeDirection.SouthEast);
-
-                hex34 = new HexLocation(locationX,locationY+1);
-                edge3 = new EdgeLocation(hex34,EdgeDirection.NorthWest);
-                edge4 = new EdgeLocation(hex34,EdgeDirection.NorthEast);
-                vertLoc1 = new VertexLocation(hex12, VertexDirection.SouthEast);
-                vertLoc2 = new VertexLocation(hex12, VertexDirection.SouthWest);
-                break;
-            case SouthEast:
-                hex12 = new HexLocation(locationX,locationY);
-                edge1 = new EdgeLocation(hex12,EdgeDirection.NorthEast);
-                edge2 = new EdgeLocation(hex12,EdgeDirection.South);
-
-                hex34 = new HexLocation(locationX,locationY+1);
-                edge3 = new EdgeLocation(hex34,EdgeDirection.North);
-                edge4 = new EdgeLocation(hex34,EdgeDirection.SouthWest);
-                vertLoc1 = new VertexLocation(hex12, VertexDirection.SouthEast);
-                vertLoc2 = new VertexLocation(hex12, VertexDirection.East);
-                break;
-            case SouthWest:
-                hex12 = new HexLocation(locationX,locationY);
-                edge1 = new EdgeLocation(hex12,EdgeDirection.NorthWest);
-                edge2 = new EdgeLocation(hex12,EdgeDirection.South);
-
-                hex34 = new HexLocation(locationX,locationY+1);
-                edge3 = new EdgeLocation(hex34,EdgeDirection.North);
-                edge4 = new EdgeLocation(hex34,EdgeDirection.SouthEast);
-                vertLoc1 = new VertexLocation(hex12, VertexDirection.SouthWest);
-                vertLoc2 = new VertexLocation(hex12, VertexDirection.West);
-                break;
         }
 
-        edge1 = edge1.getNormalizedLocation();
-        edge2 = edge2.getNormalizedLocation();
-        edge3 = edge3.getNormalizedLocation();
-        edge4 = edge4.getNormalizedLocation();
+        if(state.isFirstRound()||state.isSecondRound()){
+            //check possible city positions
+            ItemLocation v1;
+            ItemLocation v2;
+            List<Road> possibleRoads = new ArrayList<Road>(roads);
+            Road road = new Road(player.getPlayerIndex(),normalizedEdgeLocation);
+            possibleRoads.add(road);
 
-        if(checkForPlayerRoad(playerID,edge1) || checkForPlayerRoad(playerID,edge2) ||
-            checkForPlayerRoad(playerID,edge3) || checkForPlayerRoad(playerID,edge4))
-            return true;
-
-        vertLoc1 = vertLoc1.getNormalizedLocation();
-        vertLoc2 = vertLoc2.getNormalizedLocation();
-        if(checkForPlayerBuildings(playerID,vertLoc1) || checkForPlayerBuildings(playerID,vertLoc2))
-            return true;
-
-
-    	return false;
+            switch(normalizedEdgeLocation.getDir()) {
+                case NorthEast:
+                    v1 = new ItemLocation(normalizedEdgeLocation.getHexLoc(), VertexDirection.NorthEast);
+                    v2 = new ItemLocation(normalizedEdgeLocation.getHexLoc(), VertexDirection.East);
+                    return (checkBuildSettlement(player, v1, state, possibleRoads) || checkBuildSettlement(player, v2, state, possibleRoads));
+                case North:
+                    v1 = new ItemLocation(normalizedEdgeLocation.getHexLoc(), VertexDirection.NorthEast);
+                    v2 = new ItemLocation(normalizedEdgeLocation.getHexLoc(), VertexDirection.NorthWest);
+                    return (checkBuildSettlement(player, v1, state, possibleRoads) || checkBuildSettlement(player, v2, state, possibleRoads));
+                case NorthWest:
+                    v1 = new ItemLocation(normalizedEdgeLocation.getHexLoc(), VertexDirection.NorthWest);
+                    v2 = new ItemLocation(normalizedEdgeLocation.getHexLoc(), VertexDirection.West);
+                    return (checkBuildSettlement(player, v1, state, possibleRoads) || checkBuildSettlement(player, v2, state, possibleRoads));
+                default:
+                    return false;
+            }
+        }else {
+            switch (normalizedEdgeLocation.getDir()) {
+                case North:
+                    return checkNorthEdge(normalizedEdgeLocation, player);
+                case NorthEast:
+                    return checkNorthEastEdge(normalizedEdgeLocation, player);
+                case NorthWest:
+                    return checkNorthWestEdge(normalizedEdgeLocation, player);
+                default:
+                    return false;
+            }
+        }
     }
 
-    public boolean isWaterEdge(EdgeLocation edge){
-        edge = edge.getNormalizedLocation();
-        int x = edge.getX();
-        int y = edge.getY();
+    public Hex getHexByHexLocation(HexLocation hexLoc){
+
         for (Hex hex: hexes){
-            if(hex.getLocation().equals(edge.getHexLoc())){return false;}
+            if ( hex.getLocation().equals(hexLoc))
+                return hex;
         }
-        EdgeDirection dir = edge.getDir();
-        if(x > 3 || x < -3 || y > 3){return true;}
-        if(dir == EdgeDirection.North || dir == EdgeDirection.South)
-            if(x == 3 || x == -3){return true;}
-        if(dir == EdgeDirection.NorthWest || dir == EdgeDirection.SouthEast){
-            if(y == 3 || y == -3){return true;}
-        }
-        if(dir == EdgeDirection.NorthEast || dir == EdgeDirection.SouthWest){
-            if(x == -3 && y == 0){return true;}
-            if(x == -2 && y == -1){return true;}
-            if(x == -1 && y == -2){return true;}
-            if(x == 0 && y == -3){return true;}
-            if(x == 0 && y == 3){return true;}
-            if(x == 1 && y == 2){return true;}
-            if(x == 2 && y == 1){return true;}
-            if(x == 3 && y == 0){return true;}
-        }
-
-        return false;
+        return null;
     }
 
-    public boolean checkForPlayerRoad(int playerID, EdgeLocation edge){
-        for(Road road: roads){
-            if(road.getLocation().equals(edge) && road.getOwner().getIndex() == playerID)
-                return true;
-        }
-        return false;
-    }
-    public boolean checkForPlayerBuildings(int playerID, VertexLocation vertex){
-        for(Settlement settlement: settlements){
-            if(settlement.getLocation().equals(vertex) && settlement.getOwner().getIndex() == playerID)
-                return true;
-        }
-        for(City city: cities){
-            if(city.getLocation().equals(vertex) && city.getOwner().getIndex() == playerID)
-                return true;
-        }
-        return false;
+    public boolean canBuildSettlement(Player player, ItemLocation location, State state) {
+        return checkBuildSettlement(player, location, state, roads);
     }
 
-    public boolean canBuildSettlement(Player player, ItemLocation itemLocation, State state){
+    public boolean checkBuildSettlement(Player player, ItemLocation itemLocation, State state, List<Road> roadsMod){
     	/*
     	 * does vertex have settlement or city on it
     	 * does the vertex right next to it have a city/settlement on it
     	 */
-    	//if(state == null)
-    	//    state = new State();
-    	if(isWaterEdge(itemLocation.getLocation()))
-    	if(checkVertex(itemLocation.getLocation(), itemLocation.getDirection()) == false)
-    		return false;
-    	
-    	switch (itemLocation.getDirection())
-    	{
-    	case West: 
-    		return checkVertex(itemLocation.getLocation(), VertexDirection.NorthWest) &&
-    				checkVertex(itemLocation.getLocation(), VertexDirection.SouthWest) &&
-    				checkVertex(new HexLocation(itemLocation.getLocation().getX() -1, itemLocation.getLocation().getY() + 1), VertexDirection.East);
-    	case NorthWest:
-    		return checkVertex(itemLocation.getLocation(), VertexDirection.NorthEast) &&
-    				checkVertex(itemLocation.getLocation(), VertexDirection.West) &&
-    				checkVertex(new HexLocation(itemLocation.getLocation().getX() -1, itemLocation.getLocation().getY() + 1), VertexDirection.NorthEast);
-    	
-    	case NorthEast:
-    		return checkVertex(itemLocation.getLocation(), VertexDirection.NorthWest) &&
-    				checkVertex(itemLocation.getLocation(), VertexDirection.SouthEast) &&
-    				checkVertex(new HexLocation(itemLocation.getLocation().getX() +1, itemLocation.getLocation().getY() + 1), VertexDirection.NorthWest);
-    	
-    	case East:
-    		return checkVertex(itemLocation.getLocation(), VertexDirection.SouthEast) &&
-    				checkVertex(itemLocation.getLocation(), VertexDirection.NorthEast) &&
-    				checkVertex(new HexLocation(itemLocation.getLocation().getX() +1, itemLocation.getLocation().getY() + 1), VertexDirection.SouthEast);
-    	
-    	case SouthEast:
-    		return checkVertex(itemLocation.getLocation(), VertexDirection.East) &&
-    				checkVertex(itemLocation.getLocation(), VertexDirection.SouthWest) &&
-    				checkVertex(new HexLocation(itemLocation.getLocation().getX() +1, itemLocation.getLocation().getY() - 1), VertexDirection.SouthWest);
-    	
-    	case SouthWest:
-    		return checkVertex(itemLocation.getLocation(), VertexDirection.West) &&
-    				checkVertex(itemLocation.getLocation(), VertexDirection.SouthEast) &&
-    				checkVertex(new HexLocation(itemLocation.getLocation().getX() -1, itemLocation.getLocation().getY() - 1), VertexDirection.West);
-    	
-    	}
-    	
-    	return false;
+        VertexLocation normalizedVertLoc = itemLocation.toVertexLocation().getNormalizedLocation();
+
+        for (Settlement settlement : settlements) {
+            if (settlement.getLocation().getNormalizedLocation().equals(normalizedVertLoc)) {
+                return false;
+            }
+        }
+        for (City city : cities) {
+            if (city.getLocation().getNormalizedLocation().equals(normalizedVertLoc)) {
+                return false;
+            }
+        }
+
+        EdgeDirection edgeDir;
+        if (normalizedVertLoc.getDir() == VertexDirection.NorthEast) {
+            edgeDir = EdgeDirection.NorthEast;
+        }
+        else {
+            edgeDir = EdgeDirection.NorthWest;
+        }
+
+        HexLocation sideNeighborLoc = normalizedVertLoc.getHexLoc().getNeighborLoc(edgeDir);
+        HexLocation northNeighborLoc = normalizedVertLoc.getHexLoc().getNeighborLoc(EdgeDirection.North);
+
+        Hex northNeighborHex = getHexByHexLocation(northNeighborLoc);
+        Hex sideNeighborHex = getHexByHexLocation(sideNeighborLoc);
+
+        if ((!hexes.contains(northNeighborHex) && !isWaterEdge(northNeighborLoc))
+                || (!hexes.contains(sideNeighborHex) && !isWaterEdge(sideNeighborLoc))
+                || (isWaterEdge(normalizedVertLoc.getHexLoc())
+                && isWaterEdge(northNeighborLoc)
+                && isWaterEdge(sideNeighborLoc))) {
+            return false;
+        }
+        switch(normalizedVertLoc.getDir()) {
+            case NorthEast:
+                return checkNorthEastVertex(normalizedVertLoc, player, roadsMod);
+            case NorthWest:
+                return checkNorthWestVertex(normalizedVertLoc, player, roadsMod);
+            default:
+                return false;
+        }
+
     }
 
     public boolean isWaterEdge(HexLocation hexLoc){
@@ -249,50 +160,22 @@ public class Map implements PostProcessor {
         if(x == -3 && y == 2){return true;}
         if(x == -3 && y == 1){return true;}
         if(x == -3 && y == 0){return true;}
-
         if(x == -2 && y == -1){return true;}
         if(x == -2 && y == 3){return true;}
-
         if(x == -1 && y == -2){return true;}
         if(x == -1 && y == 3){return true;}
-
         if(x == 0 && y == 3){return true;}
         if(x == 0 && y == -3){return true;}
-
         if(x == 1 && y == -3){return true;}
         if(x == 1 && y == 2){return true;}
-
         if(x == 2 && y == -3){return true;}
         if(x == 2 && y == 1){return true;}
-
         if(x == 3 && y == -3){return true;}
         if(x == 3 && y == -2){return true;}
         if(x == 3 && y == -1){return true;}
         if(x == 3 && y == 0){return true;}
 
         return false;
-    }
-    
-    private boolean checkVertex(HexLocation loc, VertexDirection dir)
-    {
-    	for(int i = 0; i < settlements.size(); i++)
-    	{
-    		if(settlements.get(i).getLocation().equals(loc) && 
-    				settlements.get(i).getLocation().getDirection() == dir)
-    		{
-    			return false;
-    		}
-    	}
-    	for(int i = 0; i < cities.size(); i++)
-    	{
-    		if(cities.get(i).getLocation().equals(loc) && 
-    				cities.get(i).getLocation().getDirection() == dir)
-    		{
-    			return false;
-    		}
-    	}
-    	
-    	return true;
     }
 
 	public List<Road> getRoads() {
@@ -323,7 +206,7 @@ public class Map implements PostProcessor {
     public boolean canPlaceRobber(HexLocation hexLoc){
         Robber robber = getRobber();
 
-        if(hexLoc.equals(robber))
+        if(hexLoc.equals(robber) && hexLoc != null)
             return true;
         else
             return false;
@@ -392,4 +275,143 @@ public class Map implements PostProcessor {
             r.postDeserializationSetup(game);
         }
 	}
+
+    private boolean checkNorthEastVertex(VertexLocation normVerLoc, Player player, List<Road> roadsMod) {
+        VertexLocation vertex1 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), VertexDirection.NorthWest);
+        VertexLocation vertex2 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.SouthEast), VertexDirection.NorthWest);
+        VertexLocation vertex3 = new VertexLocation(normVerLoc.getHexLoc(), VertexDirection.NorthWest);
+
+        for (Settlement settlement : settlements) {
+
+            if (settlement.getLocation().getNormalizedLocation().equals(vertex1) ||
+                    settlement.getLocation().getNormalizedLocation().equals(vertex2) ||
+                    settlement.getLocation().getNormalizedLocation().equals(vertex3)) {
+                return false;
+            }
+        }
+        for (City city : cities) {
+
+            if (city.getLocation().getNormalizedLocation().equals(vertex1) ||
+                    city.getLocation().getNormalizedLocation().equals(vertex2) ||
+                    city.getLocation().getNormalizedLocation().equals(vertex3)) {
+                return false;
+            }
+        }
+
+        EdgeLocation edge1 = new EdgeLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), EdgeDirection.NorthWest);
+        EdgeLocation edge2= new EdgeLocation(normVerLoc.getHexLoc(), EdgeDirection.North);
+        EdgeLocation edge3 = new EdgeLocation(normVerLoc.getHexLoc(), EdgeDirection.NorthEast);
+
+        for (Road road : roadsMod) {
+            if ((road.getLocation().getNormalizedLocation().equals(edge1) && player.getPlayerIndex() == road.getOwner()) ||
+                    (road.getLocation().getNormalizedLocation().equals(edge2) && player.getPlayerIndex() == road.getOwner()) ||
+                    (road.getLocation().getNormalizedLocation().equals(edge3) && player.getPlayerIndex() == road.getOwner())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkNorthWestVertex(VertexLocation normVerLoc, Player player, List<Road> roadsMod) {
+        VertexLocation vertex1 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), VertexDirection.NorthEast);
+        VertexLocation vertex2 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.SouthWest), VertexDirection.NorthEast);
+        VertexLocation vertex3 = new VertexLocation(normVerLoc.getHexLoc(), VertexDirection.NorthEast);
+
+        for (Settlement settlement : settlements) {
+
+            if (settlement.getLocation().getNormalizedLocation().equals(vertex1) ||
+                    settlement.getLocation().getNormalizedLocation().equals(vertex2) ||
+                    settlement.getLocation().getNormalizedLocation().equals(vertex3)) {
+                return false;
+            }
+        }
+
+        for (City city : cities) {
+
+            if (city.getLocation().getNormalizedLocation().equals(vertex1) ||
+                    city.getLocation().getNormalizedLocation().equals(vertex2) ||
+                    city.getLocation().getNormalizedLocation().equals(vertex3)) {
+                return false;
+            }
+        }
+
+        EdgeLocation edge1 = new EdgeLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), EdgeDirection.NorthEast);
+        EdgeLocation edge2= new EdgeLocation(normVerLoc.getHexLoc(), EdgeDirection.North);
+        EdgeLocation edge3 = new EdgeLocation(normVerLoc.getHexLoc(), EdgeDirection.NorthWest);
+
+        for (Road road : roadsMod) {
+            if ((road.getLocation().getNormalizedLocation().equals(edge1) && player.getPlayerIndex() == road.getOwner()) ||
+                    (road.getLocation().getNormalizedLocation().equals(edge2) && player.getPlayerIndex() == road.getOwner()) ||
+                    (road.getLocation().getNormalizedLocation().equals(edge3) && player.getPlayerIndex() == road.getOwner())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkNorthEastEdge(EdgeLocation normEdgeLocation, Player player) {
+        HexLocation thisHexLoc = normEdgeLocation.getHexLoc();
+        HexLocation NEHexLoc = normEdgeLocation.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast);
+        HexLocation SEHexLoc = normEdgeLocation.getHexLoc().getNeighborLoc(EdgeDirection.SouthEast);
+
+        for (Road road : roads) {
+            if (road.getOwner() == player.getPlayerIndex() && road.getLocation().getNormalizedLocation().equals(new EdgeLocation(thisHexLoc, EdgeDirection.North))) {
+                return true;
+            }
+            else if (road.getOwner() == player.getPlayerIndex() && road.getLocation().getNormalizedLocation().equals(new EdgeLocation(NEHexLoc, EdgeDirection.NorthWest))) {
+                return true;
+            }
+            else if (road.getOwner() == player.getPlayerIndex() && road.getLocation().getNormalizedLocation().equals(new EdgeLocation(SEHexLoc, EdgeDirection.North))) {
+                return true;
+            }
+            else if (road.getOwner() == player.getPlayerIndex() && road.getLocation().getNormalizedLocation().equals(new EdgeLocation(SEHexLoc, EdgeDirection.NorthWest))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkNorthEdge(EdgeLocation normEdgeLocation, Player player) {
+        HexLocation thisHexLoc = normEdgeLocation.getHexLoc();
+        HexLocation NEHexLoc = normEdgeLocation.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast);
+        HexLocation NWHexLoc = normEdgeLocation.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest);
+
+        for (Road road : roads) {
+            if (road.getOwner() == player.getPlayerIndex() && road.getLocation().getNormalizedLocation().equals(new EdgeLocation(thisHexLoc, EdgeDirection.NorthEast))) {
+                return true;
+            }
+            else if (road.getOwner() == player.getPlayerIndex() && road.getLocation().getNormalizedLocation().equals(new EdgeLocation(thisHexLoc, EdgeDirection.NorthWest))) {
+                return true;
+            }
+            else if (road.getOwner() == player.getPlayerIndex() && road.getLocation().getNormalizedLocation().equals(new EdgeLocation(NEHexLoc, EdgeDirection.NorthWest))) {
+                return true;
+            }
+            else if (road.getOwner() == player.getPlayerIndex() && road.getLocation().getNormalizedLocation().equals(new EdgeLocation(NWHexLoc, EdgeDirection.NorthEast))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkNorthWestEdge(EdgeLocation normEdgeLocation, Player player) {
+        HexLocation thisHexLoc = normEdgeLocation.getHexLoc();
+        HexLocation NWHexLoc = normEdgeLocation.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest);
+        HexLocation SWHexLoc = normEdgeLocation.getHexLoc().getNeighborLoc(EdgeDirection.SouthWest);
+
+        for (Road road : roads) {
+            if (road.getOwner() == player.getPlayerIndex() && road.getLocation().getNormalizedLocation().equals(new EdgeLocation(thisHexLoc, EdgeDirection.North))) {
+                return true;
+            }
+            else if (road.getOwner() == player.getPlayerIndex() && road.getLocation().getNormalizedLocation().equals(new EdgeLocation(NWHexLoc, EdgeDirection.NorthEast))) {
+                return true;
+            }
+            else if (road.getOwner() == player.getPlayerIndex() && road.getLocation().getNormalizedLocation().equals(new EdgeLocation(SWHexLoc, EdgeDirection.North))) {
+                return true;
+            }
+            else if (road.getOwner() == player.getPlayerIndex() && road.getLocation().getNormalizedLocation().equals(new EdgeLocation(SWHexLoc, EdgeDirection.NorthEast))) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

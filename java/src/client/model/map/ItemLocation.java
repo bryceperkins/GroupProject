@@ -28,6 +28,13 @@ public class ItemLocation {
 			
 			return false;
 	}
+
+	public VertexLocation toVertexLocation()
+	{
+		VertexLocation vertLoc = new VertexLocation(location,direction);
+		return vertLoc;
+	}
+
 	public HexLocation getLocation() {
 		return location;
 	}
