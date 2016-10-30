@@ -3,7 +3,7 @@ package client.join;
 import com.google.gson.*;
 
 import java.util.*;
-import shared.definitions.CatanColor;
+import shared.definitions.*;
 import client.base.*;
 import client.data.*;
 import client.misc.*;

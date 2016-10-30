@@ -101,7 +101,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		super.update(o, arg);
+		//super.update(o, arg);
 
 		if (manager.getActiveGame() != null) {
 			if (setup) {
