@@ -48,21 +48,18 @@ public class RollController extends Controller implements IRollController, Obser
 		if (ModelProxy.isPlayerTurn() && ModelProxy.getGameStatus().equals(TurnTracker.GameStatus.Rolling)) {
 			System.out.println("rollDice");
 			Random rand = new Random();
-			int rollResult = 7;
-			while(rollResult == 7){
-				int die1 = rand.nextInt(6) + 1;
-				int die2 = rand.nextInt(6) + 1;
-				rollResult = die1 + die2;
-			}
+			int die1 = rand.nextInt(6) + 1;
+			int die2 = rand.nextInt(6) + 1;
+			int rollResult = die1 + die2;
 
 			getRollView().closeModal();
 
-			String result = manager.getServer().execute(new RollNumber(manager.getActivePlayerIndex(), rollResult));
+			String result = manager.getServer().execute(new RollNumber(manager.getCurrentPlayerInfo().getPlayerIndex(), rollResult));
 			if (!result.equals("Failed")) {
 				resultView.setRollValue(rollResult);
 				resultView.showModal();
 			} else {
-				error("failed to submit dice roll");
+				error("failed to join game");
 			}
 
 		}
@@ -74,6 +71,7 @@ public class RollController extends Controller implements IRollController, Obser
 
 		if (ModelProxy.getCurrentTurn() != null && ModelProxy.isPlayerTurn()
 				&& ModelProxy.getGameStatus().equals(TurnTracker.GameStatus.Rolling)) {
+			System.out.println("in update on RollController");
 			getRollView().showModal();
 		}
 	}

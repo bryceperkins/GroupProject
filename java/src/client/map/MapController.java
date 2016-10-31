@@ -132,7 +132,7 @@ public class MapController extends Controller implements IMapController,Observer
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		State state = game.getState();
-		if(game.getMap().canBuildRoad(this.manager.getActivePlayer(),edgeLoc, state.isFirstRound() || state.isSecondRound()))
+		if(game.getMap().canBuildRoad(this.manager.getActivePlayer(),edgeLoc, state))
 			return true;
 		else
 			return false;			
@@ -140,7 +140,7 @@ public class MapController extends Controller implements IMapController,Observer
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
 
-		if(game.getMap().canBuildSettlement(this.manager.getActivePlayer(), convertVertexLocationToItemLocation(vertLoc)))
+		if(game.getMap().canBuildSettlement(this.manager.getActivePlayer(), convertVertexLocationToItemLocation(vertLoc), game.getState()))
 			return true;
 		else
 			return false;
