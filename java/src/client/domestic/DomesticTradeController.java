@@ -89,13 +89,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		Game game = manager.getActiveGame();
 		getTradeView().enableDomesticTrade(ModelProxy.isPlayerTurn() && game.getState().canTrade());
 		
-		dealWithTradeOffer();
-	}
-	
-	private void dealWithTradeOffer(){
 		/*if (manager.getActiveGame() != null && manager.getActiveGame().getTradeOffer() != null){
-			TradeOffer trade_offer = manager.getActiveGame().getTradeOffer();
-			Game game = manager.getActiveGame();
+			TradeOffer trade_offer = game.getTradeOffer();
 			Player player = manager.getActivePlayer();
 			if (player.getPlayerIndex().equals(trade_offer.getReciever())){
 				ResourceList offer = trade_offer.getOffer();
@@ -135,10 +130,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			}
 		} else if {
 			getWaitOverlay().closeModal();
-		}
-		PlayerInfo[] info_array = Arrays.copyOf(players_info.toArray(), players_info.toArray().length, PlayerInfo[].class);
-		getTradeOverlay().setPlayers(info_array);
-		*/
+		}*/
 	}
 	
 	@Override
