@@ -1,7 +1,11 @@
 package shared.communication;
 
+import java.util.regex.*;
+
 public class UserName implements Input {
     private String name;
+    private Pattern p = Pattern.compile("^[\\w-]{3,7}$");
+    private Matcher m;
 
     public UserName(){ }
     public UserName(String name) throws InvalidInputException {
@@ -25,13 +29,10 @@ public class UserName implements Input {
      * @return Boolean
      */
     public boolean valid(String name) {
-        String [] invalid = {"'", "\"" };
-        for (int i = 0; i < invalid.length; i++) {
-            if (name.contains(invalid[i])) {
-                return false;
-            }
-        }
-        return true;
+        Matcher m = p.matcher(name);
+        boolean isValid = m.matches();
+
+        return isValid;
     }
     public String toString() {
         return this.name;
