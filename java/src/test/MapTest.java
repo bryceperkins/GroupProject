@@ -46,8 +46,8 @@ public class MapTest {
     @Test
     public void test_canBuildSettlement_expect_true()
     {
-
-        assertFalse(testMap.canBuildSettlement(testPlayer,itemLocation,manager.getActiveGame().getState()));
+        State state = new State(TurnTracker.GameStatus.Playing);
+        assertFalse(testMap.canBuildSettlement(testPlayer,itemLocation,state));
     }
     
 /*    
