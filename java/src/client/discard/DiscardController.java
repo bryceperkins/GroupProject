@@ -58,7 +58,6 @@ public class DiscardController extends Controller implements IDiscardController 
                 getDiscardView().setResourceAmountChangeEnabled(resource, false, true);
         }
         update();
-        System.out.println("Increase");
 	}
 
 	@Override
@@ -72,8 +71,6 @@ public class DiscardController extends Controller implements IDiscardController 
             getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
         }
         update();
-        System.out.println("Decrease");
-		
 	}
 
 	@Override
@@ -106,10 +103,6 @@ public class DiscardController extends Controller implements IDiscardController 
         this.index = index;
         this.player = this.manager.getActiveGame().getPlayer(index);
         this.resources = this.player.getResources();
-        for (ResourceType r: ResourceType.values()){
-            System.out.println("Player has: " + r.getValue() + " " + resources.count(r));
-        }
-        
         this.discardAmount = this.resources.total()/2;
         update();
         getDiscardView().showModal();
