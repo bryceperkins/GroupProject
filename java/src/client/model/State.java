@@ -168,8 +168,8 @@ public class State {
 				this.canBuildRoad = false;
 				this.canBuildSettlement = false;
 
-				this.isRoadFree = false;
-				this.isSettlementFree = false;
+				this.isRoadFree = true;
+				this.isSettlementFree = true;
 
 				this.canTrade = false;
 				this.canBuyDevCard = false;
@@ -183,8 +183,8 @@ public class State {
 				this.canBuildRoad = false;
 				this.canBuildSettlement = false;
 
-				this.isRoadFree = false;
-				this.isSettlementFree = false;
+				this.isRoadFree = true;
+				this.isSettlementFree = true;
 
 				this.canTrade = false;
 				this.canBuyDevCard = false;

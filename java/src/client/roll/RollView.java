@@ -14,8 +14,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import client.base.*;
-import client.model.ModelProxy;
-import client.model.TurnTracker;
 
 /**
  * Implementation for the roll view, which allows the user to roll the dice
@@ -74,11 +72,9 @@ public class RollView extends OverlayView implements IRollView {
 				new java.util.TimerTask() {
 					@Override
 					public void run() {
-						if (ModelProxy.getGameStatus().equals(TurnTracker.GameStatus.Rolling)) {
-							closeModal();
+						closeModal();
 
-							getController().rollDice();
-						}
+                        getController().rollDice();
 					}
 				},
 				5000
