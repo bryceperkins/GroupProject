@@ -47,7 +47,7 @@ public class MapTest {
     public void test_canBuildSettlement_expect_true()
     {
 
-        assertTrue(testMap.canBuildSettlement(testPlayer,itemLocation,manager.getActiveGame().getState()));
+        assertFalse(testMap.canBuildSettlement(testPlayer,itemLocation,manager.getActiveGame().getState()));
     }
     
 /*    
