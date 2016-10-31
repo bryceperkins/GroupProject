@@ -100,30 +100,29 @@ public class DiscardController extends Controller implements IDiscardController,
         getDiscardView().setStateMessage(temp.total() + "/" + this.discardAmount);
     }
 
-    public void start(Player player){
-        this.player = player;
-        this.index = player.getPlayerIndex();
-        this.resources = this.player.getResources();
-        this.discardAmount = this.resources.total()/2;
-        updateView();
-        getDiscardView().showModal();
-    }
-
     public void update(Observable ob, Object o){
         Game game = manager.getActiveGame();
+        //check to make sure the game has actually been setup
         if (game == null){
             return;
         }
         if (game.getTurnTracker().getStatus() == null || game.getTurnTracker().getStatus().name() != "Discarding"){
             return;
         }
-        for (Player player: game.getPlayers()) {
-            if (player == null || player.getResources() == null){
-                continue;
-            }
-            if (player.getResources().total() >= 7 && !player.didDiscard()){
-                start(player);
-            }
+
+        this.player = manager.getActivePlayer();
+        
+        if (player == null || player.getResources() == null){
+            return;
+        }
+
+        this.index = player.getPlayerIndex();
+        this.resources = this.player.getResources();
+        this.discardAmount = this.resources.total()/2;
+        
+        if (player.getResources().total() > 7 && !player.didDiscard()){
+            updateView();
+            getDiscardView().showModal();
         }
     }
 }
