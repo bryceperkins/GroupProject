@@ -40,10 +40,6 @@
         </fileset>
     </path>
 
-    <manifestclasspath property="lib.list" jarfile="${java.build.dir}/catan-client.jar">
-        <classpath refid="java.lib.classpath"/>
-    </manifestclasspath>
-
     <!-- TARGETS -->
     <!-- ******* -->
 
@@ -147,9 +143,11 @@
             </fileset>
         </copy>
         <jar jarfile="${java.dist}/catan-client.jar" basedir="${java.build}">
+            <zipgroupfileset dir="${java.dist}" includes="*.jar"/>
+            <zipgroupfileset dir="${java.dist}/lib" includes="*.jar" excludes=""/>
             <manifest>
                 <attribute name="Main-Class" value="client.main.Catan"/>
-                <attribute name="Class-Path" value="${lib.list}" />
+                <attribute name="Class-Path" value="java.lib.classpath" />
             </manifest>
         </jar>
         <jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
