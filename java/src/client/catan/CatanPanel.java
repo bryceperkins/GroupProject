@@ -92,7 +92,7 @@ public class CatanPanel extends JPanel
 				//GameFinishedView gameFinishedView = new GameFinishedView();
 				//gameFinishedView.setWinner(ModelProxy.getPlayerName(winnerInd), winnerInd.equals(GameManager.getInstance().getActivePlayerIndex()));
 				//gameFinishedView.showModal();
-                discardController.start(PlayerIndex.Player1);
+                discardController.update(null, null);
 			}
 		});
 		this.add(testButton, BorderLayout.SOUTH);
