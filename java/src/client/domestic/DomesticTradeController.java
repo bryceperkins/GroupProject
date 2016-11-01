@@ -89,47 +89,47 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		Game game = manager.getActiveGame();
 		getTradeView().enableDomesticTrade(ModelProxy.isPlayerTurn() && game.getState().canTrade());
 		
-		if (manager.getActiveGame() != null && game.getTradeOffer() != null){
+		if (game != null && game.getTradeOffer() != null && game.getTradeOffer().getReceiver() != null){
 			TradeOffer trade_offer = game.getTradeOffer();
 			Player player = manager.getActivePlayer();
-			if (player.getPlayerIndex().equals(trade_offer.getReciever())){
+			if (player.getPlayerIndex() == trade_offer.getReceiver()){
 				ResourceList offer = trade_offer.getOffer();
 				getAcceptOverlay().showModal();
+				getAcceptOverlay().reset();
 			//Set senders player name
 				Player offerer = game.getPlayer(trade_offer.getSender());
 				getAcceptOverlay().setPlayerName(offerer.getName());
 			//Set give and get values in trade offer
-				if (offer.getWood() < 0){
-					getAcceptOverlay().addGetResources(ResourceType.WOOD, offer.getWood()*-1);
-				} else if (offer.getWood() > 0){
-					getAcceptOverlay().addGiveResources(ResourceType.WOOD, offer.getWood());
+				if (offer.getWood() > 0){
+					getAcceptOverlay().addGetResource(ResourceType.WOOD, offer.getWood());
+				} else if (offer.getWood() < 0){
+					getAcceptOverlay().addGiveResource(ResourceType.WOOD, offer.getWood()*-1);
 				}
-				if (offer.getBrick() < 0){
-					getAcceptOverlay().addGetResources(ResourceType.BRICK, offer.getBrick()*-1);
-				} else if (offer.getBrick() > 0){
-					getAcceptOverlay().addGiveResources(ResourceType.BRICK, offer.getBrick());
+				if (offer.getBrick() > 0){
+					getAcceptOverlay().addGetResource(ResourceType.BRICK, offer.getBrick());
+				} else if (offer.getBrick() < 0){
+					getAcceptOverlay().addGiveResource(ResourceType.BRICK, offer.getBrick()*-1);
 				}
-				if (offer.getSheep() < 0){
-					getAcceptOverlay().addGetResources(ResourceType.SHEEP, offer.getSheep()*-1);
-				} else if (offer.getSheep() > 0){
-					getAcceptOverlay().addGiveResources(ResourceType.SHEEP, offer.getSheep());
+				if (offer.getSheep() > 0){
+					getAcceptOverlay().addGetResource(ResourceType.SHEEP, offer.getSheep());
+				} else if (offer.getSheep() < 0){
+					getAcceptOverlay().addGiveResource(ResourceType.SHEEP, offer.getSheep()*-1);
 				}
-				if (offer.getOre() < 0){
-					getAcceptOverlay().addGetResources(ResourceType.ORE, offer.getOre()*-1);
-				} else if (offer.getOre() > 0){
-					getAcceptOverlay().addGiveResources(ResourceType.ORE, offer.getOre());
+				if (offer.getOre() > 0){
+					getAcceptOverlay().addGetResource(ResourceType.ORE, offer.getOre());
+				} else if (offer.getOre() < 0){
+					getAcceptOverlay().addGiveResource(ResourceType.ORE, offer.getOre()*-1);
 				}
-				if (offer.getWheat() < 0){
-					getAcceptOverlay().addGetResources(ResourceType.WHEAT, offer.getWheat()*-1);
-				} else if (offer.getWheat() > 0){
-					getAcceptOverlay().addGiveResources(ResourceType.WHEAT, offer.getWheat());
+				if (offer.getWheat() > 0){
+					getAcceptOverlay().addGetResource(ResourceType.WHEAT, offer.getWheat());
+				} else if (offer.getWheat() < 0){
+					getAcceptOverlay().addGiveResource(ResourceType.WHEAT, offer.getWheat()*-1);
 				}
 			//Determines whether player is able to make trade
-				getAcceptOverlay().setAcceptEnabled(player.canMakeTrade(offer));
-				
+				getAcceptOverlay().setAcceptEnabled(player.canMakeTrade(trade_offer));
+			} else {
+				getWaitOverlay().closeModal();
 			}
-		} else if {
-			getWaitOverlay().closeModal();
 		}
 	}
 	
@@ -292,29 +292,29 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			Player player = manager.getActivePlayer();
 			ResourceList resources = new ResourceList();
 			if (send_wood){
-				resources.setWood(wood *= -1);
-			} else {
 				resources.setWood(wood);
+			} else {
+				resources.setWood(wood *= -1);
 			}
 			if (send_wheat){
-				resources.setWheat(wheat *= -1);
-			} else {
 				resources.setWheat(wheat);
+			} else {
+				resources.setWheat(wheat *= -1);
 			}
 			if (send_brick){
-				resources.setBrick(brick *= -1);
-			} else {
 				resources.setBrick(brick);
+			} else {
+				resources.setBrick(brick *= -1);
 			}
 			if (send_sheep){
-				resources.setSheep(sheep *= -1);
-			} else {
 				resources.setSheep(sheep);
+			} else {
+				resources.setSheep(sheep *= -1);
 			}
 			if (send_ore){
-				resources.setOre(ore *= -1);
-			} else {
 				resources.setOre(ore);
+			} else {
+				resources.setOre(ore *= -1);
 			}
 			OfferTrade offer = new OfferTrade(player.getPlayerIndex(),resources, PlayerIndex.valueOf(player_index));
 			ServerProxy server = manager.getServer();
