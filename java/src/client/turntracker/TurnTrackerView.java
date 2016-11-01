@@ -5,7 +5,9 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import client.model.GameManager;
 import client.model.ModelProxy;
+import client.model.PlayerIndex;
 import shared.definitions.*;
 import client.base.*;
 import client.catan.*;
@@ -90,38 +92,42 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 	@Override
 	public void initializePlayer(int playerIndex, String playerName,
 			CatanColor playerColor) {
-				
+
 		playerPanel[playerIndex].setLayout(new BorderLayout());
-		
+
 		JLabel name = new JLabel(playerName);
-		name.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
+		name.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		Font labelFont = name.getFont();
 		labelFont = labelFont.deriveFont(Font.BOLD, FONT_SIZE);
 		name.setFont(labelFont);
 		playerPanel[playerIndex].add(name, BorderLayout.WEST);
-		
+
 		JPanel indicatorPanel = new JPanel();
 		indicatorPanel.setBackground(playerColor.getJavaColor());
 		playerPanel[playerIndex].add(indicatorPanel, BorderLayout.CENTER);
-		
+
 		playerArmy[playerIndex] = new JLabel();
 		playerArmy[playerIndex].setIcon(new ImageIcon(largestArmyImage));
 		indicatorPanel.add(playerArmy[playerIndex]);
 		playerArmy[playerIndex].setVisible(false);
-		
+        playerArmy[playerIndex].setBackground(playerColor.getJavaColor());
+
 		playerRoad[playerIndex] = new JLabel();
 		playerRoad[playerIndex].setIcon(new ImageIcon(longestRoadImage));
 		indicatorPanel.add(playerRoad[playerIndex]);
 		playerRoad[playerIndex].setVisible(false);
-		
+		playerRoad[playerIndex].setBackground(playerColor.getJavaColor());
+
 		playerPoints[playerIndex] = new JLabel("0");
-		playerPoints[playerIndex].setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
+		playerPoints[playerIndex].setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		playerPoints[playerIndex].setFont(labelFont);
 		playerPanel[playerIndex].add(playerPoints[playerIndex], BorderLayout.EAST);
-		
+
 		playerPanel[playerIndex].setBackground(playerColor.getJavaColor());
 		playerPanel[playerIndex].setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-		
+
+		indicatorPanel.revalidate();
+		indicatorPanel.repaint();
 	}
 
 	@Override
@@ -130,13 +136,11 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		playerArmy[playerIndex].setVisible(largestArmy);
 		playerRoad[playerIndex].setVisible(longestRoad);
 		playerPoints[playerIndex].setText(String.format("%d", points));
-		
-		
+
 		if(highlight)
 			playerPanel[playerIndex].setBorder(BorderFactory.createLineBorder(new Color(0,0,0), 3));
 		else
 			playerPanel[playerIndex].setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-		
 	}
 
 	@Override

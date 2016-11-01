@@ -48,6 +48,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 
 	private void updatePlayers() {
+		initPlayers();
         for (int i = 0; i < NUM_PLAYERS; i++) {
 			PlayerIndex index = PlayerIndex.valueOf(i);
 			int points = ModelProxy.getPlayerPoints(index);
