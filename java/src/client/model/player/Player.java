@@ -133,7 +133,7 @@ public class Player implements PostProcessor {
 	 * @return true if player can make a trade, else false2
 	 */
 	public boolean canMakeTrade(TradeOffer offer){
-		ResourceList resources = offer.getOffer();
+		ResourceList offer_resources = offer.getOffer();
 		if (resources.getWood() >= 0){
 			resources.setWood(0);
 		} else {
@@ -159,7 +159,7 @@ public class Player implements PostProcessor {
 		} else {
 			resources.setWheat(resources.getWheat()*-1);
 		}
-		return resources.hasResources(resources);
+		return resources.hasResources(offer_resources);
 	}
 	
 	public boolean canMakeMaritimeTrade(PortType rt)

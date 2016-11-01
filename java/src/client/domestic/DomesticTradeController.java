@@ -127,9 +127,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				}
 			//Determines whether player is able to make trade
 				getAcceptOverlay().setAcceptEnabled(player.canMakeTrade(trade_offer));
-			} else {
-				getWaitOverlay().closeModal();
-			}
+			} else if (player.getPlayerIndex() == trade_offer.getSender()){
+				getWaitOverlay().showModal();
+			} 
+		} else if (game != null) {
+			getWaitOverlay().closeModal();
 		}
 	}
 	
