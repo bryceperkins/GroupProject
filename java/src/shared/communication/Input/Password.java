@@ -1,7 +1,11 @@
 package shared.communication;
 
+import java.util.regex.*;
+
 public class Password implements Input{
     private String password;
+    private Pattern p = Pattern.compile("^[\\w-]*$");
+    private Matcher m;
 
     public Password(){};
     public Password(String password) throws InvalidInputException {
@@ -22,21 +26,14 @@ public class Password implements Input{
     /**
      * Validate a password.
      *
-     * Passwords should not contain characters that could cause SQL injetion. ( ' " )
-     *
      * @param password 
      *  
      * @return boolean
      */
     public boolean valid(String password) {
-        boolean isValid = true;
-
-        String [] invalid = {"'", "\"", ")", "(", "<", ">"};
-        for (int i = 0; i < invalid.length; i++) {
-            if (password.contains(invalid[i])) {
-                isValid = false;;
-            }
-        }
+        Matcher m = p.matcher(password);
+        boolean isValid = m.matches();
+        
         return isValid;
     }
 

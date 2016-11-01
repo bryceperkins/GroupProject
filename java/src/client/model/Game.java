@@ -19,7 +19,7 @@ public class Game implements PostProcessor {
     private String name;
     private int version;
     private int id;
-	private PlayerIndex winner;
+	private PlayerIndex winner = PlayerIndex.None;
     private ResourceList bank;
     private Chat chat;
     private Log log;

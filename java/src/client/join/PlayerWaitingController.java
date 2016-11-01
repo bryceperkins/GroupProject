@@ -47,7 +47,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void addAI() {
         String aitype = getView().getSelectedAI();
-        this.manager.getServer().execute(new GameAddAI(AIType.valueOf(aitype)));
+        String response = this.manager.getServer().execute(new GameAddAI(AIType.valueOf(aitype)));
 	}
 
     public void update(Observable ob, Object o){
@@ -60,9 +60,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
             players[i] = p.toPlayerInfo();
         }
         getView().setPlayers(players);
-        if (this.active) {
-            getView().showModal();
-        }
         if(this.game.canBeginGame()){
             startGame();
         }

@@ -88,10 +88,11 @@ public class CatanPanel extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				PlayerIndex winnerInd = PlayerIndex.Player2;
-				GameFinishedView gameFinishedView = new GameFinishedView();
-				gameFinishedView.setWinner(ModelProxy.getPlayerName(winnerInd), winnerInd.equals(GameManager.getInstance().getActivePlayerIndex()));
-				gameFinishedView.showModal();
+				//PlayerIndex winnerInd = PlayerIndex.Player2;
+				//GameFinishedView gameFinishedView = new GameFinishedView();
+				//gameFinishedView.setWinner(ModelProxy.getPlayerName(winnerInd), winnerInd.equals(GameManager.getInstance().getActivePlayerIndex()));
+				//gameFinishedView.showModal();
+                discardController.update(null, null);
 			}
 		});
 		this.add(testButton, BorderLayout.SOUTH);
