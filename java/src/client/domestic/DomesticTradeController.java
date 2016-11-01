@@ -233,7 +233,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if (!oneSending() || !oneRecieving()){
 			getTradeOverlay().setStateMessage("Set the trade you want to make");
 			getTradeOverlay().setTradeEnabled(false);
-		} else if ((oneSending() && oneRecieving()) && player_index == -1){
+		} else if (player_index == -1){
 			getTradeOverlay().setStateMessage("Who would you like to trade with");
 			getTradeOverlay().setTradeEnabled(false);
 		} else {
@@ -243,14 +243,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	}
 	
 	public boolean oneSending(){
-		if (wood > 0 || brick > 0 || ore > 0 || wheat > 0 || sheep > 0){
+		if ((wood > 0 && !send_wood) || (brick > 0 && !send_brick) || (ore > 0 && !send_ore) || (wheat > 0 && !send_wheat) || (sheep > 0 && !send_sheep)){
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean oneRecieving(){
-		if (wood < 0 || brick < 0 || ore < 0 || wheat < 0 || sheep < 0){
+		if ((wood > 0 && send_wood) || (brick > 0 && send_brick) || (ore > 0 && send_ore) || (wheat > 0 && send_wheat) || (sheep > 0 && send_sheep)){
 			return true;
 		}
 		return false;
@@ -313,7 +313,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if (!oneSending() || !oneRecieving()){
 			getTradeOverlay().setStateMessage("Set the trade you want to make");
 			getTradeOverlay().setTradeEnabled(false);
-		} else if ((oneSending() && oneRecieving()) && player_index == -1){
+		} else if (player_index == -1){
 			getTradeOverlay().setStateMessage("Who would you like to trade with");
 			getTradeOverlay().setTradeEnabled(false);
 		} else {
@@ -367,7 +367,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if (!oneSending() || !oneRecieving()){
 			getTradeOverlay().setStateMessage("Set the trade you want to make");
 			getTradeOverlay().setTradeEnabled(false);
-		} else if ((oneSending() && oneRecieving()) && player_index == -1){
+		} else if (player_index == -1){
 			getTradeOverlay().setStateMessage("Who would you like to trade with");
 			getTradeOverlay().setTradeEnabled(false);
 		} else {
@@ -474,7 +474,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if (!oneSending() || !oneRecieving()){
 			getTradeOverlay().setStateMessage("Set the trade you want to make");
 			getTradeOverlay().setTradeEnabled(false);
-		} else if ((oneSending() && oneRecieving()) && player_index == -1){
+		} else if (player_index == -1){
 			getTradeOverlay().setStateMessage("Who would you like to trade with");
 			getTradeOverlay().setTradeEnabled(false);
 		} else {
