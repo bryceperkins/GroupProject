@@ -618,9 +618,8 @@ public class MapComponent extends JComponent
 	
 	private void drawHexes(Graphics2D g2)
 	{
-	    Map<HexLocation, HexType> tmp = new HashMap<HexLocation, HexType>();
-        tmp.putAll(hexes);
-		for (Map.Entry<HexLocation, HexType> entry : tmp.entrySet())
+		
+		for (Map.Entry<HexLocation, HexType> entry : hexes.entrySet())
 		{
 			
 			BufferedImage hexImage = getHexImage(entry.getValue());
