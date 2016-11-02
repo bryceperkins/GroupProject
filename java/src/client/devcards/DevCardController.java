@@ -154,16 +154,15 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playRoadBuildCard() {
-		
-		roadAction.execute();
 		getPlayCardView().closeModal();
+		roadAction.execute();
 	}
 
 	@Override
 	public void playSoldierCard() {
-		
-		soldierAction.execute();
 		getPlayCardView().closeModal();
+		soldierAction.execute();
+
 	}
 
 	@Override
