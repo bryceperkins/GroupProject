@@ -132,7 +132,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			} else if (player.getPlayerIndex() == trade_offer.getSender()){
 				getWaitOverlay().showModal();
 			} 
-		} else if (game != null && game.getTradeOffer().getSender() != null) {
+		} else if (game != null && manager.getActivePlayer() != null) {
 			getWaitOverlay().closeModal();
 		}
 		
