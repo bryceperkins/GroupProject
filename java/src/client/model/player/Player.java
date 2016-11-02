@@ -51,7 +51,6 @@ public class Player implements PostProcessor {
 		this.playerID = playerID;
 		this.playerIndex = playerIndex;
 		this.userID = userID;
-		
 		this.resources = new ResourceList();
         this.newDevCards = new DevCardList();
         this.oldDevCards = new DevCardList();
