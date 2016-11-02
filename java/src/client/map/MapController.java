@@ -240,10 +240,9 @@ public class MapController extends Controller implements IMapController,Observer
 		RobPlayerInfo[] victimsArray = victims.toArray(new RobPlayerInfo[victims.size()]);
 		System.out.println("number of victims: " + victimsArray.length);
 		getRobView().setPlayers(victimsArray);
-		Robber robber = new Robber();
-		robber.setX(hexLoc.getX());
-		robber.setY(hexLoc.getY());
-		game.getMap().setRobber(robber);
+
+		game.getMap().getRobber().setX(hexLoc.getX());
+		game.getMap().getRobber().setY(hexLoc.getY());
 		getView().placeRobber(hexLoc);
 		getRobView().showModal();
 	}
