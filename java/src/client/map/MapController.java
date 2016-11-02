@@ -240,6 +240,10 @@ public class MapController extends Controller implements IMapController,Observer
 		RobPlayerInfo[] victimsArray = victims.toArray(new RobPlayerInfo[victims.size()]);
 		System.out.println("number of victims: " + victimsArray.length);
 		getRobView().setPlayers(victimsArray);
+		Robber robber = new Robber();
+		robber.setX(hexLoc.getX());
+		robber.setY(hexLoc.getY());
+		game.getMap().setRobber(robber);
 		getView().placeRobber(hexLoc);
 		getRobView().showModal();
 	}
@@ -273,7 +277,7 @@ public class MapController extends Controller implements IMapController,Observer
 	public void robPlayer(RobPlayerInfo victim) {
 		String result;
 		if(victim == null)
-			result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),this.manager.getActivePlayerIndex(),game.getMap().getRobber()));
+			result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),PlayerIndex.None,game.getMap().getRobber()));
 		else
 			result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),victim.getPlayerIndex(),game.getMap().getRobber()));
 		System.out.println(game.getPlayer(victim.getPlayerIndex()).getName() + " done got robbed" );
