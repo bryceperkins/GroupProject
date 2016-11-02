@@ -1,6 +1,5 @@
 package client.devcards;
 
-import shared.definitions.ResourceType;
 import client.base.*;
 import client.model.*;
 import client.model.player.*;
@@ -15,6 +14,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
 	private IAction roadAction;
+
 	
 	/**
 	 * DevCardController constructor
@@ -80,7 +80,7 @@ public class DevCardController extends Controller implements IDevCardController 
 		getPlayCardView().setCardAmount(DevCardType.SOLDIER, oldDevCards.getSoldier() + newDevCards.getSoldier());
 		getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, oldDevCards.getYearOfPlenty() + newDevCards.getYearOfPlenty());
 
-		if (ModelProxy.isPlayerTurn()){ //hasn't played a dev card and 
+		if (ModelProxy.isPlayerTurn() && player.isPlayedDevCard() == false){ //hasn't played a dev card and 
 			//set enabled
 			if(oldDevCards.getMonopoly() < 1){
 				getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, false);
@@ -88,8 +88,6 @@ public class DevCardController extends Controller implements IDevCardController 
 			else{
 				getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, true);
 			}
-
-			//Monument can be played as many times as they have cards
 			
 			if(oldDevCards.getRoadBuilding() < 1){
 				getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, false);
@@ -111,16 +109,26 @@ public class DevCardController extends Controller implements IDevCardController 
 			else{
 				getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, true);
 			}
+			
+			
 		}else{
 			getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, false);
 			getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, false);
 			getPlayCardView().setCardEnabled(DevCardType.SOLDIER, false);
 			getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, false);
+			getPlayCardView().setCardEnabled(DevCardType.MONUMENT, false);
 		}
 
-		//monument - can play more than one
-		if(ModelProxy.isPlayerTurn()){ // isPlaying-state thing
 
+		if(ModelProxy.isPlayerTurn()){ // isPlaying-state thing
+			
+			if(oldDevCards.getMonument() < 1){
+				getPlayCardView().setCardEnabled(DevCardType.MONUMENT, false);
+			}
+			else{
+				getPlayCardView().setCardEnabled(DevCardType.MONUMENT, true);
+			}
+			
 		}else{
 			getPlayCardView().setCardEnabled(DevCardType.MONUMENT, false);
 		}
@@ -136,24 +144,26 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
-		
+		getPlayCardView().closeModal();
 	}
 
 	@Override
 	public void playMonumentCard() {
-		
+		getPlayCardView().reset(); 
 	}
 
 	@Override
 	public void playRoadBuildCard() {
 		
 		roadAction.execute();
+		getPlayCardView().closeModal();
 	}
 
 	@Override
 	public void playSoldierCard() {
 		
 		soldierAction.execute();
+		getPlayCardView().closeModal();
 	}
 
 	@Override
