@@ -64,7 +64,7 @@ public class ModelProxy {
     public static boolean playerCanBuildSettlement() {
         State state = getGameStatus() == null ? null : new State(getGameStatus());
         Player player = manager.getActivePlayer();
-        return (state == null) ? false : state.canBuildSettlement() && (player == null) ? false : player.canBuildSettlement();
+        return (state == null) ? false : state.canBuildSettlement() && (player == null) ? false : player.canBuildSettlement() && isPlayerTurn();
     }
 
     /**
@@ -72,7 +72,7 @@ public class ModelProxy {
      */
     public static boolean playerCanBuildCity() {
         Player player = manager.getActivePlayer();
-        return (player == null) ? false : player.canBuildCity();
+        return (player == null) ? false : player.canBuildCity() && isPlayerTurn();
     }
 
     /**
@@ -80,7 +80,7 @@ public class ModelProxy {
      */
     public static boolean playerCanBuildRoad() {
         Player player = manager.getActivePlayer();
-        return (player == null) ? false : player.canBuildRoad();
+        return (player == null) ? false : player.canBuildRoad() && isPlayerTurn();
     }
 
     /**
@@ -88,7 +88,7 @@ public class ModelProxy {
      */
     public static boolean canBuyDevCard() {
         Player player = manager.getActivePlayer();
-        return (player == null) ? false : player.canBuyDevCard();
+        return (player == null) ? false : player.canBuyDevCard()  && isPlayerTurn();
     }
 
     /**
@@ -117,7 +117,7 @@ public class ModelProxy {
         Game game = manager.getActiveGame();
         if (game == null) { return false; }
         Player player = manager.getActivePlayer();
-        return game.getMap().canBuildSettlement(player, location, game.getState());
+        return game.getMap().canBuildSettlement(player, location, game.getState()) && isPlayerTurn();
     }
 
     /**
@@ -128,7 +128,7 @@ public class ModelProxy {
         Game game = manager.getActiveGame();
         if (game == null) { return false; }
         Player player = manager.getActivePlayer();
-        return game.getMap().canBuildCity(player, location);
+        return game.getMap().canBuildCity(player, location) && isPlayerTurn();
     }
 
     /**
@@ -139,7 +139,7 @@ public class ModelProxy {
         Game game = manager.getActiveGame();
         if (game == null) { return false; }
         Player player = manager.getActivePlayer();
-        return game.getMap().canBuildRoad(player, location, game.getState());
+        return game.getMap().canBuildRoad(player, location, game.getState()) && isPlayerTurn();
     }
 
     /**

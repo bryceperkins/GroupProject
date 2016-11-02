@@ -247,10 +247,10 @@ public class MapController extends Controller implements IMapController,Observer
 			if(this.game.getTurnTracker().getCurrentTurn() == this.manager.getActivePlayerIndex()){
 				State state = game.getState();
 				if(state.isFirstRound() || state.isSecondRound()){
-					if (player.getRoadsRemaining() == 15) {
+					if (player.getRoadsRemaining() == 15 && state.isFirstRound()) {
 						getView().startDrop(PieceType.ROAD, manager.getActivePlayer().getColor(), false);
 					}
-					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 5) {
+					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 5 && state.isFirstRound()) {
 						getView().startDrop(PieceType.SETTLEMENT, manager.getActivePlayer().getColor(), false);
 					}
 					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 4 && state.isFirstRound()) {
