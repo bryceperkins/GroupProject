@@ -118,7 +118,7 @@ public class Game implements PostProcessor {
     }
 
     public Player getPlayer(PlayerIndex id) {
-        return players.get(id.getIndex());
+        return (id.getIndex() < 0 || id.getIndex() > players.size()) ? null : players.get(id.getIndex());
     }
 	
 	public Player getPlayerByName(String userName) {
