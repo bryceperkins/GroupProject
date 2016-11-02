@@ -7,8 +7,9 @@ import shared.commands.*;
 import shared.commands.BuildCity;
 import shared.commands.BuildRoad;
 import shared.commands.BuildSettlement;
+import shared.commands.RobPlayer;
 import shared.commands.Soldier;
-import shared.commands.moves.*;
+//import shared.commands.moves.*;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
@@ -201,7 +202,47 @@ public class MapController extends Controller implements IMapController,Observer
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
+		System.out.println("Starting place robber");
+		List<RobPlayerInfo> victims = new ArrayList<RobPlayerInfo>();
+		List<VertexLocation> buildingLocs = hexLoc.getVertices();
 
+		for(Settlement s :game.getMap().getSettlements()){
+			for(VertexLocation vertLoc: buildingLocs){
+				if(s.getLocation().getNormalizedLocation().equals(vertLoc.getNormalizedLocation()) && s.getOwner() != manager.getActivePlayerIndex()){
+					Player player = game.getPlayer(s.getOwner());
+					if(player.getResources().total() > 0){
+						RobPlayerInfo info = new RobPlayerInfo();
+						info.setNumCards(player.getResources().total());
+						info.setPlayerIndex(s.getOwner().getIndex());
+						info.setColor(player.getColor());
+						info.setName(player.getName());
+						victims.add(info);
+					}
+				}
+			}
+		}
+		for(City s :game.getMap().getCities()){
+			for(VertexLocation vertLoc: buildingLocs){
+				if(s.getLocation().getNormalizedLocation().equals(vertLoc.getNormalizedLocation()) && s.getOwner() != manager.getActivePlayerIndex()){
+					Player player = game.getPlayer(s.getOwner());
+					if(player.getResources().total() > 0){
+						RobPlayerInfo info = new RobPlayerInfo();
+						info.setNumCards(player.getResources().total());
+						info.setPlayerIndex(s.getOwner().getIndex());
+						info.setColor(player.getColor());
+						info.setName(player.getName());
+						victims.add(info);
+					}
+				}
+			}
+		}
+
+		RobPlayerInfo[] victimsArray = victims.toArray(new RobPlayerInfo[victims.size()]);
+		System.out.println("number of victims: " + victimsArray.length);
+		getRobView().setPlayers(victimsArray);
+
+		game.getMap().getRobber().setX(hexLoc.getX());
+		game.getMap().getRobber().setY(hexLoc.getY());
 		getView().placeRobber(hexLoc);
 		getRobView().showModal();
 	}
@@ -209,6 +250,11 @@ public class MapController extends Controller implements IMapController,Observer
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
 		
 		getView().startDrop(pieceType, this.manager.getActivePlayer().getColor(), true);
+	}
+
+	public void startMoveRob(PieceType pieceType, boolean canCancel) {
+
+		getView().startDrop(pieceType, this.manager.getActivePlayer().getColor(), canCancel);
 	}
 	
 	public void cancelMove() {
@@ -227,8 +273,22 @@ public class MapController extends Controller implements IMapController,Observer
 		getView().startDrop(PieceType.ROAD, this.manager.getActivePlayer().getColor(), true);
 	}
 	
-	public void robPlayer(RobPlayerInfo victim) {	
-		
+	public void robPlayer(RobPlayerInfo victim) {
+		String result;
+		if(victim == null)
+			result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),PlayerIndex.None,game.getMap().getRobber()));
+		else
+			result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),victim.getPlayerIndex(),game.getMap().getRobber()));
+		System.out.println(game.getPlayer(victim.getPlayerIndex()).getName() + " done got robbed" );
+
+		//String result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),victim.getPlayerIndex(),game.getMap().getRobber()));
+		if (!result.equals("Failed")) {
+			robView.closeModal();
+		} else {
+			System.out.println("some error with robbing");
+			//error("failed to join game");
+		}
+
 	}
 
 	public ItemLocation convertVertexLocationToItemLocation(VertexLocation vertLoc){
@@ -279,7 +339,8 @@ public class MapController extends Controller implements IMapController,Observer
 					}
 					//end turn
 				}else if (state.isRobbing()){
-					startMove(PieceType.ROBBER, false, false);
+					System.out.println("Starting robbing");
+					startMoveRob(PieceType.ROBBER, false);
 					//end turn
 				}
 			}
