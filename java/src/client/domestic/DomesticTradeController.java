@@ -133,7 +133,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				getWaitOverlay().showModal();
 			} 
 		} else if (game != null && manager.getActivePlayer() != null) {
-			getWaitOverlay().closeModal();
+			if (ModelProxy.isPlayerTurn() && game.getState().canTrade()){
+				getWaitOverlay().closeModal();
+			}
 		}
 		
 	}
