@@ -14,8 +14,8 @@ import client.server.*;
 public class DevCardController extends Controller implements IDevCardController {
 
 	private IBuyDevCardView buyCardView;
-	private IAction soldierAction;
-	private IAction roadAction;
+	private SoldierAction soldierAction;
+	private RoadBuildingAction roadAction;
 	private ServerProxy serverProxy;
 
 	
