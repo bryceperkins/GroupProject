@@ -4,6 +4,8 @@ import client.base.*;
 import client.model.*;
 import client.model.player.*;
 import shared.definitions.*;
+import shared.commands.*;
+import client.server.*;
 
 
 /**
@@ -14,6 +16,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
 	private IAction roadAction;
+	private ServerProxy serverProxy;
 
 	
 	/**
@@ -28,10 +31,10 @@ public class DevCardController extends Controller implements IDevCardController 
 								IAction soldierAction, IAction roadAction) {
 
 		super(view);
-		
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
+		this.serverProxy = GameManager.getInstance().getServer();
 	}
 
 	public IPlayDevCardView getPlayCardView() {
@@ -144,17 +147,24 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
+		Player player = GameManager.getInstance().getActivePlayer();
+		Monopoly monopoly = new Monopoly(player.getPlayerIndex(), resource);
+		serverProxy.execute(monopoly);
 		getPlayCardView().closeModal();
 	}
 
 	@Override
 	public void playMonumentCard() {
+		Player player = GameManager.getInstance().getActivePlayer();
+		Monument monument = new Monument(player.getPlayerIndex());
+		serverProxy.execute(monument);
 		getPlayCardView().reset(); 
 	}
 
 	@Override
 	public void playRoadBuildCard() {
 		getPlayCardView().closeModal();
+		
 		roadAction.execute();
 	}
 
@@ -167,7 +177,10 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		
+		Player player = GameManager.getInstance().getActivePlayer();
+		YearOfPlenty yop = new YearOfPlenty(player.getPlayerIndex(), resource1, resource2);
+		serverProxy.execute(yop);
+		getPlayCardView().closeModal();
 	}
 
 }
