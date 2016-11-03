@@ -110,11 +110,13 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				updatePlayers();
 
 				PlayerIndex winnerInd = manager.getActiveGame().getWinner();
-				if (winnerInd != PlayerIndex.None) {
+				if (!winnerInd.equals(PlayerIndex.None)) {
 					GameFinishedView gameFinishedView = new GameFinishedView();
 					gameFinishedView.setWinner(ModelProxy.getPlayerName(winnerInd), winnerInd.equals(manager.getActivePlayerIndex()));
 					gameFinishedView.showModal();
 				}
+
+				getView().setLocalPlayerColor(ModelProxy.getPlayerColor(manager.getActivePlayerIndex()));
 			} else {
 				initFromModel();
 			}
