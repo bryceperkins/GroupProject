@@ -104,6 +104,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 
 		JPanel indicatorPanel = new JPanel();
 		indicatorPanel.setBackground(playerColor.getJavaColor());
+        indicatorPanel.setBackground(new Color(0, 0, 0, 0));
 		playerPanel[playerIndex].add(indicatorPanel, BorderLayout.CENTER);
 
 		playerArmy[playerIndex] = new JLabel();
