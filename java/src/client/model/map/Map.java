@@ -186,21 +186,21 @@ public class Map implements PostProcessor {
 		this.roads = roads;
 	}
 
-	public boolean canBuildCity(Player player, ItemLocation itemLocation){
+    public boolean canBuildCity(Player player, ItemLocation itemLocation){
 
-    	for(int i = 0; i < settlements.size(); i++)
-    	{
-    		if(settlements.get(i).getLocation().equals(itemLocation.getLocation()) && 
-    				settlements.get(i).getLocation().getDirection() == itemLocation.getDirection())
-    		{
-    			if(settlements.get(i).getOwner() == player.getPlayerIndex())
-    				return true;
-    			else
-    				return false;
-    		}
-    	}
-    	
-    	return false;
+        for(Settlement settlement: settlements)
+        {
+            if(settlement.getLocation().getNormalizedLocation().equals(itemLocation.toVertexLocation().getNormalizedLocation()) &&
+                    settlement.getLocation().getNormalizedLocation().getDirection() == itemLocation.toVertexLocation().getNormalizedLocation().getDirection())
+            {
+                if(settlement.getOwner() == player.getPlayerIndex())
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        return false;
     }
 
     public boolean canPlaceRobber(HexLocation hexLoc){
