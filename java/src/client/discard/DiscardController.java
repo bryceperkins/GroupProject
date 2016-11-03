@@ -17,7 +17,7 @@ import client.model.TurnTracker.GameStatus;
  */
 public class DiscardController extends Controller implements IDiscardController, Observer {
     private GameManager manager = GameManager.getInstance();
-    private ResourceList temp = new ResourceList();
+    private ResourceList temp;
     private ResourceList resources;
     private int discardAmount;
     private PlayerIndex index;
@@ -78,6 +78,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	public void discard() {
         this.manager.getServer().execute(new DiscardCards(index, this.temp));	
         getDiscardView().closeModal();
+        System.out.println("Close Discard View");
 	}
 
     public void updateView(){
@@ -121,8 +122,10 @@ public class DiscardController extends Controller implements IDiscardController,
         this.discardAmount = this.resources.total()/2;
         
         if (player.getResources().total() > 7 && !player.didDiscard()){
+            this.temp = new ResourceList();
             updateView();
             getDiscardView().showModal();
+            System.out.println("Show Discard View");
         }
     }
 }
