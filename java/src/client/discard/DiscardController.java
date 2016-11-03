@@ -122,6 +122,9 @@ public class DiscardController extends Controller implements IDiscardController,
         this.discardAmount = this.resources.total()/2;
         
         if (player.getResources().total() > 7 && !player.didDiscard()){
+            for (ResourceType r: ResourceType.values()){
+                getDiscardView().setResourceDiscardAmount(resource, 0);
+            }
             this.temp = new ResourceList();
             updateView();
             getDiscardView().showModal();
