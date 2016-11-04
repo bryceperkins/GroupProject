@@ -147,10 +147,13 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
-		Player player = GameManager.getInstance().getActivePlayer();
-		Monopoly monopoly = new Monopoly(player.getPlayerIndex(), resource);
-		serverProxy.execute(monopoly);
-		getPlayCardView().closeModal();
+		if(resource != null)
+		{
+			Player player = GameManager.getInstance().getActivePlayer();
+			Monopoly monopoly = new Monopoly(player.getPlayerIndex(), resource);
+			serverProxy.execute(monopoly);
+			getPlayCardView().closeModal();
+		}
 	}
 
 	@Override
@@ -177,10 +180,13 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		Player player = GameManager.getInstance().getActivePlayer();
-		YearOfPlenty yop = new YearOfPlenty(player.getPlayerIndex(), resource1, resource2);
-		serverProxy.execute(yop);
-		getPlayCardView().closeModal();
+		if(resource1 != resource2 && resource1 != null && resource2 != null)
+		{
+			Player player = GameManager.getInstance().getActivePlayer();
+			YearOfPlenty yop = new YearOfPlenty(player.getPlayerIndex(), resource1, resource2);
+			serverProxy.execute(yop);
+			getPlayCardView().closeModal();
+		}
 	}
 
 }
