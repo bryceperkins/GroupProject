@@ -170,10 +170,10 @@ public class DevCardController extends Controller implements IDevCardController 
 	@Override
 	public void playRoadBuildCard() {
 		roadAction.execute();
-
-		RoadBuilding roadBuilding;
+		Player player = GameManager.getInstance().getActivePlayer();		
+		RoadBuilding roadBuilding = new RoadBuilding(player.getPlayerIndex(), null, null);
 		getPlayCardView().closeModal();
-		//serverProxy.execute(roadBuidling);		
+		serverProxy.execute(roadBuidling);		
 	
 	}
 
