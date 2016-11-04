@@ -132,8 +132,33 @@ public class Player implements PostProcessor {
 	 * @return true if player can make a trade, else false2
 	 */
 	public boolean canMakeTrade(TradeOffer offer){
-		
-		return resources.hasResources(offer.getOffer());
+		ResourceList resources = offer.getOffer();
+		if (resources.getWood() >= 0){
+			resources.setWood(0);
+		} else {
+			resources.setWood(resources.getWood()*-1);
+		}
+		if (resources.getBrick() >= 0){
+			resources.setBrick(0);
+		} else {
+			resources.setBrick(resources.getBrick()*-1);
+		}
+		if (resources.getSheep() >= 0){
+			resources.setSheep(0);
+		} else {
+			resources.setSheep(resources.getSheep()*-1);
+		}
+		if (resources.getOre() >= 0){
+			resources.setOre(0);
+		} else {
+			resources.setOre(resources.getOre()*-1);
+		}
+		if (resources.getWheat() >= 0){
+			resources.setWheat(0);
+		} else {
+			resources.setWheat(resources.getWheat()*-1);
+		}
+		return this.resources.hasResources(resources);
 	}
 	
 	public boolean canMakeMaritimeTrade(PortType rt)

@@ -1,5 +1,8 @@
 package shared.locations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents the location of a hex on a hex map
  */
@@ -85,6 +88,14 @@ public class HexLocation
 				assert false;
 				return null;
 		}
+	}
+
+	public List<VertexLocation> getVertices(){
+		List<VertexLocation> vertices = new ArrayList<>();
+		for(VertexDirection verDir : VertexDirection.values()){
+			vertices.add(new VertexLocation(this,verDir));
+		}
+		return  vertices;
 	}
 	
 }

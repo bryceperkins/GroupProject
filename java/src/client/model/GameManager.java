@@ -82,7 +82,6 @@ public class GameManager extends Observable{
     
     public void setActiveGame(int id) {
         activeGameIndex = id;
-        //update();
     }
 
     public ArrayList<Game> getGames() {
