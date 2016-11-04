@@ -66,7 +66,9 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void buyCard() {
-
+		Player player = GameManager.getInstance().getActivePlayer();
+		BuyDevCard buyDevCard = new BuyDevCard(player.getPlayerIndex());
+		serverProxy.execute(buyDevCard);
 		getBuyCardView().closeModal();
 	}
 
