@@ -48,6 +48,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 
 	private void updatePlayers() {
+		initPlayers();
         for (int i = 0; i < NUM_PLAYERS; i++) {
 			PlayerIndex index = PlayerIndex.valueOf(i);
 			int points = ModelProxy.getPlayerPoints(index);
@@ -101,19 +102,19 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//super.update(o, arg);
-
 		if (manager.getActiveGame() != null) {
 			if (setup) {
                 updateGameState();
 				updatePlayers();
 
 				PlayerIndex winnerInd = manager.getActiveGame().getWinner();
-				if (winnerInd != PlayerIndex.None) {
+				if (!winnerInd.equals(PlayerIndex.None)) {
 					GameFinishedView gameFinishedView = new GameFinishedView();
 					gameFinishedView.setWinner(ModelProxy.getPlayerName(winnerInd), winnerInd.equals(manager.getActivePlayerIndex()));
 					gameFinishedView.showModal();
 				}
+
+				getView().setLocalPlayerColor(ModelProxy.getPlayerColor(manager.getActivePlayerIndex()));
 			} else {
 				initFromModel();
 			}
