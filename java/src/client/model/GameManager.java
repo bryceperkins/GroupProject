@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import shared.communication.User;
+import client.*;
 
 /**
  * Facade class which statically manages the client's games and updates
@@ -23,6 +24,7 @@ public class GameManager extends Observable{
     private PlayerInfo playerInfo;
     private Poller poller;
     private int activeGameIndex = -1;
+    private GameController gameController = new GameController();
 
     private GameManager () {}
 

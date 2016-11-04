@@ -11,7 +11,7 @@ public class GameController
 	private static DevCardController devCardCont;
 	private static MapController mapCont;
 
-	private GameController(){}
+	public GameController(){}
 	
 	public static void setDevCardController(DevCardController devCardCont)
 	{

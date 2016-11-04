@@ -35,8 +35,8 @@ public class DevCardController extends Controller implements IDevCardController 
 
 		super(view);
 		this.buyCardView = buyCardView;
-		this.soldierAction = (SoldierAction)soldierAction;
-		this.roadAction = (RoadBuildingAction)roadAction;
+		this.soldierAction = new SoldierAction();
+		this.roadAction = new RoadBuildingAction();
 		this.serverProxy = GameManager.getInstance().getServer();
 	}
 
@@ -173,7 +173,7 @@ public class DevCardController extends Controller implements IDevCardController 
 		Player player = GameManager.getInstance().getActivePlayer();		
 		RoadBuilding roadBuilding = new RoadBuilding(player.getPlayerIndex(), null, null);
 		getPlayCardView().closeModal();
-		serverProxy.execute(roadBuidling);		
+		serverProxy.execute(roadBuilding);		
 	
 	}
 
