@@ -300,7 +300,7 @@ public class MapComponent extends JComponent
 	public IMapController getController()
 	{
 		return controller;
-	}
+	}	
 	
 	public void setController(IController controller)
 	{

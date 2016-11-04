@@ -6,6 +6,9 @@ import client.model.player.*;
 import shared.definitions.*;
 import shared.commands.*;
 import client.server.*;
+import client.model.*;
+import client.model.map.*;
+import shared.locations.*;
 
 
 /**
@@ -14,8 +17,8 @@ import client.server.*;
 public class DevCardController extends Controller implements IDevCardController {
 
 	private IBuyDevCardView buyCardView;
-	private IAction soldierAction;
-	private IAction roadAction;
+	private SoldierAction soldierAction;
+	private RoadBuildingAction roadAction;
 	private ServerProxy serverProxy;
 
 	
@@ -32,8 +35,8 @@ public class DevCardController extends Controller implements IDevCardController 
 
 		super(view);
 		this.buyCardView = buyCardView;
-		this.soldierAction = soldierAction;
-		this.roadAction = roadAction;
+		this.soldierAction = (SoldierAction)soldierAction;
+		this.roadAction = (RoadBuildingAction)roadAction;
 		this.serverProxy = GameManager.getInstance().getServer();
 	}
 
@@ -166,15 +169,28 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playRoadBuildCard() {
-		getPlayCardView().closeModal();
-		
 		roadAction.execute();
+
+		RoadBuilding roadBuilding;
+		getPlayCardView().closeModal();
+		//serverProxy.execute(roadBuidling);		
+	
 	}
 
 	@Override
 	public void playSoldierCard() {
-		getPlayCardView().closeModal();
+		
 		soldierAction.execute();
+
+		Player player = GameManager.getInstance().getActivePlayer();		
+		Robber robber = GameManager.getInstance().getActiveGame().getMap().getRobber();
+		HexLocation hexLocation = new HexLocation(robber.getX(), robber.getY()); 
+
+		Soldier soldier = new Soldier(player.getPlayerIndex(), null, hexLocation);		
+		
+		serverProxy.execute(soldier);
+		
+		getPlayCardView().closeModal();
 
 	}
 
