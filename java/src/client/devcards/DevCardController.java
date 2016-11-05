@@ -172,11 +172,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	@Override
 	public void playRoadBuildCard() {
 		roadAction.execute();
-		Player player = GameManager.getInstance().getActivePlayer();		
-		RoadBuilding roadBuilding = new RoadBuilding(player.getPlayerIndex(), null, null);
 		getPlayCardView().closeModal();
-		serverProxy.execute(roadBuilding);		
-	
 	}
 
 	@Override
@@ -184,14 +180,6 @@ public class DevCardController extends Controller implements IDevCardController 
 		
 		soldierAction.execute();
 
-		Player player = GameManager.getInstance().getActivePlayer();		
-		Robber robber = GameManager.getInstance().getActiveGame().getMap().getRobber();
-		HexLocation hexLocation = new HexLocation(robber.getX(), robber.getY()); 
-
-		Soldier soldier = new Soldier(player.getPlayerIndex(), null, hexLocation);		
-		
-		serverProxy.execute(soldier);
-		
 		getPlayCardView().closeModal();
 
 	}
