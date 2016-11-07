@@ -1,5 +1,6 @@
 package shared.commands;
 
+import server.*;
 import shared.definitions.AIType;
 
 
@@ -13,4 +14,6 @@ public class GameAddAI extends Command{
 
         this.AIType = aitype;
     }
+
+    public void serverExecute(ServerFacade facade){}
 }

@@ -1,6 +1,7 @@
 package shared.commands;
 
 import client.model.*;
+import server.ServerFacade;
 import shared.locations.*;
 
 public class BuildCity extends MoveCommand{
@@ -21,4 +22,6 @@ public class BuildCity extends MoveCommand{
         super("buildCity", index);
         this.vertexLocation = location;
     };
+
+    public void serverExecute(ServerFacade facade){}
 }

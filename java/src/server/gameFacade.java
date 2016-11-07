@@ -1,6 +1,6 @@
 package server;
 
-public class gameFacade implements serverFacade {
+public class GameFacade implements ServerFacade {
 
     /**
      * @return Returns the current state of the game in JSON format.

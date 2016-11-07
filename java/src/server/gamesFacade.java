@@ -1,6 +1,6 @@
 package server;
 
-public class gamesFacade implements serverFacade {
+public class GamesFacade implements ServerFacade {
 
     /**
      * Creates a new game on the server

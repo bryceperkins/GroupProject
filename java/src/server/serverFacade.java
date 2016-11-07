@@ -1,4 +1,4 @@
 package server;
 
-public interface serverFacade {
+public interface ServerFacade {
 }

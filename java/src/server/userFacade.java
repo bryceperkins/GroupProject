@@ -1,7 +1,7 @@
 package server;
 
 
-public class userFacade implements serverFacade {
+public class UserFacade implements ServerFacade {
 
 
 

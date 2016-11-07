@@ -1,5 +1,6 @@
 package shared.commands;
 
+import server.ServerFacade;
 import shared.locations.HexLocation;
 import client.model.PlayerIndex;
 
@@ -12,4 +13,6 @@ public class RobPlayer extends MoveCommand{
         this.victimIndex = victim.getIndex();
         this.location = location;
     };
+
+    public void serverExecute(ServerFacade facade){}
 }

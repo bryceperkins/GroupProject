@@ -2,6 +2,7 @@ package shared.commands;
 
 import java.util.*;
 
+import server.ServerFacade;
 
 public class GameCommands extends Command{
     private List<Command> commands; 
@@ -19,4 +20,5 @@ public class GameCommands extends Command{
 
         this.commands = commands;
     }
+    public void serverExecute(ServerFacade facade){}
 }

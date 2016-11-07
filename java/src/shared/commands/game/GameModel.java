@@ -1,5 +1,7 @@
 package shared.commands;
 
+import server.ServerFacade;
+
 public class GameModel extends Command{
     public GameModel() {
         super();
@@ -15,4 +17,6 @@ public class GameModel extends Command{
         tmp.append(version);
         endpoint = tmp.toString();
     }
+
+    public void serverExecute(ServerFacade facade){}
 }

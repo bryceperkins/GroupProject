@@ -2,14 +2,13 @@ package server;
 
 import client.model.PlayerIndex;
 import client.model.ResourceList;
-import client.model.map.Edge;
 import shared.definitions.*;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 
-public class movesFacade implements serverFacade {
+public class MovesFacade implements ServerFacade {
 
     public void sendChat(String content){}
 

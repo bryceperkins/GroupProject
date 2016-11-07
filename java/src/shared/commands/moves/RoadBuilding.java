@@ -1,5 +1,6 @@
 package shared.commands;
 
+import server.ServerFacade;
 import shared.locations.*;
 import client.model.*;
 
@@ -31,4 +32,6 @@ public class RoadBuilding extends MoveCommand {
         this.spot1 = spot1;
         this.spot2 = spot2;
     };
+
+    public void serverExecute(ServerFacade facade){}
 }

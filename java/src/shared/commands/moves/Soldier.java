@@ -1,5 +1,6 @@
 package shared.commands;
 
+import server.ServerFacade;
 import shared.locations.*;
 import client.model.*;
 
@@ -24,5 +25,7 @@ public class Soldier extends MoveCommand{
         this.location = location;
         this.victimIndex = victimIndex.getIndex();
     };
+
+    public void serverExecute(ServerFacade facade){}
 
 }

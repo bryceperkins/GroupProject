@@ -1,6 +1,7 @@
 package shared.commands;
 
 import client.model.PlayerIndex;
+import server.ServerFacade;
 
 public class Monument extends MoveCommand{
     /**
@@ -13,4 +14,6 @@ public class Monument extends MoveCommand{
     public Monument(PlayerIndex index){
         super("Monument", index);
     };
+
+    public void serverExecute(ServerFacade facade){}
 }

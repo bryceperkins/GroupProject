@@ -1,6 +1,7 @@
 package shared.commands;
 
 import client.model.*;
+import server.ServerFacade;
 import shared.locations.*;
 
 public class BuildSettlement extends MoveCommand{
@@ -26,4 +27,6 @@ public class BuildSettlement extends MoveCommand{
         this.free = free;
         this.vertexLocation = location;
     };
+
+    public void serverExecute(ServerFacade facade){}
 }
