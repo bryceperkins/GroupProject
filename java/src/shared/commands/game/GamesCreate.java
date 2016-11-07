@@ -16,6 +16,4 @@ public class GamesCreate extends Command{
         this.randomPorts = ports;
         this.randomNumbers = numbers;
     }
-
-    public void serverExecute(){}
 }

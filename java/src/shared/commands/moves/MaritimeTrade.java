@@ -25,6 +25,4 @@ public class MaritimeTrade extends MoveCommand{
         this.inputResource = inputResource;
         this.outputResource = outputResource;
     };
-
-    public void serverExecute(){}
 }

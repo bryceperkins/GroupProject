@@ -1,5 +1,6 @@
 package shared.commands;
 
+import client.server.*;
 import client.model.*;
 
 public class AcceptTrade extends MoveCommand{
@@ -19,6 +20,4 @@ public class AcceptTrade extends MoveCommand{
         super("acceptTrade", index);
         this.willAccept = accept;
     };
-
-    public void serverExecute(){}
 }

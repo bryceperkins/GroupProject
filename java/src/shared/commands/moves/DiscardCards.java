@@ -1,5 +1,6 @@
 package shared.commands;
 
+import client.server.*;
 import client.model.*;
 
 public class DiscardCards extends MoveCommand {
@@ -9,6 +10,4 @@ public class DiscardCards extends MoveCommand {
         super("discardCards", index);
         this.discardedCards = cards;
     };
-
-    public void serverExecute(){}
 }

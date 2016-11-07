@@ -12,6 +12,4 @@ public class RobPlayer extends MoveCommand{
         this.victimIndex = victim.getIndex();
         this.location = location;
     };
-
-    public void serverExecute(){}
 }
