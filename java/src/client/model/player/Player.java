@@ -69,6 +69,42 @@ public class Player implements PostProcessor {
         this.color = color;
     }
 
+    public void playedMonument(){
+        
+    }
+
+    public void playedMonopoly(){
+
+    }
+
+    public void playedSolder(){
+
+    }
+
+    public void playedRoadBuilding(){
+
+    }
+
+    public void playedYearOfPlenty(){
+
+    }
+
+    public void playedRoad(){
+
+    }
+
+    public void playedCity(){
+
+    }
+
+    public void playedSettlement(){
+
+    }
+
+    public void addPoint(){
+
+    }
+
 	/**
 	 * @param resources
 	 * @return whether the player has at least the resources in the passed resource list

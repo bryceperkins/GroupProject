@@ -25,4 +25,6 @@ public class Soldier extends MoveCommand{
         this.victimIndex = victimIndex.getIndex();
     };
 
+    public void serverExecute(){}
+
 }

@@ -14,4 +14,5 @@ public class GamesSave extends Command{
         this.id = id;
         this.name = name.toString();
     }
+    public void serverExecute(){}
 }

@@ -21,4 +21,6 @@ public class YearOfPlenty extends MoveCommand {
         this.resource1 = resource1;
         this.resource2 = resource2;
     };
+
+    public void serverExecute(){}
 }
