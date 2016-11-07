@@ -1,8 +1,5 @@
 package shared.commands;
 
-
-import server.ServerFacade;
-
 public class GameListAI extends Command{
     public GameListAI() {
         super();

@@ -1,6 +1,8 @@
-package server;
+package server.facades;
 
-public class GameFacade implements ServerFacade {
+import server.handlers.iServerFacade;
+
+public class GameFacade implements iServerFacade {
 
     /**
      * @return Returns the current state of the game in JSON format.

@@ -61,4 +61,16 @@ public class TurnTracker {
         }
     }
 
+    public void nextTurn(){
+
+    }
+
+    public void setLongestRoadOwner(PlayerIndex player){
+
+    }
+
+    public void setLargestArmyOwner(PlayerIndex player){
+
+    }
+
 }

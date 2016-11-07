@@ -2,8 +2,6 @@ package shared.commands;
 
 import java.util.*;
 
-import server.ServerFacade;
-
 public class GameCommands extends Command{
     private List<Command> commands; 
 

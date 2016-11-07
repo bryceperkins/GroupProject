@@ -1,7 +1,9 @@
-package server;
+package server.facades;
+
+import server.handlers.iServerFacade;
 
 
-public class UserFacade implements ServerFacade {
+public class UserFacade implements iServerFacade {
 
 
 

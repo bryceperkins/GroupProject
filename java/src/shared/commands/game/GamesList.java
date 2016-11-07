@@ -1,6 +1,6 @@
 package shared.commands;
 
-import server.ServerFacade;
+import server.handlers.iServerFacade;
 
 public class GamesList extends Command{
     public GamesList() {

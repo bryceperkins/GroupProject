@@ -41,6 +41,38 @@ public class Game implements PostProcessor {
         tradeOffer = new TradeOffer(); 
     }
 
+    public Game(String name){
+        
+    }
+
+    /**
+     *  @param player - The player to be added to the game
+     */
+    public void addPlayer(Player player){
+        
+    }
+
+    /**
+     *  @return The player with the longest road
+     */
+    public PlayerIndex longestRoad(){
+        return PlayerIndex.None;
+    }
+
+    /**
+     *  @return The player with the largest army
+     */
+    public PlayerIndex largestArmy(){
+        return PlayerIndex.None;
+    }
+
+    /**
+     *  @return The current game version
+     */
+    public int updateVersion(){
+        return version;
+    }
+
     /**
      * @return whether the game is completed
      */

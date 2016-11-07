@@ -1,6 +1,8 @@
-package server;
+package server.facades;
 
-public class GamesFacade implements ServerFacade {
+import server.handlers.iServerFacade;
+
+public class GamesFacade implements iServerFacade {
 
     /**
      * Creates a new game on the server

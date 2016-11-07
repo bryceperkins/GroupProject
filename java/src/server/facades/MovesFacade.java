@@ -1,4 +1,4 @@
-package server;
+package server.facades;
 
 import client.model.PlayerIndex;
 import client.model.ResourceList;
@@ -6,9 +6,10 @@ import shared.definitions.*;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import server.handlers.iServerFacade;
 
 
-public class MovesFacade implements ServerFacade {
+public class MovesFacade implements iServerFacade {
 
     public void sendChat(String content){}
 
