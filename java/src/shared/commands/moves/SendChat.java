@@ -1,7 +1,6 @@
 package shared.commands;
 
 import client.model.PlayerIndex;
-import server.ServerFacade;
 
 public class SendChat extends MoveCommand{
     private String content;
@@ -11,5 +10,5 @@ public class SendChat extends MoveCommand{
         this.content = content;
     }
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

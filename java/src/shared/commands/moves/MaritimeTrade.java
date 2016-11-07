@@ -1,6 +1,5 @@
 package shared.commands;
 
-import server.ServerFacade;
 import shared.definitions.*;
 import client.model.PlayerIndex;
 
@@ -27,5 +26,5 @@ public class MaritimeTrade extends MoveCommand{
         this.outputResource = outputResource;
     };
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

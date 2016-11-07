@@ -1,6 +1,5 @@
 package shared.commands;
 
-import server.ServerFacade;
 import shared.definitions.*;
 import client.model.PlayerIndex;
 
@@ -20,5 +19,5 @@ public class Monopoly extends MoveCommand{
         this.resource = resource;
     };
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

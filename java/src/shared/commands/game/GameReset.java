@@ -1,8 +1,5 @@
 package shared.commands;
 
-
-import server.ServerFacade;
-
 public class GameReset extends Command{
 
     public GameReset() {
@@ -11,5 +8,5 @@ public class GameReset extends Command{
         method = "POST";
     }
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

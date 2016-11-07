@@ -1,7 +1,6 @@
 package shared.commands;
 
 import client.model.PlayerIndex;
-import server.ServerFacade;
 
 public class FinishTurn extends shared.commands.MoveCommand {
 
@@ -9,5 +8,5 @@ public class FinishTurn extends shared.commands.MoveCommand {
         super("finishTurn", index);
     };
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

@@ -1,6 +1,5 @@
 package shared.commands;
 
-import server.ServerFacade;
 import shared.communication.*;
 
 public class UserLogin extends Command{
@@ -17,5 +16,5 @@ public class UserLogin extends Command{
         this.password = tmp.getPassword();
     }
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

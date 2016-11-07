@@ -1,7 +1,6 @@
 package shared.commands;
 
 import client.model.*;
-import server.ServerFacade;
 import shared.locations.*;
 
 public class BuildRoad extends MoveCommand {
@@ -29,5 +28,5 @@ public class BuildRoad extends MoveCommand {
         this.free = free;
         this.roadLocation = location;
     };
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

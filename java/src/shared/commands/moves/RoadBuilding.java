@@ -33,5 +33,5 @@ public class RoadBuilding extends MoveCommand {
         this.spot2 = spot2;
     };
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

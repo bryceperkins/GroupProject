@@ -1,6 +1,5 @@
 package shared.commands;
 
-import server.ServerFacade;
 import shared.definitions.CatanColor;
 
 public class GamesJoin extends Command{
@@ -16,5 +15,5 @@ public class GamesJoin extends Command{
         this.color = c;
     }
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

@@ -10,5 +10,5 @@ public class GameListAI extends Command{
         method = "GET";
     }
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

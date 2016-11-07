@@ -1,6 +1,5 @@
 package shared.commands;
 
-import server.ServerFacade;
 import shared.definitions.*;
 import client.model.PlayerIndex;
 
@@ -23,5 +22,5 @@ public class YearOfPlenty extends MoveCommand {
         this.resource2 = resource2;
     };
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

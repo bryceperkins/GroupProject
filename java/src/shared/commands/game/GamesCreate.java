@@ -1,7 +1,5 @@
 package shared.commands;
 
-import server.ServerFacade;
-
 public class GamesCreate extends Command{
     private String name;
     private boolean randomTiles;
@@ -19,5 +17,5 @@ public class GamesCreate extends Command{
         this.randomNumbers = numbers;
     }
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

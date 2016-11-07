@@ -1,8 +1,6 @@
 package shared.commands;
 
-import client.server.*;
 import client.model.*;
-import server.ServerFacade;
 
 public class AcceptTrade extends MoveCommand{
     private Boolean willAccept;
@@ -22,5 +20,5 @@ public class AcceptTrade extends MoveCommand{
         this.willAccept = accept;
     };
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

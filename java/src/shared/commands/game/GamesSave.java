@@ -1,6 +1,5 @@
 package shared.commands;
 
-import server.ServerFacade;
 import shared.communication.*;
 
 public class GamesSave extends Command{
@@ -15,5 +14,5 @@ public class GamesSave extends Command{
         this.id = id;
         this.name = name.toString();
     }
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

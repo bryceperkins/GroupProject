@@ -1,7 +1,6 @@
 package shared.commands;
 
 import client.model.PlayerIndex;
-import server.ServerFacade;
 
 public class BuyDevCard extends MoveCommand{
 
@@ -9,5 +8,5 @@ public class BuyDevCard extends MoveCommand{
         super("buyDevCard", index);
     };
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

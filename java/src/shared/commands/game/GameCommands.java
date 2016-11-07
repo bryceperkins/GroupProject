@@ -20,5 +20,5 @@ public class GameCommands extends Command{
 
         this.commands = commands;
     }
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }

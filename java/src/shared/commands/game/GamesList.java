@@ -9,5 +9,5 @@ public class GamesList extends Command{
         method = "GET";
     }
 
-    public void serverExecute(ServerFacade facade){}
+    public void serverExecute(){}
 }
