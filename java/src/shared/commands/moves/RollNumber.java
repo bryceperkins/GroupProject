@@ -9,6 +9,4 @@ public class RollNumber extends shared.commands.MoveCommand {
         super("rollNumber", index);
         this.number = number;
     };
-
-    public void serverExecute(){}
 }

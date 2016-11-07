@@ -2,7 +2,6 @@ package client.model;
 
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Set;
 import client.data.PlayerInfo;
 import client.model.*;
 import client.server.ServerProxy;
@@ -21,7 +20,6 @@ public class GameManager extends Observable{
     private static final GameManager INSTANCE = new GameManager();
     private ServerProxy server;
     private ArrayList<Game> games = new ArrayList<>();
-    private Set activeUsers = new HashSet();
     private PlayerInfo playerInfo;
     private Poller poller;
     private int activeGameIndex = -1;
@@ -50,19 +48,6 @@ public class GameManager extends Observable{
 
     public ServerProxy getServer(){
         return server;
-    }
-
-    public boolean Login(User user){
-        return false;
-    }
-
-    public boolean Register(User user){
-        return false;
-    }
-
-    public Set gamesList(){
-        Set games = new HashSet();
-        return games;
     }
 
     /**

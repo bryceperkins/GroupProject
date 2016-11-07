@@ -28,5 +28,4 @@ public class BuildRoad extends MoveCommand {
         this.free = free;
         this.roadLocation = location;
     };
-    public void serverExecute(){}
 }

@@ -182,27 +182,6 @@ public class Map implements PostProcessor {
 		return roads;
 	}
 
-    /**
-     *@param road The road to be added on the map
-     */
-    public void addRoad(Road road){
-        
-    }
-
-    /**
-     *@param city The city to be added on the map
-     */
-    public void addCity(City city){
-        
-    }
-
-    /**
-     *@param settlement The settlement to be added on the map
-     */
-    public void addSettlement(Settlement settlement){
-        
-    }
-
 	public void setRoads(List<Road> roads) {
 		this.roads = roads;
 	}
