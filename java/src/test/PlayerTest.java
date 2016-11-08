@@ -2,9 +2,9 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import client.model.*;
-import client.model.map.*;
-import client.model.player.Player;
+import shared.model.*;
+import shared.model.map.*;
+import shared.model.player.Player;
 
 import shared.locations.*;
 import shared.definitions.*;

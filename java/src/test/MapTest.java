@@ -5,12 +5,11 @@ import org.junit.Before;
 import org.junit.After;
 
 import shared.locations.*;
-import shared.definitions.*;
 import shared.definitions.CatanColor;
-import client.model.map.*;
-import client.model.*;
-import client.model.player.*;
-import client.model.ResourceList;
+import shared.model.map.*;
+import shared.model.*;
+import shared.model.player.*;
+import shared.model.ResourceList;
 
 public class MapTest {
     private Map testMap;

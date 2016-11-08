@@ -1,7 +1,6 @@
 package shared.commands;
 
-import client.server.*;
-import client.model.*;
+import shared.model.*;
 
 public class AcceptTrade extends MoveCommand{
     private Boolean willAccept;

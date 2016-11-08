@@ -3,11 +3,7 @@ package client.turntracker;
 import java.awt.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
-import client.model.GameManager;
-import client.model.ModelProxy;
-import client.model.PlayerIndex;
 import shared.definitions.*;
 import client.base.*;
 import client.catan.*;

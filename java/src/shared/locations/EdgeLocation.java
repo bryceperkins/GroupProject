@@ -1,10 +1,7 @@
 package shared.locations;
 
-import client.model.Game;
-import client.model.PostProcessor;
-
-import java.util.List;
-import java.util.ArrayList;
+import shared.model.Game;
+import shared.model.PostProcessor;
 
 
 /**

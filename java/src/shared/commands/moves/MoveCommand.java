@@ -1,7 +1,6 @@
 package shared.commands;
 
-import shared.communication.*;
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
 
 public abstract class MoveCommand extends Command {
     private String type;

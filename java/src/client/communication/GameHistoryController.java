@@ -2,13 +2,9 @@ package client.communication;
 
 import java.util.*;
 import client.base.*;
-import shared.definitions.*;
 
-import shared.commands.*;
-import client.communication.*;
-import client.model.*;
-import client.model.player.*;
-import client.server.*;
+import shared.model.*;
+import shared.model.player.*;
 
 /**
  * Game history controller implementation

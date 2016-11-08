@@ -4,10 +4,7 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
-import client.model.*;
-import client.model.map.Hex;
-import client.model.map.Robber;
-import client.model.ResourceList;
+import shared.model.map.Hex;
 
 import shared.locations.HexLocation;
 import shared.definitions.*;

@@ -1,6 +1,6 @@
 package shared.commands;
 
-import client.model.*;
+import shared.model.*;
 import shared.locations.*;
 
 public class BuildSettlement extends MoveCommand{
