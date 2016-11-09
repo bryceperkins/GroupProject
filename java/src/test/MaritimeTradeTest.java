@@ -3,15 +3,12 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
-import org.junit.Ignore;
 
-import shared.communication.*;
 import shared.communication.servers.*;
 import shared.commands.*;
-import shared.locations.*;
 import shared.definitions.*;
 import client.server.*;
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
 
 public class MaritimeTradeTest {
     private ServerProxy server; 

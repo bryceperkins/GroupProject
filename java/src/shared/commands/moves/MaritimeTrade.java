@@ -1,7 +1,7 @@
 package shared.commands;
 
 import shared.definitions.*;
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
 
 public class MaritimeTrade extends MoveCommand{
     private ResourceType inputResource;

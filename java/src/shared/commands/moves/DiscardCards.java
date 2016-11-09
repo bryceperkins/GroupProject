@@ -1,7 +1,6 @@
 package shared.commands;
 
-import client.server.*;
-import client.model.*;
+import shared.model.*;
 
 public class DiscardCards extends MoveCommand {
     private ResourceList discardedCards;

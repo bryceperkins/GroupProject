@@ -9,13 +9,12 @@ import com.google.gson.*;
 
 import java.util.*;
 
-import shared.communication.*;
 import shared.deserializers.*;
 import shared.communication.servers.*;
 import shared.commands.*;
 import client.server.*;
-import client.model.*;
-import client.model.player.*;
+import shared.model.*;
+import shared.model.player.*;
 import shared.definitions.CatanColor;
 
 public class GameModelTest {

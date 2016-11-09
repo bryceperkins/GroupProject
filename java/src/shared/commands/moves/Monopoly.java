@@ -1,7 +1,7 @@
 package shared.commands;
 
 import shared.definitions.*;
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
 
 public class Monopoly extends MoveCommand{
     private ResourceType resource;

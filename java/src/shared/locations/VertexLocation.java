@@ -1,7 +1,7 @@
 package shared.locations;
 
-import client.model.Game;
-import client.model.PostProcessor;
+import shared.model.Game;
+import shared.model.PostProcessor;
 
 /**
  * Represents the location of a vertex on a hex map

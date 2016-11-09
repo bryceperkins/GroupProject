@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import org.junit.*;
 
-import client.model.Game;
-import client.model.PlayerIndex;
-import client.model.player.*;
+import shared.model.Game;
+import shared.model.PlayerIndex;
+import shared.model.player.*;
 import shared.definitions.*;
 
 
