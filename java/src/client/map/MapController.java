@@ -26,6 +26,11 @@ public class MapController extends Controller implements IMapController,Observer
 	private IRobView robView;
 	private GameManager manager = GameManager.getInstance();
 	private Game game;
+	private boolean firstRoadPlayed;
+	private boolean firstSettlementPlayed;
+	private boolean secondRoadPlayed;
+	private boolean secondSettlementPlayed;
+
 
 	
 	public MapController(IMapView view, IRobView robView) {
@@ -36,6 +41,10 @@ public class MapController extends Controller implements IMapController,Observer
 		
 		initFromModel();
 		manager.addObserver(this);
+		firstRoadPlayed = false;
+		firstSettlementPlayed= false;
+		secondRoadPlayed= false;
+		secondSettlementPlayed= false;
 		
 	}
 	
@@ -304,11 +313,13 @@ public class MapController extends Controller implements IMapController,Observer
 			if(this.game.getTurnTracker().getCurrentTurn() == this.manager.getActivePlayerIndex()){
 				State state = game.getState();
 				if(state.isFirstRound() || state.isSecondRound()){
-					if (player.getRoadsRemaining() == 15 && state.isFirstRound()) {
+					if (player.getRoadsRemaining() == 15 && state.isFirstRound() && !firstRoadPlayed) {
 						getView().startDrop(PieceType.ROAD, manager.getActivePlayer().getColor(), false);
+						firstRoadPlayed = true;
 					}
-					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 5 && state.isFirstRound()) {
+					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 5 && state.isFirstRound() && !firstSettlementPlayed) {
 						getView().startDrop(PieceType.SETTLEMENT, manager.getActivePlayer().getColor(), false);
+						firstSettlementPlayed = true;
 					}
 					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 4 && state.isFirstRound()) {
 						String response = manager.getServer().execute(new shared.commands.FinishTurn(manager.getActivePlayerIndex()));
@@ -319,11 +330,13 @@ public class MapController extends Controller implements IMapController,Observer
 							//getView().updateGameState("Waiting for other Players", false);
 						}
 					}
-					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 4 && state.isSecondRound()) {
+					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 4 && state.isSecondRound() && !secondRoadPlayed) {
 						getView().startDrop(PieceType.ROAD, manager.getActivePlayer().getColor(), false);
+						secondRoadPlayed = true;
 					}
-					else if (player.getRoadsRemaining() == 13 && player.getSettlementsRemaining() == 4 && state.isSecondRound()) {
+					else if (player.getRoadsRemaining() == 13 && player.getSettlementsRemaining() == 4 && state.isSecondRound() && !secondSettlementPlayed) {
 						getView().startDrop(PieceType.SETTLEMENT, manager.getActivePlayer().getColor(), false);
+						secondSettlementPlayed = true;
 					}
 					else if (player.getRoadsRemaining() == 13 && player.getSettlementsRemaining() == 3 && state.isSecondRound()) {
 						String response = manager.getServer().execute(new shared.commands.FinishTurn(manager.getActivePlayerIndex()));
