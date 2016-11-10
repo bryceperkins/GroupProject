@@ -9,4 +9,8 @@ public class SendChat extends MoveCommand{
         super("sendChat", index);
         this.content = content;
     }
+
+    public String serverExecute(){
+        return "";
+    }
 }

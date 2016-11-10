@@ -14,4 +14,8 @@ public class GamesJoin extends Command{
         this.id = id;
         this.color = c;
     }
+
+    public String serverExecute(){
+        return "";
+    }
 }

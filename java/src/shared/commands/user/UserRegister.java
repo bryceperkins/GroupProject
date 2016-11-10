@@ -15,4 +15,8 @@ public class UserRegister extends Command{
         this.username = tmp.getUserName();
         this.password = tmp.getPassword();
     }
+
+    public String serverExecute(){
+        return "";
+    }
 }

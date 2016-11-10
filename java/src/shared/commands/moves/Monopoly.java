@@ -18,4 +18,8 @@ public class Monopoly extends MoveCommand{
         super("Monopoly", index);
         this.resource = resource;
     };
+
+    public String serverExecute(){
+        return "";
+    }
 }

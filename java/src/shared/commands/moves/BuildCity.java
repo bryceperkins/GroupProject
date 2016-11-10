@@ -21,4 +21,8 @@ public class BuildCity extends MoveCommand{
         super("buildCity", index);
         this.vertexLocation = location;
     };
+
+    public String serverExecute(){
+        return "";
+    }
 }

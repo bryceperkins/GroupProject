@@ -12,4 +12,8 @@ public class GamesLoad extends Command{
 
         this.name = name.toString();
     }
+
+    public String serverExecute(){
+        return "";
+    }
 }

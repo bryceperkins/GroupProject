@@ -1,10 +1,13 @@
 package shared.commands;
 
 import client.server.iCommand;
+import server.handlers.iServerCommand;
+import server.handlers.iServerFacade;
 
-public abstract class Command implements iCommand{
+public abstract class Command implements iCommand, iServerCommand{
     transient String endpoint;
     transient String method;
+    iServerFacade facade;
 
     public Command(){};
 
@@ -16,4 +19,6 @@ public abstract class Command implements iCommand{
         return method;
     }
     public void execute(){};
+    
+    public void setFacade(iServerFacade facade){}
 }

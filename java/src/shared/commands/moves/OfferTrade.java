@@ -20,4 +20,8 @@ public class OfferTrade extends MoveCommand{
         this.offer = offer;
         this.receiver = receiver.getIndex();
     };
+
+    public String serverExecute(){
+        return "";
+    }
 }

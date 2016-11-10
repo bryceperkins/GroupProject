@@ -9,4 +9,8 @@ public class DiscardCards extends MoveCommand {
         super("discardCards", index);
         this.discardedCards = cards;
     };
+
+    public String  serverExecute(){
+        return "";
+    }
 }

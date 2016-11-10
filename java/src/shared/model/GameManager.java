@@ -2,6 +2,8 @@ package shared.model;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Set;
+import java.util.HashSet;
 import client.data.PlayerInfo;
 import client.server.ServerProxy;
 import shared.model.player.Player;

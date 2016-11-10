@@ -19,4 +19,8 @@ public class AcceptTrade extends MoveCommand{
         super("acceptTrade", index);
         this.willAccept = accept;
     };
+
+    public String serverExecute(){
+        return "";
+    }
 }
