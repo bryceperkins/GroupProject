@@ -8,5 +8,7 @@ public class FinishTurn extends shared.commands.MoveCommand {
         super("finishTurn", index);
     };
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

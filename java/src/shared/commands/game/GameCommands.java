@@ -18,5 +18,7 @@ public class GameCommands extends Command{
 
         this.commands = commands;
     }
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

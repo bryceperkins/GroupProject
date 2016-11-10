@@ -7,8 +7,9 @@ import java.net.InetSocketAddress;
 import com.sun.net.httpserver.*;
 
 
-public class MockServer implements iServer {
-    public void start(){
+public class Mock implements iServer {
+    public void start() throws IOException{
+        int port = 8081;
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/moves", new HttpHandler() {
             @Override

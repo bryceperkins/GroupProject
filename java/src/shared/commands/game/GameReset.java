@@ -8,5 +8,7 @@ public class GameReset extends Command{
         method = "POST";
     }
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

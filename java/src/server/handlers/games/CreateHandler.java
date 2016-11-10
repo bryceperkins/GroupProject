@@ -1,11 +1,13 @@
 package server.handlers;
 
 import shared.communication.User;
+
+import java.io.*;
 import com.sun.net.httpserver.*;
 
-public class CreateHandler implements HttpHandler{
+public class CreateHandler extends BaseHandler{
     /**
      * Handle the Incoming request
      */
-    public void handle(){ }
+    public void handle(HttpExchange request) throws IOException{ }
 }

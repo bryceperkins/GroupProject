@@ -17,5 +17,7 @@ public class GamesCreate extends Command{
         this.randomNumbers = numbers;
     }
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

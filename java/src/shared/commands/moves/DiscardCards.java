@@ -10,5 +10,7 @@ public class DiscardCards extends MoveCommand {
         this.discardedCards = cards;
     };
 
-    public void serverExecute(){}
+    public String  serverExecute(){
+        return "";
+    }
 }

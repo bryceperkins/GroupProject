@@ -14,5 +14,7 @@ public class GameAddAI extends Command{
         this.AIType = aitype;
     }
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

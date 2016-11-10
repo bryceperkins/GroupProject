@@ -20,5 +20,7 @@ public class AcceptTrade extends MoveCommand{
         this.willAccept = accept;
     };
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

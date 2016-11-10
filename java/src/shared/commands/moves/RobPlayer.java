@@ -13,5 +13,7 @@ public class RobPlayer extends MoveCommand{
         this.location = location;
     };
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

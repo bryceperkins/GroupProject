@@ -10,5 +10,7 @@ public class RollNumber extends shared.commands.MoveCommand {
         this.number = number;
     };
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

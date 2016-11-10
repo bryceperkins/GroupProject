@@ -1,10 +1,11 @@
 package server.handlers;
 
+import java.io.*;
 import com.sun.net.httpserver.*;
 
-public class OfferTradeHandler{
+public class OfferTradeHandler extends BaseHandler{
     /**
      * Handle the Incoming request
      */
-    public void handle(){ }
+    public void handle(HttpExchange request) throws IOException{ }
 }

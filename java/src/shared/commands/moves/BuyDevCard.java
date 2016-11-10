@@ -8,5 +8,7 @@ public class BuyDevCard extends MoveCommand{
         super("buyDevCard", index);
     };
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

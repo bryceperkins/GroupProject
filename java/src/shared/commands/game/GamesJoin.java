@@ -15,5 +15,7 @@ public class GamesJoin extends Command{
         this.color = c;
     }
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

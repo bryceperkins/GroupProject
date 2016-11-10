@@ -16,5 +16,7 @@ public class UserLogin extends Command{
         this.password = tmp.getPassword();
     }
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

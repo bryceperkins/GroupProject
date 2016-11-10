@@ -19,5 +19,7 @@ public class Monopoly extends MoveCommand{
         this.resource = resource;
     };
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

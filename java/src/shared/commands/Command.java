@@ -20,7 +20,5 @@ public abstract class Command implements iCommand, iServerCommand{
     }
     public void execute(){};
     
-    public void serverExecute(){};
-
     public void setFacade(iServerFacade facade){}
 }

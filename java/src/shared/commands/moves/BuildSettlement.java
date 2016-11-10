@@ -27,5 +27,7 @@ public class BuildSettlement extends MoveCommand{
         this.vertexLocation = location;
     };
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

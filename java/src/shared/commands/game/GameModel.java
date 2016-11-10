@@ -16,5 +16,7 @@ public class GameModel extends Command{
         endpoint = tmp.toString();
     }
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

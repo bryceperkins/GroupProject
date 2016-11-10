@@ -11,11 +11,15 @@ public abstract class BaseHandler implements HttpHandler{
     /**
      * @return The game the request is associated with
      */
-    public int getGame(){ }
+    public int getGame(){
+        return 0;
+    }
     /**
      * @return The user the request is associated with
      */
-    public User getUser(){ }
+    public User getUser(){
+        return new User();
+    }
     private void processCommand(String json){ }
     private void parseCookies(){ }
 }

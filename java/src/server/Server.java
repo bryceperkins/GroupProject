@@ -15,10 +15,12 @@ import server.servers.*;
  */
 
 public class Server {
-    private iServer server;
+    private static iServer server;
 
     public static void main(String[] args) throws Exception {
         int port = 8081;
+
+        server = new Http();
         
         if (args.length > 0) {
             port = Integer.parseInt(args[0]);

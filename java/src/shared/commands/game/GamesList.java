@@ -9,5 +9,7 @@ public class GamesList extends Command{
         method = "GET";
     }
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

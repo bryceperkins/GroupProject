@@ -14,5 +14,7 @@ public class Monument extends MoveCommand{
         super("Monument", index);
     };
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

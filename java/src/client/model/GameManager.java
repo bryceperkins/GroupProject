@@ -3,6 +3,7 @@ package client.model;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Set;
+import java.util.HashSet;
 import client.data.PlayerInfo;
 import client.model.*;
 import client.server.ServerProxy;

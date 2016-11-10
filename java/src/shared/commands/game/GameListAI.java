@@ -7,5 +7,7 @@ public class GameListAI extends Command{
         method = "GET";
     }
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }

@@ -32,5 +32,7 @@ public class RoadBuilding extends MoveCommand {
         this.spot2 = spot2;
     };
 
-    public void serverExecute(){}
+    public String serverExecute(){
+        return "";
+    }
 }
