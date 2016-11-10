@@ -1,7 +1,7 @@
 package shared.commands;
 
 import shared.locations.HexLocation;
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
 
 public class RobPlayer extends MoveCommand{
     private int victimIndex;

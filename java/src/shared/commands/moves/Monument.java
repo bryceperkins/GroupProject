@@ -1,6 +1,6 @@
 package shared.commands;
 
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
 
 public class Monument extends MoveCommand{
     /**
