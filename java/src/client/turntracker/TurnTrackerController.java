@@ -1,9 +1,9 @@
 package client.turntracker;
 
-import client.model.GameManager;
-import client.model.ModelProxy;
-import client.model.PlayerIndex;
-import client.model.TurnTracker;
+import shared.model.GameManager;
+import shared.model.ModelProxy;
+import shared.model.PlayerIndex;
+import shared.model.TurnTracker;
 import client.points.GameFinishedView;
 import shared.commands.FinishTurn;
 import shared.definitions.CatanColor;

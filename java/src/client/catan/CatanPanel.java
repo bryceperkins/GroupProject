@@ -7,11 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import client.model.GameManager;
-import client.model.ModelProxy;
-import client.model.PlayerIndex;
-import client.points.GameFinishedView;
-import shared.definitions.ResourceType;
 import client.discard.DiscardController;
 import client.discard.DiscardView;
 import client.misc.WaitView;

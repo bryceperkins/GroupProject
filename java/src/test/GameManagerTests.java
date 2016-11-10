@@ -1,11 +1,11 @@
 import static org.junit.Assert.*;
 
-import client.model.*;
-import client.model.map.*;
+import shared.model.*;
+import shared.model.map.*;
 import shared.definitions.*;
 import shared.definitions.CatanColor;
-import client.model.player.DevCardList;
-import client.model.player.Player;
+import shared.model.player.DevCardList;
+import shared.model.player.Player;
 import org.junit.Test;
 import shared.locations.*;
 

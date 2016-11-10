@@ -4,13 +4,11 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
-import client.model.ResourceList;
+import shared.model.ResourceList;
 import shared.definitions.*;
-import client.model.map.*;
-import client.model.*;
+import shared.model.map.*;
 
 import shared.locations.*;
-import shared.locations.VertexLocation;
 
 public class PortTest {
 	private Port testPort;	

@@ -1,8 +1,8 @@
 package client.devcards;
 
 import client.base.*;
-import client.model.*;
-import client.model.player.*;
+import shared.model.*;
+import shared.model.player.*;
 import shared.definitions.*;
 
 

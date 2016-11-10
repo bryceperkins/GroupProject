@@ -2,21 +2,18 @@ package client.map;
 
 import java.util.*;
 
-import client.server.iCommand;
-import shared.commands.*;
 import shared.commands.BuildCity;
 import shared.commands.BuildRoad;
 import shared.commands.BuildSettlement;
 import shared.commands.RobPlayer;
-import shared.commands.Soldier;
 //import shared.commands.moves.*;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
 import client.data.*;
-import client.model.map.*;
-import client.model.*;
-import client.model.player.*;
+import shared.model.map.*;
+import shared.model.*;
+import shared.model.player.*;
 
 import static com.sun.tools.javac.util.Assert.error;
 

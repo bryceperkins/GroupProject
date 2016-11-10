@@ -3,12 +3,11 @@ package client.maritime;
 import shared.definitions.*;
 import client.base.*;
 import shared.commands.*;
-import client.communication.*;
-import client.model.*;
-import client.model.player.*;
+import shared.model.*;
+import shared.model.player.*;
 import client.server.*;
 import java.util.*;
-import client.model.map.*;
+import shared.model.map.*;
 
 /**
  * Implementation for the maritime trade controller

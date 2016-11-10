@@ -8,7 +8,7 @@ import client.join.*;
 import client.misc.*;
 import client.base.*;
 import client.server.*;
-import client.model.*;
+import shared.model.*;
 
 /**
  * Main entry point for the Catan program

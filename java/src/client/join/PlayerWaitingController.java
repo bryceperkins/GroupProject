@@ -4,10 +4,9 @@ import java.util.*;
 import shared.definitions.*;
 import client.base.*;
 import client.data.*;
-import client.model.*;
-import client.model.player.*;
+import shared.model.*;
+import shared.model.player.*;
 import shared.commands.*;
-import shared.deserializers.*;
 import com.google.gson.*;
 
 

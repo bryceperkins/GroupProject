@@ -2,9 +2,8 @@ package client.communication;
 
 import client.base.*;
 import shared.commands.*;
-import client.communication.*;
-import client.model.*;
-import client.model.player.*;
+import shared.model.*;
+import shared.model.player.*;
 import client.server.*;
 import java.util.*;
 
