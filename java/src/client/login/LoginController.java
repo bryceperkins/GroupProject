@@ -2,17 +2,10 @@ package client.login;
 
 import client.base.*;
 import client.misc.*;
-import client.server.*;
-import client.model.*;
+import shared.model.*;
 
 import shared.commands.*;
 
-import java.net.*;
-import java.io.*;
-import java.util.*;
-import java.lang.reflect.*;
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import shared.commands.UserLogin;
 
 

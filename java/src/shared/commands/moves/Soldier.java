@@ -1,7 +1,7 @@
 package shared.commands;
 
 import shared.locations.*;
-import client.model.*;
+import shared.model.*;
 
 public class Soldier extends MoveCommand{
     private HexLocation location;
@@ -24,5 +24,9 @@ public class Soldier extends MoveCommand{
         this.location = location;
         this.victimIndex = victimIndex.getIndex();
     };
+
+    public String serverExecute(){
+        return "";
+    }
 
 }

@@ -2,7 +2,6 @@ package shared.commands;
 
 import java.util.*;
 
-
 public class GameCommands extends Command{
     private List<Command> commands; 
 
@@ -18,5 +17,8 @@ public class GameCommands extends Command{
         method = "POST";
 
         this.commands = commands;
+    }
+    public String serverExecute(){
+        return "";
     }
 }

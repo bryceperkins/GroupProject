@@ -2,21 +2,18 @@ package client.map;
 
 import java.util.*;
 
-import client.server.iCommand;
-import shared.commands.*;
 import shared.commands.BuildCity;
 import shared.commands.BuildRoad;
 import shared.commands.BuildSettlement;
 import shared.commands.RobPlayer;
-import shared.commands.Soldier;
 //import shared.commands.moves.*;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
 import client.data.*;
-import client.model.map.*;
-import client.model.*;
-import client.model.player.*;
+import shared.model.map.*;
+import shared.model.*;
+import shared.model.player.*;
 
 import static com.sun.tools.javac.util.Assert.error;
 
@@ -29,6 +26,11 @@ public class MapController extends Controller implements IMapController,Observer
 	private IRobView robView;
 	private GameManager manager = GameManager.getInstance();
 	private Game game;
+	private boolean firstRoadPlayed;
+	private boolean firstSettlementPlayed;
+	private boolean secondRoadPlayed;
+	private boolean secondSettlementPlayed;
+
 
 	
 	public MapController(IMapView view, IRobView robView) {
@@ -39,6 +41,10 @@ public class MapController extends Controller implements IMapController,Observer
 		
 		initFromModel();
 		manager.addObserver(this);
+		firstRoadPlayed = false;
+		firstSettlementPlayed= false;
+		secondRoadPlayed= false;
+		secondSettlementPlayed= false;
 		
 	}
 	
@@ -307,11 +313,13 @@ public class MapController extends Controller implements IMapController,Observer
 			if(this.game.getTurnTracker().getCurrentTurn() == this.manager.getActivePlayerIndex()){
 				State state = game.getState();
 				if(state.isFirstRound() || state.isSecondRound()){
-					if (player.getRoadsRemaining() == 15 && state.isFirstRound()) {
+					if (player.getRoadsRemaining() == 15 && state.isFirstRound() && !firstRoadPlayed) {
 						getView().startDrop(PieceType.ROAD, manager.getActivePlayer().getColor(), false);
+						firstRoadPlayed = true;
 					}
-					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 5 && state.isFirstRound()) {
+					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 5 && state.isFirstRound() && !firstSettlementPlayed) {
 						getView().startDrop(PieceType.SETTLEMENT, manager.getActivePlayer().getColor(), false);
+						firstSettlementPlayed = true;
 					}
 					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 4 && state.isFirstRound()) {
 						String response = manager.getServer().execute(new shared.commands.FinishTurn(manager.getActivePlayerIndex()));
@@ -322,11 +330,13 @@ public class MapController extends Controller implements IMapController,Observer
 							//getView().updateGameState("Waiting for other Players", false);
 						}
 					}
-					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 4 && state.isSecondRound()) {
+					else if (player.getRoadsRemaining() == 14 && player.getSettlementsRemaining() == 4 && state.isSecondRound() && !secondRoadPlayed) {
 						getView().startDrop(PieceType.ROAD, manager.getActivePlayer().getColor(), false);
+						secondRoadPlayed = true;
 					}
-					else if (player.getRoadsRemaining() == 13 && player.getSettlementsRemaining() == 4 && state.isSecondRound()) {
+					else if (player.getRoadsRemaining() == 13 && player.getSettlementsRemaining() == 4 && state.isSecondRound() && !secondSettlementPlayed) {
 						getView().startDrop(PieceType.SETTLEMENT, manager.getActivePlayer().getColor(), false);
+						secondSettlementPlayed = true;
 					}
 					else if (player.getRoadsRemaining() == 13 && player.getSettlementsRemaining() == 3 && state.isSecondRound()) {
 						String response = manager.getServer().execute(new shared.commands.FinishTurn(manager.getActivePlayerIndex()));

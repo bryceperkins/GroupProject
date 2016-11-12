@@ -1,7 +1,7 @@
 package shared.commands;
 
 import shared.locations.*;
-import client.model.*;
+import shared.model.*;
 
 public class RoadBuilding extends MoveCommand {
     private EdgeLocation spot1;
@@ -31,4 +31,8 @@ public class RoadBuilding extends MoveCommand {
         this.spot1 = spot1;
         this.spot2 = spot2;
     };
+
+    public String serverExecute(){
+        return "";
+    }
 }

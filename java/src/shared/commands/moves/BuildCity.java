@@ -1,6 +1,6 @@
 package shared.commands;
 
-import client.model.*;
+import shared.model.*;
 import shared.locations.*;
 
 public class BuildCity extends MoveCommand{
@@ -21,4 +21,8 @@ public class BuildCity extends MoveCommand{
         super("buildCity", index);
         this.vertexLocation = location;
     };
+
+    public String serverExecute(){
+        return "";
+    }
 }

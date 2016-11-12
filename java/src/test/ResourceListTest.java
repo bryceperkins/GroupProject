@@ -1,14 +1,8 @@
 import static org.junit.Assert.*;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import org.junit.*;
 
-import client.model.Game;
-import client.model.PlayerIndex;
-import client.model.player.*;
-import client.model.ResourceList;
+import shared.model.ResourceList;
 
 
 public class ResourceListTest {

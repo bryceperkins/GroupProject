@@ -1,6 +1,6 @@
 package shared.commands;
 
-import client.model.*;
+import shared.model.*;
 
 public class OfferTrade extends MoveCommand{
     private int receiver;
@@ -20,4 +20,8 @@ public class OfferTrade extends MoveCommand{
         this.offer = offer;
         this.receiver = receiver.getIndex();
     };
+
+    public String serverExecute(){
+        return "";
+    }
 }

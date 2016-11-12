@@ -2,17 +2,12 @@ package shared.deserializers;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.google.gson.*;
 
-import client.model.player.*;
-import client.model.*;
-import client.model.map.*;
-import shared.locations.*;
-import shared.definitions.ResourceType;
-import shared.definitions.CatanColor;
+import shared.model.player.*;
+import shared.model.*;
 
 public class GamesCreateDeserializer implements JsonDeserializer<Game> {
     @Override

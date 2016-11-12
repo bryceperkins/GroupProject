@@ -5,12 +5,11 @@ import org.junit.Before;
 import org.junit.After;
 import org.junit.Ignore;
 
-import shared.communication.*;
 import shared.communication.servers.*;
 import shared.commands.*;
 import shared.locations.*;
 import client.server.*;
-import client.model.*;
+import shared.model.*;
 
 public class SoldierTest {
     private ServerProxy server; 

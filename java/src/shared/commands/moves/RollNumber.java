@@ -1,6 +1,6 @@
 package shared.commands;
 
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
 
 public class RollNumber extends shared.commands.MoveCommand {
     private int number;
@@ -9,4 +9,8 @@ public class RollNumber extends shared.commands.MoveCommand {
         super("rollNumber", index);
         this.number = number;
     };
+
+    public String serverExecute(){
+        return "";
+    }
 }

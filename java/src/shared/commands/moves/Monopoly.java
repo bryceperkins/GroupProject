@@ -1,7 +1,7 @@
 package shared.commands;
 
 import shared.definitions.*;
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
 
 public class Monopoly extends MoveCommand{
     private ResourceType resource;
@@ -18,4 +18,8 @@ public class Monopoly extends MoveCommand{
         super("Monopoly", index);
         this.resource = resource;
     };
+
+    public String serverExecute(){
+        return "";
+    }
 }

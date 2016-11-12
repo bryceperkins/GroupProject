@@ -1,7 +1,7 @@
 package shared.commands;
 
 import shared.definitions.*;
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
 
 public class MaritimeTrade extends MoveCommand{
     private ResourceType inputResource;
@@ -25,4 +25,8 @@ public class MaritimeTrade extends MoveCommand{
         this.inputResource = inputResource;
         this.outputResource = outputResource;
     };
+
+    public String serverExecute(){
+        return "";
+    }
 }

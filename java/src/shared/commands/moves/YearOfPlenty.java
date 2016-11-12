@@ -1,7 +1,7 @@
 package shared.commands;
 
 import shared.definitions.*;
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
 
 public class YearOfPlenty extends MoveCommand {
     private ResourceType resource1;
@@ -21,4 +21,8 @@ public class YearOfPlenty extends MoveCommand {
         this.resource1 = resource1;
         this.resource2 = resource2;
     };
+
+    public String serverExecute(){
+        return "";
+    }
 }

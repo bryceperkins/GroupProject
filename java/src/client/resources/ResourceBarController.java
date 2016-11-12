@@ -3,11 +3,8 @@ package client.resources;
 import java.util.*;
 
 import client.base.*;
-import client.model.*;
-import java.util.Random;
-import client.model.player.*;
-
-import javax.annotation.Resource;
+import shared.model.*;
+import shared.model.player.*;
 
 /**
  * Implementation for the resource bar controller
