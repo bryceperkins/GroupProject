@@ -4,9 +4,6 @@ import server.handlers.iServerFacade;
 
 
 public class UserFacade implements iServerFacade {
-
-
-
     /**
      * Logs caller into the server and sets their catan.user HTTP cookie
      * @pre username is not null
@@ -15,8 +12,9 @@ public class UserFacade implements iServerFacade {
      * @param username
      * @param password
      **/
-    public void login(String username, String password){
-
+    public String login(String username, String password){
+        String success = "Success";
+        return success;
     }
 
     /**
@@ -28,7 +26,8 @@ public class UserFacade implements iServerFacade {
      * @param username
      * @param password
      **/
-    public void register(String username, String password){
-
+    public String register(String username, String password){
+        String success = "Success";
+        return success;
     }
 }

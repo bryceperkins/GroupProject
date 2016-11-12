@@ -1,6 +1,7 @@
 package shared.commands;
 
 import shared.communication.*;
+import server.facades.UserFacade;
 
 public class UserLogin extends Command{
     private String username;
@@ -17,6 +18,6 @@ public class UserLogin extends Command{
     }
 
     public String serverExecute(){
-        return "";
+        return new UserFacade().login(this.username, this.password);
     }
 }
