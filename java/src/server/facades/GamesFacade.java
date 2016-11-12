@@ -2,7 +2,7 @@ package server.facades;
 
 import server.handlers.iServerFacade;
 
-public class GamesFacade implements iServerFacade {
+public class GamesFacade extends BaseFacade{
 
     /**
      * Creates a new game on the server

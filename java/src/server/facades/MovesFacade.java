@@ -1,5 +1,7 @@
 package server.facades;
 
+import shared.communication.User;
+import shared.model.Game;
 import shared.model.PlayerIndex;
 import shared.model.ResourceList;
 import shared.definitions.*;
@@ -7,9 +9,16 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import server.handlers.iServerFacade;
+import shared.model.State;
+import shared.model.map.Map;
+import shared.model.map.Road;
+import shared.model.player.Player;
+
+import java.util.List;
 
 
-public class MovesFacade implements iServerFacade {
+public class MovesFacade extends BaseFacade{
+
 
     public void sendChat(String content){}
 
@@ -24,7 +33,10 @@ public class MovesFacade implements iServerFacade {
      *  @post resources exchanged
      *  @post trade offere removed
      */
-    public void acceptTrade(boolean willAccept){}
+    public void acceptTrade(boolean willAccept){
+
+
+    }
 
     /**
      *  When a 7 is rolled and a player has more than 7 cards, they must discard until they have 7 card in their hand
@@ -48,7 +60,7 @@ public class MovesFacade implements iServerFacade {
      *
      *  @post client model's status is now Discarding, Robbing, or Playing
      */
-    public void rollNumber(){}
+    public void rollNumber(int number){}
 
     /**
      *  Build a Road.
@@ -67,7 +79,38 @@ public class MovesFacade implements iServerFacade {
      *  @post Settlement is on the map
      *  @post longest road gained if necessary
      */
-    public void buildRoad(boolean free, EdgeLocation roadLocation){}
+    public String buildRoad(boolean free, EdgeLocation roadLocation){
+        Game game = getGame();
+        User user = getUser();
+
+        Player player = game.getPlayerByName(user.getUserName());
+
+        if(!free){
+            //charge cost of road
+            ResourceList roadCost = new ResourceList(1,0,0,0,1);
+            ResourceList playerResources = player.getResources();
+
+            if(playerResources.hasResources(roadCost)){
+                playerResources.decreaseBrick();
+                playerResources.decreaseWood();
+            }else {
+                System.out.println("not enough resources to purchase road");
+                return "";
+            }
+        }
+
+        Map map = game.getMap();
+        State state = game.getState();
+        if(map.canBuildRoad(player,roadLocation,state)){
+            Road road = new Road(player.getPlayerIndex(),roadLocation);
+            List<Road> existingRoads = map.getRoads();
+            existingRoads.add(road);
+            map.setRoads(existingRoads);
+            return getModel();
+        }
+
+        return "";
+    }
 
     /**
      *  Build a Settlement.

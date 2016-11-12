@@ -3,7 +3,7 @@ package server.facades;
 import server.handlers.iServerFacade;
 
 
-public class UserFacade implements iServerFacade {
+public class UserFacade extends BaseFacade{
 
 
 
