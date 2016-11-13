@@ -1,9 +1,16 @@
 package server.facades;
 
 import server.handlers.iServerFacade;
+import shared.communication.User;
+import shared.model.Game;
 
 
 public class UserFacade extends BaseFacade{
+
+    public UserFacade(Game game, User user){
+        super(game,user);
+    }
+
 
 
 

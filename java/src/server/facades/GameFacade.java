@@ -1,6 +1,14 @@
 package server.facades;
 
+import shared.communication.User;
+import shared.model.Game;
+
 public class GameFacade extends BaseFacade {
+
+    public GameFacade(Game game, User user){
+        super(game,user);
+    }
+
 
     /**
      * @return Returns the current state of the game in JSON format.

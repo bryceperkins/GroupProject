@@ -19,6 +19,11 @@ import java.util.List;
 
 public class MovesFacade extends BaseFacade{
 
+    public MovesFacade(Game game, User user){
+        super(game,user);
+    }
+
+
 
     public void sendChat(String content){}
 
