@@ -6,20 +6,20 @@ import shared.communication.User;
 import shared.model.Game;
 
 public class BaseFacade implements iServerFacade {
-    private Game game;
     private User user;
 
-    public BaseFacade(Game game, User user){
-        this.game = game;
+    public BaseFacade(){}
+
+    public BaseFacade(User user){
         this.user = user;
     }
 
-    public Game getGame() {
-        return game;
+    public int getGame() {
+        return user.getGameID();
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setGame(int game) {
+        this.user.setGameID(game);
     }
 
     public User getUser() {
@@ -33,7 +33,7 @@ public class BaseFacade implements iServerFacade {
     public String getModel(){
 
         Gson gson = new Gson();
-        String json = gson.toJson(game);
+        String json = gson.toJson(user);
 
         return json;
     }

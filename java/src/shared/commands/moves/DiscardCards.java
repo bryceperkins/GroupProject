@@ -1,6 +1,8 @@
 package shared.commands;
 
 import shared.model.*;
+import server.handlers.iServerFacade;
+import server.facades.GameFacade;
 
 public class DiscardCards extends MoveCommand {
     private ResourceList discardedCards;
@@ -10,7 +12,7 @@ public class DiscardCards extends MoveCommand {
         this.discardedCards = cards;
     };
 
-    public String  serverExecute(){
+    public String  serverExecute(iServerFacade f){
         return "";
     }
 }

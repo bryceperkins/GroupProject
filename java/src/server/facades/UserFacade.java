@@ -6,14 +6,6 @@ import shared.model.Game;
 
 
 public class UserFacade extends BaseFacade{
-
-    public UserFacade(Game game, User user){
-        super(game,user);
-    }
-
-
-
-
     /**
      * Logs caller into the server and sets their catan.user HTTP cookie
      * @pre username is not null
@@ -22,8 +14,9 @@ public class UserFacade extends BaseFacade{
      * @param username
      * @param password
      **/
-    public void login(String username, String password){
-
+    public String login(String username, String password){
+        String success = "Success";
+        return success;
     }
 
     /**
@@ -35,7 +28,8 @@ public class UserFacade extends BaseFacade{
      * @param username
      * @param password
      **/
-    public void register(String username, String password){
-
+    public String register(String username, String password){
+        String success = "Success";
+        return success;
     }
 }
