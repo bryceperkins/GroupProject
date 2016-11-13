@@ -27,7 +27,7 @@ public class RegisterHandler extends BaseHandler{
             body = IOUtils.toString(request.getRequestBody(), "UTF-8");
             UserRegister command = new Gson().fromJson(body, UserRegister.class);     
 
-            body = command.serverExecute();
+            body = command.serverExecute(new UserFacade());
             if (body.equals("Success")) {
                 code = 200;
                 request.getResponseHeaders().add("Set-Cookie", "catan.user=" + URLEncoder.encode(gson.toJson(super.getUser()), "UTF-8") + "; path=/");

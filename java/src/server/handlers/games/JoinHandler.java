@@ -22,13 +22,13 @@ public class JoinHandler extends BaseHandler{
      */
     public void handle(HttpExchange request) throws IOException{ 
         body = IOUtils.toString(request.getRequestBody(), "UTF-8");
-        body = new Gson().fromJson(body, GamesJoin.class).serverExecute();
+        body = new Gson().fromJson(body, GamesJoin.class).serverExecute(new GamesFacade(getUser()));
 
         if(!body.equals("Failed")) {
             code = 200;
             request.getResponseHeaders().add("Set-Cookie", "catan.game=" + super.getUser().getGameID() + "; path=/");
         }
-        super.respond(request, code, body);
+        respond(request, code, body);
         LOGGER.log(Level.INFO, "Finished: " + request.getRequestURI()); 
     }
 }

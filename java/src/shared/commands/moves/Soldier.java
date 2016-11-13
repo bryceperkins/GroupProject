@@ -2,6 +2,8 @@ package shared.commands;
 
 import shared.locations.*;
 import shared.model.*;
+import server.handlers.iServerFacade;
+import server.facades.GameFacade;
 
 public class Soldier extends MoveCommand{
     private HexLocation location;
@@ -25,7 +27,7 @@ public class Soldier extends MoveCommand{
         this.victimIndex = victimIndex.getIndex();
     };
 
-    public String serverExecute(){
+    public String serverExecute(iServerFacade f){
         return "";
     }
 

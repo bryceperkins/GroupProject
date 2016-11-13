@@ -2,6 +2,7 @@ package server.handlers;
 
 import java.util.logging.Level;
 import shared.commands.GamesList;
+import server.facades.GamesFacade;
 
 import com.google.gson.*;
 import org.apache.commons.io.*;
@@ -24,7 +25,7 @@ public class ListHandler extends BaseHandler{
             LOGGER.log(Level.SEVERE, "User not logged in");
         }
         else {
-            body = new GamesList().serverExecute();
+            body = new GamesList().serverExecute(new GamesFacade(getUser()));
 
             if(!body.equals("Failed")) {
                 code = 200;

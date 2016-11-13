@@ -11,8 +11,8 @@ import shared.model.Game;
 
 public class GamesFacade extends BaseFacade{
 
-    public GamesFacade(Game game, User user){
-        super(game,user);
+    public GamesFacade(User user){
+        super(user);
     }
 
 

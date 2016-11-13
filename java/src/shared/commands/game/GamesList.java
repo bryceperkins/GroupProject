@@ -1,6 +1,7 @@
 package shared.commands;
 
 import server.facades.GamesFacade;
+import server.handlers.iServerFacade;
 
 public class GamesList extends Command{
     public GamesList() {
@@ -9,7 +10,8 @@ public class GamesList extends Command{
         method = "GET";
     }
 
-    public String serverExecute(){
-        return new GamesFacade().list();
+    public String serverExecute(iServerFacade f){
+        GamesFacade facade = (GamesFacade) f;
+        return facade.list();
     }
 }

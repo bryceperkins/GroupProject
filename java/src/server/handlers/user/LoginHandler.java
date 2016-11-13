@@ -24,7 +24,7 @@ public class LoginHandler extends BaseHandler{
      */
     public void handle(HttpExchange request) throws IOException{
         body = IOUtils.toString(request.getRequestBody(), "UTF-8");
-        body = new Gson().fromJson(body, UserLogin.class).serverExecute();
+        body = new Gson().fromJson(body, UserLogin.class).serverExecute(new UserFacade());
 
         if(body.equals("Success")) {
             code = 200;

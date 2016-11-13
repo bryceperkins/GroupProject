@@ -2,6 +2,7 @@ package server.handlers;
 
 import java.util.logging.Level;
 import shared.commands.GamesCreate;
+import server.facades.GamesFacade;
 
 import com.google.gson.*;
 import org.apache.commons.io.*;
@@ -20,19 +21,19 @@ public class CreateHandler extends BaseHandler{
      * Handle the Incoming request
      */
     public void handle(HttpExchange request) throws IOException{ 
-        super.parseCookies(request);
-        if(super.getUser() == null ){
+        parseCookies(request);
+        if(getUser() == null ){
             LOGGER.log(Level.SEVERE, "User not logged in");
         }
         else {
             body = IOUtils.toString(request.getRequestBody(), "UTF-8");
-            body = new Gson().fromJson(body, GamesCreate.class).serverExecute();     
+            body = new Gson().fromJson(body, GamesCreate.class).serverExecute(new GamesFacade(getUser()));     
             
             if(!body.equals("Failed")) {
                 code = 200;
             }
         }
-        super.respond(request, code, body);
+        respond(request, code, body);
         LOGGER.log(Level.INFO, "Finished: " + request.getRequestURI()); 
     }
 }

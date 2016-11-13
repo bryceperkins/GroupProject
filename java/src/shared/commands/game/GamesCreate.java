@@ -1,6 +1,7 @@
 package shared.commands;
 
 import server.facades.GamesFacade;
+import server.handlers.iServerFacade;
 
 public class GamesCreate extends Command{
     private String name;
@@ -19,7 +20,8 @@ public class GamesCreate extends Command{
         this.randomNumbers = numbers;
     }
 
-    public String serverExecute(){
-        return new GamesFacade().create();
+    public String serverExecute(iServerFacade f){
+        GamesFacade facade = (GamesFacade) f;
+        return facade.create();
     }
 }
