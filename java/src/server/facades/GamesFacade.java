@@ -23,6 +23,7 @@ public class GamesFacade extends BaseFacade{
         game.setName("list-test");
         ArrayList<Game> array = new ArrayList();
         array.add(game);
+        //
 
         return new Gson().toJson(array);
     }
@@ -40,6 +41,7 @@ public class GamesFacade extends BaseFacade{
         Game game = new Game();
         game.setId(0);
         game.setName("create-test");
+        //
 
         return new Gson().toJson(game);
     }
@@ -62,6 +64,7 @@ public class GamesFacade extends BaseFacade{
         game.setId(0);
         game.setName("join-test");
         game.getPlayers().add(new Player(c, "test-player", 1, PlayerIndex.Player1, 0));
+        //
 
         return new Gson().toJson(game);
     }
