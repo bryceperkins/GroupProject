@@ -6,10 +6,6 @@ import shared.model.Game;
 
 
 public class UserFacade extends BaseFacade{
-
-    public UserFacade(Game game, User user){
-        super(game,user);
-    }
     /**
      * Logs caller into the server and sets their catan.user HTTP cookie
      * @pre username is not null

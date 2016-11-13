@@ -2,6 +2,7 @@ package server.facades;
 
 import shared.communication.User;
 import shared.model.Game;
+import shared.model.GameManager;
 import shared.model.PlayerIndex;
 import shared.model.ResourceList;
 import shared.definitions.*;
@@ -18,9 +19,10 @@ import java.util.List;
 
 
 public class MovesFacade extends BaseFacade{
+    private GameManager manager = GameManager.getInstance();
 
-    public MovesFacade(Game game, User user){
-        super(game,user);
+    public MovesFacade(User user){
+        super(user);
     }
 
 
@@ -85,8 +87,8 @@ public class MovesFacade extends BaseFacade{
      *  @post longest road gained if necessary
      */
     public String buildRoad(boolean free, EdgeLocation roadLocation){
-        Game game = getGame();
         User user = getUser();
+        Game game = manager.getGame(user.getGameID());
 
         Player player = game.getPlayerByName(user.getUserName());
 

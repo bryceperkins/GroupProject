@@ -2,6 +2,8 @@ package shared.commands;
 
 import shared.model.*;
 import shared.locations.*;
+import server.handlers.iServerFacade;
+import server.facades.GameFacade;
 
 public class BuildCity extends MoveCommand{
     private VertexLocation vertexLocation;
@@ -22,7 +24,7 @@ public class BuildCity extends MoveCommand{
         this.vertexLocation = location;
     };
 
-    public String serverExecute(){
+    public String serverExecute(iServerFacade f){
         return "";
     }
 }
