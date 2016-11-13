@@ -1,8 +1,22 @@
 package server.facades;
 
+import com.google.gson.*;
+import java.util.*;
+import shared.model.Game;
 import server.handlers.iServerFacade;
 
 public class GamesFacade implements iServerFacade {
+
+    public String list(){
+        //TESTING
+        Game game = new Game();
+        game.setId(0);
+        game.setName("test");
+        ArrayList<Game> array = new ArrayList();
+        array.add(game);
+
+        return new Gson().toJson(array);
+    }
 
     /**
      * Creates a new game on the server

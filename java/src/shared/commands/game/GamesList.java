@@ -1,6 +1,6 @@
 package shared.commands;
 
-import server.handlers.iServerFacade;
+import server.facades.GamesFacade;
 
 public class GamesList extends Command{
     public GamesList() {
@@ -10,6 +10,6 @@ public class GamesList extends Command{
     }
 
     public String serverExecute(){
-        return "";
+        return new GamesFacade().list();
     }
 }

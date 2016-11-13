@@ -9,6 +9,7 @@ import server.facades.UserFacade;
 import shared.communication.User;
 
 import java.io.*;
+import java.net.*;
 import com.sun.net.httpserver.*;
 import com.google.gson.*;
 import org.apache.commons.io.*;
@@ -23,18 +24,17 @@ public class RegisterHandler extends BaseHandler{
      */
     public void handle(HttpExchange request) throws IOException{
         try{
-            // TESTING
-            User user = new User("test", "test");
-
             body = IOUtils.toString(request.getRequestBody(), "UTF-8");
             UserRegister command = new Gson().fromJson(body, UserRegister.class);     
 
             body = command.serverExecute();
             if (body.equals("Success")) {
                 code = 200;
-                request.getResponseHeaders().add("Set-Cookie", "catan.user=" + gson.toJson(user));
+                request.getResponseHeaders().add("Set-Cookie", "catan.user=" + URLEncoder.encode(gson.toJson(super.getUser()), "UTF-8") + "; path=/");
             }
-        } catch (IOException e) { } finally {
+        } catch (IOException e) { 
+            LOGGER.log(Level.SEVERE, "Handle Error: " + request.getRequestURI()); 
+        } finally {
             super.respond(request, code, body);
             LOGGER.log(Level.SEVERE, "Finished: " + request.getRequestURI()); 
         }
