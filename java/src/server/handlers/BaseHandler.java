@@ -20,13 +20,6 @@ public abstract class BaseHandler implements HttpHandler{
     private User user = null;
     
     /**
-     * @return The game the request is associated with
-     */
-    public int getGame(){
-        return user.getGameID();
-    }
-    
-    /**
      * @return The user the request is associated with
      */
     public User getUser(){
@@ -50,7 +43,6 @@ public abstract class BaseHandler implements HttpHandler{
         request.sendResponseHeaders(code, 0);       
         OutputStream os = request.getResponseBody();
         os.write(body.getBytes());
-        parseCookies(request);
         request.getResponseBody().close();
         os.close();
     }

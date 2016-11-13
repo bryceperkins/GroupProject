@@ -2,6 +2,8 @@ package shared.commands;
 
 import shared.definitions.CatanColor;
 
+import server.facades.GamesFacade;
+
 public class GamesJoin extends Command{
     private int id;
     private CatanColor color;
@@ -16,6 +18,6 @@ public class GamesJoin extends Command{
     }
 
     public String serverExecute(){
-        return "";
+        return new GamesFacade().join(this.id, this.color);
     }
 }

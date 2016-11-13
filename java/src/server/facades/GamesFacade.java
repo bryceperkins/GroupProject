@@ -2,7 +2,9 @@ package server.facades;
 
 import com.google.gson.*;
 import java.util.*;
-import shared.model.Game;
+import shared.model.*;
+import shared.model.player.*;
+import shared.definitions.CatanColor;
 import server.handlers.iServerFacade;
 
 public class GamesFacade implements iServerFacade {
@@ -47,7 +49,15 @@ public class GamesFacade implements iServerFacade {
      * @post 2. The player is in the game with the specified color (i.e. calls to /games/list method will show the player in the game with the chosen color).
      * @post 3. The server response includes the Set­cookie response header setting the catan.game HTTP cookie
      **/
-    public void join(){}
+    public String join(int id, CatanColor c){
+        //TESTING
+        Game game = new Game();
+        game.setId(0);
+        game.setName("join-test");
+        game.getPlayers().add(new Player(c, "test-player", 1, PlayerIndex.Player1, 0));
+
+        return new Gson().toJson(game);
+    }
 
     /**
      * Save state of game to file

@@ -23,21 +23,14 @@ public class LoginHandler extends BaseHandler{
      * Handle the Incoming request
      */
     public void handle(HttpExchange request) throws IOException{
-        try{
-            body = IOUtils.toString(request.getRequestBody(), "UTF-8");
-            UserLogin command = new Gson().fromJson(body, UserLogin.class);     
+        body = IOUtils.toString(request.getRequestBody(), "UTF-8");
+        body = new Gson().fromJson(body, UserLogin.class).serverExecute();
 
-            body = command.serverExecute();
-            if(body.equals("Success")) {
-                code = 200;
-                request.getResponseHeaders().add("Set-Cookie", "catan.user=" + URLEncoder.encode(gson.toJson(super.getUser()), "UTF-8") + "; path=/");
-            }
-        } catch (IOException e) { 
-            LOGGER.log(Level.SEVERE, "Handle Error: " + request.getRequestURI()); 
-        } 
-        finally {
-            super.respond(request, code, body);
-            LOGGER.log(Level.SEVERE, "Finished: " + request.getRequestURI()); 
+        if(body.equals("Success")) {
+            code = 200;
+            request.getResponseHeaders().add("Set-Cookie", "catan.user=" + URLEncoder.encode(gson.toJson(super.getUser()), "UTF-8") + "; path=/");
         }
+        super.respond(request, code, body);
+        LOGGER.log(Level.INFO, "Finished: " + request.getRequestURI()); 
     }
 }
