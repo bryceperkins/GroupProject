@@ -1,8 +1,15 @@
 package server.facades;
 
 import server.handlers.iServerFacade;
+import shared.communication.User;
+import shared.model.Game;
 
-public class GamesFacade implements iServerFacade {
+public class GamesFacade extends BaseFacade{
+
+    public GamesFacade(Game game, User user){
+        super(game,user);
+    }
+
 
     /**
      * Creates a new game on the server

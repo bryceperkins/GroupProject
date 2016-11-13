@@ -1,9 +1,15 @@
 package server.facades;
 
 import server.handlers.iServerFacade;
+import shared.communication.User;
+import shared.model.Game;
 
 
-public class UserFacade implements iServerFacade {
+public class UserFacade extends BaseFacade{
+
+    public UserFacade(Game game, User user){
+        super(game,user);
+    }
     /**
      * Logs caller into the server and sets their catan.user HTTP cookie
      * @pre username is not null
