@@ -19,7 +19,6 @@ import java.util.List;
 
 
 public class MovesFacade extends BaseFacade{
-    private GameManager manager = GameManager.getInstance();
 
     public MovesFacade(User user){
         super(user);
@@ -88,7 +87,7 @@ public class MovesFacade extends BaseFacade{
      */
     public String buildRoad(boolean free, EdgeLocation roadLocation){
         User user = getUser();
-        Game game = manager.getGame(user.getGameID());
+        Game game = getGame();
 
         Player player = game.getPlayerByName(user.getUserName());
 

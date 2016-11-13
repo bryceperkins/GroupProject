@@ -1,7 +1,11 @@
 package server.facades;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import shared.communication.User;
+import shared.definitions.AIType;
 import shared.model.Game;
+import com.google.gson.*;
 
 public class GameFacade extends BaseFacade {
 
@@ -21,14 +25,21 @@ public class GameFacade extends BaseFacade {
     b. “true” (true in double quotes) is returned if the caller provided a version number,
     and the version number matched the version number on the server
      */
-    public void model(){}
+    public String model(){
+        Game game = new Game();
+        game.setId(0);
+        game.setName("model-test");
+        return new Gson().toJson(game);
+    }
 
     /**
      * @return Returns a list of supported AI player types
      * @post 1. The server returns an HTTP 200 success response.
      * @post 2. The body contains a JSON string array enumerating the different types of AI players.
      */
-    public void listAI(){}
+    public String listAI(){
+        return new Gson().toJson(new ArrayList<AIType>(Arrays.asList(AIType.values())));
+    }
 
     /**
      * Adds an AI player to the current game.
@@ -38,5 +49,10 @@ public class GameFacade extends BaseFacade {
      * @post 1. The server returns an HTTP 200 success response with “Success” in the body.
      * @post 2. A new AI player of the specified type has been added to the current game. The server selected a name and color for the player.
      */
-    public void addAI(){}
+    public String addAI(AIType type){
+        Game game = new Game();
+        game.setId(0);
+        game.setName("addai-test");
+        return new Gson().toJson(game);
+    }
 }
