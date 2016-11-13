@@ -6,8 +6,15 @@ import shared.model.*;
 import shared.model.player.*;
 import shared.definitions.CatanColor;
 import server.handlers.iServerFacade;
+import shared.communication.User;
+import shared.model.Game;
 
-public class GamesFacade implements iServerFacade {
+public class GamesFacade extends BaseFacade{
+
+    public GamesFacade(Game game, User user){
+        super(game,user);
+    }
+
 
     public String list(){
         //TESTING
