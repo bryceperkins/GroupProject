@@ -1,5 +1,8 @@
 package shared.commands;
 
+import server.handlers.iServerFacade;
+import server.facades.GameFacade;
+
 public class GameListAI extends Command{
     public GameListAI() {
         super();
@@ -7,7 +10,7 @@ public class GameListAI extends Command{
         method = "GET";
     }
 
-    public String serverExecute(){
+    public String serverExecute(iServerFacade f){
         return "";
     }
 }

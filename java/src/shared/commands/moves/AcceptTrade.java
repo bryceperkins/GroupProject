@@ -1,6 +1,8 @@
 package shared.commands;
 
 import shared.model.*;
+import server.handlers.iServerFacade;
+import server.facades.GameFacade;
 
 public class AcceptTrade extends MoveCommand{
     private Boolean willAccept;
@@ -20,7 +22,7 @@ public class AcceptTrade extends MoveCommand{
         this.willAccept = accept;
     };
 
-    public String serverExecute(){
+    public String serverExecute(iServerFacade f){
         return "";
     }
 }

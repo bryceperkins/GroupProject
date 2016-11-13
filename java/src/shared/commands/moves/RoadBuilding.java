@@ -2,6 +2,8 @@ package shared.commands;
 
 import shared.locations.*;
 import shared.model.*;
+import server.handlers.iServerFacade;
+import server.facades.GameFacade;
 
 public class RoadBuilding extends MoveCommand {
     private EdgeLocation spot1;
@@ -32,7 +34,7 @@ public class RoadBuilding extends MoveCommand {
         this.spot2 = spot2;
     };
 
-    public String serverExecute(){
+    public String serverExecute(iServerFacade f){
         return "";
     }
 }

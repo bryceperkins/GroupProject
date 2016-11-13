@@ -2,6 +2,7 @@ package shared.commands;
 
 import shared.communication.*;
 import server.facades.UserFacade;
+import server.handlers.iServerFacade;
 
 public class UserLogin extends Command{
     private String username;
@@ -17,7 +18,8 @@ public class UserLogin extends Command{
         this.password = tmp.getPassword();
     }
 
-    public String serverExecute(){
-        return new UserFacade().login(this.username, this.password);
+    public String serverExecute(iServerFacade f){
+        UserFacade facade = (UserFacade)f;
+        return facade.login(this.username, this.password);
     }
 }
