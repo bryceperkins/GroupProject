@@ -1,5 +1,7 @@
 package shared.commands;
 
+import server.facades.GamesFacade;
+
 public class GamesCreate extends Command{
     private String name;
     private boolean randomTiles;
@@ -18,6 +20,6 @@ public class GamesCreate extends Command{
     }
 
     public String serverExecute(){
-        return "";
+        return new GamesFacade().create();
     }
 }

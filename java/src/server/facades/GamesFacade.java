@@ -11,7 +11,7 @@ public class GamesFacade implements iServerFacade {
         //TESTING
         Game game = new Game();
         game.setId(0);
-        game.setName("test");
+        game.setName("list-test");
         ArrayList<Game> array = new ArrayList();
         array.add(game);
 
@@ -26,8 +26,13 @@ public class GamesFacade implements iServerFacade {
      * @post 2. The server returns an HTTP 200 success response.
      * @post 3. The body contains a JSON object describing the newly created game
      **/
-    public void create(){
+    public String create(){
+        //TESTING
+        Game game = new Game();
+        game.setId(0);
+        game.setName("create-test");
 
+        return new Gson().toJson(game);
     }
 
     /**
