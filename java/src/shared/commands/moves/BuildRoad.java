@@ -2,6 +2,8 @@ package shared.commands;
 
 import shared.model.*;
 import shared.locations.*;
+import server.handlers.iServerFacade;
+import server.facades.GameFacade;
 
 public class BuildRoad extends MoveCommand {
     private Boolean free;
@@ -28,7 +30,7 @@ public class BuildRoad extends MoveCommand {
         this.free = free;
         this.roadLocation = location;
     };
-    public String serverExecute(){
+    public String serverExecute(iServerFacade f){
         return "";
     }
 }

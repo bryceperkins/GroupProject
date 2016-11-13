@@ -1,6 +1,8 @@
 package shared.commands;
 
 import shared.model.PlayerIndex;
+import server.handlers.iServerFacade;
+import server.facades.GameFacade;
 
 public class BuyDevCard extends MoveCommand{
 
@@ -8,7 +10,7 @@ public class BuyDevCard extends MoveCommand{
         super("buyDevCard", index);
     };
 
-    public String serverExecute(){
+    public String serverExecute(iServerFacade f){
         return "";
     }
 }

@@ -1,8 +1,31 @@
 package server.facades;
 
+import com.google.gson.*;
+import java.util.*;
+import shared.model.*;
+import shared.model.player.*;
+import shared.definitions.CatanColor;
 import server.handlers.iServerFacade;
+import shared.communication.User;
+import shared.model.Game;
 
-public class GamesFacade implements iServerFacade {
+public class GamesFacade extends BaseFacade{
+
+    public GamesFacade(User user){
+        super(user);
+    }
+
+
+    public String list(){
+        //TESTING
+        Game game = new Game();
+        game.setId(0);
+        game.setName("list-test");
+        ArrayList<Game> array = new ArrayList();
+        array.add(game);
+
+        return new Gson().toJson(array);
+    }
 
     /**
      * Creates a new game on the server
@@ -12,8 +35,13 @@ public class GamesFacade implements iServerFacade {
      * @post 2. The server returns an HTTP 200 success response.
      * @post 3. The body contains a JSON object describing the newly created game
      **/
-    public void create(){
+    public String create(){
+        //TESTING
+        Game game = new Game();
+        game.setId(0);
+        game.setName("create-test");
 
+        return new Gson().toJson(game);
     }
 
     /**
@@ -28,7 +56,15 @@ public class GamesFacade implements iServerFacade {
      * @post 2. The player is in the game with the specified color (i.e. calls to /games/list method will show the player in the game with the chosen color).
      * @post 3. The server response includes the Set­cookie response header setting the catan.game HTTP cookie
      **/
-    public void join(){}
+    public String join(int id, CatanColor c){
+        //TESTING
+        Game game = new Game();
+        game.setId(0);
+        game.setName("join-test");
+        game.getPlayers().add(new Player(c, "test-player", 1, PlayerIndex.Player1, 0));
+
+        return new Gson().toJson(game);
+    }
 
     /**
      * Save state of game to file

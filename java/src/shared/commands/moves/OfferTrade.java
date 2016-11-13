@@ -1,6 +1,8 @@
 package shared.commands;
 
 import shared.model.*;
+import server.handlers.iServerFacade;
+import server.facades.GameFacade;
 
 public class OfferTrade extends MoveCommand{
     private int receiver;
@@ -21,7 +23,7 @@ public class OfferTrade extends MoveCommand{
         this.receiver = receiver.getIndex();
     };
 
-    public String serverExecute(){
+    public String serverExecute(iServerFacade f){
         return "";
     }
 }

@@ -1,8 +1,14 @@
 package server.facades;
 
-import server.handlers.iServerFacade;
+import shared.communication.User;
+import shared.model.Game;
 
-public class GameFacade implements iServerFacade {
+public class GameFacade extends BaseFacade {
+
+    public GameFacade(User user){
+        super(user);
+    }
+
 
     /**
      * @return Returns the current state of the game in JSON format.

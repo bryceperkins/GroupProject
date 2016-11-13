@@ -2,6 +2,8 @@ package shared.commands;
 
 import shared.definitions.*;
 import shared.model.PlayerIndex;
+import server.handlers.iServerFacade;
+import server.facades.GameFacade;
 
 public class Monopoly extends MoveCommand{
     private ResourceType resource;
@@ -19,7 +21,7 @@ public class Monopoly extends MoveCommand{
         this.resource = resource;
     };
 
-    public String serverExecute(){
+    public String serverExecute(iServerFacade f){
         return "";
     }
 }

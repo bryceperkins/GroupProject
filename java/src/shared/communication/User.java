@@ -8,8 +8,7 @@ public class User{
     private String name;
     private String password;
     private int playerID;
-    private PlayerInfo player;
-    private int gameID;
+    private transient int gameID;
 
     public User() {}
     /**
