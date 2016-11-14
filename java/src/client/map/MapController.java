@@ -6,7 +6,8 @@ import shared.commands.BuildCity;
 import shared.commands.BuildRoad;
 import shared.commands.BuildSettlement;
 import shared.commands.RobPlayer;
-//import shared.commands.moves.*;
+import shared.commands.RoadBuilding;
+import shared.commands.Soldier;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
@@ -26,12 +27,12 @@ public class MapController extends Controller implements IMapController,Observer
 	private IRobView robView;
 	private GameManager manager = GameManager.getInstance();
 	private Game game;
+	private List<EdgeLocation> roadBuildingLocations = new ArrayList<EdgeLocation>();
+	private boolean isRoadBuilding = false;
 	private boolean firstRoadPlayed;
 	private boolean firstSettlementPlayed;
 	private boolean secondRoadPlayed;
 	private boolean secondSettlementPlayed;
-
-
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -171,6 +172,10 @@ public class MapController extends Controller implements IMapController,Observer
 
 	public void placeRoad(EdgeLocation edgeLoc) {
 		if(canPlaceRoad(edgeLoc)){
+			if(isRoadBuilding)
+			{
+				roadBuildingLocations.add(edgeLoc);
+			}
 			System.out.println("yes we can place a road here....");
 			String result = manager.getServer().execute(new BuildRoad(this.manager.getActivePlayerIndex(), edgeLoc, game.getState().isFirstRound() ||game.getState().isSecondRound()));
 			if (!result.equals("Failed")) {
@@ -275,18 +280,36 @@ public class MapController extends Controller implements IMapController,Observer
 	}
 	
 	public void playRoadBuildingCard() {	
+		isRoadBuilding = true;
 		getView().startDrop(PieceType.ROAD, this.manager.getActivePlayer().getColor(), true);
 		getView().startDrop(PieceType.ROAD, this.manager.getActivePlayer().getColor(), true);
+		
+		Player player = GameManager.getInstance().getActivePlayer();
+		//loaded with dummy variables
+		RoadBuilding roadBuilding = new RoadBuilding(player.getPlayerIndex(), roadBuildingLocations.get(0), roadBuildingLocations.get(1));
+		String results = manager.getServer().execute(roadBuilding);
+		isRoadBuilding = false;
+		roadBuildingLocations = new ArrayList<EdgeLocation>();
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {
 		String result;
-		if(victim == null)
-			result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),PlayerIndex.None,game.getMap().getRobber()));
+		State state = game.getState();
+		if(state.isRobbing() == true)
+		{
+			if(victim == null)
+				result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),PlayerIndex.None,game.getMap().getRobber()));
+			else
+				result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),victim.getPlayerIndex(),game.getMap().getRobber()));
+			System.out.println(game.getPlayer(victim.getPlayerIndex()).getName() + " done got robbed" );
+		}
 		else
-			result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),victim.getPlayerIndex(),game.getMap().getRobber()));
-		System.out.println(game.getPlayer(victim.getPlayerIndex()).getName() + " done got robbed" );
-
+		{
+			if(victim == null)
+				result = manager.getServer().execute(new Soldier(this.manager.getActivePlayerIndex(),PlayerIndex.None,game.getMap().getRobber()));
+			else
+				result = manager.getServer().execute(new Soldier(this.manager.getActivePlayerIndex(),victim.getPlayerIndex(),game.getMap().getRobber()));
+		}
 		//String result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),victim.getPlayerIndex(),game.getMap().getRobber()));
 		if (!result.equals("Failed")) {
 			robView.closeModal();

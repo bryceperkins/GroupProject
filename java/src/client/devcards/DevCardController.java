@@ -4,6 +4,11 @@ import client.base.*;
 import shared.model.*;
 import shared.model.player.*;
 import shared.definitions.*;
+import shared.commands.*;
+import client.server.*;
+import shared.model.*;
+import shared.model.map.*;
+import shared.locations.*;
 
 
 /**
@@ -12,8 +17,9 @@ import shared.definitions.*;
 public class DevCardController extends Controller implements IDevCardController {
 
 	private IBuyDevCardView buyCardView;
-	private IAction soldierAction;
-	private IAction roadAction;
+	private SoldierAction soldierAction;
+	private RoadBuildingAction roadAction;
+	private ServerProxy serverProxy;
 
 	
 	/**
@@ -28,10 +34,10 @@ public class DevCardController extends Controller implements IDevCardController 
 								IAction soldierAction, IAction roadAction) {
 
 		super(view);
-		
 		this.buyCardView = buyCardView;
-		this.soldierAction = soldierAction;
-		this.roadAction = roadAction;
+		this.soldierAction = new SoldierAction();
+		this.roadAction = new RoadBuildingAction();
+		this.serverProxy = GameManager.getInstance().getServer();
 	}
 
 	public IPlayDevCardView getPlayCardView() {
@@ -60,7 +66,9 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void buyCard() {
-
+		Player player = GameManager.getInstance().getActivePlayer();
+		BuyDevCard buyDevCard = new BuyDevCard(player.getPlayerIndex());
+		serverProxy.execute(buyDevCard);
 		getBuyCardView().closeModal();
 	}
 
@@ -144,30 +152,47 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
-		getPlayCardView().closeModal();
+		if(resource != null)
+		{
+			Player player = GameManager.getInstance().getActivePlayer();
+			Monopoly monopoly = new Monopoly(player.getPlayerIndex(), resource);
+			serverProxy.execute(monopoly);
+			getPlayCardView().closeModal();
+		}
 	}
 
 	@Override
 	public void playMonumentCard() {
+		Player player = GameManager.getInstance().getActivePlayer();
+		Monument monument = new Monument(player.getPlayerIndex());
+		serverProxy.execute(monument);
 		getPlayCardView().reset(); 
 	}
 
 	@Override
 	public void playRoadBuildCard() {
-		getPlayCardView().closeModal();
 		roadAction.execute();
+		getPlayCardView().closeModal();
 	}
 
 	@Override
 	public void playSoldierCard() {
-		getPlayCardView().closeModal();
+		
 		soldierAction.execute();
+
+		getPlayCardView().closeModal();
 
 	}
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		
+		if(resource1 != resource2 && resource1 != null && resource2 != null)
+		{
+			Player player = GameManager.getInstance().getActivePlayer();
+			YearOfPlenty yop = new YearOfPlenty(player.getPlayerIndex(), resource1, resource2);
+			serverProxy.execute(yop);
+			getPlayCardView().closeModal();
+		}
 	}
 
 }

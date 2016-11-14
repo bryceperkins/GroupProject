@@ -3,7 +3,7 @@ package shared.commands;
 import shared.model.*;
 import shared.locations.*;
 import server.handlers.iServerFacade;
-import server.facades.GameFacade;
+import server.facades.MovesFacade;
 
 public class BuildRoad extends MoveCommand {
     private Boolean free;
@@ -31,6 +31,7 @@ public class BuildRoad extends MoveCommand {
         this.roadLocation = location;
     };
     public String serverExecute(iServerFacade f){
-        return "";
+        MovesFacade facade = (MovesFacade) f;
+        return facade.buildRoad(getIndex(), free, roadLocation);
     }
 }

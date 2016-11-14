@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import client.map.*;
+import client.*;
 
 @SuppressWarnings("serial")
 public class MidPanel extends JPanel
@@ -17,7 +18,7 @@ public class MidPanel extends JPanel
 	
 	public MidPanel()
 	{
-		
+
 		this.setLayout(new BorderLayout());
 		
 		tradePanel = new TradePanel();
@@ -35,6 +36,7 @@ public class MidPanel extends JPanel
 		this.add(gameStatePanel, BorderLayout.SOUTH);
 		
 		this.setPreferredSize(new Dimension(800, 700));
+		GameController.setMapController(mapController);
 	}
 	
 	public GameStatePanel getGameStatePanel()

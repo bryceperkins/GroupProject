@@ -4,9 +4,12 @@ import com.google.gson.Gson;
 import server.handlers.iServerFacade;
 import shared.communication.User;
 import shared.model.Game;
+import shared.model.GameManager;
 
 public class BaseFacade implements iServerFacade {
+    private GameManager manager = GameManager.getInstance();
     private User user;
+    private Game game;
 
     public BaseFacade(){}
 
@@ -14,8 +17,12 @@ public class BaseFacade implements iServerFacade {
         this.user = user;
     }
 
-    public int getGame() {
-        return user.getGameID();
+    public Game getGame() {
+        Game tmp = new Game();
+        tmp.setId(0);
+        tmp.setName("test game");
+        return tmp;
+        //return manager.getGame(user.getGameID());
     }
 
     public void setGame(int game) {
@@ -33,7 +40,7 @@ public class BaseFacade implements iServerFacade {
     public String getModel(){
 
         Gson gson = new Gson();
-        String json = gson.toJson(user);
+        String json = gson.toJson(game);
 
         return json;
     }
