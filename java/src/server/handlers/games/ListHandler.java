@@ -7,8 +7,6 @@ import server.facades.GamesFacade;
 import com.google.gson.*;
 import org.apache.commons.io.*;
 
-import shared.communication.User;
-
 import java.io.*;
 import com.sun.net.httpserver.*;
 

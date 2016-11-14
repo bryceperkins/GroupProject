@@ -11,6 +11,7 @@ public class GameListAI extends Command{
     }
 
     public String serverExecute(iServerFacade f){
-        return "";
+        GameFacade facade = (GameFacade) f;
+        return facade.listAI();
     }
 }
