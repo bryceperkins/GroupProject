@@ -2,7 +2,7 @@ package shared.commands;
 
 import shared.model.PlayerIndex;
 import server.handlers.iServerFacade;
-import server.facades.GameFacade;
+import server.facades.MovesFacade;
 
 public class SendChat extends MoveCommand{
     private String content;
@@ -13,6 +13,7 @@ public class SendChat extends MoveCommand{
     }
 
     public String serverExecute(iServerFacade f){
-        return "";
+        MovesFacade facade = (MovesFacade) f;
+        return facade.sendChat(super.getIndex(), this.content);
     }
 }
