@@ -1,5 +1,8 @@
 package shared.commands;
 
+import server.handlers.iServerFacade;
+import server.facades.GameFacade;
+
 public class GameModel extends Command{
     public GameModel() {
         super();
@@ -14,5 +17,10 @@ public class GameModel extends Command{
         tmp.append("/game/model?version=");
         tmp.append(version);
         endpoint = tmp.toString();
+    }
+
+    public String serverExecute(iServerFacade f){
+        GameFacade facade = (GameFacade) f;
+        return facade.model();
     }
 }

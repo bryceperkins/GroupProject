@@ -1,6 +1,8 @@
 package shared.commands;
 
 import shared.communication.*;
+import server.handlers.iServerFacade;
+import server.facades.GameFacade;
 
 public class GamesSave extends Command{
     private int id;
@@ -13,5 +15,8 @@ public class GamesSave extends Command{
 
         this.id = id;
         this.name = name.toString();
+    }
+    public String serverExecute(iServerFacade f){
+        return "";
     }
 }

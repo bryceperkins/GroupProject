@@ -1,7 +1,7 @@
 package shared.commands;
 
 import shared.communication.*;
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
 
 public abstract class MoveCommand extends Command {
     private String type;
@@ -13,5 +13,9 @@ public abstract class MoveCommand extends Command {
         method = "POST";
         this.type = type;
         this.playerIndex = index.getIndex();
+    }
+
+    public int getIndex(){
+        return playerIndex;
     }
 }

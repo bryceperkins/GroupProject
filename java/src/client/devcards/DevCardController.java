@@ -1,13 +1,13 @@
 package client.devcards;
 
 import client.base.*;
-import client.model.*;
-import client.model.player.*;
+import shared.model.*;
+import shared.model.player.*;
 import shared.definitions.*;
 import shared.commands.*;
 import client.server.*;
-import client.model.*;
-import client.model.map.*;
+import shared.model.*;
+import shared.model.map.*;
 import shared.locations.*;
 
 

@@ -1,7 +1,9 @@
 package shared.commands;
 
-import client.model.*;
+import shared.model.*;
 import shared.locations.*;
+import server.handlers.iServerFacade;
+import server.facades.MovesFacade;
 
 public class BuildSettlement extends MoveCommand{
     private Boolean free;
@@ -26,4 +28,9 @@ public class BuildSettlement extends MoveCommand{
         this.free = free;
         this.vertexLocation = location;
     };
+
+    public String serverExecute(iServerFacade f){
+        MovesFacade facade = (MovesFacade) f;
+        return facade.buildSettlement(getIndex(), free, vertexLocation);
+    }
 }

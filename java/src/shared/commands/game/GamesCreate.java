@@ -1,5 +1,8 @@
 package shared.commands;
 
+import server.facades.GamesFacade;
+import server.handlers.iServerFacade;
+
 public class GamesCreate extends Command{
     private String name;
     private boolean randomTiles;
@@ -15,5 +18,10 @@ public class GamesCreate extends Command{
         this.randomTiles = tiles;
         this.randomPorts = ports;
         this.randomNumbers = numbers;
+    }
+
+    public String serverExecute(iServerFacade f){
+        GamesFacade facade = (GamesFacade) f;
+        return facade.create();
     }
 }

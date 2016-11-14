@@ -1,18 +1,13 @@
 import static org.junit.Assert.*;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
-import com.google.gson.*;
-
-import shared.communication.*;
-import shared.deserializers.*;
 import shared.communication.servers.*;
 import shared.commands.*;
 import client.server.*;
-import client.model.*;
+import shared.model.*;
 import shared.definitions.CatanColor;
 
 public class GamesJoinTest {

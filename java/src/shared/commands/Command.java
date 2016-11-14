@@ -1,8 +1,9 @@
 package shared.commands;
 
 import client.server.iCommand;
+import server.handlers.iServerCommand;
 
-public abstract class Command implements iCommand{
+public abstract class Command implements iCommand, iServerCommand{
     transient String endpoint;
     transient String method;
 
@@ -15,5 +16,4 @@ public abstract class Command implements iCommand{
     public String getMethod(){
         return method;
     }
-    public void execute(){};
 }

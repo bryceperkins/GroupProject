@@ -1,7 +1,9 @@
 package shared.commands;
 
 import shared.definitions.*;
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
+import server.handlers.iServerFacade;
+import server.facades.MovesFacade;
 
 public class YearOfPlenty extends MoveCommand {
     private ResourceType resource1;
@@ -21,4 +23,9 @@ public class YearOfPlenty extends MoveCommand {
         this.resource1 = resource1;
         this.resource2 = resource2;
     };
+
+    public String serverExecute(iServerFacade f){
+        MovesFacade facade = (MovesFacade) f;
+        return facade.Year_of_Plenty(getIndex(), resource1, resource2);
+    }
 }

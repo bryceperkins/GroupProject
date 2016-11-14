@@ -1,9 +1,8 @@
 package client.points;
 
 import client.base.*;
-import client.*;
-import client.model.player.*;
-import client.model.*;
+import shared.model.player.*;
+import shared.model.*;
 import java.util.*;
 
 

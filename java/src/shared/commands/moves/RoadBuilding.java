@@ -1,7 +1,9 @@
 package shared.commands;
 
 import shared.locations.*;
-import client.model.*;
+import shared.model.*;
+import server.handlers.iServerFacade;
+import server.facades.MovesFacade;
 
 public class RoadBuilding extends MoveCommand {
     private EdgeLocation spot1;
@@ -31,4 +33,9 @@ public class RoadBuilding extends MoveCommand {
         this.spot1 = spot1;
         this.spot2 = spot2;
     };
+
+    public String serverExecute(iServerFacade f){
+        MovesFacade facade = (MovesFacade) f;
+        return facade.Road_Building(getIndex(), spot1, spot2);
+    }
 }

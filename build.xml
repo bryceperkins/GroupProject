@@ -151,9 +151,11 @@
             </manifest>
         </jar>
         <jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
+            <zipgroupfileset dir="${java.dist}" includes="*.jar"/>
+            <zipgroupfileset dir="${java.dist}/lib" includes="*.jar" excludes=""/>
             <manifest>
-                <attribute name="Main-Class" value="PUT THE NAME OF YOUR SERVER'S MAIN CLASS HERE"/>
-                <attribute name="Class-Path" value="lib/gson-2.2.4.jar" />
+                <attribute name="Main-Class" value="server.Server"/>
+                <attribute name="Class-Path" value="java.lib.classpath" />
             </manifest>
         </jar>
     </target>
@@ -170,6 +172,9 @@
     </target>
 
     <target name="our-server" depends="package" description="compiles, packages, and runs the student server">
+        <copy todir="java/dist/docs">
+            <fileset dir="demo/docs"/>
+        </copy>
         <java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
             <sysproperty key="com.sun.management.jmxremote" value=""/>
             <assertions>

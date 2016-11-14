@@ -7,10 +7,8 @@ import shared.definitions.*;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
-import client.model.*;
-import client.model.player.*;
+import shared.model.*;
 import shared.commands.*;
-import shared.deserializers.*;
 
 
 /**

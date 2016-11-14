@@ -1,7 +1,8 @@
 package shared.commands;
 
-import client.server.*;
-import client.model.*;
+import shared.model.*;
+import server.handlers.iServerFacade;
+import server.facades.MovesFacade;
 
 public class AcceptTrade extends MoveCommand{
     private Boolean willAccept;
@@ -20,4 +21,9 @@ public class AcceptTrade extends MoveCommand{
         super("acceptTrade", index);
         this.willAccept = accept;
     };
+
+    public String serverExecute(iServerFacade f){
+        MovesFacade facade = (MovesFacade) f;
+        return facade.acceptTrade(getIndex(), willAccept);
+    }
 }

@@ -1,7 +1,9 @@
 package shared.commands;
 
-import client.model.*;
+import shared.model.*;
 import shared.locations.*;
+import server.handlers.iServerFacade;
+import server.facades.MovesFacade;
 
 public class BuildRoad extends MoveCommand {
     private Boolean free;
@@ -28,4 +30,8 @@ public class BuildRoad extends MoveCommand {
         this.free = free;
         this.roadLocation = location;
     };
+    public String serverExecute(iServerFacade f){
+        MovesFacade facade = (MovesFacade) f;
+        return facade.buildRoad(getIndex(), free, roadLocation);
+    }
 }

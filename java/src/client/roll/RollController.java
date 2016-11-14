@@ -1,8 +1,7 @@
 package client.roll;
 
 import client.base.*;
-import client.model.*;
-import client.model.player.*;
+import shared.model.*;
 import shared.commands.RollNumber;
 
 import java.util.Observable;

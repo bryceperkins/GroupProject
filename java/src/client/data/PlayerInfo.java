@@ -1,6 +1,6 @@
 package client.data;
 
-import client.model.PlayerIndex;
+import shared.model.PlayerIndex;
 import shared.definitions.*;
 
 /**
