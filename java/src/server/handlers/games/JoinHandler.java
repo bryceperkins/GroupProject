@@ -33,8 +33,8 @@ public class JoinHandler extends BaseHandler{
                 code = 200;
                 request.getResponseHeaders().add("Set-Cookie", "catan.game=" + super.getUser().getGameID() + "; path=/");
             }
-            respond(request, code, body);
-            LOGGER.log(Level.INFO, "Finished: " + request.getRequestURI()); 
         }
+        respond(request, code, body);
+        LOGGER.log(Level.INFO, "Finished: " + request.getRequestURI()); 
     }
 }

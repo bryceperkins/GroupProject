@@ -14,4 +14,8 @@ public abstract class MoveCommand extends Command {
         this.type = type;
         this.playerIndex = index.getIndex();
     }
+
+    public int getIndex(){
+        return playerIndex;
+    }
 }

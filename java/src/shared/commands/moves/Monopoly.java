@@ -3,7 +3,7 @@ package shared.commands;
 import shared.definitions.*;
 import shared.model.PlayerIndex;
 import server.handlers.iServerFacade;
-import server.facades.GameFacade;
+import server.facades.MovesFacade;
 
 public class Monopoly extends MoveCommand{
     private ResourceType resource;
@@ -22,6 +22,7 @@ public class Monopoly extends MoveCommand{
     };
 
     public String serverExecute(iServerFacade f){
-        return "";
+        MovesFacade facade = (MovesFacade) f;
+        return facade.Monopoly(getIndex(), this.resource);
     }
 }

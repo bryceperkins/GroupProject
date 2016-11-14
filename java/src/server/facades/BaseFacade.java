@@ -18,7 +18,11 @@ public class BaseFacade implements iServerFacade {
     }
 
     public Game getGame() {
-        return manager.getGame(user.getGameID());
+        Game tmp = new Game();
+        tmp.setId(0);
+        tmp.setName("test game");
+        return tmp;
+        //return manager.getGame(user.getGameID());
     }
 
     public void setGame(int game) {
@@ -36,7 +40,7 @@ public class BaseFacade implements iServerFacade {
     public String getModel(){
 
         Gson gson = new Gson();
-        String json = gson.toJson(user);
+        String json = gson.toJson(game);
 
         return json;
     }

@@ -26,7 +26,9 @@ public class MovesFacade extends BaseFacade{
 
 
 
-    public void sendChat(String content){}
+    public String sendChat(int index, String content){
+		return "Failed";
+	}
 
     /**
      *  Accept the proposed trade.
@@ -39,9 +41,8 @@ public class MovesFacade extends BaseFacade{
      *  @post resources exchanged
      *  @post trade offere removed
      */
-    public void acceptTrade(boolean willAccept){
-
-
+    public String acceptTrade(int index, boolean willAccept){
+		return "";
     }
 
     /**
@@ -56,7 +57,9 @@ public class MovesFacade extends BaseFacade{
      *  @post You gave up the specified resources
      *  @post If you're the last one to discard, the client model status changes to Robbing
      */
-    public void discardCards(ResourceList discardedCards){}
+    public String discardCards(int index, ResourceList discardedCards){
+		return "";
+	}
 
     /**
      *  Process the number rolled
@@ -66,7 +69,9 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post client model's status is now Discarding, Robbing, or Playing
      */
-    public void rollNumber(int number){}
+    public String rollNumber(int index, int number){
+		return "";
+	}
 
     /**
      *  Build a Road.
@@ -85,7 +90,7 @@ public class MovesFacade extends BaseFacade{
      *  @post Settlement is on the map
      *  @post longest road gained if necessary
      */
-    public String buildRoad(boolean free, EdgeLocation roadLocation){
+    public String buildRoad(int index, boolean free, EdgeLocation roadLocation){
         User user = getUser();
         Game game = getGame();
 
@@ -133,7 +138,9 @@ public class MovesFacade extends BaseFacade{
      *  @post resources lost
      *  @post Settlement is on the map
      */
-    public void buildSettlement(boolean free, VertexLocation vertexLocation){}
+    public String buildSettlement(int index, boolean free, VertexLocation vertexLocation){
+		return "";
+	}
 
     /**
      *  Build a city.
@@ -147,7 +154,9 @@ public class MovesFacade extends BaseFacade{
      *  @post settlement returned
      *  @post city is on the map
      */
-    public void buildCity(VertexLocation vertexLocation){}
+    public String buildCity(int index, VertexLocation vertexLocation){
+		return "";
+	}
 
     /**
      *  Offer a trade to another player
@@ -159,7 +168,9 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post trade is offered to the other player
      */
-    public void offerTrade(ResourceList offer, PlayerIndex receiver){}
+    public String offerTrade(int index, ResourceList offer, int receiver){
+		return "";
+	}
 
     /**
      *  Perform a trade with the Bank
@@ -173,7 +184,9 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post trade has been performed
      */
-    public void maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource){}
+    public String maritimeTrade(int index, int ratio, ResourceType inputResource, ResourceType outputResource){
+		return "";
+	}
 
     /**
      *  Relocate the robber and rob another player
@@ -188,7 +201,9 @@ public class MovesFacade extends BaseFacade{
      *  @post Player being robbed (if any) has given you their resource cards
      *  @post Largest army awarded to player with most Solder cards
      */
-    public void robPlayer(HexLocation location, PlayerIndex victim){}
+    public String robPlayer(int index, HexLocation location, int victim){
+		return "";
+	}
 
     /**
      *  Finish turn
@@ -196,7 +211,9 @@ public class MovesFacade extends BaseFacade{
      *  @post new dex cards are transferred to old dev cards
      *  @post it is the next player's turn
      */
-    public void finishTurn(){}
+    public String finishTurn(int index){
+		return "";
+	}
 
     /**
      *  buy a new dev card
@@ -206,7 +223,9 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post You have a new card - if it is a monument card, add it to old dev cards. Else add to new dev cards
      */
-    public void buyDevCard(){}
+    public String buyDevCard(int index){
+		return "";
+	}
 
     /**
      *  Relocate the robber and rob another player. Add one to army
@@ -222,7 +241,9 @@ public class MovesFacade extends BaseFacade{
      *  @post Largest army awarded to player with most Solder cards
      *  @post Player is not allowed to play any other dev cards this turn
      */
-    public void Soldier(HexLocation location, PlayerIndex victim){}
+    public String Soldier(int index, HexLocation location, int victim){
+		return "";
+	}
 
     /**
      *  Gain two resources from the bank
@@ -234,7 +255,9 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post You gained the two specified resources
      */
-    public void Year_of_Plenty(ResourceType resource1, ResourceType resource2){}
+    public String Year_of_Plenty(int index, ResourceType resource1, ResourceType resource2){
+		return "";
+	}
 
     /**
      *  RoadBuilding
@@ -256,7 +279,9 @@ public class MovesFacade extends BaseFacade{
      *  @post 2 new roads appear
      *  @post longest road gained if necessary
      */
-    public void Road_Building(EdgeLocation spot1, EdgeLocation spot2){}
+    public String Road_Building(int index, EdgeLocation spot1, EdgeLocation spot2){
+		return "";
+	}
 
     /**
      *  Monopoly
@@ -267,7 +292,9 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post You gain the amount of specified resource the other players lost
      */
-    public void Monopoly(ResourceType resource){}
+    public String Monopoly(int index, ResourceType resource){
+		return "";
+	}
 
     /**
      *  Play the monument DevCard
@@ -276,6 +303,8 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post You gain a victory point
      */
-    public void Monument(){}
+    public String Monument(int index){
+		return "";
+	}
 
 }

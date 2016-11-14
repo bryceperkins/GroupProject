@@ -3,7 +3,7 @@ package shared.commands;
 import shared.locations.*;
 import shared.model.*;
 import server.handlers.iServerFacade;
-import server.facades.GameFacade;
+import server.facades.MovesFacade;
 
 public class Soldier extends MoveCommand{
     private HexLocation location;
@@ -28,7 +28,8 @@ public class Soldier extends MoveCommand{
     };
 
     public String serverExecute(iServerFacade f){
-        return "";
+        MovesFacade facade = (MovesFacade) f;
+        return facade.Soldier(getIndex(), location, victimIndex);
     }
 
 }
