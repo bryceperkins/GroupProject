@@ -202,7 +202,7 @@ public class Player implements PostProcessor {
 		this.newDevCards.addCard(devCard);
 	}
 
-	public vod removeDevCard(DevCardType devCard)
+	public void removeDevCard(DevCardType devCard)
 	{
 		this.oldDevCards.removeCard(devCard);
 	}

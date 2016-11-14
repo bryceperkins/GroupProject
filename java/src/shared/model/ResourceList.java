@@ -174,21 +174,18 @@ public class ResourceList{
 	switch (resource)
 		{
 		case WOOD:
-            	return this.wood;
-			break;
+            		return this.wood;
 		case SHEEP:
-		return this.sheep;
-			break;
+			return this.sheep;
 		case BRICK:
-		return this.brick;
-			break;
+			return this.brick;
 		case ORE:
-		return this.ore;
-			break;
+			return this.ore;
 		case WHEAT:
-		return this.wheat;
-			break;
+			return this.wheat;
 		}
+
+		return 0;
 	}
 
     public void increase(ResourceType resource){

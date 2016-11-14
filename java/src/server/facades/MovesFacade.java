@@ -223,21 +223,25 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post You have a new card - if it is a monument card, add it to old dev cards. Else add to new dev cards
      */
-    public void buyDevCard(int index){
+    public String buyDevCard(int index){
 	User user = getUser();
-        Game game = manager.getGame(user.getGameID());
+        Game game = getGame();
         Player player = game.getPlayerByName(user.getUserName());
 
         ResourceList playerResources = player.getResources();
 
         if(player.canBuyDevCard()){
+		DevCardType card = game.dealRandomCard(); 
+		
+		player.addDevCard(card);
+
 		player.getResources().decreaseOre();
 		player.getResources().decreaseSheep();
 		player.getResources().decreaseWheat();
 		//dole out devcard
-		player.addDevCard(game.dealRandomCard());
+		
         }else {
-            System.out.println("not enough resources to purchase DevCard");
+		return "Failed";
         }
 	
 	return "";
@@ -311,7 +315,7 @@ public class MovesFacade extends BaseFacade{
      */
     public String Monopoly(int index, ResourceType resource){
 	User user = getUser();
-	Game game = manager.getGame(user.getGameID());
+	Game game = getGame();
 	List<Player> players = game.getPlayers();
         Player player = game.getPlayerByName(user.getUserName());
 	
@@ -321,7 +325,7 @@ public class MovesFacade extends BaseFacade{
 
 	for(Player p: players)
 	{
-		int playerResources = p.getResources().getResourcesByType(resource);
+		int playerResources = p.getResources().getResourceByType(resource);
 		
 	}
 
@@ -340,12 +344,13 @@ public class MovesFacade extends BaseFacade{
     public String Monument(int index){
 	int newVictoryPoints;
 
-	Game game = manager.getGame(user.getGameID());
+	Game game = getGame();
+	User user = getUser();
         Player player = game.getPlayerByName(user.getUserName());
 
 	player.removeDevCard(DevCardType.MONUMENT);
 
-	newVictoryPoints =player.getVictoryPoints + 1;
+	newVictoryPoints =player.getVictoryPoints() + 1;
 	player.setVictoryPoints(newVictoryPoints);	
 	return "";
 	}
