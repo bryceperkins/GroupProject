@@ -18,6 +18,7 @@ public class GameAddAI extends Command{
     }
 
     public String serverExecute(iServerFacade f){
-        return "";
+        GameFacade facade = (GameFacade) f;
+        return facade.addAI(AIType);
     }
 }

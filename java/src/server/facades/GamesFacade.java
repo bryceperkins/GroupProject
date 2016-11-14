@@ -23,6 +23,7 @@ public class GamesFacade extends BaseFacade{
         game.setName("list-test");
         ArrayList<Game> array = new ArrayList();
         array.add(game);
+        //
 
         return new Gson().toJson(array);
     }
@@ -36,12 +37,7 @@ public class GamesFacade extends BaseFacade{
      * @post 3. The body contains a JSON object describing the newly created game
      **/
     public String create(){
-        //TESTING
-        Game game = new Game();
-        game.setId(0);
-        game.setName("create-test");
-
-        return new Gson().toJson(game);
+        return getModel();
     }
 
     /**
@@ -62,6 +58,7 @@ public class GamesFacade extends BaseFacade{
         game.setId(0);
         game.setName("join-test");
         game.getPlayers().add(new Player(c, "test-player", 1, PlayerIndex.Player1, 0));
+        //
 
         return new Gson().toJson(game);
     }
@@ -71,13 +68,13 @@ public class GamesFacade extends BaseFacade{
      * @pre 1. The specified game ID is valid
         2. The specified file name is valid (i.e., not null or empty)
      * @post 1. The server returns an HTTP 200 success response with Success in the body.
-        2. The current state of the specified game (including its ID) has been saved to the specified file name in the server’s saves/ directory
+        2. The current state of the specified game (including its ID) has been saved to the specified file name in the server's saves/ directory
      **/
     public void save(){}
 
     /**
      * Load a game from a file
-     * @pre 1. A previously saved game file with the specified name exists in the server’s saves/ directory
+     * @pre 1. A previously saved game file with the specified name exists in the server's saves/ directory
      * @post 1. The server returns an HTTP 200 success response with Success in the body.
         2. The game in the specified file has been loaded into the server and its state restored (including its ID).
      **/

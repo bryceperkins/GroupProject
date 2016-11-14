@@ -2,7 +2,7 @@ package shared.commands;
 
 import shared.model.*;
 import server.handlers.iServerFacade;
-import server.facades.GameFacade;
+import server.facades.MovesFacade;
 
 public class OfferTrade extends MoveCommand{
     private int receiver;
@@ -24,6 +24,7 @@ public class OfferTrade extends MoveCommand{
     };
 
     public String serverExecute(iServerFacade f){
-        return "";
+        MovesFacade facade = (MovesFacade) f;
+        return facade.offerTrade(getIndex(), offer, receiver);
     }
 }

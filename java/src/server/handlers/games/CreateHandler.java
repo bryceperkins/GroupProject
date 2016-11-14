@@ -21,8 +21,8 @@ public class CreateHandler extends BaseHandler{
      * Handle the Incoming request
      */
     public void handle(HttpExchange request) throws IOException{ 
-        parseCookies(request);
-        if(getUser() == null ){
+        super.parseCookies(request);
+        if(super.getUser() == null ){
             LOGGER.log(Level.SEVERE, "User not logged in");
         }
         else {

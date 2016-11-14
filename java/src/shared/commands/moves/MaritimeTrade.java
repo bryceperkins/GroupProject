@@ -3,7 +3,7 @@ package shared.commands;
 import shared.definitions.*;
 import shared.model.PlayerIndex;
 import server.handlers.iServerFacade;
-import server.facades.GameFacade;
+import server.facades.MovesFacade;
 
 public class MaritimeTrade extends MoveCommand{
     private ResourceType inputResource;
@@ -29,6 +29,7 @@ public class MaritimeTrade extends MoveCommand{
     };
 
     public String serverExecute(iServerFacade f){
-        return "";
+        MovesFacade facade = (MovesFacade) f;
+        return facade.maritimeTrade(getIndex(), ratio, inputResource, outputResource);
     }
 }

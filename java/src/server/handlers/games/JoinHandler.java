@@ -21,12 +21,18 @@ public class JoinHandler extends BaseHandler{
      * Handle the Incoming request
      */
     public void handle(HttpExchange request) throws IOException{ 
-        body = IOUtils.toString(request.getRequestBody(), "UTF-8");
-        body = new Gson().fromJson(body, GamesJoin.class).serverExecute(new GamesFacade(getUser()));
+        super.parseCookies(request);
+        if(super.getUser() == null ){
+            LOGGER.log(Level.SEVERE, "User not logged in");
+        }
+        else {
+            body = IOUtils.toString(request.getRequestBody(), "UTF-8");
+            body = new Gson().fromJson(body, GamesJoin.class).serverExecute(new GamesFacade(getUser()));
 
-        if(!body.equals("Failed")) {
-            code = 200;
-            request.getResponseHeaders().add("Set-Cookie", "catan.game=" + super.getUser().getGameID() + "; path=/");
+            if(!body.equals("Failed")) {
+                code = 200;
+                request.getResponseHeaders().add("Set-Cookie", "catan.game=" + super.getUser().getGameID() + "; path=/");
+            }
         }
         respond(request, code, body);
         LOGGER.log(Level.INFO, "Finished: " + request.getRequestURI()); 
