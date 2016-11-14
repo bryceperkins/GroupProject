@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import client.data.*;
 import java.util.HashSet;
 import java.util.Set;
-
 import shared.model.*;
 import shared.model.map.City;
 import shared.model.map.Map;
@@ -197,6 +196,16 @@ public class Player implements PostProcessor {
 		
 		return resources.hasResources(temp);
 	}
+
+	public void addDevCard(DevCardType devCard)
+	{
+		this.newDevCards.addCard(devCard);
+	}
+
+	public vod removeDevCard(DevCardType devCard)
+	{
+		this.oldDevCards.removeCard(devCard);
+	}
 	
 	public void addPort(Port port)
 	{
@@ -279,6 +288,11 @@ public class Player implements PostProcessor {
 	public int getVictoryPoints() {
 		return victoryPoints;
 	}
+
+	public void setVictoryPoints(int num)
+	{
+		this.victoryPoints = num;
+	}
 	
 	public void setResources(ResourceList rl)
 	{
@@ -288,7 +302,6 @@ public class Player implements PostProcessor {
     public void setPlayerID(int id){
         this.playerID = id;
     }
-	
     public PlayerInfo toPlayerInfo(){
         PlayerInfo player = new PlayerInfo();
         player.setId(getPlayerID());

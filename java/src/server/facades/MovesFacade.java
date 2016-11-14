@@ -207,7 +207,26 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post You have a new card - if it is a monument card, add it to old dev cards. Else add to new dev cards
      */
-    public void buyDevCard(){}
+    public void buyDevCard(){
+	User user = getUser();
+        Game game = manager.getGame(user.getGameID());
+        Player player = game.getPlayerByName(user.getUserName());
+
+        ResourceList playerResources = player.getResources();
+
+        if(player.canBuyDevCard()){
+		player.getResources().decreaseOre();
+		player.getResources().decreaseSheep();
+		player.getResources().decreaseWheat();
+		//dole out devcard
+		player.addDevCard(game.dealRandomCard());
+        }else {
+            System.out.println("not enough resources to purchase DevCard");
+        }
+	
+
+
+	}
 
     /**
      *  Relocate the robber and rob another player. Add one to army
@@ -268,7 +287,22 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post You gain the amount of specified resource the other players lost
      */
-    public void Monopoly(ResourceType resource){}
+    public void Monopoly(ResourceType resource){
+	User user = getUser();
+	Game game = manager.getGame(user.getGameID());
+	List<Player> players = game.getPlayers();
+        Player player = game.getPlayerByName(user.getUserName());
+	
+	player.removeDevCard(DevCardType.MONOPOLY);
+
+	int stolenResources = 0;
+
+	for(Player p: players)
+	{
+		int playerResources = p.getResources().getResourcesByType(resource);
+		
+	}
+	}
 
     /**
      *  Play the monument DevCard
@@ -277,6 +311,16 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post You gain a victory point
      */
-    public void Monument(){}
+    public void Monument(){
+	int newVictoryPoints;
+
+	Game game = manager.getGame(user.getGameID());
+        Player player = game.getPlayerByName(user.getUserName());
+
+	player.removeDevCard(DevCardType.MONUMENT);
+
+	newVictoryPoints =player.getVictoryPoints + 1;
+	player.setVictoryPoints(newVictoryPoints);	
+	}
 
 }
