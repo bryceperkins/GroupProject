@@ -57,10 +57,14 @@ public class MovesFacade extends BaseFacade{
 			return getModel();
 		} else {
 			TradeOffer trade_offer = game.getTradeOffer();
-			Player sender = game.getPlayer(trade_offer.getSender());
-			Player reciever = game.getPlayer(trade_offer.getReciever());
+			ResourceList sender_list = game.getPlayer(trade_offer.getSender()).getResources();
+			ResourceList reciever_list = game.getPlayer(trade_offer.getReciever()).getResources();
 			ResourceList offer = trade_offer.getOffer();
-			
+			sender_list.addResources(offer.reversedList());
+			reciever_list.addResources(offer);
+			game.getPlayer(trade_offer.getSender()).setResources(sender_list);
+			game.getPlayer(trade_offer.getReciever()).setResources(reciever_list);
+			game.setTradeOffer(null);
 			return getModel();
 		}
     }
