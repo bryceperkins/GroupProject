@@ -276,7 +276,25 @@ public class MovesFacade extends BaseFacade{
      *  @post trade has been performed
      */
     public String maritimeTrade(int index, int ratio, ResourceType inputResource, ResourceType outputResource){
-		return "";
+		Game game = getGame();
+		ResourceList trade = new ResourceList();
+		switch (inputResource){
+			case BRICK: trade.setBrick(ratio*-1);
+			case ORE: trade.setOre(ratio*-1);
+			case SHEEP: trade.setSheep(ratio*-1);
+			case WHEAT: trade.setWheat(ratio*-1);
+			case WOOD: trade.setWood(ratio*-1);
+		}
+		switch (outputResource){
+			case BRICK: trade.setBrick(1);
+			case ORE: trade.setOre(1);
+			case SHEEP: trade.setSheep(1);
+			case WHEAT: trade.setWheat(1);
+			case WOOD: trade.setWood(1);
+		}
+		game.getPlayer(PlayerIndex.valueOf(index)).getResources().addResources(trade);
+		game.getBank().addResources(trade.reversedList());
+		return getModel();
 	}
 
     /**
