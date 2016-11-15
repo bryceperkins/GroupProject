@@ -48,7 +48,18 @@ public class MovesFacade extends BaseFacade{
      *  @post trade offere removed
      */
     public String acceptTrade(int index, boolean willAccept){
-		return "";
+		Game game = getGame();
+		if (!willAccept) {
+			game.setTradeOffer(null);
+			return getModel();
+		} else {
+			TradeOffer trade_offer = game.getTradeOffer();
+			Player sender = game.getPlayer(trade_offer.getSender());
+			Player reciever = game.getPlayer(trade_offer.getReciever());
+			ResourceList offer = trade_offer.getOffer();
+			
+			return getModel();
+		}
     }
 
     /**
