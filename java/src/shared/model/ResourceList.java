@@ -196,6 +196,39 @@ public class ResourceList{
         return amount;
     }
 
+	public void removeResources(ResourceList removeList) {
+		this.brick -= removeList.getBrick();
+		this.ore -= removeList.getOre();
+		this.sheep -= removeList.getSheep();
+		this.wheat -= removeList.getWheat();
+		this.wood -= removeList.getWood();
+		
+	}
+
+ public void setResourceByType(ResourceType resource, int value){
+
+	switch (resource)
+		{
+		case WOOD:
+            		this.wood = value;
+			break;
+		case SHEEP:
+			this.sheep = value;
+			break;
+		case BRICK:
+			this.brick = value;
+			break;
+		case ORE:
+			this.ore = value;
+			break;
+		case WHEAT:
+			this.wheat = value;
+			break;
+		}
+
+	}
+
+
     public int getResourceByType(ResourceType resource){
 
 	switch (resource)

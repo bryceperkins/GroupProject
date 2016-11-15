@@ -62,7 +62,12 @@ public class MovesFacade extends BaseFacade{
      *  @post If you're the last one to discard, the client model status changes to Robbing
      */
     public String discardCards(int index, ResourceList discardedCards){
-		return "";
+		User user = getUser();
+        Game game = getGame();
+
+        Player player = game.getPlayerByName(user.getUserName());
+	player.getResources().removeResources(discardedCards);	
+	return "";
 	}
 
     /**
@@ -353,7 +358,15 @@ public class MovesFacade extends BaseFacade{
      *  @post Largest army awarded to player with most Solder cards
      *  @post Player is not allowed to play any other dev cards this turn
      */
-    public String Soldier(int index, HexLocation location, int victim){
+        public String Soldier(int index, HexLocation location, int victim){
+		User user = getUser();
+		Game game = getGame();
+	        Player player = game.getPlayerByName(user.getUserName());
+		
+		player.removeDevCard(DevCardType.SOLDIER);
+		robPlayer(index, location, victim);
+		
+	
 		return "";
 	}
 
@@ -367,7 +380,22 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post You gained the two specified resources
      */
-    public String Year_of_Plenty(int index, ResourceType resource1, ResourceType resource2){
+   public String Year_of_Plenty(int index, ResourceType resource1, ResourceType resource2){
+		User user = getUser();
+		Game game = getGame();
+	        Player player = game.getPlayerByName(user.getUserName());
+
+		int resource1Amount = player.getResources().getResourceByType(resource1);
+		int resource2Amount = player.getResources().getResourceByType(resource2);
+
+		resource1Amount += 2;
+		resource2Amount += 2;
+
+		player.getResources().setResourceByType(resource2, resource2Amount);
+		player.removeDevCard(DevCardType.YEAR_OF_PLENTY);
+
+		ResourceList bank = game.getBank();
+
 		return "";
 	}
 
@@ -391,8 +419,18 @@ public class MovesFacade extends BaseFacade{
      *  @post 2 new roads appear
      *  @post longest road gained if necessary
      */
-    public String Road_Building(int index, EdgeLocation spot1, EdgeLocation spot2){
-		return "";
+       public String Road_Building(int index, EdgeLocation spot1, EdgeLocation spot2){
+	User user = getUser();
+        Game game = getGame();
+
+        Player player = game.getPlayerByName(user.getUserName());
+	player.removeDevCard(DevCardType.ROAD_BUILDING);
+		
+	//public String buildRoad(int index, boolean free, EdgeLocation roadLocation){
+	buildRoad(index, true, spot1);
+	buildRoad(index, true, spot2);
+	
+	return "";
 	}
 
     /**
