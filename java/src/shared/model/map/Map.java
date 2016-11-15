@@ -15,8 +15,6 @@ public class Map implements PostProcessor {
     private List<City> cities;
     private int radius;
     private Robber robber;
-    
-    
 
     public Map() {
     	
@@ -30,6 +28,13 @@ public class Map implements PostProcessor {
         this.roads = new ArrayList<Road>();
 
 	}
+
+    public List<Piece> getCitiesAndSettlements() {
+        List<Piece> result = new ArrayList<>();
+        result.addAll(cities);
+        result.addAll(settlements);
+        return result;
+    }
 
 	public boolean canBuildRoad(Player player, EdgeLocation edgeLocation, State state){
         EdgeLocation normalizedEdgeLocation = edgeLocation.getNormalizedLocation(); //when do i ever not normalize before using an edge....
@@ -86,6 +91,10 @@ public class Map implements PostProcessor {
                     return false;
             }
         }
+    }
+
+    public void distributeResources(int rollNumber) {
+
     }
 
     public Hex getHexByHexLocation(HexLocation hexLoc){

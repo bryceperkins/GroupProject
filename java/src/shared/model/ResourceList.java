@@ -2,6 +2,8 @@ package shared.model;
 
 import shared.definitions.*;
 
+import javax.annotation.Resource;
+
 /**
  * Contains a list of all the resources in Catan.
  */
@@ -45,6 +47,17 @@ public class ResourceList{
 		}
 		return true;
     }
+
+    public boolean hasResource(ResourceType type, int count) {
+		switch (type) {
+			case BRICK: return brick >= count;
+			case ORE: return ore >= count;
+			case SHEEP: return sheep >= count;
+			case WHEAT: return wheat >= count;
+			case WOOD: return wood >= count;
+			default: return false;
+		}
+	}
 	
 	public boolean hasOneResource(ResourceList resource_list){
         if (this.brick < resource_list.getBrick() &&
@@ -64,6 +77,20 @@ public class ResourceList{
 		this.wheat += addList.getWheat();
 		this.wood += addList.getWood();
 		
+	}
+
+	public void decreaseBy(ResourceType resource, int amount) {
+		switch (resource) {
+			case BRICK: brick -= amount;
+			case ORE: ore -= amount;
+			case SHEEP: sheep -= amount;
+			case WHEAT: wheat -= amount;
+			case WOOD: wood -= amount;
+		}
+	}
+
+	public void increaseBy(ResourceType resource, int amount) {
+		decreaseBy(resource, amount * -1);
 	}
 
 	public int getBrick() {
@@ -168,6 +195,25 @@ public class ResourceList{
 		}
         return amount;
     }
+
+    public int getResourceByType(ResourceType resource){
+
+	switch (resource)
+		{
+		case WOOD:
+            		return this.wood;
+		case SHEEP:
+			return this.sheep;
+		case BRICK:
+			return this.brick;
+		case ORE:
+			return this.ore;
+		case WHEAT:
+			return this.wheat;
+		}
+
+		return 0;
+	}
 
     public void increase(ResourceType resource){
 		switch (resource)

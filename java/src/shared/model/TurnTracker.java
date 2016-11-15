@@ -30,6 +30,10 @@ public class TurnTracker {
         return largestArmyOwner;
     }
 
+    public void setGameStatus(GameStatus status) {
+        this.status = status;
+    }
+
     /**
      * The different possible states of the game
      */
