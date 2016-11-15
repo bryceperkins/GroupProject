@@ -34,22 +34,22 @@ public class Game implements PostProcessor {
 
     public Game(){ 
         //name = "Test";
-        //version = 1;
-        //winner = PlayerIndex.None;
-        //bank = new ResourceList(19, 19, 19, 19, 19);
+        version = 1;
+        winner = PlayerIndex.None;
+        bank = new ResourceList(19, 19, 19, 19, 19);
         chat = new Chat();
         log = new Log();
         map = new Map();
         players = new ArrayList<Player>();
         turnTracker = new TurnTracker();
         tradeOffer = new TradeOffer(); 
-	devCardDeck = new DevCardList();
-	
-	devCardDeck.setMonopoly(2);
-	devCardDeck.setMonument(5);
-	devCardDeck.setRoadBuilding(2);
-	devCardDeck.setSoldier(15);
-	devCardDeck.setYearOfPlenty(2);	
+		devCardDeck = new DevCardList();
+		
+		devCardDeck.setMonopoly(2);
+		devCardDeck.setMonument(5);
+		devCardDeck.setRoadBuilding(2);
+		devCardDeck.setSoldier(15);
+		devCardDeck.setYearOfPlenty(2);	
     }
 
     /**
@@ -141,6 +141,10 @@ public class Game implements PostProcessor {
         this.winner = index;
     }
     
+	public void setBank(ResourceList bank){
+		this.bank = bank;
+	}
+	
     public ResourceList getBank() {
         return bank;
     }
