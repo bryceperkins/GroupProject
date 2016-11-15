@@ -17,7 +17,7 @@ public class Map implements PostProcessor {
     private Robber robber;
 
 	public Map(boolean randomTiles, boolean randomPorts, boolean randomNumbers){
-		
+		//TODO: Create a map with these attributes.
 	}
 	
     public Map() {
