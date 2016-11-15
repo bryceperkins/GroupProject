@@ -34,11 +34,20 @@ public class GamesFacade extends BaseFacade{
     public String create(String name, boolean tiles, boolean ports, boolean numbers){
 		Game game = new Game();
 		game.setName(name);
+		game.setId(createId());
 		shared.model.map.Map map = new shared.model.map.Map(tiles, ports, numbers);
 		game.setMap(map);
 		manager.addGame(game);
         return getModel();
     }
+	
+	public int createId(){
+		int id = 0;
+		while (manager.getGame(id) != null){
+			id++;
+		}
+		return id;
+	}
 
     /**
      * Adds the player to the specified game and sets their catan.game cookie.
