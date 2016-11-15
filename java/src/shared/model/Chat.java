@@ -19,7 +19,9 @@ public class Chat{
 	 * @pre message_line must contain a source and message
 	 * @post The message and its source will be stored in Chat
 	 */
-	public void createMessage(MessageLine message_line){}
+	public void createMessage(MessageLine message_line){
+		lines.add(message_line);
+	}
 
     public List<MessageLine> getLines() {
         return lines;
@@ -28,5 +30,4 @@ public class Chat{
     public void setLines(List<MessageLine> lines) {
 		this.lines = lines;
 	}
-
 }

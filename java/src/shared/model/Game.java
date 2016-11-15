@@ -146,6 +146,10 @@ public class Game implements PostProcessor {
     public Chat getChat() {
         return chat;
     }
+	
+	public void setChat(Chat chat){
+		this.chat = chat;
+	}
 
     public Log getLog() {
         return log;
