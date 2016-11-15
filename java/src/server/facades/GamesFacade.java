@@ -31,7 +31,9 @@ public class GamesFacade extends BaseFacade{
      * @post 3. The body contains a JSON object describing the newly created game
      **/
     public String create(){
-		
+		Game game = new Game();
+		game.setName()
+		manager.addGame(game);
         return getModel();
     }
 
