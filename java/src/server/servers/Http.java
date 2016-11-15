@@ -13,9 +13,6 @@ public class Http implements iServer {
     public void start() throws IOException{
         int port = 8081;
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-        // Swagger Endpoints
-        server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
-        server.createContext("/docs/api/view", new Handlers.BasicFile(""));
 
         // Project Endpoints
         server.createContext("/user/login", new LoginHandler());
@@ -43,6 +40,12 @@ public class Http implements iServer {
         server.createContext("/moves/acceptTrade", new AcceptTradeHandler());
         server.createContext("/moves/maritimeTrade", new MaritimeTradeHandler());
         server.createContext("/moves/discardCards", new DiscardCardsHandler());
+        
+        // Swagger Endpoints
+        server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
+        server.createContext("/docs/api/view", new Handlers.BasicFile(""));
+        server.createContext("/", new Handlers.BasicFile(""));
+        
         server.setExecutor(null); // creates a default executor
         server.start();
     }

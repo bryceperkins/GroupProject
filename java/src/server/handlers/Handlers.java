@@ -53,6 +53,9 @@ public class Handlers {
         }
         public void handle(HttpExchange exchange) throws IOException {
             String filepath = this.rootPath + this.getRequestPath(exchange);
+            if (this.getRequestPath(exchange) == ""){
+                filepath = this.rootPath + "index.html";
+            }
             this.sendFile(exchange, filepath);
         }
     }

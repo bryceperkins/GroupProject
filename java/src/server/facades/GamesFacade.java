@@ -8,8 +8,10 @@ import shared.definitions.CatanColor;
 import server.handlers.iServerFacade;
 import shared.communication.User;
 import shared.model.Game;
+import shared.model.GameManager;
 
 public class GamesFacade extends BaseFacade{
+    private GameManager manager = GameManager.getInstance();
 
     public GamesFacade(User user){
         super(user);
@@ -17,15 +19,7 @@ public class GamesFacade extends BaseFacade{
 
 
     public String list(){
-        //TESTING
-        Game game = new Game();
-        game.setId(0);
-        game.setName("list-test");
-        ArrayList<Game> array = new ArrayList();
-        array.add(game);
-        //
-
-        return new Gson().toJson(array);
+        return new Gson().toJson(manager.getGames());
     }
 
     /**
