@@ -1,10 +1,12 @@
 package shared.model;
 
+import java.util.Random;
+import shared.definitions.*;
 import client.data.*;
 import java.util.List;
 import shared.model.map.*;
 import shared.model.player.*;
-
+import shared.communication.*;
 import java.util.ArrayList;
 import com.google.gson.annotations.SerializedName;
 
@@ -26,6 +28,7 @@ public class Game implements PostProcessor {
     private List<Player> players;
     private TurnTracker turnTracker;
     private TradeOffer tradeOffer;
+    private DevCardList devCardDeck;
     
     public Game(){ 
         //name = "Test";
@@ -38,6 +41,13 @@ public class Game implements PostProcessor {
         players = new ArrayList<Player>();
         turnTracker = new TurnTracker();
         tradeOffer = new TradeOffer(); 
+	devCardDeck = new DevCardList();
+	
+	devCardDeck.setMonopoly(2);
+	devCardDeck.setMonument(5);
+	devCardDeck.setRoadBuilding(2);
+	devCardDeck.setSoldier(15);
+	devCardDeck.setYearOfPlenty(2);	
     }
 
     /**
@@ -48,6 +58,47 @@ public class Game implements PostProcessor {
             return false;
         }
         return true;
+    }
+
+    public DevCardType dealRandomCard()
+    {
+    	int total;
+	int chooser;
+
+	Random randy = new Random();
+	List<DevCardType> randomizerList = new ArrayList<DevCardType>();
+	DevCardType returnCard;
+
+	for(int i = 0; i < devCardDeck.getMonopoly(); i++)
+	{
+		randomizerList.add(DevCardType.MONOPOLY);
+	}	
+	
+	for(int i = 0; i < devCardDeck.getMonument(); i++)
+	{
+		randomizerList.add(DevCardType.MONUMENT);
+	}
+
+	for(int i = 0; i < devCardDeck.getSoldier(); i++)
+	{
+		randomizerList.add(DevCardType.SOLDIER);
+	}	
+
+	for(int i = 0; i < devCardDeck.getYearOfPlenty(); i++)
+	{
+		randomizerList.add(DevCardType.YEAR_OF_PLENTY);
+	}		
+
+	for(int i = 0; i < devCardDeck.getRoadBuilding(); i++)
+	{
+		randomizerList.add(DevCardType.ROAD_BUILD);
+	
+	}		
+	returnCard = randomizerList.get(randy.nextInt() % randomizerList.size());
+
+	devCardDeck.removeCard(returnCard);
+
+	return returnCard;
     }
 
     /**

@@ -169,6 +169,25 @@ public class ResourceList{
         return amount;
     }
 
+    public int getResourceByType(ResourceType resource){
+
+	switch (resource)
+		{
+		case WOOD:
+            		return this.wood;
+		case SHEEP:
+			return this.sheep;
+		case BRICK:
+			return this.brick;
+		case ORE:
+			return this.ore;
+		case WHEAT:
+			return this.wheat;
+		}
+
+		return 0;
+	}
+
     public void increase(ResourceType resource){
 		switch (resource)
 		{

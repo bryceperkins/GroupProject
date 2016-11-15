@@ -224,7 +224,28 @@ public class MovesFacade extends BaseFacade{
      *  @post You have a new card - if it is a monument card, add it to old dev cards. Else add to new dev cards
      */
     public String buyDevCard(int index){
-		return "";
+	User user = getUser();
+        Game game = getGame();
+        Player player = game.getPlayerByName(user.getUserName());
+
+        ResourceList playerResources = player.getResources();
+
+        if(player.canBuyDevCard()){
+		DevCardType card = game.dealRandomCard(); 
+		
+		player.addDevCard(card);
+
+		player.getResources().decreaseOre();
+		player.getResources().decreaseSheep();
+		player.getResources().decreaseWheat();
+		//dole out devcard
+		
+        }else {
+		return "Failed";
+        }
+	
+	return "";
+
 	}
 
     /**
@@ -293,7 +314,23 @@ public class MovesFacade extends BaseFacade{
      *  @post You gain the amount of specified resource the other players lost
      */
     public String Monopoly(int index, ResourceType resource){
-		return "";
+	User user = getUser();
+	Game game = getGame();
+	List<Player> players = game.getPlayers();
+        Player player = game.getPlayerByName(user.getUserName());
+	
+	player.removeDevCard(DevCardType.MONOPOLY);
+
+	int stolenResources = 0;
+
+	for(Player p: players)
+	{
+		int playerResources = p.getResources().getResourceByType(resource);
+		
+	}
+
+	return "";
+
 	}
 
     /**
@@ -303,8 +340,19 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post You gain a victory point
      */
+
     public String Monument(int index){
-		return "";
+	int newVictoryPoints;
+
+	Game game = getGame();
+	User user = getUser();
+        Player player = game.getPlayerByName(user.getUserName());
+
+	player.removeDevCard(DevCardType.MONUMENT);
+
+	newVictoryPoints =player.getVictoryPoints() + 1;
+	player.setVictoryPoints(newVictoryPoints);	
+	return "";
 	}
 
 }
