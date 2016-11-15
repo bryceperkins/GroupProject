@@ -19,17 +19,22 @@ public class MovesFacade extends BaseFacade{
     private final int SETTLEMENT_RESOURCES = 1;
     private final int CITY_RESOURCES = 2;
 
+	GameManager manager = GameManager.getInstance();
+	
     public MovesFacade(User user){
         super(user);
     }
 
     public String sendChat(int index, String content){
-		return "Failed";
+		if (index < 0 || index > 3) return "Failed";
+		if (content == null) return "Failed";
+		Game game = getGame();
+		Player player = game.getPlayer(PlayerIndex.valueOf(index));
+		Chat chat = game.getChat();
+		chat.createMessage(new MessageLine(player.getName(), content));
+		game.setChat(chat);
+		return getModel();
 	}
-
-	GameManager manager = GameManager.getInstance();
-
-    public void sendChat(String content){}
 
     /**
      *  Accept the proposed trade.
