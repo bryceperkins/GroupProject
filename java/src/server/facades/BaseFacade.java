@@ -18,11 +18,7 @@ public class BaseFacade implements iServerFacade {
     }
 
     public Game getGame() {
-        Game tmp = new Game();
-        tmp.setId(0);
-        tmp.setName("test game");
-        return tmp;
-        //return manager.getGame(user.getGameID());
+        return manager.getGame(user.getGameID());
     }
 
     public void setGame(int game) {
