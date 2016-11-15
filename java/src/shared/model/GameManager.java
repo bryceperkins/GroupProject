@@ -3,7 +3,7 @@ package shared.model;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Set;
-import java.util.HashSet;
+import java.util.HashMap;
 import client.data.PlayerInfo;
 import client.server.ServerProxy;
 import shared.model.player.Player;
@@ -21,13 +21,33 @@ public class GameManager extends Observable{
 
     private static final GameManager INSTANCE = new GameManager();
     private ServerProxy server;
-    private ArrayList<Game> games = new ArrayList<>();
+    private ArrayList<Game> games = new ArrayList<Game>();
     private PlayerInfo playerInfo;
     private Poller poller;
     private int activeGameIndex = -1;
     private GameController gameController = new GameController();
+    private HashMap<String, User> users = new HashMap();
 
     private GameManager () {}
+
+    public HashMap getUsers(){
+        return users;
+    }
+
+    public boolean login(User user){
+        if (users.get(user.getUserName()).equals(user)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean register(User user){
+        if (users.containsKey(user.getUserName())){
+            return false;
+        }
+        users.put(user.getUserName(), user);
+        return true;
+    }
 
     private Game createGame(String json) {
         Gson gson = new Gson();

@@ -24,12 +24,12 @@ public class RegisterHandler extends BaseHandler{
      */
     public void handle(HttpExchange request) throws IOException{
         body = IOUtils.toString(request.getRequestBody(), "UTF-8");
-        UserRegister command = new Gson().fromJson(body, UserRegister.class);     
+        UserFacade facade = new UserFacade();
+        body = new Gson().fromJson(body, UserRegister.class).serverExecute(facade);     
 
-        body = command.serverExecute(new UserFacade());
         if (body.equals("Success")) {
             code = 200;
-            request.getResponseHeaders().add("Set-Cookie", "catan.user=" + URLEncoder.encode(gson.toJson(super.getUser()), "UTF-8") + "; path=/");
+            request.getResponseHeaders().add("Set-Cookie", "catan.user=" + URLEncoder.encode(gson.toJson(facade.getUser()), "UTF-8") + "; path=/");
         }
         super.respond(request, code, body);
         LOGGER.log(Level.SEVERE, "Finished: " + request.getRequestURI()); 

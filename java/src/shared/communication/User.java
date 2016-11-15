@@ -69,4 +69,8 @@ public class User{
         player.setName(this.name);
         return player;
     }
+
+    public boolean equals(User other){
+        return this.getUserName().equals(other.getUserName()) && this.getPassword().equals(other.getPassword());
+    }
 }
