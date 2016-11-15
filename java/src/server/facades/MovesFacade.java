@@ -424,7 +424,7 @@ public class MovesFacade extends BaseFacade{
         Game game = getGame();
 
         Player player = game.getPlayerByName(user.getUserName());
-	player.removeDevCard(DevCardType.ROAD_BUILDING);
+	player.removeDevCard(DevCardType.ROAD_BUILD);
 		
 	//public String buildRoad(int index, boolean free, EdgeLocation roadLocation){
 	buildRoad(index, true, spot1);
