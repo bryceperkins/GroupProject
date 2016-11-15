@@ -9,6 +9,14 @@ public class TradeOffer {
     private PlayerIndex receiver;
     private ResourceList offer;
 
+	public TradeOffer(){}
+	
+	public TradeOffer(int sender, int reciever, ResourceList offer){
+		this.sender = PlayerIndex.valueOf(sender);
+		this.receiver = PlayerIndex.valueOf(reciever);
+		this.offer = offer;
+	}
+	
 	public PlayerIndex getSender() {
 		return sender;
 	}

@@ -35,7 +35,7 @@ public class MovesFacade extends BaseFacade{
 		Player player = game.getPlayer(PlayerIndex.valueOf(index));
 		Chat chat = game.getChat();
 		chat.createMessage(new MessageLine(player.getName(), content));
-		game.setChat(chat);
+		getGame().setChat(chat);
 		return getModel();
 	}
 
@@ -52,19 +52,23 @@ public class MovesFacade extends BaseFacade{
      */
     public String acceptTrade(int index, boolean willAccept){
 		Game game = getGame();
+		String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
+		
 		if (!willAccept) {
-			game.setTradeOffer(null);
+			getGame().setTradeOffer(null);
+			getGame().getLog().addLine(new MessageLine(name, name + " has rejected the trade."));
 			return getModel();
 		} else {
 			TradeOffer trade_offer = game.getTradeOffer();
 			ResourceList sender_list = game.getPlayer(trade_offer.getSender()).getResources();
-			ResourceList reciever_list = game.getPlayer(trade_offer.getReciever()).getResources();
+			ResourceList reciever_list = game.getPlayer(trade_offer.getReceiver()).getResources();
 			ResourceList offer = trade_offer.getOffer();
 			sender_list.addResources(offer.reversedList());
 			reciever_list.addResources(offer);
-			game.getPlayer(trade_offer.getSender()).setResources(sender_list);
-			game.getPlayer(trade_offer.getReciever()).setResources(reciever_list);
-			game.setTradeOffer(null);
+			getGame().getPlayer(trade_offer.getSender()).setResources(sender_list);
+			getGame().getPlayer(trade_offer.getReceiver()).setResources(reciever_list);
+			getGame().getLog().addLine(new MessageLine(name, name + " has accepted the trade."));
+			getGame().setTradeOffer(null);
 			return getModel();
 		}
     }
@@ -280,7 +284,12 @@ public class MovesFacade extends BaseFacade{
      *  @post trade is offered to the other player
      */
     public String offerTrade(int index, ResourceList offer, int receiver){
-		return "";
+		Game game = getGame();
+		getGame().setTradeOffer(new TradeOffer(index, receiver, offer));
+		String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
+		String reciever_name = game.getPlayer(PlayerIndex.valueOf(receiver)).getName();
+		getGame().getLog().addLine(new MessageLine(name, name + " has requested trade with " + reciever_name));
+		return getModel();
 	}
 
     /**
@@ -296,8 +305,8 @@ public class MovesFacade extends BaseFacade{
      *  @post trade has been performed
      */
     public String maritimeTrade(int index, int ratio, ResourceType inputResource, ResourceType outputResource){
-		Game game = getGame();
 		ResourceList trade = new ResourceList();
+		Game game = getGame();
 		switch (inputResource){
 			case BRICK: trade.setBrick(ratio*-1);
 			case ORE: trade.setOre(ratio*-1);
@@ -312,8 +321,11 @@ public class MovesFacade extends BaseFacade{
 			case WHEAT: trade.setWheat(1);
 			case WOOD: trade.setWood(1);
 		}
-		game.getPlayer(PlayerIndex.valueOf(index)).getResources().addResources(trade);
-		game.getBank().addResources(trade.reversedList());
+		getGame().getPlayer(PlayerIndex.valueOf(index)).getResources().addResources(trade);
+		getGame().getBank().addResources(trade.reversedList());
+		String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
+		getGame().getLog().addLine(new MessageLine(name, name + " has traded " + ratio + " " + 
+		   inputResource.getValue() + " for 1 " + outputResource.getValue()));
 		return getModel();
 	}
 
