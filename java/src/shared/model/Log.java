@@ -21,4 +21,8 @@ public class Log{
     public void setLines(List<MessageLine> lines) {
         this.lines = lines;
     }
+
+    public void addLine(MessageLine line) {
+        lines.add(line);
+    }
 }

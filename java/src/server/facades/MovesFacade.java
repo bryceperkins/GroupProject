@@ -1,34 +1,38 @@
 package server.facades;
 
 import shared.communication.User;
-import shared.model.Game;
-import shared.model.GameManager;
-import shared.model.PlayerIndex;
-import shared.model.ResourceList;
+import shared.model.*;
 import shared.definitions.*;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import server.handlers.iServerFacade;
-import shared.model.State;
-import shared.model.map.Map;
-import shared.model.map.Road;
+import shared.model.map.*;
 import shared.model.player.Player;
+import shared.model.map.Map;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class MovesFacade extends BaseFacade{
+
+    private final int ROBBING_ROLL = 7;
+    private final int SETTLEMENT_RESOURCES = 1;
+    private final int CITY_RESOURCES = 2;
 
     public MovesFacade(User user){
         super(user);
     }
 
-
-
     public String sendChat(int index, String content){
 		return "Failed";
 	}
+
+	GameManager manager = GameManager.getInstance();
+
+    public void sendChat(String content){}
 
     /**
      *  Accept the proposed trade.
@@ -69,9 +73,96 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post client model's status is now Discarding, Robbing, or Playing
      */
-    public String rollNumber(int index, int number){
-		return "";
-	}
+    public String rollNumber(int playerInd, int number){
+        Game game = getGame();
+        Map map = game.getMap();
+
+        logRoll(playerInd, number);
+
+        if (number == ROBBING_ROLL) {
+            boolean discarding = false;
+            for (Player player : game.getPlayers()) {
+                if (player.getResources().total() > 7) {
+                    game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Discarding);
+                    discarding = true;
+                }
+            }
+
+            if (!discarding) {
+                game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Robbing);
+            }
+
+            return getModel();
+        }
+
+        // Creates map of resources to a set of normalized locations that match the roll (not tied to pieces)
+        HashMap<ResourceType, Set<VertexLocation>> locations = new HashMap<>();
+        for (Hex h : map.getHexes()) {
+            if (h.getNumber() == number) {
+                if (!locations.containsKey(h.getResource())) {
+                    locations.put(h.getResource(), new HashSet<>());
+                }
+                locations.get(h.getResource()).addAll(h.getNormalizedVertexLocations());
+            }
+        }
+
+        for (ResourceType resource : locations.keySet()) {
+            updatePlayerAndBankResource(resource, locations.get(resource));
+        }
+
+        game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Playing);
+        return getModel();
+    }
+
+    /**
+     * Assumes resourcebank has requisite resources
+     * Updates player and bank resources based on normalized vertex locations
+     * @param resource
+     * @param vertexLocations
+     */
+    private void updatePlayerAndBankResource(ResourceType resource, Set<VertexLocation> vertexLocations) {
+        Map map = getGame().getMap();
+
+        // Keep map of expected updates after verifying resources exist
+        HashMap<Player, Integer> plannedUpdates = new HashMap<>();
+        int totalNeeded = 0;
+
+        for (Piece piece : map.getCitiesAndSettlements()) {
+            if (vertexLocations.contains(piece.getLocation().getNormalizedLocation())) {
+                Player owner = getGame().getPlayer(piece.getOwner());
+                int increaseBy = (piece instanceof Settlement) ? SETTLEMENT_RESOURCES : CITY_RESOURCES;
+
+                if (!plannedUpdates.keySet().contains(owner)) {
+                    plannedUpdates.put(owner, 0);
+                }
+
+                // increment expected increase
+                plannedUpdates.put(owner, plannedUpdates.get(owner) + increaseBy);
+                totalNeeded += increaseBy;
+            }
+        }
+
+        // Check if bank has enough of resource for all players - if so, add to player, remove from bank
+        for (Player player : plannedUpdates.keySet()) {
+            if (getGame().getBank().hasResource(resource, totalNeeded)) {
+                player.getResources().increaseBy(resource, plannedUpdates.get(player));
+                getGame().getBank().decreaseBy(resource, plannedUpdates.get(player));
+            }
+        }
+    }
+
+    private void logRoll(int number, int playerInd) {
+        String logMessage = "Player " + (playerInd + 1) + " rolled ";
+        if (number == 8 || number == 11) {
+            logMessage += " an " + number;
+        } else {
+            logMessage += " a " + number;
+        }
+
+        String playerName = getGame().getPlayer(PlayerIndex.valueOf(playerInd)).getName();
+
+        getGame().getLog().addLine(new MessageLine(playerName, logMessage));
+    }
 
     /**
      *  Build a Road.
