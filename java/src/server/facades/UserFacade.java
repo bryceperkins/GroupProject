@@ -3,9 +3,11 @@ package server.facades;
 import server.handlers.iServerFacade;
 import shared.communication.User;
 import shared.model.Game;
+import shared.model.GameManager;
 
 
 public class UserFacade extends BaseFacade{
+    private GameManager manager = GameManager.getInstance();
     /**
      * Logs caller into the server and sets their catan.user HTTP cookie
      * @pre username is not null
@@ -15,7 +17,12 @@ public class UserFacade extends BaseFacade{
      * @param password
      **/
     public String login(String username, String password){
-        String success = "Success";
+        String success = "Failed";
+        User user = new User(username, password); 
+        if(manager.login(user)){
+            success = "Success"; 
+            setUser(user);
+        }
         return success;
     }
 
@@ -29,7 +36,13 @@ public class UserFacade extends BaseFacade{
      * @param password
      **/
     public String register(String username, String password){
-        String success = "Success";
+        String success = "Failed";
+        User user = new User(username, password); 
+        if(manager.register(user)){
+            System.out.println("Register: " + username + " " + password);
+            success = "Success"; 
+            setUser(user);
+        }
         return success;
     }
 }

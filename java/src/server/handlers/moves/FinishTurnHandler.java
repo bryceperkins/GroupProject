@@ -27,7 +27,7 @@ public class FinishTurnHandler extends BaseHandler{
         }   
         else {
             body = IOUtils.toString(request.getRequestBody(), "UTF-8");
-            body = new Gson().fromJson(body, FinishTurn.class).serverExecute(new MovesFacade(getUser()));
+            body = new Gson().fromJson(body, FinishTurn.class).serverExecute(new MovesFacade(super.getUser()));
 
             if(!body.equals("Failed")) {
                 code = 200;

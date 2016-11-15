@@ -23,10 +23,6 @@ public abstract class BaseHandler implements HttpHandler{
      * @return The user the request is associated with
      */
     public User getUser(){
-        //TESTING
-        User user = new User("test", "test");
-        user.setGameID(0);
-        user.setPlayerID(0);
         return user;
     }
 
