@@ -1,9 +1,14 @@
 package shared.model.map;
 
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import shared.model.Game;
 import shared.model.PostProcessor;
 import shared.definitions.ResourceType;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Hex implements PostProcessor {
 	private HexLocation location;
@@ -53,6 +58,14 @@ public class Hex implements PostProcessor {
 	}
 
 	public boolean canPlaceRobber(){ return true; }
+
+	public Set<VertexLocation> getNormalizedVertexLocations() {
+		Set<VertexLocation> locations = new HashSet<>();
+		for (VertexDirection direction : VertexDirection.values()) {
+			locations.add(new VertexLocation(location, direction).getNormalizedLocation());
+		}
+		return locations;
+	}
 
 	@Override
 	public void postDeserializationSetup(Game game) {

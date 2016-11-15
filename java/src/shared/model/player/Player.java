@@ -3,12 +3,10 @@ package shared.model.player;
 import java.util.ArrayList;
 import client.data.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import shared.model.*;
-import shared.model.map.City;
-import shared.model.map.Map;
-import shared.model.map.Port;
-import shared.model.map.Settlement;
+import shared.model.map.*;
 import shared.definitions.*;
 import com.google.gson.annotations.SerializedName;
 import shared.locations.*;
@@ -42,7 +40,7 @@ public class Player implements PostProcessor {
     private int victoryPoints;
 
     
- public Player(CatanColor color, String name, int playerID, PlayerIndex playerIndex, int userID) {
+ 	public Player(CatanColor color, String name, int playerID, PlayerIndex playerIndex, int userID) {
 
 		this.color = color;
 		this.name = name;
@@ -86,7 +84,7 @@ public class Player implements PostProcessor {
 		temp.setOre(3);
 		return (citiesRemaining > 0) && resources.hasResources(temp);
 	}
-	
+
 	/**
 	 * checks if player has the prerequisite resources to build a road
 	 * @return true if player has resources, else false
@@ -314,6 +312,11 @@ public class Player implements PostProcessor {
         }
         return player;
     }
+
+	@Override
+	public int hashCode() {
+		return (playerID + 1) * 31;
+	}
 
 	@Override
 	public void postDeserializationSetup(Game game) {
