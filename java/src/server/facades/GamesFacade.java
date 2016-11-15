@@ -7,6 +7,8 @@ import shared.model.player.*;
 import shared.definitions.CatanColor;
 import server.handlers.iServerFacade;
 import shared.communication.User;
+import shared.model.map.*;
+import shared.model.GameManager;
 
 public class GamesFacade extends BaseFacade{
     private GameManager manager = GameManager.getInstance();
@@ -28,9 +30,11 @@ public class GamesFacade extends BaseFacade{
      * @post 2. The server returns an HTTP 200 success response.
      * @post 3. The body contains a JSON object describing the newly created game
      **/
-    public String create(){
+    public String create(String name, boolean tiles, boolean ports, boolean numbers){
 		Game game = new Game();
-		game.setName()
+		game.setName(name);
+		shared.model.map.Map map = new shared.model.map.Map(tiles, ports, numbers);
+		game.setMap(map);
 		manager.addGame(game);
         return getModel();
     }

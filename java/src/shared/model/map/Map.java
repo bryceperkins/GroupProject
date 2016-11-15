@@ -16,6 +16,10 @@ public class Map implements PostProcessor {
     private int radius;
     private Robber robber;
 
+	public Map(boolean randomTiles, boolean randomPorts, boolean randomNumbers){
+		
+	}
+	
     public Map() {
     	
 		super();
