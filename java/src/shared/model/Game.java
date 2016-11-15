@@ -197,6 +197,10 @@ public class Game implements PostProcessor {
     public TradeOffer getTradeOffer() {
         return tradeOffer;
     }
+	
+	public void setTradeOffer(TradeOffer offer){
+		this.tradeOffer = offer;	
+	}
 
     @Override
     public void postDeserializationSetup(Game game) {
