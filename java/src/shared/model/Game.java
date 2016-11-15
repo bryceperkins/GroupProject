@@ -146,6 +146,10 @@ public class Game implements PostProcessor {
     public Chat getChat() {
         return chat;
     }
+	
+	public void setChat(Chat chat){
+		this.chat = chat;
+	}
 
     public Log getLog() {
         return log;
@@ -162,7 +166,7 @@ public class Game implements PostProcessor {
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
-
+	
     public List<Player> getPlayers() {
         return players;
     }
@@ -193,6 +197,10 @@ public class Game implements PostProcessor {
     public TradeOffer getTradeOffer() {
         return tradeOffer;
     }
+	
+	public void setTradeOffer(TradeOffer offer){
+		this.tradeOffer = offer;	
+	}
 
     @Override
     public void postDeserializationSetup(Game game) {
