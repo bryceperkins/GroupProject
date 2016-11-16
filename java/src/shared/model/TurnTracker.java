@@ -65,7 +65,6 @@ public class TurnTracker {
         }
 
         currentTurn = PlayerIndex.valueOf(nextTurnInt);
-        notifyObservers();
     }
 
     public void nextRound() {
