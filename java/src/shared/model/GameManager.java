@@ -45,6 +45,7 @@ public class GameManager extends Observable{
         if (users.containsKey(user.getUserName())){
             return false;
         }
+        user.setPlayerID(users.size());
         users.put(user.getUserName(), user);
         return true;
     }

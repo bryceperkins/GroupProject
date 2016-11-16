@@ -41,6 +41,7 @@ public class UserFacade extends BaseFacade{
         if(manager.register(user)){
             System.out.println("Register: " + username + " " + password);
             success = "Success"; 
+            user.setPlayerID(manager.getUsers().size()-1);
             setUser(user);
         }
         return success;
