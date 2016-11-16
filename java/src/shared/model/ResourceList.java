@@ -47,6 +47,11 @@ public class ResourceList{
 		}
 		return true;
     }
+	
+	public ResourceList reversedList(){
+		ResourceList reversed_resources = new ResourceList(this.brick*-1, this.ore*-1,this.sheep*-1,this.wheat*-1,this.wood*-1);
+		return reversed_resources;
+	}
 
     public boolean hasResource(ResourceType type, int count) {
 		switch (type) {

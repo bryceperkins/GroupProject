@@ -5,6 +5,7 @@ import java.util.*;
 import shared.model.player.*;
 import shared.model.*;
 import shared.locations.*;
+import shared.definitions.ResourceType;
 
 public class Map implements PostProcessor {
 
@@ -16,6 +17,164 @@ public class Map implements PostProcessor {
     private int radius;
     private Robber robber;
 
+	//Components of Catan, used for randomization
+	private final HexLocation[] portLocations = {
+		new HexLocation(-3,  0),
+		new HexLocation(-1, -2),
+		new HexLocation( 1, -3),
+		new HexLocation( 3, -3),
+		new HexLocation( 3, -1),
+		new HexLocation( 2,  1),
+		new HexLocation( 0,  3),
+		new HexLocation(-2,  3),
+		new HexLocation(-3,  2),
+	};
+
+	private final EdgeDirection[] portDirections = {
+		EdgeDirection.SouthEast,
+		EdgeDirection.South,
+		EdgeDirection.South,
+		EdgeDirection.SouthWest,
+		EdgeDirection.NorthWest,
+		EdgeDirection.NorthWest,
+		EdgeDirection.North,
+		EdgeDirection.NorthEast,
+		EdgeDirection.NorthEast,
+	};
+	
+	private final ResourceType[] portTypes = {
+		null,
+		ResourceType.WHEAT,
+		ResourceType.ORE,
+		null,
+		ResourceType.SHEEP,
+		null,
+		null,
+		ResourceType.BRICK,
+		ResourceType.WOOD,
+	};
+
+	private final HexLocation[] landLocations = {
+		new HexLocation(-2,  0),
+		new HexLocation(-2,  1),
+		new HexLocation(-2,  2),
+		new HexLocation(-1, -1),
+		new HexLocation(-1,  0),
+		new HexLocation(-1,  1),
+		new HexLocation(-1,  2),
+		new HexLocation( 0, -2),
+		new HexLocation( 0, -1),
+		new HexLocation( 0,  0),
+		new HexLocation( 0,  1),
+		new HexLocation( 0,  2),
+		new HexLocation( 1, -2),
+		new HexLocation( 1, -1),
+		new HexLocation( 1,  0),
+		new HexLocation( 1,  1),
+		new HexLocation( 2, -2),
+		new HexLocation( 2, -1),
+		new HexLocation( 2,  0),
+	};
+	
+	private final ResourceType[] hexTypes = {
+		ResourceType.ORE,
+		ResourceType.WHEAT,
+		ResourceType.WOOD,
+
+		ResourceType.BRICK,
+		ResourceType.SHEEP,
+		ResourceType.SHEEP,
+		ResourceType.ORE,
+
+		null,
+		ResourceType.WOOD,
+		ResourceType.WHEAT,
+		ResourceType.WOOD,
+		ResourceType.WHEAT,
+
+		ResourceType.BRICK,
+		ResourceType.ORE,
+		ResourceType.BRICK,
+		ResourceType.SHEEP,
+
+		ResourceType.WOOD,
+		ResourceType.SHEEP,
+		ResourceType.WHEAT,
+	};
+	
+	private final int[] hexNumbers = {
+		5, 2, 6,
+		8, 10, 9, 3,
+		/*0,*/ 3, 11, 4, 8,
+		4, 9, 5, 10,
+		11, 12, 6
+	};
+	
+	public Map(boolean randomTiles, boolean randomPorts, boolean randomNumbers){
+		//TODO: Create a map with these attributes.
+		super();
+		this.hexes = new ArrayList<Hex>();
+		this.ports = new ArrayList<Port>();
+		this.settlements = new ArrayList<Settlement>();
+		this.cities = new ArrayList<City>();
+		this.radius = 3;
+		this.robber = new Robber(3, 3);
+        this.roads = new ArrayList<Road>();
+		
+		List<Integer> numbers = new ArrayList<>(this.hexNumbers.length);
+		for (int i : this.hexNumbers) {
+			numbers.add(i);
+		}
+		List<ResourceType> hexTypes = Arrays.asList(this.hexTypes);
+		List<ResourceType> portTypes = Arrays.asList(this.portTypes);
+
+		if (randomNumbers) {
+			Collections.shuffle(numbers);
+		}
+
+		if (randomPorts) {
+			Collections.shuffle(portTypes);
+		}
+
+		if (randomTiles) {
+			Collections.shuffle(hexTypes);
+		}
+		
+		//land tiles
+		int desert_offset = 0;
+		for (int i = 0; i < landLocations.length; i++) {
+			Hex tempHex = new Hex();
+            tempHex.setLocation(landLocations[i]);
+            tempHex.setResource(hexTypes.get(i));
+			tempHex.setHasRobber(false);
+            if (hexTypes.get(i) == null) {
+				tempHex.setHasRobber(true);
+                this.robber = new Robber(landLocations[i].getX(), landLocations[i].getY());
+                desert_offset = -1;
+            } else {
+                tempHex.setNumber(numbers.get(i + desert_offset));
+            }
+            this.hexes.add(tempHex);
+        }
+		
+		//ports
+		for (int i = 0; i < portLocations.length; i++) {
+			Port tempPort = new Port();
+			tempPort.setResource(portTypes.get(i));
+			tempPort.setDirection(portDirections[i]);
+			tempPort.setLocation(portLocations[i]);
+			int ratio = 4;
+			if (portTypes.get(i) == null){
+				ratio = 3;
+			} else {
+				ratio = 2;
+			}
+			tempPort.setRatio(ratio);
+			this.ports.add(tempPort);
+		}
+		
+	}
+	
     public Map() {
     	
 		super();
@@ -421,5 +580,75 @@ public class Map implements PostProcessor {
             }
         }
         return false;
+    }
+
+    public List<Port>getPortsForTrade(Player player){
+        System.out.println("These are the ports available for trade: ");
+        List<Port> tradePorts = new ArrayList<Port>();
+        for(Port port: ports){
+
+            ArrayList<VertexDirection> vertLocs = getVertexDirections(port.getDirection());
+            VertexLocation vertLoc1 = new VertexLocation(port.getLocation(), vertLocs.get(0));
+            VertexLocation vertLoc2 = new VertexLocation(port.getLocation(), vertLocs.get(1));
+            //Normalize locations
+            VertexLocation vertLoc1Norm = vertLoc1.getNormalizedLocation();
+            VertexLocation vertLoc2Norm = vertLoc2.getNormalizedLocation();
+
+            for(City city: cities){
+                if((city.getLocation().getNormalizedLocation().equals(vertLoc1Norm) || city.getLocation().getNormalizedLocation().equals(vertLoc2Norm))
+                        && city.getOwner() == player.getPlayerIndex()){
+                    tradePorts.add(port);
+                    player.addPort(port);
+                    System.out.println("port added... its brokt");
+                }
+            }
+
+            for(Settlement settlement: settlements){
+                if((settlement.getLocation().getNormalizedLocation().equals(vertLoc1Norm) || settlement.getLocation().getNormalizedLocation().equals(vertLoc2Norm))
+                        && settlement.getOwner() == player.getPlayerIndex()){
+                    System.out.println("port added");
+                    tradePorts.add(port);
+                    player.addPort(port);
+                }
+            }
+        }
+        for(Port port1: tradePorts)
+            System.out.println(port1.getResource());
+
+        return tradePorts;
+    }
+
+    public ArrayList<VertexDirection> getVertexDirections(EdgeDirection edgeDir){
+        ArrayList<VertexDirection> vertDirs = new ArrayList<VertexDirection>();
+        switch(edgeDir){
+            case NorthWest:
+                vertDirs.add(VertexDirection.NorthWest);
+                vertDirs.add(VertexDirection.West);
+                break;
+            case North:
+                vertDirs.add(VertexDirection.NorthWest);
+                vertDirs.add(VertexDirection.NorthEast);
+                break;
+            case NorthEast:
+                vertDirs.add(VertexDirection.NorthEast);
+                vertDirs.add(VertexDirection.East);
+                break;
+            case SouthEast:
+                vertDirs.add(VertexDirection.East);
+                vertDirs.add(VertexDirection.SouthEast);
+                break;
+            case South:
+                vertDirs.add(VertexDirection.SouthEast);
+                vertDirs.add(VertexDirection.SouthWest);
+                break;
+            case SouthWest:
+                vertDirs.add(VertexDirection.SouthWest);
+                vertDirs.add(VertexDirection.West);
+                break;
+            default:
+                return null;
+
+        }
+        return vertDirs;
     }
 }

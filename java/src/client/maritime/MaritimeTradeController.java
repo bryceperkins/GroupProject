@@ -48,6 +48,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().setTradeEnabled(false);
 		Player player = manager.getActivePlayer();
 		System.out.println(player.getPorts().size());
+		System.out.println("This is how many ports you have:");
+		System.out.println(manager.getActiveGame().getMap().getPortsForTrade(player).size());
+
 		List<ResourceType> resource_type_list = new ArrayList<ResourceType>();
 		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.WOOD)){
 			resource_type_list.add(ResourceType.WOOD);

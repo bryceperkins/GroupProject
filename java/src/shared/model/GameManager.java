@@ -1,11 +1,10 @@
 package shared.model;
 
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Set;
-import java.util.HashMap;
+import java.util.*;
+
 import client.data.PlayerInfo;
 import client.server.ServerProxy;
+import shared.definitions.AI;
 import shared.model.player.Player;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -27,6 +26,7 @@ public class GameManager extends Observable{
     private int activeGameIndex = -1;
     private GameController gameController = new GameController();
     private HashMap<String, User> users = new HashMap();
+    private HashSet<AI> ai = new HashSet<>();
 
     private GameManager () {}
 
@@ -139,6 +139,10 @@ public class GameManager extends Observable{
         }
 
         return -1;
+    }
+
+    public void addAI(AI ai) {
+        this.ai.add(ai);
     }
 
     /**

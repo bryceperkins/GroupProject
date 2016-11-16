@@ -22,6 +22,6 @@ public class GamesCreate extends Command{
 
     public String serverExecute(iServerFacade f){
         GamesFacade facade = (GamesFacade) f;
-        return facade.create();
+        return facade.create(this.name, this.randomTiles, this.randomPorts, this.randomNumbers);
     }
 }

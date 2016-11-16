@@ -8,6 +8,8 @@ import shared.model.map.*;
 import shared.model.player.*;
 import shared.communication.*;
 import java.util.ArrayList;
+import java.util.Set;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -20,7 +22,7 @@ public class Game implements PostProcessor {
     private String name;
     private int version;
     private int id;
-	private PlayerIndex winner = PlayerIndex.None;
+	private PlayerIndex winner;
     private ResourceList bank;
     private Chat chat;
     private Log log;
@@ -29,25 +31,25 @@ public class Game implements PostProcessor {
     private TurnTracker turnTracker;
     private TradeOffer tradeOffer;
     private DevCardList devCardDeck;
-    
+
     public Game(){ 
         //name = "Test";
-        //version = 1;
-        //winner = PlayerIndex.None;
-        //bank = new ResourceList(19, 19, 19, 19, 19);
+        version = 1;
+        winner = PlayerIndex.None;
+        bank = new ResourceList(19, 19, 19, 19, 19);
         chat = new Chat();
         log = new Log();
         map = new Map();
         players = new ArrayList<Player>();
         turnTracker = new TurnTracker();
         tradeOffer = new TradeOffer(); 
-	devCardDeck = new DevCardList();
-	
-	devCardDeck.setMonopoly(2);
-	devCardDeck.setMonument(5);
-	devCardDeck.setRoadBuilding(2);
-	devCardDeck.setSoldier(15);
-	devCardDeck.setYearOfPlenty(2);	
+		devCardDeck = new DevCardList();
+		
+		devCardDeck.setMonopoly(2);
+		devCardDeck.setMonument(5);
+		devCardDeck.setRoadBuilding(2);
+		devCardDeck.setSoldier(15);
+		devCardDeck.setYearOfPlenty(2);	
     }
 
     /**
@@ -139,6 +141,10 @@ public class Game implements PostProcessor {
         this.winner = index;
     }
     
+	public void setBank(ResourceList bank){
+		this.bank = bank;
+	}
+	
     public ResourceList getBank() {
         return bank;
     }
@@ -146,6 +152,10 @@ public class Game implements PostProcessor {
     public Chat getChat() {
         return chat;
     }
+	
+	public void setChat(Chat chat){
+		this.chat = chat;
+	}
 
     public Log getLog() {
         return log;
@@ -162,7 +172,7 @@ public class Game implements PostProcessor {
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
-
+	
     public List<Player> getPlayers() {
         return players;
     }
@@ -193,6 +203,10 @@ public class Game implements PostProcessor {
     public TradeOffer getTradeOffer() {
         return tradeOffer;
     }
+	
+	public void setTradeOffer(TradeOffer offer){
+		this.tradeOffer = offer;	
+	}
 
     @Override
     public void postDeserializationSetup(Game game) {
