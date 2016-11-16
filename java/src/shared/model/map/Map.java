@@ -18,7 +18,7 @@ public class Map implements PostProcessor {
     private Robber robber;
 
 	//Components of Catan, used for randomization
-	private HexLocation[] portLocations = {
+	private final HexLocation[] portLocations = {
 		new HexLocation(-3,  0),
 		new HexLocation(-1, -2),
 		new HexLocation( 1, -3),
@@ -42,7 +42,7 @@ public class Map implements PostProcessor {
 		EdgeDirection.NorthEast,
 	};
 	
-	private transient final ResourceType[] portTypes = {
+	private final ResourceType[] portTypes = {
 		null,
 		ResourceType.WHEAT,
 		ResourceType.ORE,
@@ -54,7 +54,7 @@ public class Map implements PostProcessor {
 		ResourceType.WOOD,
 	};
 
-	private HexLocation[] landLocations = {
+	private final HexLocation[] landLocations = {
 		new HexLocation(-2,  0),
 		new HexLocation(-2,  1),
 		new HexLocation(-2,  2),
@@ -76,7 +76,7 @@ public class Map implements PostProcessor {
 		new HexLocation( 2,  0),
 	};
 	
-	private transient final ResourceType[] hexTypes = {
+	private final ResourceType[] hexTypes = {
 		ResourceType.ORE,
 		ResourceType.WHEAT,
 		ResourceType.WOOD,
@@ -102,7 +102,7 @@ public class Map implements PostProcessor {
 		ResourceType.WHEAT,
 	};
 	
-	private transient final int[] hexNumbers = {
+	private final int[] hexNumbers = {
 		5, 2, 6,
 		8, 10, 9, 3,
 		/*0,*/ 3, 11, 4, 8,

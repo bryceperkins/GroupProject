@@ -32,7 +32,6 @@ public class GamesFacade extends BaseFacade{
      * @post 3. The body contains a JSON object describing the newly created game
      **/
     public String create(String name, boolean tiles, boolean ports, boolean numbers){
-		System.out.println("create in facade";)
 		Game game = new Game();
 		game.setName(name);
 		game.setId(createId());
