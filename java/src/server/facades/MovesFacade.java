@@ -19,17 +19,22 @@ public class MovesFacade extends BaseFacade{
     private final int SETTLEMENT_RESOURCES = 1;
     private final int CITY_RESOURCES = 2;
 
+	GameManager manager = GameManager.getInstance();
+	
     public MovesFacade(User user){
         super(user);
     }
 
     public String sendChat(int index, String content){
-		return "Failed";
+		if (index < 0 || index > 3) return "Failed";
+		if (content == null) return "Failed";
+		Game game = getGame();
+		Player player = game.getPlayer(PlayerIndex.valueOf(index));
+		Chat chat = game.getChat();
+		chat.createMessage(new MessageLine(player.getName(), content));
+		getGame().setChat(chat);
+		return getModel();
 	}
-
-	GameManager manager = GameManager.getInstance();
-
-    public void sendChat(String content){}
 
     /**
      *  Accept the proposed trade.
@@ -43,7 +48,26 @@ public class MovesFacade extends BaseFacade{
      *  @post trade offere removed
      */
     public String acceptTrade(int index, boolean willAccept){
-		return "";
+		Game game = getGame();
+		String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
+		
+		if (!willAccept) {
+			getGame().setTradeOffer(null);
+			getGame().getLog().addLine(new MessageLine(name, name + " has rejected the trade."));
+			return getModel();
+		} else {
+			TradeOffer trade_offer = game.getTradeOffer();
+			ResourceList sender_list = game.getPlayer(trade_offer.getSender()).getResources();
+			ResourceList reciever_list = game.getPlayer(trade_offer.getReceiver()).getResources();
+			ResourceList offer = trade_offer.getOffer();
+			sender_list.addResources(offer.reversedList());
+			reciever_list.addResources(offer);
+			getGame().getPlayer(trade_offer.getSender()).setResources(sender_list);
+			getGame().getPlayer(trade_offer.getReceiver()).setResources(reciever_list);
+			getGame().getLog().addLine(new MessageLine(name, name + " has accepted the trade."));
+			getGame().setTradeOffer(null);
+			return getModel();
+		}
     }
 
     /**
@@ -344,7 +368,12 @@ public class MovesFacade extends BaseFacade{
      *  @post trade is offered to the other player
      */
     public String offerTrade(int index, ResourceList offer, int receiver){
-		return "";
+		Game game = getGame();
+		getGame().setTradeOffer(new TradeOffer(index, receiver, offer));
+		String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
+		String reciever_name = game.getPlayer(PlayerIndex.valueOf(receiver)).getName();
+		getGame().getLog().addLine(new MessageLine(name, name + " has requested trade with " + reciever_name));
+		return getModel();
 	}
 
     /**
@@ -360,7 +389,28 @@ public class MovesFacade extends BaseFacade{
      *  @post trade has been performed
      */
     public String maritimeTrade(int index, int ratio, ResourceType inputResource, ResourceType outputResource){
-		return "";
+		ResourceList trade = new ResourceList();
+		Game game = getGame();
+		switch (inputResource){
+			case BRICK: trade.setBrick(ratio*-1);
+			case ORE: trade.setOre(ratio*-1);
+			case SHEEP: trade.setSheep(ratio*-1);
+			case WHEAT: trade.setWheat(ratio*-1);
+			case WOOD: trade.setWood(ratio*-1);
+		}
+		switch (outputResource){
+			case BRICK: trade.setBrick(1);
+			case ORE: trade.setOre(1);
+			case SHEEP: trade.setSheep(1);
+			case WHEAT: trade.setWheat(1);
+			case WOOD: trade.setWood(1);
+		}
+		getGame().getPlayer(PlayerIndex.valueOf(index)).getResources().addResources(trade);
+		getGame().getBank().addResources(trade.reversedList());
+		String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
+		getGame().getLog().addLine(new MessageLine(name, name + " has traded " + ratio + " " + 
+		   inputResource.getValue() + " for 1 " + outputResource.getValue()));
+		return getModel();
 	}
 
     /**
