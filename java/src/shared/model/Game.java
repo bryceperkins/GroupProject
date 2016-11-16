@@ -15,7 +15,7 @@ import com.google.gson.annotations.SerializedName;
  * Game model class containing all local information provided by
  * the server for a given game.
  */
-public class Game extends Observable implements PostProcessor {
+public class Game implements PostProcessor {
 
     @SerializedName("title")
     private String name;
@@ -204,7 +204,6 @@ public class Game extends Observable implements PostProcessor {
 	
 	public void setTradeOffer(TradeOffer offer){
 		this.tradeOffer = offer;
-        notifyObservers();
 	}
 
     @Override

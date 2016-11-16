@@ -7,7 +7,7 @@ import java.util.Observable;
 /**
  * Keeps track of the current turn and game state for a given game
  */
-public class TurnTracker extends Observable {
+public class TurnTracker {
 
     private PlayerIndex currentTurn;
     private GameStatus status;
@@ -41,7 +41,6 @@ public class TurnTracker extends Observable {
     }
 
     public void setGameStatus(GameStatus status) {
-        this.notifyObservers();
         this.status = status;
     }
 
