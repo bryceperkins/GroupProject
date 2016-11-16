@@ -2,10 +2,12 @@ package shared.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Observable;
+
 /**
  * Keeps track of the current turn and game state for a given game
  */
-public class TurnTracker {
+public class TurnTracker extends Observable {
 
     private PlayerIndex currentTurn;
     private GameStatus status;
@@ -32,6 +34,7 @@ public class TurnTracker {
     }
 
     public void setGameStatus(GameStatus status) {
+        this.notifyObservers();
         this.status = status;
     }
 
@@ -56,6 +59,7 @@ public class TurnTracker {
         }
 
         currentTurn = PlayerIndex.valueOf(nextTurnInt);
+        notifyObservers();
     }
 
     public void nextRound() {

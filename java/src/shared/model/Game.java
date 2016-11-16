@@ -1,14 +1,13 @@
 package shared.model;
 
-import java.util.Random;
+import java.util.*;
+
 import shared.definitions.*;
 import client.data.*;
-import java.util.List;
 import shared.model.map.*;
+import shared.model.map.Map;
 import shared.model.player.*;
 import shared.communication.*;
-import java.util.ArrayList;
-import java.util.Set;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -16,7 +15,7 @@ import com.google.gson.annotations.SerializedName;
  * Game model class containing all local information provided by
  * the server for a given game.
  */
-public class Game implements PostProcessor {
+public class Game extends Observable implements PostProcessor {
 
     @SerializedName("title")
     private String name;
@@ -205,7 +204,8 @@ public class Game implements PostProcessor {
     }
 	
 	public void setTradeOffer(TradeOffer offer){
-		this.tradeOffer = offer;	
+		this.tradeOffer = offer;
+        notifyObservers();
 	}
 
     @Override

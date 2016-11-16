@@ -13,22 +13,19 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
-public class AI extends Player implements Observer {
+public class AI extends Player {
 
-    MovesFacade facade;
-    GameManager manager = GameManager.getInstance();
-    User user;
+    private transient MovesFacade facade;
+    private transient User user;
 
     public AI(int gameId, CatanColor color, String name, PlayerIndex playerIndex) {
-        super(color, name, -1, playerIndex, -1);
+        super(color, name, 24601, playerIndex, 24601);
 
-        user = new User(name, "");
-        user.setPlayerID(-1);
+        user = new User(name, "password");
+        user.setPlayerID(24601);
         user.setGameID(gameId);
 
         facade = new MovesFacade(user);
-
-        manager.addObserver(this);
     }
 
     private void rollNumber() {
@@ -68,7 +65,7 @@ public class AI extends Player implements Observer {
             for (VertexDirection direction : VertexDirection.values()) {
                 ItemLocation location = new ItemLocation(hexlocation, direction);
                 if (map.canBuildSettlement(this, location, new State(facade.getGame().getTurnTracker().getStatus()))) {
-                    facade.buildSettlement(getPlayerIndex().getIndex(), true, location);
+                    facade.buildSettlement(getPlayerIndex().getIndex(), true, new VertexLocation(hexlocation, direction));
                 }
             }
         }
@@ -82,8 +79,7 @@ public class AI extends Player implements Observer {
         facade.finishTurn(getPlayerIndex().getIndex());
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
+    public void play() {
         Game game = facade.getGame();
         if (game.getTurnTracker().getCurrentTurn() != getPlayerIndex()) {
             return;
@@ -116,8 +112,6 @@ public class AI extends Player implements Observer {
                 placeRobberRandomly();
                 break;
         }
-
-        update(null, null);
     }
 
     @Override
