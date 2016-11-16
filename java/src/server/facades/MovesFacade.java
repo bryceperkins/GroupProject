@@ -10,10 +10,7 @@ import shared.model.map.*;
 import shared.model.player.Player;
 import shared.model.map.Map;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class MovesFacade extends BaseFacade{
@@ -211,36 +208,42 @@ public class MovesFacade extends BaseFacade{
      *  @post longest road gained if necessary
      */
     public String buildRoad(int index, boolean free, EdgeLocation roadLocation){
-        User user = getUser();
         Game game = getGame();
-
+        User user = getUser();
         Player player = game.getPlayerByName(user.getUserName());
-
-        if(!free){
-            //charge cost of road
-            ResourceList roadCost = new ResourceList(1,0,0,0,1);
-            ResourceList playerResources = player.getResources();
-
-            if(playerResources.hasResources(roadCost)){
-                playerResources.decreaseBrick();
-                playerResources.decreaseWood();
-            }else {
-                System.out.println("not enough resources to purchase road");
-                return "";
-            }
-        }
 
         Map map = game.getMap();
         State state = game.getState();
         if(map.canBuildRoad(player,roadLocation,state)){
+            if(!free){
+                //charge cost of road
+                ResourceList roadCost = new ResourceList(1,0,0,0,1);
+                ResourceList playerResources = player.getResources();
+
+                if(playerResources.hasResources(roadCost)){
+                    playerResources.decreaseBrick();
+                    playerResources.decreaseWood();
+                }else {
+                    System.out.println("not enough resources to purchase road");
+                    return "Fail";
+                }
+            }
+
             Road road = new Road(player.getPlayerIndex(),roadLocation);
             List<Road> existingRoads = map.getRoads();
             existingRoads.add(road);
             map.setRoads(existingRoads);
+
+            logBuild(user.getUserName(), "road");
             return getModel();
         }
 
-        return "";
+        return "Fail";
+    }
+
+    public void logBuild(String player, String building){
+        String logMessage = player + " built a " + building;
+        getGame().getLog().addLine(new MessageLine(player, logMessage));
     }
 
     /**
@@ -259,7 +262,41 @@ public class MovesFacade extends BaseFacade{
      *  @post Settlement is on the map
      */
     public String buildSettlement(int index, boolean free, VertexLocation vertexLocation){
-		return "";
+        Game game = getGame();
+        User user = getUser();
+        Player player = game.getPlayerByName(user.getUserName());
+
+
+        ItemLocation location = new ItemLocation(vertexLocation.getHexLoc(),vertexLocation.getDirection());
+        Map map = game.getMap();
+        State state = game.getState();
+        if(map.canBuildSettlement(player,location,state)){
+            if(!free){
+                //charge cost of settlement
+                ResourceList settlementCost = new ResourceList(1,0,1,1,1);
+                ResourceList playerResources = player.getResources();
+
+                if(playerResources.hasResources(settlementCost)){
+                    playerResources.decreaseBrick();
+                    playerResources.decreaseWood();
+                    playerResources.decreaseSheep();
+                    playerResources.decreaseWheat();
+                }else {
+                    System.out.println("not enough resources to purchase settlement");
+                    return "Fail";
+                }
+            }
+
+            Settlement settlement = new Settlement(player.getPlayerIndex(), vertexLocation);
+            List<Settlement> existingSettlements = map.getSettlements();
+            existingSettlements.add(settlement);
+            map.setSettlements(existingSettlements);
+
+            logBuild(user.getUserName(), "settlement");
+            return getModel();
+        }
+
+        return "Fail";
 	}
 
     /**
@@ -275,7 +312,49 @@ public class MovesFacade extends BaseFacade{
      *  @post city is on the map
      */
     public String buildCity(int index, VertexLocation vertexLocation){
-		return "";
+
+        Game game = getGame();
+        User user = getUser();
+        Player player = game.getPlayerByName(user.getUserName());
+
+        ItemLocation location = new ItemLocation(vertexLocation.getHexLoc(),vertexLocation.getDirection());
+        Map map = game.getMap();
+        State state = game.getState();
+        if(map.canBuildSettlement(player,location,state)){
+            //charge cost of City
+            ResourceList cityCost = new ResourceList(0,3,0,2,0);
+            ResourceList playerResources = player.getResources();
+
+            if(playerResources.hasResources(cityCost)){
+                playerResources.decreaseOre();
+                playerResources.decreaseOre();
+                playerResources.decreaseOre();
+                playerResources.decreaseWheat();
+                playerResources.decreaseWheat();
+            }else {
+                System.out.println("not enough resources to purchase road");
+                return "Fail";
+            }
+
+            City city = new City(player.getPlayerIndex(), vertexLocation);
+            List<City> existingCities = map.getCities();
+            existingCities.add(city);
+            map.setCities(existingCities);
+
+            //remove settlement replaced by city
+            List<Settlement> existingSettlements = map.getSettlements();
+            for (Settlement settlement : existingSettlements){
+                if (settlement.getLocation().equals(location)){
+                    existingSettlements.remove(settlement);
+                    break;
+                }
+            }
+
+            logBuild(user.getUserName(), "city");
+            return getModel();
+        }
+
+        return "Fail";
 	}
 
     /**
@@ -348,7 +427,89 @@ public class MovesFacade extends BaseFacade{
      *  @post Largest army awarded to player with most Solder cards
      */
     public String robPlayer(int index, HexLocation location, int victim){
-		return "";
+        PlayerIndex victimIndex = PlayerIndex.valueOf(victim);
+        Game game = getGame();
+        User user = getUser();
+        Map map = game.getMap();
+        Random rand = new Random();
+        Player player = game.getPlayerByName(user.getUserName());
+        Robber robber = map.getRobber();
+
+        if(victim == -1){
+            if(map.canPlaceRobber(location)){
+
+                robber.setX(location.getX());
+                robber.setY(location.getY());
+                String logMessage = player.getName() + " has robbed no one";
+                getGame().getLog().addLine(new MessageLine(player.getName(), logMessage));
+
+                return getModel();
+            }
+        }
+
+        Player victimPlayer = game.getPlayer(victimIndex);
+        ResourceList playerResources = player.getResources();
+        ResourceList victimPlayerResources = victimPlayer.getResources();
+
+        int randomNumber;
+        List<ResourceType> resources = new ArrayList<>();
+
+        if(victimPlayerResources.total()> 0){
+            if(map.canPlaceRobber(location)){
+                int wood = victimPlayerResources.getWood();
+                int ore = victimPlayerResources.getOre();
+                int wheat = victimPlayerResources.getWheat();
+                int brick = victimPlayerResources.getBrick();
+                int sheep = victimPlayerResources.getSheep();
+
+                for(int i = 0; i < wood; i++){resources.add(ResourceType.WOOD);}
+                for(int i = 0; i < ore; i++){resources.add(ResourceType.ORE);}
+                for(int i = 0; i < wheat; i++){resources.add(ResourceType.WHEAT);}
+                for(int i = 0; i < brick; i++){resources.add(ResourceType.BRICK);}
+                for(int i = 0; i < sheep; i++){resources.add(ResourceType.SHEEP);}
+
+                //transfer one random card form victim to player
+                randomNumber = rand.nextInt(victimPlayerResources.total());
+
+                switch (resources.get(randomNumber)){
+                    case WOOD:
+                        victimPlayerResources.decreaseWood();
+                        playerResources.increaseWood();
+                        break;
+                    case ORE:
+                        victimPlayerResources.decreaseOre();
+                        playerResources.increaseOre();
+                        break;
+                    case WHEAT:
+                        victimPlayerResources.decreaseWheat();
+                        playerResources.increaseWheat();
+                        break;
+                    case BRICK:
+                        victimPlayerResources.decreaseBrick();
+                        playerResources.increaseBrick();
+                        break;
+                    case SHEEP:
+                        victimPlayerResources.decreaseSheep();
+                        playerResources.increaseSheep();
+                        break;
+                    default:
+                        System.out.println("some error with robbing resource");
+                        return "Fail";
+                }
+                robber.setX(location.getX());
+                robber.setY(location.getY());
+
+                String logMessage = player.getName() + " has robbed " + victimPlayer.getName();
+                getGame().getLog().addLine(new MessageLine(player.getName(), logMessage));
+                return getModel();
+            }else{
+                System.out.println("Cannot place a robber on this location");
+                return "Fail";
+            }
+        }else{
+            System.out.println("Victim does not have resources");
+            return "Fail";
+        }
 	}
 
     /**
@@ -358,7 +519,15 @@ public class MovesFacade extends BaseFacade{
      *  @post it is the next player's turn
      */
     public String finishTurn(int index){
-		return "";
+        Player player = getGame().getPlayer(PlayerIndex.valueOf(index));
+        String message = player.getName() + "'s turn just ended.";
+        getGame().getLog().addLine(new MessageLine(player.getName(), message));
+        TurnTracker tracker = getGame().getTurnTracker();
+
+        tracker.setNextTurn();
+        player.transferNewDevCards();
+
+		return getModel();
 	}
 
     /**
