@@ -32,6 +32,7 @@ public class JoinHandler extends BaseHandler{
             if(!body.equals("Failed")) {
                 code = 200;
                 request.getResponseHeaders().add("Set-Cookie", "catan.game=" + super.getUser().getGameID() + "; path=/");
+                LOGGER.log(Level.INFO, "Setting catan.game cookie"); 
             }
         }
         respond(request, code, body);
