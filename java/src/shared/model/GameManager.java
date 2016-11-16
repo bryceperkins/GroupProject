@@ -26,7 +26,6 @@ public class GameManager extends Observable{
     private int activeGameIndex = -1;
     private GameController gameController = new GameController();
     private HashMap<String, User> users = new HashMap();
-    private HashSet<AI> ai = new HashSet<>();
 
     private GameManager () {}
 
@@ -138,10 +137,6 @@ public class GameManager extends Observable{
         }
 
         return -1;
-    }
-
-    public void addAI(AI ai) {
-        this.ai.add(ai);
     }
 
     /**

@@ -70,8 +70,7 @@ public class GameFacade extends BaseFacade {
             }
         }
 
-        manager.addAI(new AI(getGame(), index)); //TODO figure out what to do with this
-        getGame().getPlayers().add(new Player(playerColor, names.get(index.getIndex()), 1, index, -1));
+        getGame().getPlayers().add(new AI(getGame().getId(), playerColor, names.get(index.getIndex()), index));
 
         return getModel();
     }
