@@ -9,7 +9,6 @@ import shared.model.GameManager;
 public class BaseFacade implements iServerFacade {
     private GameManager manager = GameManager.getInstance();
     private User user;
-    private Game game;
 
     public BaseFacade(){}
 
@@ -36,7 +35,7 @@ public class BaseFacade implements iServerFacade {
     public String getModel(){
 
         Gson gson = new Gson();
-        String json = gson.toJson(game);
+        String json = gson.toJson(getGame());
 
         return json;
     }
