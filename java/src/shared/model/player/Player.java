@@ -60,6 +60,11 @@ public class Player implements PostProcessor {
         this.didDiscard = false;
         this.playedDevCard = false;
     }
+
+    public void transferNewDevCards() {
+        oldDevCards.addDevCardList(newDevCards);
+		newDevCards.clear();
+	}
     
     public void setColor(CatanColor color){
         this.color = color;
