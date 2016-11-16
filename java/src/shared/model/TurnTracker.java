@@ -17,6 +17,13 @@ public class TurnTracker extends Observable {
     private PlayerIndex largestArmyOwner;
     private int round = 1;
 
+    public TurnTracker() {
+        currentTurn = PlayerIndex.Player1;
+        status = GameStatus.FirstRound;
+        longestRoadOwner = PlayerIndex.None;
+        largestArmyOwner = PlayerIndex.None;
+    }
+
     public PlayerIndex getCurrentTurn() {
         return currentTurn;
     }

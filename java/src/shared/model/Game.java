@@ -41,7 +41,6 @@ public class Game extends Observable implements PostProcessor {
         map = new Map();
         players = new ArrayList<Player>();
         turnTracker = new TurnTracker();
-        tradeOffer = new TradeOffer(); 
 		devCardDeck = new DevCardList();
 		
 		devCardDeck.setMonopoly(2);
