@@ -581,4 +581,74 @@ public class Map implements PostProcessor {
         }
         return false;
     }
+
+    public List<Port>getPortsForTrade(Player player){
+        System.out.println("These are the ports available for trade: ");
+        List<Port> tradePorts = new ArrayList<Port>();
+        for(Port port: ports){
+
+            ArrayList<VertexDirection> vertLocs = getVertexDirections(port.getDirection());
+            VertexLocation vertLoc1 = new VertexLocation(port.getLocation(), vertLocs.get(0));
+            VertexLocation vertLoc2 = new VertexLocation(port.getLocation(), vertLocs.get(1));
+            //Normalize locations
+            VertexLocation vertLoc1Norm = vertLoc1.getNormalizedLocation();
+            VertexLocation vertLoc2Norm = vertLoc2.getNormalizedLocation();
+
+            for(City city: cities){
+                if((city.getLocation().getNormalizedLocation().equals(vertLoc1Norm) || city.getLocation().getNormalizedLocation().equals(vertLoc2Norm))
+                        && city.getOwner() == player.getPlayerIndex()){
+                    tradePorts.add(port);
+                    player.addPort(port);
+                    System.out.println("port added... its brokt");
+                }
+            }
+
+            for(Settlement settlement: settlements){
+                if((settlement.getLocation().getNormalizedLocation().equals(vertLoc1Norm) || settlement.getLocation().getNormalizedLocation().equals(vertLoc2Norm))
+                        && settlement.getOwner() == player.getPlayerIndex()){
+                    System.out.println("port added");
+                    tradePorts.add(port);
+                    player.addPort(port);
+                }
+            }
+        }
+        for(Port port1: tradePorts)
+            System.out.println(port1.getResource());
+
+        return tradePorts;
+    }
+
+    public ArrayList<VertexDirection> getVertexDirections(EdgeDirection edgeDir){
+        ArrayList<VertexDirection> vertDirs = new ArrayList<VertexDirection>();
+        switch(edgeDir){
+            case NorthWest:
+                vertDirs.add(VertexDirection.NorthWest);
+                vertDirs.add(VertexDirection.West);
+                break;
+            case North:
+                vertDirs.add(VertexDirection.NorthWest);
+                vertDirs.add(VertexDirection.NorthEast);
+                break;
+            case NorthEast:
+                vertDirs.add(VertexDirection.NorthEast);
+                vertDirs.add(VertexDirection.East);
+                break;
+            case SouthEast:
+                vertDirs.add(VertexDirection.East);
+                vertDirs.add(VertexDirection.SouthEast);
+                break;
+            case South:
+                vertDirs.add(VertexDirection.SouthEast);
+                vertDirs.add(VertexDirection.SouthWest);
+                break;
+            case SouthWest:
+                vertDirs.add(VertexDirection.SouthWest);
+                vertDirs.add(VertexDirection.West);
+                break;
+            default:
+                return null;
+
+        }
+        return vertDirs;
+    }
 }
