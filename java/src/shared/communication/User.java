@@ -20,7 +20,7 @@ public class User{
         setUserName(name);
         setPassword(password);
     }
-    
+
     public void setUserName(String name) {
         try {
             this.name = new UserName(name).toString();

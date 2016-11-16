@@ -8,6 +8,8 @@ import shared.model.map.*;
 import shared.model.player.*;
 import shared.communication.*;
 import java.util.ArrayList;
+import java.util.Set;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -29,7 +31,7 @@ public class Game implements PostProcessor {
     private TurnTracker turnTracker;
     private TradeOffer tradeOffer;
     private DevCardList devCardDeck;
-    
+
     public Game(){ 
         //name = "Test";
         //version = 1;

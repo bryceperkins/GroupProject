@@ -1,13 +1,20 @@
 package server.facades;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import shared.definitions.AI;
 import shared.communication.User;
 import shared.definitions.AIType;
-import shared.model.Game;
 import com.google.gson.*;
+import shared.definitions.CatanColor;
+import shared.model.GameManager;
+import shared.model.PlayerIndex;
+import shared.model.player.Player;
 
 public class GameFacade extends BaseFacade {
+
+    GameManager manager = GameManager.getInstance();
 
     public GameFacade(User user){
         super(user);
@@ -37,6 +44,12 @@ public class GameFacade extends BaseFacade {
         return new Gson().toJson(new ArrayList<AIType>(Arrays.asList(AIType.values())));
     }
 
+    private List<String> names = new ArrayList<String>() {{
+        add("Larry");
+        add("Steve");
+        add("John");
+    }};
+
     /**
      * Adds an AI player to the current game.
      * @pre 1. The caller has previously logged in to the server and joined a game (i.e., they have valid catan.user and catan.game HTTP cookies).
@@ -46,6 +59,20 @@ public class GameFacade extends BaseFacade {
      * @post 2. A new AI player of the specified type has been added to the current game. The server selected a name and color for the player.
      */
     public String addAI(AIType type){
+        PlayerIndex index = PlayerIndex.valueOf(getGame().getPlayers().size());
+
+        CatanColor playerColor = CatanColor.BLUE;
+        List<CatanColor> takenColors = getGame().getPlayers().stream().map(player -> player.getColor()).collect(Collectors.toList());
+        for (CatanColor color : CatanColor.values()) {
+            if (!takenColors.contains(color)) {
+                playerColor = color;
+                break;
+            }
+        }
+
+        manager.addAI(new AI(getGame(), index)); //TODO figure out what to do with this
+        getGame().getPlayers().add(new Player(playerColor, names.get(index.getIndex()), 1, index, -1));
+
         return getModel();
     }
 }
