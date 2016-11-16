@@ -308,7 +308,15 @@ public class MovesFacade extends BaseFacade{
      *  @post it is the next player's turn
      */
     public String finishTurn(int index){
-		return "";
+        Player player = getGame().getPlayer(PlayerIndex.valueOf(index));
+        String message = player.getName() + "'s turn just ended.";
+        getGame().getLog().addLine(new MessageLine(player.getName(), message));
+        TurnTracker tracker = getGame().getTurnTracker();
+
+        tracker.setNextTurn();
+        player.transferNewDevCards();
+
+		return getModel();
 	}
 
     /**
