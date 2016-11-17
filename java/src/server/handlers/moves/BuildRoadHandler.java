@@ -27,12 +27,17 @@ public class BuildRoadHandler extends BaseHandler{
         }   
         else {
             body = IOUtils.toString(request.getRequestBody(), "UTF-8");
-            body = new Gson().fromJson(body, BuildRoad.class).serverExecute(new MovesFacade(super.getUser()));
+            System.out.println(body);
+            BuildRoad command = new Gson().fromJson(body, BuildRoad.class);
+            System.out.println("Running Command");
+            body = command.serverExecute(new MovesFacade(super.getUser()));
+            System.out.println(body);
 
             if(!body.equals("Failed")) {
                 code = 200;
             }   
         }   
+        System.out.println(body);
         super.respond(request, code, body);
         LOGGER.log(Level.INFO, "Finished: " + request.getRequestURI()); 
     } 

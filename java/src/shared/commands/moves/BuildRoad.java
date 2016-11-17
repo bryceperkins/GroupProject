@@ -31,7 +31,9 @@ public class BuildRoad extends MoveCommand {
         this.roadLocation = location;
     };
     public String serverExecute(iServerFacade f){
+        System.out.println("Building Road: " + getIndex() + " " + free + " " + roadLocation);
         MovesFacade facade = (MovesFacade) f;
-        return facade.buildRoad(getIndex(), free, roadLocation);
+        roadLocation.setHexLoc(new HexLocation(roadLocation.getX(), roadLocation.getY()));
+        return facade.buildRoad(super.getIndex(), free, roadLocation);
     }
 }
