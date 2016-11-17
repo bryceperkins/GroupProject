@@ -97,13 +97,21 @@ public class MovesFacade extends BaseFacade{
 
         Player player = game.getPlayerByName(user.getUserName());
         player.getResources().removeResources(discardedCards);
+        player.discarded();
 
-        if (discardCount++ == 4) {
-            discardCount = 0;
+        boolean done = true;
+
+        for (Player p: getGame().getPlayers()){
+            System.out.println("Player: " + p.getName() + " " + p.getResources().total() + " " + p.didDiscard());
+            if (p.getResources().total() > 7 && !p.didDiscard()) {
+                done = false;
+            }
+        }
+
+        if (done){
             game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Robbing);
         }
 
-        updateAI();
         return getModel();
     }
 
@@ -306,7 +314,9 @@ public class MovesFacade extends BaseFacade{
                 }
             }
             player.setSettlementsRemaining(remainingSettlements - 1);
-
+            
+            int victoryPoints = player.getVictoryPoints();
+            player.setVictoryPoints(victoryPoints + 1);
             Settlement settlement = new Settlement(player.getPlayerIndex(), vertexLocation);
             List<Settlement> existingSettlements = map.getSettlements();
             existingSettlements.add(settlement);
@@ -340,7 +350,7 @@ public class MovesFacade extends BaseFacade{
         ItemLocation location = new ItemLocation(vertexLocation.getHexLoc(),vertexLocation.getDirection());
         Map map = game.getMap();
         State state = game.getState();
-        if(map.canBuildSettlement(player,location,state) && citiesRemaining > 0){
+        if(map.canBuildCity(player,location) && citiesRemaining > 0){
             //charge cost of City
             ResourceList cityCost = new ResourceList(0,3,0,2,0);
             ResourceList playerResources = player.getResources();
@@ -355,6 +365,8 @@ public class MovesFacade extends BaseFacade{
                 System.out.println("not enough resources to purchase road");
                 return "Failed";
             }
+            int victoryPoints = player.getVictoryPoints();
+            player.setVictoryPoints(victoryPoints + 1);
             player.setCitiesRemaining(citiesRemaining - 1);
             City city = new City(player.getPlayerIndex(), vertexLocation);
             List<City> existingCities = map.getCities();
@@ -551,6 +563,9 @@ public class MovesFacade extends BaseFacade{
 
         tracker.setNextTurn();
         player.transferNewDevCards();
+        for (Player p: getGame().getPlayers()){
+            p.clearDiscard();
+        }
 
         updateAI();
         return getModel();
