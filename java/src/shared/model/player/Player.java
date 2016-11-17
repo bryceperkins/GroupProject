@@ -242,6 +242,7 @@ public class Player implements PostProcessor {
 	public int getCitiesRemaining() {
 		return citiesRemaining;
 	}
+	public void setCitiesRemaining(int cities){this.citiesRemaining = cities;}
 
 
 	public CatanColor getColor() {
@@ -300,10 +301,13 @@ public class Player implements PostProcessor {
 		return roadsRemaining;
 	}
 
+	public void setRoadsRemaining(int roads){this.roadsRemaining = roads;}
+
 
 	public int getSettlementsRemaining() {
 		return settlementsRemaining;
 	}
+	public void setSettlementsRemaining(int settlements){this.settlementsRemaining = settlements;}
 
 
 	public int getSoldiersPlayed() {
