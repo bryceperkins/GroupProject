@@ -57,7 +57,7 @@ public class TurnTracker {
         }
 
         if (nextTurnInt == 4) {
-            nextTurnInt = 2;
+            nextTurnInt = 3;
             nextRound();
         } else if (nextTurnInt == -1) {
             nextTurnInt = 2;
