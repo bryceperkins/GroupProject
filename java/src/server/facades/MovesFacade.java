@@ -97,13 +97,21 @@ public class MovesFacade extends BaseFacade{
 
         Player player = game.getPlayerByName(user.getUserName());
         player.getResources().removeResources(discardedCards);
+        player.discarded();
 
-        if (discardCount++ == 4) {
-            discardCount = 0;
+        boolean done = true;
+
+        for (Player p: getGame().getPlayers()){
+            System.out.println("Player: " + p.getName() + " " + p.getResources().total() + " " + p.didDiscard());
+            if (p.getResources().total() > 7 && !p.didDiscard()) {
+                done = false;
+            }
+        }
+
+        if (done){
             game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Robbing);
         }
 
-        updateAI();
         return getModel();
     }
 
@@ -551,6 +559,9 @@ public class MovesFacade extends BaseFacade{
 
         tracker.setNextTurn();
         player.transferNewDevCards();
+        for (Player p: getGame().getPlayers()){
+            p.clearDiscard();
+        }
 
         updateAI();
         return getModel();

@@ -113,6 +113,7 @@ public class AI extends Player {
                 discard();
                 break;
             case Playing:
+                discard();
                 finishTurn();
                 break;
             case Robbing:
