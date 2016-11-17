@@ -254,6 +254,14 @@ public class Player implements PostProcessor {
 		return didDiscard;
 	}
 
+    public void discarded(){
+        didDiscard = true;
+    }
+
+    public void clearDiscard(){
+        didDiscard = false;
+    }
+
 	public int getMonumentsPlayed() {
 		return monumentsPlayed;
 	}
