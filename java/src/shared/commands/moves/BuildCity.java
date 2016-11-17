@@ -26,6 +26,7 @@ public class BuildCity extends MoveCommand{
 
     public String serverExecute(iServerFacade f){
         MovesFacade facade = (MovesFacade) f;
+        vertexLocation.setHexLoc(new HexLocation(vertexLocation.getX(), vertexLocation.getY()));
         return facade.buildCity(getIndex(), vertexLocation);
     }
 }
