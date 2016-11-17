@@ -194,7 +194,7 @@ public class MovesFacade extends BaseFacade{
         }
     }
 
-    private void logRoll(int number, int playerInd) {
+    private void logRoll(int playerInd, int number) {
         String logMessage = "Player " + (playerInd + 1) + " rolled ";
         if (number == 8 || number == 11) {
             logMessage += " an " + number;
