@@ -78,6 +78,7 @@ public class MovesFacade extends BaseFacade{
         }
     }
 
+    private int discardCount = 0;
     /**
      *  When a 7 is rolled and a player has more than 7 cards, they must discard until they have 7 card in their hand
      *
@@ -96,6 +97,12 @@ public class MovesFacade extends BaseFacade{
 
         Player player = game.getPlayerByName(user.getUserName());
         player.getResources().removeResources(discardedCards);
+
+        if (discardCount++ == 4) {
+            discardCount = 0;
+            game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Robbing);
+        }
+
         updateAI();
         return getModel();
     }
@@ -248,7 +255,7 @@ public class MovesFacade extends BaseFacade{
             return getModel();
         }
 
-        return "Fail";
+        return "Failed";
     }
 
     public void logBuild(String player, String building){
@@ -275,7 +282,6 @@ public class MovesFacade extends BaseFacade{
         Game game = getGame();
         User user = getUser();
         Player player = game.getPlayerByName(user.getUserName());
-
 
         ItemLocation location = new ItemLocation(vertexLocation.getHexLoc(),vertexLocation.getDirection());
         Map map = game.getMap();
@@ -306,7 +312,7 @@ public class MovesFacade extends BaseFacade{
             return getModel();
         }
 
-        return "Fail";
+        return "Failed";
     }
 
     /**
@@ -364,7 +370,7 @@ public class MovesFacade extends BaseFacade{
             return getModel();
         }
 
-        return "Fail";
+        return "Failed";
     }
 
     /**
@@ -512,6 +518,9 @@ public class MovesFacade extends BaseFacade{
 
                 String logMessage = player.getName() + " has robbed " + victimPlayer.getName();
                 getGame().getLog().addLine(new MessageLine(player.getName(), logMessage));
+
+                getGame().getTurnTracker().setGameStatus(TurnTracker.GameStatus.Playing);
+
                 updateAI();
                 return getModel();
             }else{
@@ -572,7 +581,7 @@ public class MovesFacade extends BaseFacade{
             return "Failed";
         }
 
-        return "";
+        return getModel();
 
     }
 
