@@ -350,7 +350,7 @@ public class MovesFacade extends BaseFacade{
         ItemLocation location = new ItemLocation(vertexLocation.getHexLoc(),vertexLocation.getDirection());
         Map map = game.getMap();
         State state = game.getState();
-        if(map.canBuildSettlement(player,location,state) && citiesRemaining > 0){
+        if(map.canBuildCity(player,location) && citiesRemaining > 0){
             //charge cost of City
             ResourceList cityCost = new ResourceList(0,3,0,2,0);
             ResourceList playerResources = player.getResources();
