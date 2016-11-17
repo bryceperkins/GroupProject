@@ -425,18 +425,38 @@ public class MovesFacade extends BaseFacade{
         ResourceList trade = new ResourceList();
         Game game = getGame();
         switch (inputResource){
-            case BRICK: trade.setBrick(ratio*-1);
-            case ORE: trade.setOre(ratio*-1);
-            case SHEEP: trade.setSheep(ratio*-1);
-            case WHEAT: trade.setWheat(ratio*-1);
-            case WOOD: trade.setWood(ratio*-1);
+            case BRICK: 
+                trade.setBrick(ratio*-1);
+                break;
+            case ORE: 
+                trade.setOre(ratio*-1);
+                break;
+            case SHEEP: 
+                trade.setSheep(ratio*-1);
+                break;
+            case WHEAT:
+                trade.setWheat(ratio*-1);
+                break;
+            case WOOD: 
+                trade.setWood(ratio*-1);
+                break;
         }
         switch (outputResource){
-            case BRICK: trade.setBrick(1);
-            case ORE: trade.setOre(1);
-            case SHEEP: trade.setSheep(1);
-            case WHEAT: trade.setWheat(1);
-            case WOOD: trade.setWood(1);
+            case BRICK: 
+                trade.setBrick(1);
+                break;
+            case ORE: 
+                trade.setOre(1);
+                break;
+            case SHEEP: 
+                trade.setSheep(1);
+                break;
+            case WHEAT: 
+                trade.setWheat(1);
+                break;
+            case WOOD: 
+                trade.setWood(1);
+                break;
         }
         getGame().getPlayer(PlayerIndex.valueOf(index)).getResources().addResources(trade);
         getGame().getBank().addResources(trade.reversedList());
@@ -527,7 +547,7 @@ public class MovesFacade extends BaseFacade{
                         break;
                     default:
                         System.out.println("some error with robbing resource");
-                        return "Fail";
+                        return "Failed";
                 }
                 robber.setX(location.getX());
                 robber.setY(location.getY());
@@ -541,11 +561,11 @@ public class MovesFacade extends BaseFacade{
                 return getModel();
             }else{
                 System.out.println("Cannot place a robber on this location");
-                return "Fail";
+                return "Failed";
             }
         }else{
             System.out.println("Victim does not have resources");
-            return "Fail";
+            return "Failed";
         }
     }
 
@@ -564,10 +584,22 @@ public class MovesFacade extends BaseFacade{
         tracker.setNextTurn();
         player.transferNewDevCards();
 
-        PlayerIndex mostRoads = PlayerIndex.None;
-        PlayerIndex largestArmy = PlayerIndex.None;
-        int roadCount = 15;
-        int armyCount = 0;
+        PlayerIndex mostRoads = tracker.getLongestRoadOwner();
+        PlayerIndex largestArmy = tracker.getLargestArmyOwner();
+
+        Player lr = getGame().getPlayer(mostRoads);
+        Player la = getGame().getPlayer(largestArmy);
+
+        if (lr != null){
+            getGame().getPlayer(mostRoads).setVictoryPoints(lr.getVictoryPoints() - 2);
+        }
+        if (la != null){
+            getGame().getPlayer(largestArmy).setVictoryPoints(la.getVictoryPoints() - 2);
+        }
+
+        int roadCount = 10;
+        int armyCount = 3;
+
         for (Player p: getGame().getPlayers()){
             p.clearDiscard();
             if (p.getRoadsRemaining() < roadCount){
@@ -579,9 +611,18 @@ public class MovesFacade extends BaseFacade{
                 largestArmy = p.getPlayerIndex();
             }
         }
+        
+        lr = getGame().getPlayer(mostRoads);
+        la = getGame().getPlayer(largestArmy);
+        if (lr != null){
+            getGame().getPlayer(mostRoads).setVictoryPoints(lr.getVictoryPoints() + 2);
+        }
+        if (la != null){
+            getGame().getPlayer(largestArmy).setVictoryPoints(la.getVictoryPoints() + 2);
+        }
 
-        tracker.setLargestArmyOwner(largestArmy);
         tracker.setLongestRoadOwner(mostRoads);
+        tracker.setLargestArmyOwner(largestArmy);
 
         updateAI();
         return getModel();
