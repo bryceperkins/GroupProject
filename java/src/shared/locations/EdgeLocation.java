@@ -36,7 +36,7 @@ public class EdgeLocation implements PostProcessor
 		return this.y;
 	}
 	
-	private void setHexLoc(HexLocation hexLoc)
+	public void setHexLoc(HexLocation hexLoc)
 	{
 		if(hexLoc == null)
 		{

@@ -582,8 +582,7 @@ public class Map implements PostProcessor {
         return false;
     }
 
-    public List<Port>getPortsForTrade(Player player){
-        System.out.println("These are the ports available for trade: ");
+    public List<Port> getPortsForTrade(Player player){
         List<Port> tradePorts = new ArrayList<Port>();
         for(Port port: ports){
 
@@ -599,14 +598,13 @@ public class Map implements PostProcessor {
                         && city.getOwner() == player.getPlayerIndex()){
                     tradePorts.add(port);
                     player.addPort(port);
-                    System.out.println("port added... its brokt");
                 }
             }
 
             for(Settlement settlement: settlements){
                 if((settlement.getLocation().getNormalizedLocation().equals(vertLoc1Norm) || settlement.getLocation().getNormalizedLocation().equals(vertLoc2Norm))
                         && settlement.getOwner() == player.getPlayerIndex()){
-                    System.out.println("port added");
+					System.out.println("Ratio: " + port.getRatio());
                     tradePorts.add(port);
                     player.addPort(port);
                 }

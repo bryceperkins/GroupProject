@@ -47,10 +47,11 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().reset();
 		getTradeOverlay().setTradeEnabled(false);
 		Player player = manager.getActivePlayer();
-		System.out.println(player.getPorts().size());
-		System.out.println("This is how many ports you have:");
-		System.out.println(manager.getActiveGame().getMap().getPortsForTrade(player).size());
-
+		Game game = manager.getActiveGame();
+		List<Port> ports = game.getMap().getPortsForTrade(player);
+		for (Port p: ports){
+			manager.getActivePlayer().addPort(p);
+		}
 		List<ResourceType> resource_type_list = new ArrayList<ResourceType>();
 		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.WOOD)){
 			resource_type_list.add(ResourceType.WOOD);
@@ -111,12 +112,17 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void setGiveResource(ResourceType resource) {
 		getTradeOverlay().setTradeEnabled(false);
 		Player player = manager.getActivePlayer();
-		List<Port> ports = player.getPorts();
+		Game game = manager.getActiveGame();
+		List<Port> ports = game.getMap().getPortsForTrade(player);
+		for (Port p: ports){
+			manager.getActivePlayer().addPort(p);
+		}
+		List<Port> player_ports = player.getPorts();
 		int amount = 4;
-		for (int i = 0; i < ports.size(); i++){
-			if (ports.get(i).getResource().equals(resource)){
+		for (int i = 0; i < player_ports.size(); i++){
+			if (player_ports.get(i).getResource()==null){
 				if (amount > 3) amount = 3;
-			} else if (ports.get(i).getResource() == resource) {
+			} else if (player_ports.get(i).getResource().equals(resource)) {
 				amount = 2;
 			}
 		}
@@ -154,6 +160,11 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void unsetGiveValue() {
 		getTradeOverlay().reset();
 		Player player = manager.getActivePlayer();
+		Game game = manager.getActiveGame();
+		List<Port> ports = game.getMap().getPortsForTrade(player);
+		for (Port p: ports){
+			manager.getActivePlayer().addPort(p);
+		}
 		List resource_type_list = new ArrayList();
 		if (ModelProxy.playerCanMakeMaritimeTrade(PortType.WOOD)){
 			resource_type_list.add(ResourceType.WOOD);
