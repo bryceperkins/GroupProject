@@ -13,7 +13,7 @@ public class TurnTracker {
     private GameStatus status;
     @SerializedName("longestRoad")
     private PlayerIndex longestRoadOwner;
-    @SerializedName("longestArmy")
+    @SerializedName("largestArmy")
     private PlayerIndex largestArmyOwner;
     private int round = 1;
 
@@ -30,6 +30,14 @@ public class TurnTracker {
 
     public GameStatus getStatus() {
         return status;
+    }
+
+    public void setLongestRoadOwner(PlayerIndex i) {
+        longestRoadOwner = i;
+    }
+
+    public void setLargestArmyOwner(PlayerIndex i) {
+        largestArmyOwner = i;
     }
 
     public PlayerIndex getLongestRoadOwner() {
