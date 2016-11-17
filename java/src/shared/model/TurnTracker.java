@@ -2,6 +2,8 @@ package shared.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Observable;
+
 /**
  * Keeps track of the current turn and game state for a given game
  */
@@ -14,6 +16,13 @@ public class TurnTracker {
     @SerializedName("longestArmy")
     private PlayerIndex largestArmyOwner;
     private int round = 1;
+
+    public TurnTracker() {
+        currentTurn = PlayerIndex.Player1;
+        status = GameStatus.FirstRound;
+        longestRoadOwner = PlayerIndex.None;
+        largestArmyOwner = PlayerIndex.None;
+    }
 
     public PlayerIndex getCurrentTurn() {
         return currentTurn;
@@ -48,11 +57,15 @@ public class TurnTracker {
         }
 
         if (nextTurnInt == 4) {
-            nextTurnInt = 0;
+            nextTurnInt = 2;
             nextRound();
         } else if (nextTurnInt == -1) {
-            nextTurnInt = 3;
+            nextTurnInt = 2;
             nextRound();
+        }
+
+        if (round > 2) {
+            setGameStatus(GameStatus.Rolling);
         }
 
         currentTurn = PlayerIndex.valueOf(nextTurnInt);

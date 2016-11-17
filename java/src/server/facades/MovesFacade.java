@@ -19,22 +19,30 @@ public class MovesFacade extends BaseFacade{
     private final int SETTLEMENT_RESOURCES = 1;
     private final int CITY_RESOURCES = 2;
 
-	GameManager manager = GameManager.getInstance();
-	
+    GameManager manager = GameManager.getInstance();
+
     public MovesFacade(User user){
         super(user);
     }
 
+    private void updateAI() {
+        for (Player player : getGame().getPlayers()) {
+            if (player instanceof AI) {
+                ((AI) player).play();
+            }
+        }
+    }
+
     public String sendChat(int index, String content){
-		if (index < 0 || index > 3) return "Failed";
-		if (content == null) return "Failed";
-		Game game = getGame();
-		Player player = game.getPlayer(PlayerIndex.valueOf(index));
-		Chat chat = game.getChat();
-		chat.createMessage(new MessageLine(player.getName(), content));
-		getGame().setChat(chat);
-		return getModel();
-	}
+        if (index < 0 || index > 3) return "Failed";
+        if (content == null) return "Failed";
+        Game game = getGame();
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
+        Chat chat = game.getChat();
+        chat.createMessage(new MessageLine(player.getName(), content));
+        getGame().setChat(chat);
+        return getModel();
+    }
 
     /**
      *  Accept the proposed trade.
@@ -48,28 +56,29 @@ public class MovesFacade extends BaseFacade{
      *  @post trade offere removed
      */
     public String acceptTrade(int index, boolean willAccept){
-		Game game = getGame();
-		String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
-		
-		if (!willAccept) {
-			getGame().setTradeOffer(null);
-			getGame().getLog().addLine(new MessageLine(name, name + " has rejected the trade."));
-			return getModel();
-		} else {
-			TradeOffer trade_offer = game.getTradeOffer();
-			ResourceList sender_list = game.getPlayer(trade_offer.getSender()).getResources();
-			ResourceList reciever_list = game.getPlayer(trade_offer.getReceiver()).getResources();
-			ResourceList offer = trade_offer.getOffer();
-			sender_list.addResources(offer.reversedList());
-			reciever_list.addResources(offer);
-			getGame().getPlayer(trade_offer.getSender()).setResources(sender_list);
-			getGame().getPlayer(trade_offer.getReceiver()).setResources(reciever_list);
-			getGame().getLog().addLine(new MessageLine(name, name + " has accepted the trade."));
-			getGame().setTradeOffer(null);
-			return getModel();
-		}
+        Game game = getGame();
+        String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
+
+        if (!willAccept) {
+            getGame().setTradeOffer(null);
+            getGame().getLog().addLine(new MessageLine(name, name + " has rejected the trade."));
+            return getModel();
+        } else {
+            TradeOffer trade_offer = game.getTradeOffer();
+            ResourceList sender_list = game.getPlayer(trade_offer.getSender()).getResources();
+            ResourceList reciever_list = game.getPlayer(trade_offer.getReceiver()).getResources();
+            ResourceList offer = trade_offer.getOffer();
+            sender_list.addResources(offer.reversedList());
+            reciever_list.addResources(offer);
+            getGame().getPlayer(trade_offer.getSender()).setResources(sender_list);
+            getGame().getPlayer(trade_offer.getReceiver()).setResources(reciever_list);
+            getGame().getLog().addLine(new MessageLine(name, name + " has accepted the trade."));
+            getGame().setTradeOffer(null);
+            return getModel();
+        }
     }
 
+    private int discardCount = 0;
     /**
      *  When a 7 is rolled and a player has more than 7 cards, they must discard until they have 7 card in their hand
      *
@@ -83,13 +92,20 @@ public class MovesFacade extends BaseFacade{
      *  @post If you're the last one to discard, the client model status changes to Robbing
      */
     public String discardCards(int index, ResourceList discardedCards){
-		User user = getUser();
+        User user = getUser();
         Game game = getGame();
 
         Player player = game.getPlayerByName(user.getUserName());
-	player.getResources().removeResources(discardedCards);	
-	return "";
-	}
+        player.getResources().removeResources(discardedCards);
+
+        if (discardCount++ == 4) {
+            discardCount = 0;
+            game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Robbing);
+        }
+
+        updateAI();
+        return getModel();
+    }
 
     /**
      *  Process the number rolled
@@ -137,6 +153,7 @@ public class MovesFacade extends BaseFacade{
         }
 
         game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Playing);
+        updateAI();
         return getModel();
     }
 
@@ -238,7 +255,7 @@ public class MovesFacade extends BaseFacade{
             return getModel();
         }
 
-        return "Fail";
+        return "Failed";
     }
 
     public void logBuild(String player, String building){
@@ -265,7 +282,6 @@ public class MovesFacade extends BaseFacade{
         Game game = getGame();
         User user = getUser();
         Player player = game.getPlayerByName(user.getUserName());
-
 
         ItemLocation location = new ItemLocation(vertexLocation.getHexLoc(),vertexLocation.getDirection());
         Map map = game.getMap();
@@ -296,8 +312,8 @@ public class MovesFacade extends BaseFacade{
             return getModel();
         }
 
-        return "Fail";
-	}
+        return "Failed";
+    }
 
     /**
      *  Build a city.
@@ -354,8 +370,8 @@ public class MovesFacade extends BaseFacade{
             return getModel();
         }
 
-        return "Fail";
-	}
+        return "Failed";
+    }
 
     /**
      *  Offer a trade to another player
@@ -368,13 +384,14 @@ public class MovesFacade extends BaseFacade{
      *  @post trade is offered to the other player
      */
     public String offerTrade(int index, ResourceList offer, int receiver){
-		Game game = getGame();
-		getGame().setTradeOffer(new TradeOffer(index, receiver, offer));
-		String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
-		String reciever_name = game.getPlayer(PlayerIndex.valueOf(receiver)).getName();
-		getGame().getLog().addLine(new MessageLine(name, name + " has requested trade with " + reciever_name));
-		return getModel();
-	}
+        Game game = getGame();
+        getGame().setTradeOffer(new TradeOffer(index, receiver, offer));
+        String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
+        String reciever_name = game.getPlayer(PlayerIndex.valueOf(receiver)).getName();
+        getGame().getLog().addLine(new MessageLine(name, name + " has requested trade with " + reciever_name));
+        updateAI();
+        return getModel();
+    }
 
     /**
      *  Perform a trade with the Bank
@@ -389,29 +406,29 @@ public class MovesFacade extends BaseFacade{
      *  @post trade has been performed
      */
     public String maritimeTrade(int index, int ratio, ResourceType inputResource, ResourceType outputResource){
-		ResourceList trade = new ResourceList();
-		Game game = getGame();
-		switch (inputResource){
-			case BRICK: trade.setBrick(ratio*-1);
-			case ORE: trade.setOre(ratio*-1);
-			case SHEEP: trade.setSheep(ratio*-1);
-			case WHEAT: trade.setWheat(ratio*-1);
-			case WOOD: trade.setWood(ratio*-1);
-		}
-		switch (outputResource){
-			case BRICK: trade.setBrick(1);
-			case ORE: trade.setOre(1);
-			case SHEEP: trade.setSheep(1);
-			case WHEAT: trade.setWheat(1);
-			case WOOD: trade.setWood(1);
-		}
-		getGame().getPlayer(PlayerIndex.valueOf(index)).getResources().addResources(trade);
-		getGame().getBank().addResources(trade.reversedList());
-		String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
-		getGame().getLog().addLine(new MessageLine(name, name + " has traded " + ratio + " " + 
-		   inputResource.getValue() + " for 1 " + outputResource.getValue()));
-		return getModel();
-	}
+        ResourceList trade = new ResourceList();
+        Game game = getGame();
+        switch (inputResource){
+            case BRICK: trade.setBrick(ratio*-1);
+            case ORE: trade.setOre(ratio*-1);
+            case SHEEP: trade.setSheep(ratio*-1);
+            case WHEAT: trade.setWheat(ratio*-1);
+            case WOOD: trade.setWood(ratio*-1);
+        }
+        switch (outputResource){
+            case BRICK: trade.setBrick(1);
+            case ORE: trade.setOre(1);
+            case SHEEP: trade.setSheep(1);
+            case WHEAT: trade.setWheat(1);
+            case WOOD: trade.setWood(1);
+        }
+        getGame().getPlayer(PlayerIndex.valueOf(index)).getResources().addResources(trade);
+        getGame().getBank().addResources(trade.reversedList());
+        String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
+        getGame().getLog().addLine(new MessageLine(name, name + " has traded " + ratio + " " +
+                inputResource.getValue() + " for 1 " + outputResource.getValue()));
+        return getModel();
+    }
 
     /**
      *  Relocate the robber and rob another player
@@ -501,6 +518,10 @@ public class MovesFacade extends BaseFacade{
 
                 String logMessage = player.getName() + " has robbed " + victimPlayer.getName();
                 getGame().getLog().addLine(new MessageLine(player.getName(), logMessage));
+
+                getGame().getTurnTracker().setGameStatus(TurnTracker.GameStatus.Playing);
+
+                updateAI();
                 return getModel();
             }else{
                 System.out.println("Cannot place a robber on this location");
@@ -510,7 +531,7 @@ public class MovesFacade extends BaseFacade{
             System.out.println("Victim does not have resources");
             return "Fail";
         }
-	}
+    }
 
     /**
      *  Finish turn
@@ -527,8 +548,9 @@ public class MovesFacade extends BaseFacade{
         tracker.setNextTurn();
         player.transferNewDevCards();
 
-		return getModel();
-	}
+        updateAI();
+        return getModel();
+    }
 
     /**
      *  buy a new dev card
@@ -539,29 +561,29 @@ public class MovesFacade extends BaseFacade{
      *  @post You have a new card - if it is a monument card, add it to old dev cards. Else add to new dev cards
      */
     public String buyDevCard(int index){
-	User user = getUser();
+        User user = getUser();
         Game game = getGame();
         Player player = game.getPlayerByName(user.getUserName());
 
         ResourceList playerResources = player.getResources();
 
         if(player.canBuyDevCard()){
-		DevCardType card = game.dealRandomCard(); 
-		
-		player.addDevCard(card);
+            DevCardType card = game.dealRandomCard();
 
-		player.getResources().decreaseOre();
-		player.getResources().decreaseSheep();
-		player.getResources().decreaseWheat();
-		//dole out devcard
-		
+            player.addDevCard(card);
+
+            player.getResources().decreaseOre();
+            player.getResources().decreaseSheep();
+            player.getResources().decreaseWheat();
+            //dole out devcard
+
         }else {
-		return "Failed";
+            return "Failed";
         }
-	
-	return "";
 
-	}
+        return getModel();
+
+    }
 
     /**
      *  Relocate the robber and rob another player. Add one to army
@@ -577,17 +599,17 @@ public class MovesFacade extends BaseFacade{
      *  @post Largest army awarded to player with most Solder cards
      *  @post Player is not allowed to play any other dev cards this turn
      */
-        public String Soldier(int index, HexLocation location, int victim){
-		User user = getUser();
-		Game game = getGame();
-	        Player player = game.getPlayerByName(user.getUserName());
-		
-		player.removeDevCard(DevCardType.SOLDIER);
-		robPlayer(index, location, victim);
-		
-	
-		return "";
-	}
+    public String Soldier(int index, HexLocation location, int victim){
+        User user = getUser();
+        Game game = getGame();
+        Player player = game.getPlayerByName(user.getUserName());
+
+        player.removeDevCard(DevCardType.SOLDIER);
+        robPlayer(index, location, victim);
+
+
+        return getModel();
+    }
 
     /**
      *  Gain two resources from the bank
@@ -599,24 +621,24 @@ public class MovesFacade extends BaseFacade{
      *
      *  @post You gained the two specified resources
      */
-   public String Year_of_Plenty(int index, ResourceType resource1, ResourceType resource2){
-		User user = getUser();
-		Game game = getGame();
-	        Player player = game.getPlayerByName(user.getUserName());
+    public String Year_of_Plenty(int index, ResourceType resource1, ResourceType resource2){
+        User user = getUser();
+        Game game = getGame();
+        Player player = game.getPlayerByName(user.getUserName());
 
-		int resource1Amount = player.getResources().getResourceByType(resource1);
-		int resource2Amount = player.getResources().getResourceByType(resource2);
+        int resource1Amount = player.getResources().getResourceByType(resource1);
+        int resource2Amount = player.getResources().getResourceByType(resource2);
 
-		resource1Amount += 2;
-		resource2Amount += 2;
+        resource1Amount += 2;
+        resource2Amount += 2;
 
-		player.getResources().setResourceByType(resource2, resource2Amount);
-		player.removeDevCard(DevCardType.YEAR_OF_PLENTY);
+        player.getResources().setResourceByType(resource2, resource2Amount);
+        player.removeDevCard(DevCardType.YEAR_OF_PLENTY);
 
-		ResourceList bank = game.getBank();
+        ResourceList bank = game.getBank();
 
-		return "";
-	}
+        return getModel();
+    }
 
     /**
      *  RoadBuilding
@@ -638,19 +660,19 @@ public class MovesFacade extends BaseFacade{
      *  @post 2 new roads appear
      *  @post longest road gained if necessary
      */
-       public String Road_Building(int index, EdgeLocation spot1, EdgeLocation spot2){
-	User user = getUser();
+    public String Road_Building(int index, EdgeLocation spot1, EdgeLocation spot2){
+        User user = getUser();
         Game game = getGame();
 
         Player player = game.getPlayerByName(user.getUserName());
-	player.removeDevCard(DevCardType.ROAD_BUILD);
-		
-	//public String buildRoad(int index, boolean free, EdgeLocation roadLocation){
-	buildRoad(index, true, spot1);
-	buildRoad(index, true, spot2);
-	
-	return "";
-	}
+        player.removeDevCard(DevCardType.ROAD_BUILD);
+
+        //public String buildRoad(int index, boolean free, EdgeLocation roadLocation){
+        buildRoad(index, true, spot1);
+        buildRoad(index, true, spot2);
+
+        return getModel();
+    }
 
     /**
      *  Monopoly
@@ -662,24 +684,24 @@ public class MovesFacade extends BaseFacade{
      *  @post You gain the amount of specified resource the other players lost
      */
     public String Monopoly(int index, ResourceType resource){
-	User user = getUser();
-	Game game = getGame();
-	List<Player> players = game.getPlayers();
+        User user = getUser();
+        Game game = getGame();
+        List<Player> players = game.getPlayers();
         Player player = game.getPlayerByName(user.getUserName());
-	
-	player.removeDevCard(DevCardType.MONOPOLY);
 
-	int stolenResources = 0;
+        player.removeDevCard(DevCardType.MONOPOLY);
 
-	for(Player p: players)
-	{
-		int playerResources = p.getResources().getResourceByType(resource);
-		
-	}
+        int stolenResources = 0;
 
-	return "";
+        for(Player p: players)
+        {
+            int playerResources = p.getResources().getResourceByType(resource);
 
-	}
+        }
+
+        return getModel();
+
+    }
 
     /**
      *  Play the monument DevCard
@@ -690,17 +712,17 @@ public class MovesFacade extends BaseFacade{
      */
 
     public String Monument(int index){
-	int newVictoryPoints;
+        int newVictoryPoints;
 
-	Game game = getGame();
-	User user = getUser();
+        Game game = getGame();
+        User user = getUser();
         Player player = game.getPlayerByName(user.getUserName());
 
-	player.removeDevCard(DevCardType.MONUMENT);
+        player.removeDevCard(DevCardType.MONUMENT);
 
-	newVictoryPoints =player.getVictoryPoints() + 1;
-	player.setVictoryPoints(newVictoryPoints);	
-	return "";
-	}
+        newVictoryPoints =player.getVictoryPoints() + 1;
+        player.setVictoryPoints(newVictoryPoints);
+        return getModel();
+    }
 
 }

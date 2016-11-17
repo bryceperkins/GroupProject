@@ -1,14 +1,13 @@
 package shared.model;
 
-import java.util.Random;
+import java.util.*;
+
 import shared.definitions.*;
 import client.data.*;
-import java.util.List;
 import shared.model.map.*;
+import shared.model.map.Map;
 import shared.model.player.*;
 import shared.communication.*;
-import java.util.ArrayList;
-import java.util.Set;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -42,7 +41,6 @@ public class Game implements PostProcessor {
         map = new Map();
         players = new ArrayList<Player>();
         turnTracker = new TurnTracker();
-        tradeOffer = new TradeOffer(); 
 		devCardDeck = new DevCardList();
 		
 		devCardDeck.setMonopoly(2);
@@ -205,7 +203,7 @@ public class Game implements PostProcessor {
     }
 	
 	public void setTradeOffer(TradeOffer offer){
-		this.tradeOffer = offer;	
+		this.tradeOffer = offer;
 	}
 
     @Override

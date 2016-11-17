@@ -2,6 +2,8 @@ package server.facades;
 
 import com.google.gson.*;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import shared.model.*;
 import shared.model.player.*;
 import shared.definitions.CatanColor;
@@ -60,9 +62,15 @@ public class GamesFacade extends BaseFacade{
      * @post 2. The player is in the game with the specified color (i.e. calls to /games/list method will show the player in the game with the chosen color).
      * @post 3. The server response includes the Set­cookie response header setting the catan.game HTTP cookie
      **/
-    public String join(int gameid, CatanColor c){
+    public String join(int gameid, CatanColor c) {
         String success = "Failed";
         Game game = manager.getGame(gameid);
+
+        if (game != null && game.getPlayerByName(getUser().getUserName()) != null) {
+            game.getPlayerByName(getUser().getUserName()).setColor(c);
+            return getModel();
+        }
+
         if(game != null && !game.canBeginGame()){
             List<Player> players = game.getPlayers();
             User user = getUser();

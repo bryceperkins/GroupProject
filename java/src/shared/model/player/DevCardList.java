@@ -4,11 +4,11 @@ import shared.definitions.*;
 
 public class DevCardList {
 
-	private int monopoly;
-	private int monument;
-	private int roadBuilding;
-	private int soldier;
-	private int yearOfPlenty;
+	private int monopoly = 0;
+	private int monument = 0;
+	private int roadBuilding = 0;
+	private int soldier = 0;
+	private int yearOfPlenty = 0;
 
 	public int getMonopoly() {
 		return monopoly;

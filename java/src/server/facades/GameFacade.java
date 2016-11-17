@@ -48,6 +48,7 @@ public class GameFacade extends BaseFacade {
         add("Larry");
         add("Steve");
         add("John");
+        add("Frank");
     }};
 
     /**
@@ -60,7 +61,6 @@ public class GameFacade extends BaseFacade {
      */
     public String addAI(AIType type){
         PlayerIndex index = PlayerIndex.valueOf(getGame().getPlayers().size());
-
         CatanColor playerColor = CatanColor.BLUE;
         List<CatanColor> takenColors = getGame().getPlayers().stream().map(player -> player.getColor()).collect(Collectors.toList());
         for (CatanColor color : CatanColor.values()) {
@@ -70,8 +70,8 @@ public class GameFacade extends BaseFacade {
             }
         }
 
-        manager.addAI(new AI(getGame(), index)); //TODO figure out what to do with this
-        getGame().getPlayers().add(new Player(playerColor, names.get(index.getIndex()), 1, index, -1));
+        AI ai = new AI(getGame().getId(), playerColor, names.get(index.getIndex()), index);
+        getGame().getPlayers().add(ai);
 
         return getModel();
     }
