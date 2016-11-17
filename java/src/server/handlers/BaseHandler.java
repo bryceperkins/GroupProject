@@ -29,7 +29,7 @@ public abstract class BaseHandler implements HttpHandler{
     public void setUser(User user){
         this.user = user;
     }
-    
+
     protected void respond(HttpExchange request, int code, String body) throws IOException{
         if (body.equals("Success") || body.equals("Failed")){
             request.getResponseHeaders().set("Content-Type", "text/plain");
@@ -50,7 +50,9 @@ public abstract class BaseHandler implements HttpHandler{
             Map.Entry<String, List<String>> header = (Map.Entry)it.next();
             if(header.getKey().equals("Cookie")){
                 for (String s: header.getValue()){
-                    for (HttpCookie cookie: HttpCookie.parse(s)){
+                    String[] cookies = s.split(";");
+                    for (String a: cookies){
+                        HttpCookie cookie = HttpCookie.parse(a).get(0);
                         if (cookie.getName().equals("catan.user")){
                             LOGGER.log(Level.INFO, "Processing catan.user");
                             this.user = new Gson().fromJson(URLDecoder.decode(cookie.getValue()), User.class);
