@@ -563,9 +563,25 @@ public class MovesFacade extends BaseFacade{
 
         tracker.setNextTurn();
         player.transferNewDevCards();
+
+        PlayerIndex mostRoads = PlayerIndex.None;
+        PlayerIndex largestArmy = PlayerIndex.None;
+        int roadCount = 15;
+        int armyCount = 0;
         for (Player p: getGame().getPlayers()){
             p.clearDiscard();
+            if (p.getRoadsRemaining() < roadCount){
+                roadCount = p.getRoadsRemaining();
+                mostRoads = p.getPlayerIndex();
+            }
+            if (p.getSoldiersPlayed() > armyCount){
+                armyCount = p.getSoldiersPlayed();
+                largestArmy = p.getPlayerIndex();
+            }
         }
+
+        tracker.setLargestArmyOwner(largestArmy);
+        tracker.setLongestRoadOwner(mostRoads);
 
         updateAI();
         return getModel();
