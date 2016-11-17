@@ -33,6 +33,9 @@ public class AI extends Player {
         int die1 = rand.nextInt(6) + 1;
         int die2 = rand.nextInt(6) + 1;
         int rollResult = die1 + die2;
+        if (rollResult == 7){
+            rollResult = 8;
+        }
         facade.rollNumber(getPlayerIndex().getIndex(), rollResult);
     }
 
