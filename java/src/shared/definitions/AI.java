@@ -44,6 +44,7 @@ public class AI extends Player {
                 EdgeLocation location = new EdgeLocation(hexlocation, direction);
                 if (map.canBuildRoad(this, location, new State(facade.getGame().getTurnTracker().getStatus()))) {
                     facade.buildRoad(getPlayerIndex().getIndex(), true, location);
+                    return;
                 }
             }
         }
@@ -54,6 +55,7 @@ public class AI extends Player {
         for (Hex hex : map.getHexes()) {
             if (map.canPlaceRobber(hex.getLocation())) {
                 facade.robPlayer(getPlayerIndex().getIndex(), hex.getLocation(), 0);
+                return;
             }
         }
     }
@@ -66,6 +68,7 @@ public class AI extends Player {
                 ItemLocation location = new ItemLocation(hexlocation, direction);
                 if (map.canBuildSettlement(this, location, new State(facade.getGame().getTurnTracker().getStatus()))) {
                     facade.buildSettlement(getPlayerIndex().getIndex(), true, new VertexLocation(hexlocation, direction));
+                    return;
                 }
             }
         }
@@ -101,6 +104,7 @@ public class AI extends Player {
             case SecondRound:
                 placeRandomRoad();
                 placeRandomSettlement();
+                finishTurn();
                 break;
             case Discarding:
                 discard();

@@ -64,6 +64,10 @@ public class TurnTracker {
             nextRound();
         }
 
+        if (round > 2) {
+            setGameStatus(GameStatus.Rolling);
+        }
+
         currentTurn = PlayerIndex.valueOf(nextTurnInt);
     }
 

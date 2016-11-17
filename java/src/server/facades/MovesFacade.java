@@ -245,7 +245,6 @@ public class MovesFacade extends BaseFacade{
             map.setRoads(existingRoads);
 
             logBuild(user.getUserName(), "road");
-            updateAI();
             return getModel();
         }
 
@@ -304,7 +303,6 @@ public class MovesFacade extends BaseFacade{
             map.setSettlements(existingSettlements);
 
             logBuild(user.getUserName(), "settlement");
-            updateAI();
             return getModel();
         }
 
@@ -363,7 +361,6 @@ public class MovesFacade extends BaseFacade{
             }
 
             logBuild(user.getUserName(), "city");
-            updateAI();
             return getModel();
         }
 
