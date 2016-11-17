@@ -426,17 +426,27 @@ public class MovesFacade extends BaseFacade{
         Game game = getGame();
         switch (inputResource){
             case BRICK: trade.setBrick(ratio*-1);
+                break;
             case ORE: trade.setOre(ratio*-1);
+                break;
             case SHEEP: trade.setSheep(ratio*-1);
+                break;
             case WHEAT: trade.setWheat(ratio*-1);
+                break;
             case WOOD: trade.setWood(ratio*-1);
+                break;
         }
         switch (outputResource){
             case BRICK: trade.setBrick(1);
+                break;
             case ORE: trade.setOre(1);
+                break;
             case SHEEP: trade.setSheep(1);
+                break;
             case WHEAT: trade.setWheat(1);
+                break;
             case WOOD: trade.setWood(1);
+                break;
         }
         getGame().getPlayer(PlayerIndex.valueOf(index)).getResources().addResources(trade);
         getGame().getBank().addResources(trade.reversedList());
