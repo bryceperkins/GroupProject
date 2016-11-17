@@ -37,12 +37,11 @@ public class UserFacade extends BaseFacade{
      **/
     public String register(String username, String password){
         String success = "Failed";
-        User user = new User(username, password); 
-        if(manager.register(user)){
+        User user = manager.register(new User(username, password)); 
+        if(user != null){
+            setUser(user);
             System.out.println("Register: " + username + " " + password);
             success = "Success"; 
-            user.setPlayerID(manager.getUsers().size()-1);
-            setUser(user);
         }
         return success;
     }

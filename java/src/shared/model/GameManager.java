@@ -40,13 +40,13 @@ public class GameManager extends Observable{
         return false;
     }
 
-    public boolean register(User user){
+    public User register(User user){
         if (users.containsKey(user.getUserName())){
-            return false;
+            return null;
         }
         user.setPlayerID(users.size());
         users.put(user.getUserName(), user);
-        return true;
+        return user;
     }
 
     private Game createGame(String json) {
