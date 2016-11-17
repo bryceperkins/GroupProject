@@ -27,11 +27,12 @@ public class JoinHandler extends BaseHandler{
         }
         else {
             body = IOUtils.toString(request.getRequestBody(), "UTF-8");
-            body = new Gson().fromJson(body, GamesJoin.class).serverExecute(new GamesFacade(getUser()));
+            GamesFacade facade = new GamesFacade(getUser());
+            body = new Gson().fromJson(body, GamesJoin.class).serverExecute(facade);
 
             if(!body.equals("Failed")) {
                 code = 200;
-                request.getResponseHeaders().add("Set-Cookie", "catan.game=" + super.getUser().getGameID() + "; path=/");
+                request.getResponseHeaders().add("Set-Cookie", "catan.game=" + facade.getUser().getGameID() + "; path=/");
                 LOGGER.log(Level.INFO, "Setting catan.game cookie"); 
             }
         }

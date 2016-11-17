@@ -66,12 +66,13 @@ public class GamesFacade extends BaseFacade{
         String success = "Failed";
         Game game = manager.getGame(gameid);
 
-        if (game != null && game.getPlayerByName(getUser().getUserName()) != null) {
+        if (game == null){}
+        else if (game.getPlayerByName(getUser().getUserName()) != null) {
             game.getPlayerByName(getUser().getUserName()).setColor(c);
-            return getModel();
+            setGame(gameid);
+            success = getModel();
         }
-
-        if(game != null && !game.canBeginGame()){
+        else if(!game.canBeginGame()){
             List<Player> players = game.getPlayers();
             User user = getUser();
             Player player = new Player(c, user.getUserName(), user.getPlayerID(), PlayerIndex.createPlayerAtIndex(players.size()), user.getPlayerID());
