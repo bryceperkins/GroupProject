@@ -228,10 +228,11 @@ public class MovesFacade extends BaseFacade{
         Game game = getGame();
         User user = getUser();
         Player player = game.getPlayerByName(user.getUserName());
+        int remainingRoads = player.getRoadsRemaining();
 
         Map map = game.getMap();
         State state = game.getState();
-        if(map.canBuildRoad(player,roadLocation,state)){
+        if(map.canBuildRoad(player,roadLocation,state) && remainingRoads > 0){
             if(!free){
                 //charge cost of road
                 ResourceList roadCost = new ResourceList(1,0,0,0,1);
@@ -242,14 +243,16 @@ public class MovesFacade extends BaseFacade{
                     playerResources.decreaseWood();
                 }else {
                     System.out.println("not enough resources to purchase road");
-                    return "Fail";
+                    return "Failed";
                 }
             }
-
+            player.setRoadsRemaining(remainingRoads-1);
             Road road = new Road(player.getPlayerIndex(),roadLocation);
             List<Road> existingRoads = map.getRoads();
             existingRoads.add(road);
             map.setRoads(existingRoads);
+
+
 
             logBuild(user.getUserName(), "road");
             return getModel();
@@ -282,11 +285,12 @@ public class MovesFacade extends BaseFacade{
         Game game = getGame();
         User user = getUser();
         Player player = game.getPlayerByName(user.getUserName());
+        int remainingSettlements = player.getSettlementsRemaining();
 
         ItemLocation location = new ItemLocation(vertexLocation.getHexLoc(),vertexLocation.getDirection());
         Map map = game.getMap();
         State state = game.getState();
-        if(map.canBuildSettlement(player,location,state)){
+        if(map.canBuildSettlement(player,location,state) && remainingSettlements >0){
             if(!free){
                 //charge cost of settlement
                 ResourceList settlementCost = new ResourceList(1,0,1,1,1);
@@ -298,10 +302,10 @@ public class MovesFacade extends BaseFacade{
                     playerResources.decreaseSheep();
                     playerResources.decreaseWheat();
                 }else {
-                    System.out.println("not enough resources to purchase settlement");
-                    return "Fail";
+                    return "Failed";
                 }
             }
+            player.setSettlementsRemaining(remainingSettlements - 1);
 
             Settlement settlement = new Settlement(player.getPlayerIndex(), vertexLocation);
             List<Settlement> existingSettlements = map.getSettlements();
@@ -311,7 +315,6 @@ public class MovesFacade extends BaseFacade{
             logBuild(user.getUserName(), "settlement");
             return getModel();
         }
-
         return "Failed";
     }
 
@@ -332,11 +335,12 @@ public class MovesFacade extends BaseFacade{
         Game game = getGame();
         User user = getUser();
         Player player = game.getPlayerByName(user.getUserName());
+        int citiesRemaining = player.getCitiesRemaining();
 
         ItemLocation location = new ItemLocation(vertexLocation.getHexLoc(),vertexLocation.getDirection());
         Map map = game.getMap();
         State state = game.getState();
-        if(map.canBuildSettlement(player,location,state)){
+        if(map.canBuildSettlement(player,location,state) && citiesRemaining > 0){
             //charge cost of City
             ResourceList cityCost = new ResourceList(0,3,0,2,0);
             ResourceList playerResources = player.getResources();
@@ -349,9 +353,9 @@ public class MovesFacade extends BaseFacade{
                 playerResources.decreaseWheat();
             }else {
                 System.out.println("not enough resources to purchase road");
-                return "Fail";
+                return "Failed";
             }
-
+            player.setCitiesRemaining(citiesRemaining - 1);
             City city = new City(player.getPlayerIndex(), vertexLocation);
             List<City> existingCities = map.getCities();
             existingCities.add(city);
