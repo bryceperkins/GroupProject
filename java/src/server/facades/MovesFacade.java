@@ -242,7 +242,7 @@ public class MovesFacade extends BaseFacade{
                     playerResources.decreaseWood();
                 }else {
                     System.out.println("not enough resources to purchase road");
-                    return "Fail";
+                    return "Failed";
                 }
             }
 
