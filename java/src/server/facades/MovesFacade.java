@@ -306,7 +306,9 @@ public class MovesFacade extends BaseFacade{
                 }
             }
             player.setSettlementsRemaining(remainingSettlements - 1);
-
+            
+            int victoryPoints = player.getVictoryPoints();
+            player.setVictoryPoints(victoryPoints + 1);
             Settlement settlement = new Settlement(player.getPlayerIndex(), vertexLocation);
             List<Settlement> existingSettlements = map.getSettlements();
             existingSettlements.add(settlement);
@@ -355,6 +357,8 @@ public class MovesFacade extends BaseFacade{
                 System.out.println("not enough resources to purchase road");
                 return "Failed";
             }
+            int victoryPoints = player.getVictoryPoints();
+            player.setVictoryPoints(victoryPoints + 1);
             player.setCitiesRemaining(citiesRemaining - 1);
             City city = new City(player.getPlayerIndex(), vertexLocation);
             List<City> existingCities = map.getCities();
