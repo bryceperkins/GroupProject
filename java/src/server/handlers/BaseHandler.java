@@ -54,11 +54,11 @@ public abstract class BaseHandler implements HttpHandler{
                     for (String a: cookies){
                         HttpCookie cookie = HttpCookie.parse(a).get(0);
                         if (cookie.getName().equals("catan.user")){
-                            LOGGER.log(Level.INFO, "Processing catan.user");
+                            LOGGER.log(Level.INFO, "Processing catan.user " + cookie.getValue());
                             this.user = new Gson().fromJson(URLDecoder.decode(cookie.getValue()), User.class);
                         }
                         if (cookie.getName().equals("catan.game")){
-                            LOGGER.log(Level.INFO, "Processing catan.game");
+                            LOGGER.log(Level.INFO, "Processing catan.game" + cookie.getValue());
                             this.user.setGameID(Integer.parseInt(URLDecoder.decode(cookie.getValue())));
                         }
                     }
