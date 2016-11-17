@@ -162,20 +162,41 @@ public class Player implements PostProcessor {
 		return this.resources.hasResources(resources);
 	}
 	
-	public boolean canMakeMaritimeTrade(PortType rt)
+	public boolean canMakeMaritimeTrade(PortType pt)
 	{
 		int ratio = 4;
 		ResourceList temp = new ResourceList();
-		
+		ResourceType type = null;
+		PortType test = pt;
+		switch (pt){
+		case WOOD:
+			type = ResourceType.WOOD;
+			break;
+		case SHEEP:
+			type = ResourceType.SHEEP;
+			break;
+		case WHEAT:
+			type = ResourceType.WHEAT;
+			break;
+		case BRICK:
+			type = ResourceType.BRICK;
+			break;
+		case ORE:
+			type = ResourceType.ORE;
+			break;
+		}
 		for(int i = 0; i < ports.size(); i++)
 		{
-			if(PortType.fromResourceType(ports.get(i).getResource()) == rt && ports.get(i).getRatio() < ratio)
-			{
+			if(PortType.fromResourceType(ports.get(i).getResource()).equals(pt) && ports.get(i).getRatio() < ratio){
 				ratio = ports.get(i).getRatio();
+				test = pt;
+			}
+			if (ports.get(i).getResource() == null && ports.get(i).getRatio() < ratio){
+				ratio = 3;
+				test = PortType.THREE;
 			}
 		}
-		
-		switch (rt)
+		switch (test)
 		{
 		case WOOD:
 			temp.setWood(ratio);
@@ -193,10 +214,12 @@ public class Player implements PostProcessor {
 			temp.setWheat(ratio);
 			break;
 		case THREE:
-			temp.setThree();
-			return resources.hasOneResource(temp);
+			if (type == ResourceType.WOOD) temp.setWood(ratio);
+			if (type == ResourceType.SHEEP) temp.setSheep(ratio);
+			if (type == ResourceType.BRICK) temp.setBrick(ratio);
+			if (type == ResourceType.ORE) temp.setOre(ratio);
+			if (type == ResourceType.WHEAT) temp.setWheat(ratio);
 		}
-		
 		return resources.hasResources(temp);
 	}
 
@@ -229,7 +252,6 @@ public class Player implements PostProcessor {
 	public boolean didDiscard() {
 		return didDiscard;
 	}
-
 
 	public int getMonumentsPlayed() {
 		return monumentsPlayed;
