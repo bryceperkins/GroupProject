@@ -495,7 +495,8 @@ public class MovesFacade extends BaseFacade{
                 robber.setY(location.getY());
                 String logMessage = player.getName() + " has robbed no one";
                 getGame().getLog().addLine(new MessageLine(player.getName(), logMessage));
-
+                game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Playing);
+                updateAI();
                 return getModel();
             }
         }
