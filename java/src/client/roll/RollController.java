@@ -17,6 +17,7 @@ public class RollController extends Controller implements IRollController, Obser
 
 	private IRollResultView resultView;
 	private GameManager manager = GameManager.getInstance();
+    private boolean hasRolled = false;
 
 	/**
 	 * RollController constructor
@@ -44,6 +45,9 @@ public class RollController extends Controller implements IRollController, Obser
 	
 	@Override
 	public void rollDice() {
+        if (this.hasRolled){
+            return;
+        }
 		if (ModelProxy.isPlayerTurn() && ModelProxy.getGameStatus().equals(TurnTracker.GameStatus.Rolling)) {
 			System.out.println("rollDice");
 			Random rand = new Random();
@@ -59,16 +63,17 @@ public class RollController extends Controller implements IRollController, Obser
 			if (!result.equals("Failed")) {
 				resultView.setRollValue(rollResult);
 				resultView.showModal();
+                this.hasRolled = true;
 			} else {
 				error("failed to join game");
 			}
-
 		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		super.update(o, arg);
+        this.hasRolled = false;
 
 		if (ModelProxy.getCurrentTurn() != null && ModelProxy.isPlayerTurn()
 				&& ModelProxy.getGameStatus().equals(TurnTracker.GameStatus.Rolling)) {
