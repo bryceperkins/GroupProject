@@ -53,9 +53,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			PlayerIndex index = PlayerIndex.valueOf(i);
 			int points = ModelProxy.getPlayerPoints(index);
 			boolean highlight = index.equals(ModelProxy.getCurrentTurn());
-			boolean largestRoad = index.equals(ModelProxy.getLargestRoadOwner());
+			boolean longestRoad = index.equals(ModelProxy.getLongestRoadOwner());
 			boolean largestArmy = index.equals(ModelProxy.getLargestArmyOwner());
-            getView().updatePlayer(i, points, highlight, largestRoad, largestArmy);
+            getView().updatePlayer(i, points, highlight, largestArmy, longestRoad);
 		}
 	}
 

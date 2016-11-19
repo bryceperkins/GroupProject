@@ -29,7 +29,7 @@ public class ModelProxy {
         return (game == null) ? null : game.getTurnTracker().getLargestArmyOwner();
     }
 
-    public static PlayerIndex getLargestRoadOwner() {
+    public static PlayerIndex getLongestRoadOwner() {
         Game game = manager.getActiveGame();
         return (game == null) ? null : game.getTurnTracker().getLongestRoadOwner();
     }
