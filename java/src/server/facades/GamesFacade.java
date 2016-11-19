@@ -72,7 +72,8 @@ public class GamesFacade extends BaseFacade{
         }
         
         for (Player p: game.getPlayers()){
-            if (p.getColor() == c){
+            if (p.getColor() == c && !p.getName().equals(getUser().getUserName())){
+                System.out.println(p.getName() + " using " + p.getColor() + " " + getUser().getUserName());
                 return "Failed";
             }
         }

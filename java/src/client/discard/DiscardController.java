@@ -99,12 +99,12 @@ public class DiscardController extends Controller implements IDiscardController,
     }
 
     public void update(Observable ob, Object o){
-        Game game = manager.getActiveGame();
         //check to make sure the game has actually been setup
+        Game game = (Game) o;
         if (game == null){
             return;
         }
-        if (game.getTurnTracker().getStatus() == null || game.getTurnTracker().getStatus().name() != "Discarding"){
+        if (game.getTurnTracker().getStatus() == null || !game.getTurnTracker().getStatus().name().equals("Discarding")){
             return;
         }
 
