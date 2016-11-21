@@ -373,7 +373,7 @@ public class Map implements PostProcessor {
     public boolean canPlaceRobber(HexLocation hexLoc){
         Robber robber = getRobber();
 
-        if(!hexLoc.equals(robber) && hexLoc != null){
+        if(hexLoc != null && !hexLoc.equals(robber)){
             for(HexLocation hexLocation : landLocations){
                 if(hexLoc.equals(hexLocation)){
                     return true;
