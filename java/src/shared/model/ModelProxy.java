@@ -21,7 +21,11 @@ public class ModelProxy {
 
     public static CatanColor getPlayerColor(PlayerIndex player) {
         Game game = manager.getActiveGame();
-        return (game == null) ? null : game.getPlayer(player).getColor();
+        if (game == null){
+            return null;
+        }
+        Player p = game.getPlayer(player);
+        return (p == null) ? null : p.getColor();
     }
 
     public static PlayerIndex getLargestArmyOwner() {
