@@ -1,6 +1,7 @@
 package server.facades;
 
 import shared.communication.User;
+import shared.locations.VertexDirection;
 import shared.model.*;
 import shared.definitions.*;
 import shared.locations.EdgeLocation;
@@ -313,6 +314,7 @@ public class MovesFacade extends BaseFacade{
                     return "Failed";
                 }
             }
+
             player.setSettlementsRemaining(remainingSettlements - 1);
             
             int victoryPoints = player.getVictoryPoints();
@@ -322,11 +324,96 @@ public class MovesFacade extends BaseFacade{
             existingSettlements.add(settlement);
             map.setSettlements(existingSettlements);
 
+            if(state.isSecondRound()){
+                giveSecondRoundResources(vertexLocation);
+            }
+
             logBuild(user.getUserName(), "settlement");
             return getModel();
         }
         return "Failed";
     }
+
+    private void giveSecondRoundResources(VertexLocation settlement){
+        VertexLocation location = settlement.getNormalizedLocation();
+        VertexDirection direction = location.getDir();
+        HexLocation hexLoc = location.getHexLoc();
+        int x = hexLoc.getX();
+        int y = hexLoc.getY();
+
+        HexLocation hexLoc2 = new HexLocation(x, y-1);
+
+        HexLocation hexLoc3 = null;
+        switch(direction){
+            case East:
+                break;
+            case NorthEast:
+                hexLoc3 = new HexLocation(x+1, y-1);
+                break;
+            case NorthWest:
+                hexLoc3 = new HexLocation(x-1, y);
+                break;
+            case SouthEast:
+                break;
+            case SouthWest:
+                break;
+            case West:
+                break;
+            default:
+                break;
+
+        }
+
+        findHex(hexLoc);
+        findHex(hexLoc2);
+        findHex(hexLoc3);
+    }
+
+    private void findHex(HexLocation loc){
+        Game game = getGame();
+        List<Hex> hexes = game.getMap().getHexes();
+        for(Hex hex: hexes){
+            HexLocation hexLoc = hex.getLocation();
+            if(hexLoc.equals(loc)){
+                giveResource(hex.getResource());
+            }
+        }
+    }
+
+    private void giveResource(ResourceType resource){
+        Game game = getGame();
+        User user = getUser();
+        Player player = game.getPlayerByName(user.getUserName());
+        ResourceList playerResources = player.getResources();
+        ResourceList bank = game.getBank();
+
+        switch(resource){
+            case BRICK:
+                playerResources.setBrick(playerResources.getBrick() + 1);
+                bank.setBrick(bank.getBrick() -1);
+                break;
+            case ORE:
+                playerResources.setOre(playerResources.getOre() + 1);
+                bank.setOre(bank.getOre() -1);
+                break;
+            case SHEEP:
+                playerResources.setSheep(playerResources.getSheep() + 1);
+                bank.setSheep(bank.getSheep() -1);
+                break;
+            case WHEAT:
+                playerResources.setWheat(playerResources.getWheat() + 1);
+                bank.setWheat(bank.getWheat() -1);
+                break;
+            case WOOD:
+                playerResources.setWood(playerResources.getWood() + 1);
+                bank.setWood(bank.getWood() -1);
+                break;
+            default:
+                break;
+
+        }
+    }
+
 
     /**
      *  Build a city.
