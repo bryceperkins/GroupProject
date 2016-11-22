@@ -99,6 +99,7 @@ public class MovesFacade extends BaseFacade{
         Player player = game.getPlayerByName(user.getUserName());
         player.getResources().removeResources(discardedCards);
         player.discarded();
+        game.getBank().addResources(discardedCards);
 
         boolean done = true;
 
