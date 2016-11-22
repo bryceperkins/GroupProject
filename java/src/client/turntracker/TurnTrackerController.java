@@ -80,6 +80,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 		initPlayers();
         setup = true;
+
+		update(null, null);
 	}
 
 	/**
