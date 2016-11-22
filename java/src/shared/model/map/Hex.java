@@ -57,8 +57,6 @@ public class Hex implements PostProcessor {
 		this.resource = resource;
 	}
 
-	public boolean canPlaceRobber(){ return true; }
-
 	public Set<VertexLocation> getNormalizedVertexLocations() {
 		Set<VertexLocation> locations = new HashSet<>();
 		for (VertexDirection direction : VertexDirection.values()) {

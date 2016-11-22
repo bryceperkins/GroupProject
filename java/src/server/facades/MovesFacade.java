@@ -11,6 +11,7 @@ import shared.model.player.Player;
 import shared.model.map.Map;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class MovesFacade extends BaseFacade{
@@ -98,6 +99,7 @@ public class MovesFacade extends BaseFacade{
         Player player = game.getPlayerByName(user.getUserName());
         player.getResources().removeResources(discardedCards);
         player.discarded();
+        game.getBank().addResources(discardedCards);
 
         boolean done = true;
 
@@ -127,7 +129,7 @@ public class MovesFacade extends BaseFacade{
         Game game = getGame();
         Map map = game.getMap();
 
-        logRoll(playerInd, number);
+        logRoll(number);
 
         if (number == ROBBING_ROLL) {
             boolean discarding = false;
@@ -169,9 +171,9 @@ public class MovesFacade extends BaseFacade{
      * Assumes resourcebank has requisite resources
      * Updates player and bank resources based on normalized vertex locations
      * @param resource
-     * @param vertexLocations
+     * @param resourceVertexLocations
      */
-    private void updatePlayerAndBankResource(ResourceType resource, Set<VertexLocation> vertexLocations) {
+    private void updatePlayerAndBankResource(ResourceType resource, Set<VertexLocation> resourceVertexLocations) {
         Map map = getGame().getMap();
 
         // Keep map of expected updates after verifying resources exist
@@ -179,7 +181,7 @@ public class MovesFacade extends BaseFacade{
         int totalNeeded = 0;
 
         for (Piece piece : map.getCitiesAndSettlements()) {
-            if (vertexLocations.contains(piece.getLocation().getNormalizedLocation())) {
+            if (resourceVertexLocations.contains(piece.getLocation().getNormalizedLocation())) {
                 Player owner = getGame().getPlayer(piece.getOwner());
                 int increaseBy = (piece instanceof Settlement) ? SETTLEMENT_RESOURCES : CITY_RESOURCES;
 
@@ -202,17 +204,15 @@ public class MovesFacade extends BaseFacade{
         }
     }
 
-    private void logRoll(int playerInd, int number) {
-        String logMessage = "Player " + (playerInd + 1) + " rolled ";
+    private void logRoll(int number) {
+        String logMessage = getUser().getUserName() + " rolled ";
         if (number == 8 || number == 11) {
             logMessage += " an " + number;
         } else {
             logMessage += " a " + number;
         }
 
-        String playerName = getGame().getPlayer(PlayerIndex.valueOf(playerInd)).getName();
-
-        getGame().getLog().addLine(new MessageLine(playerName, logMessage));
+        getGame().getLog().addLine(new MessageLine(getUser().getUserName(), logMessage));
     }
 
     /**
@@ -260,8 +260,6 @@ public class MovesFacade extends BaseFacade{
             existingRoads.add(road);
             map.setRoads(existingRoads);
 
-
-
             logBuild(user.getUserName(), "road");
             return getModel();
         }
@@ -269,7 +267,7 @@ public class MovesFacade extends BaseFacade{
         return "Failed";
     }
 
-    public void logBuild(String player, String building){
+    private void logBuild(String player, String building){
         String logMessage = player + " built a " + building;
         getGame().getLog().addLine(new MessageLine(player, logMessage));
     }

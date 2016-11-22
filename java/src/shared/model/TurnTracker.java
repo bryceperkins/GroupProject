@@ -15,7 +15,7 @@ public class TurnTracker {
     private PlayerIndex longestRoadOwner;
     @SerializedName("largestArmy")
     private PlayerIndex largestArmyOwner;
-    private int round = 1;
+    private int round = 1; // 1 based
 
     public TurnTracker() {
         currentTurn = PlayerIndex.Player1;
@@ -58,12 +58,19 @@ public class TurnTracker {
 
     public void setNextTurn() {
         int nextTurnInt = currentTurn.getIndex();
-        if (round == 2){
+        if (status == GameStatus.SecondRound) {
             nextTurnInt--;
-            if (nextTurnInt < 0){
-                nextTurnInt = 0;
-                nextRound();
-            }
+        } else {
+            nextTurnInt++;
+        }
+
+        // handle wrapping
+        if (status == GameStatus.FirstRound && nextTurnInt == 4) {
+            nextRound();
+            nextTurnInt = 3;
+        } else if (nextTurnInt == -1 || nextTurnInt == 4) {
+            nextRound();
+            nextTurnInt = 0;
         }
         else{
             nextTurnInt++;

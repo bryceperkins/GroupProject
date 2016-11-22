@@ -42,12 +42,6 @@ public class HexTest {
 		assertEquals(true, testHex.hasRobber());
 	}
 
-	@Test
-	public void test_canPlaceRobber_expect_true()
-	{
-		assertEquals(true, testHex.canPlaceRobber());
-	}
-
 }
 
 
