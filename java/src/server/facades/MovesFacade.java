@@ -169,9 +169,9 @@ public class MovesFacade extends BaseFacade{
      * Assumes resourcebank has requisite resources
      * Updates player and bank resources based on normalized vertex locations
      * @param resource
-     * @param vertexLocations
+     * @param resourceVertexLocations
      */
-    private void updatePlayerAndBankResource(ResourceType resource, Set<VertexLocation> vertexLocations) {
+    private void updatePlayerAndBankResource(ResourceType resource, Set<VertexLocation> resourceVertexLocations) {
         Map map = getGame().getMap();
 
         // Keep map of expected updates after verifying resources exist
@@ -179,7 +179,7 @@ public class MovesFacade extends BaseFacade{
         int totalNeeded = 0;
 
         for (Piece piece : map.getCitiesAndSettlements()) {
-            if (vertexLocations.contains(piece.getLocation().getNormalizedLocation())) {
+            if (resourceVertexLocations.contains(piece.getLocation().getNormalizedLocation())) {
                 Player owner = getGame().getPlayer(piece.getOwner());
                 int increaseBy = (piece instanceof Settlement) ? SETTLEMENT_RESOURCES : CITY_RESOURCES;
 

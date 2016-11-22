@@ -301,7 +301,6 @@ public class MapController extends Controller implements IMapController,Observer
 				result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),PlayerIndex.None,game.getMap().getRobber()));
 			else
 				result = manager.getServer().execute(new RobPlayer(this.manager.getActivePlayerIndex(),victim.getPlayerIndex(),game.getMap().getRobber()));
-			System.out.println(game.getPlayer(victim.getPlayerIndex()).getName() + " done got robbed" );
 		}
 		else
 		{
