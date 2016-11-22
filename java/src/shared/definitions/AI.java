@@ -87,17 +87,18 @@ public class AI extends Player {
 
     public void play() {
         Game game = facade.getGame();
-        if (game.getTurnTracker().getCurrentTurn() != getPlayerIndex()) {
-            return;
-        }
-
-        TurnTracker.GameStatus status = game.getTurnTracker().getStatus();
 
         if (game.getTradeOffer() != null) {
             if (game.getTradeOffer().getReceiver() == getPlayerIndex()) {
                 facade.acceptTrade(getPlayerIndex().getIndex(), false);
             }
         }
+
+        if (game.getTurnTracker().getCurrentTurn() != getPlayerIndex()) {
+            return;
+        }
+
+        TurnTracker.GameStatus status = game.getTurnTracker().getStatus();
 
         switch (status) {
             case Rolling:
