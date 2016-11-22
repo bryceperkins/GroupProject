@@ -340,7 +340,6 @@ public class MovesFacade extends BaseFacade{
         int y = hexLoc.getY();
 
         HexLocation hexLoc2 = new HexLocation(x, y-1);
-
         HexLocation hexLoc3 = null;
         switch(direction){
             case East:
@@ -359,26 +358,25 @@ public class MovesFacade extends BaseFacade{
                 break;
             default:
                 break;
-
         }
 
-        findHex(hexLoc);
-        findHex(hexLoc2);
-        findHex(hexLoc3);
+        getHexToGivePlayerResource(hexLoc);
+        getHexToGivePlayerResource(hexLoc2);
+        getHexToGivePlayerResource(hexLoc3);
     }
 
-    private void findHex(HexLocation loc){
+    private void getHexToGivePlayerResource(HexLocation loc){
         Game game = getGame();
         List<Hex> hexes = game.getMap().getHexes();
         for(Hex hex: hexes){
             HexLocation hexLoc = hex.getLocation();
             if(hexLoc.equals(loc)){
-                giveResource(hex.getResource());
+                addResourceToPlayer(hex.getResource());
             }
         }
     }
 
-    private void giveResource(ResourceType resource){
+    private void addResourceToPlayer(ResourceType resource){
         Game game = getGame();
         User user = getUser();
         Player player = game.getPlayerByName(user.getUserName());
@@ -408,10 +406,8 @@ public class MovesFacade extends BaseFacade{
                 break;
             default:
                 break;
-
         }
     }
-
 
     /**
      *  Build a city.
