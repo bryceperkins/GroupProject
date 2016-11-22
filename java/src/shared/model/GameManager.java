@@ -161,6 +161,6 @@ public class GameManager extends Observable{
 
     public void update(){
         setChanged();
-        notifyObservers();
+        notifyObservers(getActiveGame());
     }
 }

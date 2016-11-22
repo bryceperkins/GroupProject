@@ -11,6 +11,7 @@ import shared.model.player.Player;
 import shared.model.map.Map;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class MovesFacade extends BaseFacade{
@@ -98,6 +99,7 @@ public class MovesFacade extends BaseFacade{
         Player player = game.getPlayerByName(user.getUserName());
         player.getResources().removeResources(discardedCards);
         player.discarded();
+        game.getBank().addResources(discardedCards);
 
         boolean done = true;
 
@@ -127,7 +129,7 @@ public class MovesFacade extends BaseFacade{
         Game game = getGame();
         Map map = game.getMap();
 
-        logRoll(playerInd, number);
+        logRoll(number);
 
         if (number == ROBBING_ROLL) {
             boolean discarding = false;
@@ -169,9 +171,9 @@ public class MovesFacade extends BaseFacade{
      * Assumes resourcebank has requisite resources
      * Updates player and bank resources based on normalized vertex locations
      * @param resource
-     * @param vertexLocations
+     * @param resourceVertexLocations
      */
-    private void updatePlayerAndBankResource(ResourceType resource, Set<VertexLocation> vertexLocations) {
+    private void updatePlayerAndBankResource(ResourceType resource, Set<VertexLocation> resourceVertexLocations) {
         Map map = getGame().getMap();
 
         // Keep map of expected updates after verifying resources exist
@@ -179,7 +181,7 @@ public class MovesFacade extends BaseFacade{
         int totalNeeded = 0;
 
         for (Piece piece : map.getCitiesAndSettlements()) {
-            if (vertexLocations.contains(piece.getLocation().getNormalizedLocation())) {
+            if (resourceVertexLocations.contains(piece.getLocation().getNormalizedLocation())) {
                 Player owner = getGame().getPlayer(piece.getOwner());
                 int increaseBy = (piece instanceof Settlement) ? SETTLEMENT_RESOURCES : CITY_RESOURCES;
 
@@ -202,17 +204,15 @@ public class MovesFacade extends BaseFacade{
         }
     }
 
-    private void logRoll(int playerInd, int number) {
-        String logMessage = "Player " + (playerInd + 1) + " rolled ";
+    private void logRoll(int number) {
+        String logMessage = getUser().getUserName() + " rolled ";
         if (number == 8 || number == 11) {
             logMessage += " an " + number;
         } else {
             logMessage += " a " + number;
         }
 
-        String playerName = getGame().getPlayer(PlayerIndex.valueOf(playerInd)).getName();
-
-        getGame().getLog().addLine(new MessageLine(playerName, logMessage));
+        getGame().getLog().addLine(new MessageLine(getUser().getUserName(), logMessage));
     }
 
     /**
@@ -260,8 +260,6 @@ public class MovesFacade extends BaseFacade{
             existingRoads.add(road);
             map.setRoads(existingRoads);
 
-
-
             logBuild(user.getUserName(), "road");
             return getModel();
         }
@@ -269,7 +267,7 @@ public class MovesFacade extends BaseFacade{
         return "Failed";
     }
 
-    public void logBuild(String player, String building){
+    private void logBuild(String player, String building){
         String logMessage = player + " built a " + building;
         getGame().getLog().addLine(new MessageLine(player, logMessage));
     }
@@ -425,18 +423,38 @@ public class MovesFacade extends BaseFacade{
         ResourceList trade = new ResourceList();
         Game game = getGame();
         switch (inputResource){
-            case BRICK: trade.setBrick(ratio*-1);
-            case ORE: trade.setOre(ratio*-1);
-            case SHEEP: trade.setSheep(ratio*-1);
-            case WHEAT: trade.setWheat(ratio*-1);
-            case WOOD: trade.setWood(ratio*-1);
+            case BRICK: 
+                trade.setBrick(ratio*-1);
+                break;
+            case ORE: 
+                trade.setOre(ratio*-1);
+                break;
+            case SHEEP: 
+                trade.setSheep(ratio*-1);
+                break;
+            case WHEAT:
+                trade.setWheat(ratio*-1);
+                break;
+            case WOOD: 
+                trade.setWood(ratio*-1);
+                break;
         }
         switch (outputResource){
-            case BRICK: trade.setBrick(1);
-            case ORE: trade.setOre(1);
-            case SHEEP: trade.setSheep(1);
-            case WHEAT: trade.setWheat(1);
-            case WOOD: trade.setWood(1);
+            case BRICK: 
+                trade.setBrick(1);
+                break;
+            case ORE: 
+                trade.setOre(1);
+                break;
+            case SHEEP: 
+                trade.setSheep(1);
+                break;
+            case WHEAT: 
+                trade.setWheat(1);
+                break;
+            case WOOD: 
+                trade.setWood(1);
+                break;
         }
         getGame().getPlayer(PlayerIndex.valueOf(index)).getResources().addResources(trade);
         getGame().getBank().addResources(trade.reversedList());
@@ -475,7 +493,8 @@ public class MovesFacade extends BaseFacade{
                 robber.setY(location.getY());
                 String logMessage = player.getName() + " has robbed no one";
                 getGame().getLog().addLine(new MessageLine(player.getName(), logMessage));
-
+                game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Playing);
+                updateAI();
                 return getModel();
             }
         }
@@ -527,7 +546,7 @@ public class MovesFacade extends BaseFacade{
                         break;
                     default:
                         System.out.println("some error with robbing resource");
-                        return "Fail";
+                        return "Failed";
                 }
                 robber.setX(location.getX());
                 robber.setY(location.getY());
@@ -541,11 +560,11 @@ public class MovesFacade extends BaseFacade{
                 return getModel();
             }else{
                 System.out.println("Cannot place a robber on this location");
-                return "Fail";
+                return "Failed";
             }
         }else{
             System.out.println("Victim does not have resources");
-            return "Fail";
+            return "Failed";
         }
     }
 
@@ -563,9 +582,46 @@ public class MovesFacade extends BaseFacade{
 
         tracker.setNextTurn();
         player.transferNewDevCards();
+
+        PlayerIndex mostRoads = tracker.getLongestRoadOwner();
+        PlayerIndex largestArmy = tracker.getLargestArmyOwner();
+
+        Player lr = getGame().getPlayer(mostRoads);
+        Player la = getGame().getPlayer(largestArmy);
+
+        if (lr != null){
+            getGame().getPlayer(mostRoads).setVictoryPoints(lr.getVictoryPoints() - 2);
+        }
+        if (la != null){
+            getGame().getPlayer(largestArmy).setVictoryPoints(la.getVictoryPoints() - 2);
+        }
+
+        int roadCount = 10;
+        int armyCount = 3;
+
         for (Player p: getGame().getPlayers()){
             p.clearDiscard();
+            if (p.getRoadsRemaining() < roadCount){
+                roadCount = p.getRoadsRemaining();
+                mostRoads = p.getPlayerIndex();
+            }
+            if (p.getSoldiersPlayed() > armyCount){
+                armyCount = p.getSoldiersPlayed();
+                largestArmy = p.getPlayerIndex();
+            }
         }
+        
+        lr = getGame().getPlayer(mostRoads);
+        la = getGame().getPlayer(largestArmy);
+        if (lr != null){
+            getGame().getPlayer(mostRoads).setVictoryPoints(lr.getVictoryPoints() + 2);
+        }
+        if (la != null){
+            getGame().getPlayer(largestArmy).setVictoryPoints(la.getVictoryPoints() + 2);
+        }
+
+        tracker.setLongestRoadOwner(mostRoads);
+        tracker.setLargestArmyOwner(largestArmy);
 
         updateAI();
         return getModel();

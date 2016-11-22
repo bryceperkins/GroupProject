@@ -86,11 +86,21 @@ public class ResourceList{
 
 	public void decreaseBy(ResourceType resource, int amount) {
 		switch (resource) {
-			case BRICK: brick -= amount;
-			case ORE: ore -= amount;
-			case SHEEP: sheep -= amount;
-			case WHEAT: wheat -= amount;
-			case WOOD: wood -= amount;
+			case BRICK:
+				brick -= amount;
+				break;
+			case ORE:
+				ore -= amount;
+				break;
+			case SHEEP:
+				sheep -= amount;
+				break;
+			case WHEAT:
+				wheat -= amount;
+				break;
+			case WOOD:
+				wood -= amount;
+				break;
 		}
 	}
 

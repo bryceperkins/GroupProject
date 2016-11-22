@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -29,6 +31,8 @@ public class RollView extends OverlayView implements IRollView {
     private JLabel imageLabel;
 	private JButton rollButton;
 	private JPanel buttonPanel;
+
+    private Timer timer;
 
 	public RollView() {
 
@@ -67,13 +71,14 @@ public class RollView extends OverlayView implements IRollView {
 	public void showModal() {
 		super.showModal();
         System.out.println("in showModal() on RollView");
-
-		new java.util.Timer().schedule(
-				new java.util.TimerTask() {
+        
+        timer = new Timer();
+		timer.schedule(
+				new TimerTask() {
 					@Override
 					public void run() {
 						closeModal();
-
+                        timer.cancel();
                         getController().rollDice();
 					}
 				},
@@ -86,9 +91,8 @@ public class RollView extends OverlayView implements IRollView {
 		public void actionPerformed(ActionEvent e) {
 			
 			if (e.getSource() == rollButton) {
-
 				closeModal();
-				
+                timer.cancel();
 				getController().rollDice();
 			}
 		}	
