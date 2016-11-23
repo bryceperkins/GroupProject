@@ -214,7 +214,7 @@ public class MapController extends Controller implements IMapController,Observer
 
 	public void placeRobber(HexLocation hexLoc) {
 		System.out.println("Starting place robber");
-		List<RobPlayerInfo> victims = new ArrayList<RobPlayerInfo>();
+		Set<RobPlayerInfo> victims = new HashSet<RobPlayerInfo>();
 		List<VertexLocation> buildingLocs = hexLoc.getVertices();
 
 		for(Settlement s :game.getMap().getSettlements()){
