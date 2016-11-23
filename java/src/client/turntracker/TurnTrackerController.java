@@ -4,6 +4,7 @@ import shared.model.GameManager;
 import shared.model.ModelProxy;
 import shared.model.PlayerIndex;
 import shared.model.TurnTracker;
+import shared.model.player.Player;
 import client.points.GameFinishedView;
 import shared.commands.FinishTurn;
 import shared.definitions.CatanColor;
@@ -104,7 +105,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (manager.getActiveGame() != null) {
+		if (manager.getActiveGame() != null && manager.getActiveGame().getPlayers().size() == 4) {
+            Player p = manager.getActiveGame().getPlayerByName(manager.getCurrentPlayerInfo().getName());
 			if (setup) {
                 updateGameState();
 				updatePlayers();
@@ -116,7 +118,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 					gameFinishedView.showModal();
 				}
 
-				getView().setLocalPlayerColor(ModelProxy.getPlayerColor(manager.getActivePlayerIndex()));
+                if (manager.getActivePlayerIndex() != null){
+                    getView().setLocalPlayerColor(p.getColor());
+                }
 			} else {
 				initFromModel();
 			}

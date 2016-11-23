@@ -250,6 +250,8 @@ public class MovesFacade extends BaseFacade{
                 if(playerResources.hasResources(roadCost)){
                     playerResources.decreaseBrick();
                     playerResources.decreaseWood();
+                    game.getBank().increaseBrick();
+                    game.getBank().increaseWood();
                 }else {
                     System.out.println("not enough resources to purchase road");
                     return "Failed";
@@ -308,6 +310,10 @@ public class MovesFacade extends BaseFacade{
                     playerResources.decreaseWood();
                     playerResources.decreaseSheep();
                     playerResources.decreaseWheat();
+                    game.getBank().increaseBrick();
+                    game.getBank().increaseWood();
+                    game.getBank().increaseSheep();
+                    game.getBank().increaseWheat();
                 }else {
                     return "Failed";
                 }
@@ -442,6 +448,11 @@ public class MovesFacade extends BaseFacade{
                 playerResources.decreaseOre();
                 playerResources.decreaseWheat();
                 playerResources.decreaseWheat();
+                game.getBank().increaseOre();
+                game.getBank().increaseOre();
+                game.getBank().increaseOre();
+                game.getBank().increaseWheat();
+                game.getBank().increaseWheat();
             }else {
                 System.out.println("not enough resources to purchase road");
                 return "Failed";
@@ -733,6 +744,9 @@ public class MovesFacade extends BaseFacade{
             player.getResources().decreaseOre();
             player.getResources().decreaseSheep();
             player.getResources().decreaseWheat();
+            game.getBank().increaseOre();
+            game.getBank().increaseSheep();
+            game.getBank().increaseWheat();
             //dole out devcard
 
         }else {

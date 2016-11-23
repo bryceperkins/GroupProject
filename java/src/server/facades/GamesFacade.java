@@ -79,8 +79,16 @@ public class GamesFacade extends BaseFacade{
         }
         
         if (game.getPlayerByName(getUser().getUserName()) != null) {
-            game.getPlayerByName(getUser().getUserName()).setColor(c);
+            List<Player> players = game.getPlayers();
+            for (Player p: players){
+                if (p.getName().equals(getUser().getUserName())){
+                    p.setColor(c);
+                }
+            }
+            
+            manager.getGame(gameid).setPlayers(players);
             setGame(gameid);
+            
             success = getModel();
         }
         else if(!game.canBeginGame()){
@@ -88,10 +96,14 @@ public class GamesFacade extends BaseFacade{
             User user = getUser();
             Player player = new Player(c, user.getUserName(), user.getPlayerID(), PlayerIndex.createPlayerAtIndex(players.size()), user.getPlayerID());
             players.add(player);
-            game.setPlayers(players);
 
+            manager.getGame(gameid).setPlayers(players);
             setGame(gameid);
+
             success = getModel();
+        }
+        else {
+            return "Failed";
         }
         return success;
     }

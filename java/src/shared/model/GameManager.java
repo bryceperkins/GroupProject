@@ -144,10 +144,16 @@ public class GameManager extends Observable{
      * @return the current player's index or NULL when user is not yet signed in
      */
     public PlayerIndex getActivePlayerIndex() {
-        return playerInfo.getPlayerIndex();
+        Game game = getActiveGame();
+        return (game == null) ? null : game.getPlayerByName(playerInfo.getName()).getPlayerIndex();
     }
 
     public PlayerInfo getCurrentPlayerInfo() {
+        PlayerInfo p = this.playerInfo;
+        Game g = getActiveGame();
+        if (g != null){
+            p = g.getPlayerByName(p.getName()).toPlayerInfo();
+        }
         return this.playerInfo;
     }
 
