@@ -17,6 +17,7 @@ public class AI extends Player {
 
     private transient MovesFacade facade;
     private transient User user;
+    private transient boolean hasPlayed = false;
 
     public AI(int gameId, CatanColor color, String name, PlayerIndex playerIndex) {
         super(color, name, 24601, playerIndex, 24601);
@@ -37,6 +38,18 @@ public class AI extends Player {
             rollResult = 8;
         }
         facade.rollNumber(getPlayerIndex().getIndex(), rollResult);
+    }
+
+    public boolean hasPlayed(){
+        return hasPlayed;
+    }
+    
+    public void setPlayed(){
+        hasPlayed = true;
+    }
+
+    public void clearPlayed(){
+        hasPlayed = false;
     }
 
     private void placeRandomRoad() {

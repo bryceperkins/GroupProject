@@ -28,7 +28,8 @@ public class MovesFacade extends BaseFacade{
 
     private void updateAI() {
         for (Player player : getGame().getPlayers()) {
-            if (player instanceof AI) {
+            if (player instanceof AI && !((AI) player).hasPlayed()) {
+                ((AI) player).setPlayed();
                 ((AI) player).play();
             }
         }
@@ -635,6 +636,11 @@ public class MovesFacade extends BaseFacade{
         tracker.setLargestArmyOwner(largestArmy);
 
         updateAI();
+        for (Player p : getGame().getPlayers()) {
+            if (p instanceof AI) {
+                ((AI) p).clearPlayed();
+            }
+        }
         return getModel();
     }
 
