@@ -715,17 +715,56 @@ public class MovesFacade extends BaseFacade{
         Game game = getGame();
         Player player = game.getPlayerByName(user.getUserName());
 
-        int resource1Amount = player.getResources().getResourceByType(resource1);
-        int resource2Amount = player.getResources().getResourceByType(resource2);
+		ResourceList resources = player.getResources();
+		ResourceList bank = game.getBank();
+		
+		switch(resource1){
+			case BRICK: 
+				resources.increaseBrick();
+				bank.decreaseBrick();
+				break;
+			case WOOD: 
+				resources.increaseWood();
+				bank.decreaseWood();
+				break;
+			case SHEEP: 
+				resources.increaseSheep();
+				bank.decreaseSheep();
+				break;
+			case WHEAT: 
+				resources.increaseWheat();
+				bank.decreaseWheat();
+				break;
+			case ORE: 
+				resources.increaseOre();
+				bank.decreaseOre();
+				break;
+		}
+		
+		switch(resource2){
+			case BRICK: 
+				resources.increaseBrick();
+				bank.decreaseBrick();
+				break;
+			case WOOD: 
+				resources.increaseWood();
+				bank.decreaseWood();
+				break;
+			case SHEEP: 
+				resources.increaseSheep();
+				bank.decreaseSheep();
+				break;
+			case WHEAT: 
+				resources.increaseWheat();
+				bank.decreaseWheat();
+				break;
+			case ORE: 
+				resources.increaseOre();
+				bank.decreaseOre();
+				break;
+		}
 
-        resource1Amount += 2;
-        resource2Amount += 2;
-
-        player.getResources().setResourceByType(resource2, resource2Amount);
         player.removeDevCard(DevCardType.YEAR_OF_PLENTY);
-
-        ResourceList bank = game.getBank();
-
         return getModel();
     }
 
