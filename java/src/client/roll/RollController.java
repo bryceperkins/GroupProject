@@ -59,7 +59,7 @@ public class RollController extends Controller implements IRollController, Obser
 
 			getRollView().closeModal();
 
-			String result = manager.getServer().execute(new RollNumber(manager.getCurrentPlayerInfo().getPlayerIndex(), rollResult));
+			String result = manager.getServer().execute(new RollNumber(manager.getActiveGame().getPlayerByName(manager.getCurrentPlayerInfo().getName()).getPlayerIndex(), rollResult));
 			if (!result.equals("Failed")) {
 				resultView.setRollValue(rollResult);
 				resultView.showModal();
