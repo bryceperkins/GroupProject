@@ -1,6 +1,6 @@
 package server.persistance;
 
-import java.util.List;
+import java.util.*;
 
 import shared.model.Game;
 import shared.communication.User;
@@ -11,15 +11,15 @@ public interface iPlugin {
     
     public void addUser(User user);
     
-    public List<User> getUsers();
+    public HashMap<String, User> getUsers();
     
-    public List<Game> getGames();
+    public ArrayList<Game> getGames();
 
     public void clearGames();
     
-    public void addCommand(Command command);
+    public void addCommand(int gameid, Command command);
     
     public void clearCommands(int gameId);
 
-    public void getCommands(int gameId);
+    public ArrayList<Command> getCommands(int gameId);
 }

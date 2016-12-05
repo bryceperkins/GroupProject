@@ -1,7 +1,6 @@
 package server.persistance;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 import shared.model.Game;
 import shared.communication.User;
@@ -14,21 +13,23 @@ public class SQLitePlugin extends BasePlugin implements iPlugin {
     }
     public void addUser(User user){}
     
-    public List<User> getUsers(){
-        List<User> users  = new ArrayList<User>();
+    public HashMap<String, User> getUsers(){
+        HashMap<String, User> users  = new HashMap<String, User>();
         return users;
     }
     
-    public List<Game> getGames(){
-        List<Game> games  = new ArrayList<Game>();
+    public ArrayList<Game> getGames(){
+        ArrayList<Game> games  = new ArrayList<Game>();
         return games;
     }
 
     public void clearGames(){}
     
-    public void addCommand(Command command){}
+    public void addCommand(int gameid, Command command){}
     
     public void clearCommands(int gameId){}
 
-    public void getCommands(int gameId){}
+    public ArrayList getCommands(int gameId){
+        return new ArrayList<Command>();
+    }
 }

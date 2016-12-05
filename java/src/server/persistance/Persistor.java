@@ -5,10 +5,8 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Iterator;
-import java.util.ServiceLoader;
 import java.lang.reflect.Method;
-import java.util.List;
+import java.util.*;
 
 import shared.model.Game;
 import shared.communication.User;
@@ -52,7 +50,7 @@ public class Persistor {
         }
     }
 
-    public static synchronized Persistor getInstance(){
+    public static Persistor getInstance(){
         if (INSTANCE == null) {
             INSTANCE = new Persistor();
         }
@@ -63,11 +61,11 @@ public class Persistor {
         plugin.addUser(user);
     }
     
-    public List<User> getUsers() {
+    public HashMap<String, User> getUsers() {
         return plugin.getUsers();
     }
     
-    public List<Game> getGames(){
+    public ArrayList<Game> getGames(){
         return plugin.getGames();
     }
 
@@ -75,15 +73,15 @@ public class Persistor {
         plugin.clearGames();
     }
     
-    public void addCommand(Command command){
-        plugin.addCommand(command);
+    public void addCommand(int gameid, Command command){
+        plugin.addCommand(gameid, command);
     }
     
     public void clearCommands(int gameId){
         plugin.clearCommands(gameId);
     }
 
-    public void getCommands(int gameId){
-        plugin.getCommands(gameId);
+    public ArrayList getCommands(int gameId){
+        return plugin.getCommands(gameId);
     }
 }

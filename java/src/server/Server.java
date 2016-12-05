@@ -67,8 +67,9 @@ public class Server {
             System.out.println("Using default plugin " + plugin_type);
         }
 
-        manager.setCheckpoint(checkpoint);
         persist.setPlugin(plugin_type);
+        manager.setCheckpoint(checkpoint);
+        manager.loadUsers();
 
         server = new Http();
         System.out.println("Server running on http://localhost:" + port);

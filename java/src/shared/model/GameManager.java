@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import shared.communication.User;
 import client.*;
+import server.persistance.Persistor;
 
 /**
  * Facade class which statically manages the client's games and updates
@@ -19,6 +20,7 @@ import client.*;
 public class GameManager extends Observable{
 
     private static final GameManager INSTANCE = new GameManager();
+    private static final Persistor persistor = Persistor.getInstance();
     private ServerProxy server;
     private ArrayList<Game> games = new ArrayList<Game>();
     private PlayerInfo playerInfo;
@@ -30,7 +32,11 @@ public class GameManager extends Observable{
 
     private GameManager () {}
 
-    public HashMap getUsers(){
+    public void loadUsers(){
+        users = persistor.getUsers();
+    }
+
+    public HashMap<String, User> getUsers(){
         return users;
     }
 
@@ -47,6 +53,7 @@ public class GameManager extends Observable{
         }
         user.setPlayerID(users.size());
         users.put(user.getUserName(), user);
+        persistor.addUser(user);
         return user;
     }
 

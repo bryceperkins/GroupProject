@@ -1,36 +1,129 @@
 package server.persistance;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
+import java.io.*;
 
 import shared.model.Game;
 import shared.communication.User;
 import shared.commands.Command;
 import server.persistance.iPlugin;
+import com.google.gson.*;
+import org.apache.commons.io.*;
 
 
 public class FilePlugin extends BasePlugin implements iPlugin{
+    File data_dir;
+    File user_file;
+    String commands_file = "commands.json";
+    Gson gson = new Gson();
     
     public FilePlugin(){
         super("file");
+        data_dir = getDir("data");
+        user_file = getFile(data_dir, "users.json");
+        System.out.println("Data dir: " + data_dir.toString());
+        System.out.println("Users: " + user_file.toString());
     }
-    public void addUser(User user){}
+
+    private File getDir(String name){
+        if (data_dir != null){
+            name = data_dir.toString() + System.getProperty("file.separator") + name;
+        }
+        File tmp = new File(name);
+        if (!tmp.exists()) {
+            System.out.println("Creating directory: " + name);
+
+            try{
+                tmp.mkdir();
+            } 
+            catch(SecurityException se){
+                System.out.println("Could not create dir " + name);
+            }        
+        }
+        return tmp;
+    }
     
-    public List<User> getUsers(){
-        List<User> users  = new ArrayList<User>();
+    private File getFile(File dir, String name){
+        name = dir.toString() + System.getProperty("file.separator") + name;
+        File tmp = new File(name);
+        try {
+            if(!tmp.exists())
+                tmp.createNewFile();
+        } catch (IOException e){
+            System.out.println("Could not create file: " + user_file.toString());
+        }
+        return tmp;
+    }
+    
+    public void addUser(User user){
+        HashMap<String, User> users = getUsers();
+        users.put(user.getUserName(), user);
+
+        try {
+            FileWriter writer = new FileWriter(user_file);
+            writer.write(gson.toJson(users));
+            writer.close();
+        } catch (IOException e){
+            System.out.println("Could not write to file: " + user_file.toString());
+        }
+    }
+    
+    public HashMap<String, User> getUsers(){
+        user_file = getFile(data_dir, "users.json");
+        HashMap<String, User> users = new HashMap();
+        if (user_file.length() != 0){
+            try{
+                BufferedReader reader = new BufferedReader(new FileReader(user_file));
+                users = gson.fromJson(reader, HashMap.class);
+            } catch (FileNotFoundException e){
+                System.out.println("File not found: " + user_file.toString());
+            }
+        }
         return users;
     }
     
-    public List<Game> getGames(){
-        List<Game> games  = new ArrayList<Game>();
+    public ArrayList<Game> getGames(){
+        ArrayList<Game> games  = new ArrayList<Game>();
         return games;
     }
 
-    public void clearGames(){}
+    public void clearGames(){
+        for(File file: data_dir.listFiles()) 
+            if (file.isDirectory()) 
+                file.delete();
+    }
     
-    public void addCommand(Command command){}
-    
-    public void clearCommands(int gameId){}
+    public void addCommand(int gameId, Command command){
+        ArrayList<Command> commands = getCommands(gameId);
+        commands.add(command);
 
-    public void getCommands(int gameId){}
+        try {
+            FileWriter writer = new FileWriter(user_file);
+            writer.write(gson.toJson(commands));
+            writer.close();
+        } catch (IOException e){
+            System.out.println("Could not write to file: " + user_file.toString());
+        }
+    }
+    
+    public void clearCommands(int gameId){
+        File game_dir = getDir("" + gameId);
+        File commands = getFile(game_dir, commands_file);
+        commands.delete();
+    }
+
+    public ArrayList<Command> getCommands(int gameId){
+        File game_dir = getDir("" + gameId);
+        File command_file = getFile(game_dir, commands_file);
+        ArrayList<Command> commands = new ArrayList();
+        if (command_file.length() != 0){
+            try{
+                BufferedReader reader = new BufferedReader(new FileReader(command_file));
+                commands = gson.fromJson(reader, ArrayList.class);
+            } catch (FileNotFoundException e){
+                System.out.println("File not found: " + command_file.toString());
+            }
+        }
+        return commands;
+    }
 }

@@ -8,6 +8,8 @@ import shared.model.map.*;
 import shared.model.map.Map;
 import shared.model.player.*;
 import shared.communication.*;
+import shared.commands.*;
+import server.persistance.Persistor;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -31,6 +33,8 @@ public class Game implements PostProcessor {
     private TradeOffer tradeOffer;
     private DevCardList devCardDeck;
     private transient int checkpoint;
+    private transient ArrayList<Command> recentCommands;
+    private transient Persistor persist = Persistor.getInstance();
 
     public Game(){ 
         //name = "Test";
@@ -43,6 +47,7 @@ public class Game implements PostProcessor {
         players = new ArrayList<Player>();
         turnTracker = new TurnTracker();
 		devCardDeck = new DevCardList();
+        recentCommands = new ArrayList<Command>();
 		
 		devCardDeck.setMonopoly(2);
 		devCardDeck.setMonument(5);
@@ -53,6 +58,15 @@ public class Game implements PostProcessor {
 
     public void setCheckpoint(int checkpoint){
         this.checkpoint = checkpoint;
+    }
+    
+    public void addCommand(Command c){
+        if (recentCommands.size() >= checkpoint){
+            persist.clearCommands(id);
+            recentCommands.clear();
+        }
+        recentCommands.add(c);
+        persist.addCommand(id, c);
     }
 
     /**
