@@ -69,6 +69,10 @@ public class Persistor {
         return plugin.getGames();
     }
 
+    public void addGame(Game game){
+        plugin.addGame(game);
+    }
+
     public void clearGames() {
         plugin.clearGames();
     }

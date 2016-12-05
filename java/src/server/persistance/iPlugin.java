@@ -15,6 +15,8 @@ public interface iPlugin {
     
     public ArrayList<Game> getGames();
 
+    public void addGame(Game game);
+
     public void clearGames();
     
     public void addCommand(int gameid, Command command);

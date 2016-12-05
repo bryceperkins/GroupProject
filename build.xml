@@ -168,6 +168,7 @@
         <jar  destfile="${java.dist}/plugins/FilePlugin.jar" basedir="plugins/FilePlugin"/>
         
         <copy file="${java.build}/server/persistance/SQLitePlugin.class" todir="plugins/SQLitePlugin"/>
+        <jar  destfile="${java.dist}/plugins/SQLitePlugin.jar" basedir="plugins/SQLitePlugin"/>
     </target>
 
     <target name="our-client" depends="package" description="compiles, packages, and runs the student client">

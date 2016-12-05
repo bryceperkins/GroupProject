@@ -33,8 +33,8 @@ public class Game implements PostProcessor {
     private TurnTracker turnTracker;
     private TradeOffer tradeOffer;
     private DevCardList devCardDeck;
-    private transient int checkpoint;
-    private transient ArrayList<Command> recentCommands;
+    private transient int checkpoint = 10;
+    private transient ArrayList<Command> recentCommands = new ArrayList<Command>();
     private transient Persistor persist = Persistor.getInstance();
 
     public Game(){ 
@@ -48,7 +48,6 @@ public class Game implements PostProcessor {
         players = new ArrayList<Player>();
         turnTracker = new TurnTracker();
 		devCardDeck = new DevCardList();
-        recentCommands = new ArrayList<Command>();
 		
 		devCardDeck.setMonopoly(2);
 		devCardDeck.setMonument(5);
@@ -62,9 +61,11 @@ public class Game implements PostProcessor {
     }
     
     public void addCommand(Command c){
-        if (recentCommands.size() >= checkpoint){
-            persist.clearCommands(id);
+        System.out.println(recentCommands.size());
+        if ((recentCommands.size() % checkpoint) == 0){
             recentCommands.clear();
+            persist.clearCommands(id);
+            persist.addGame(this);
         }
         recentCommands.add(c);
         persist.addCommand(id, c);
