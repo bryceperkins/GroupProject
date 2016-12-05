@@ -20,6 +20,7 @@ import server.persistance.Persistor;
 public class GameManager extends Observable{
 
     private static final GameManager INSTANCE = new GameManager();
+    private Persistor persistor;
     private ServerProxy server;
     private ArrayList<Game> games = new ArrayList<Game>();
     private PlayerInfo playerInfo;
@@ -32,7 +33,7 @@ public class GameManager extends Observable{
     private GameManager () {}
 
     public void loadAll(){
-        Persistor persistor = persistor.getInstance();
+        persistor = persistor.getInstance();
         users = persistor.getUsers();
         games = persistor.getGames();
     }

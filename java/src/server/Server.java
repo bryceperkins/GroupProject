@@ -73,7 +73,7 @@ public class Server {
             persist.reset();
         }
         manager.setCheckpoint(checkpoint);
-        manager.loadUsers();
+        manager.loadAll();
 
         server = new Http();
         System.out.println("Server running on http://localhost:" + port);
