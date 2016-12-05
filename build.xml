@@ -1,4 +1,4 @@
-﻿<project name="Demo Server" default="server" basedir=".">
+﻿<project name="Demo Server" default="server" basedir="." xmlns:if="ant:if">
 
     <!-- PROPERTIES -->
     <!-- ********** -->	
@@ -71,6 +71,7 @@
             <packageset dir="${java.src.dir}">
                 <include name="client/**"/>
                 <include name="shared/**"/>
+                <include name="sserver/**"/>
             </packageset>
         </javadoc>
     </target>
@@ -130,18 +131,21 @@
     </target>
 
     <target name="package" depends="compile" description="package the jar file" >
+        <mkdir dir="${java.dist}/plugins"/>
         <mkdir dir="${java.dist}/lib"/>
         <copy todir="${java.dist}/lib">
             <fileset dir="${java.lib}">
                 <include name="**"/>
             </fileset>
         </copy>
+
         <mkdir dir="${java.dist}/images"/>
         <copy todir="${java.dist}/images">
             <fileset dir="${java.images}">
                 <include name="**"/>
             </fileset>
         </copy>
+
         <jar jarfile="${java.dist}/catan-client.jar" basedir="${java.build}">
             <zipgroupfileset dir="${java.dist}" includes="*.jar"/>
             <zipgroupfileset dir="${java.dist}/lib" includes="*.jar" excludes=""/>
@@ -153,11 +157,17 @@
         <jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
             <zipgroupfileset dir="${java.dist}" includes="*.jar"/>
             <zipgroupfileset dir="${java.dist}/lib" includes="*.jar" excludes=""/>
+            <zipgroupfileset dir="${java.dist}/plugins" includes="*.jar" excludes=""/>
             <manifest>
                 <attribute name="Main-Class" value="server.Server"/>
                 <attribute name="Class-Path" value="java.lib.classpath" />
             </manifest>
         </jar>
+        
+        <copy file="${java.build}/server/persistance/FilePlugin.class" todir="plugins/FilePlugin"/>
+        <jar  destfile="${java.dist}/plugins/FilePlugin.jar" basedir="plugins/FilePlugin"/>
+        
+        <copy file="${java.build}/server/persistance/SQLitePlugin.class" todir="plugins/SQLitePlugin"/>
     </target>
 
     <target name="our-client" depends="package" description="compiles, packages, and runs the student client">
@@ -176,6 +186,8 @@
             <fileset dir="demo/docs"/>
         </copy>
         <java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
+            <arg value="${plugin}"/>
+            <arg value="${sync}"/>
             <sysproperty key="com.sun.management.jmxremote" value=""/>
             <assertions>
                 <enable/>

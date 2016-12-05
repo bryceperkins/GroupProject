@@ -30,6 +30,7 @@ public class Game implements PostProcessor {
     private TurnTracker turnTracker;
     private TradeOffer tradeOffer;
     private DevCardList devCardDeck;
+    private transient int checkpoint;
 
     public Game(){ 
         //name = "Test";
@@ -48,6 +49,10 @@ public class Game implements PostProcessor {
 		devCardDeck.setRoadBuilding(2);
 		devCardDeck.setSoldier(15);
 		devCardDeck.setYearOfPlenty(2);	
+    }
+
+    public void setCheckpoint(int checkpoint){
+        this.checkpoint = checkpoint;
     }
 
     /**
