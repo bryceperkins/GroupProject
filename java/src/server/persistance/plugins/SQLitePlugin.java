@@ -9,7 +9,7 @@ import java.sql.*;
 import java.io.File;
 import com.google.gson.*;
 
-public class SQLitePlugin extends BasePlugin implements iPlugin {
+public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, UserDAO, GameDAO{
 
     private Database db;
     private PreparedStatement stmt;
@@ -43,6 +43,27 @@ public class SQLitePlugin extends BasePlugin implements iPlugin {
             db.safeClose(stmt);
         }
     }
+
+    public void clearAll(){
+        try {
+            Statement stmt = db.getConnection().createStatement();
+            String query = "DELETE from USER";
+            stmt.executeUpdate(query);
+            
+            query = "DELETE from COMMAND";
+            stmt.executeUpdate(query);
+            
+            query = "DELETE from GAME";
+            stmt.executeUpdate(query);
+        }
+        catch (SQLException e) {
+            System.out.println("Could not delete users. Error: " + e); 
+        }
+        finally {
+            db.safeClose(stmt);
+        }
+
+    }
     
     public HashMap<String, User> getUsers(){
         HashMap<String, User> users  = new HashMap<String, User>();
@@ -52,7 +73,7 @@ public class SQLitePlugin extends BasePlugin implements iPlugin {
             while ( rs.next() ) {
                 User user = new User();
                 user.setPlayerID(rs.getInt("id"));
-                user.setUserName(rs.getString("name"));
+                user.setUserName(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 users.put(user.getUserName(), user);
             }
@@ -177,13 +198,13 @@ public class SQLitePlugin extends BasePlugin implements iPlugin {
     private void createTables(){
         try {
             Statement stmt = db.getConnection().createStatement();
-            String query = "CREATE TABLE USER (id INT PRIMARY KEY, username TEXT, password TEXT)";
+            String query = "CREATE TABLE IF NOT EXISTS USER (id INT PRIMARY KEY, username TEXT, password TEXT)";
             stmt.executeUpdate(query);
             
-            query = "CREATE TABLE GAME (gameid int PRIMARY KEY, json TEXT)";
+            query = "CREATE TABLE IF NOT EXISTS GAME (gameid int PRIMARY KEY, json TEXT)";
             stmt.executeUpdate(query);
             
-            query = "CREATE TABLE COMMAND (gameid int, json TEXT)";
+            query = "CREATE TABLE IF NOT EXISTS COMMAND (gameid int, json TEXT)";
             stmt.executeUpdate(query);
         }
 

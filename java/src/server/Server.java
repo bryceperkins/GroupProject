@@ -36,6 +36,7 @@ public class Server {
         options.addOption("p", true, "Set the plugin type to use");
         options.addOption("t", true, "How often should the server sync");
         options.addOption("h", false, "Show the this help menu");
+        options.addOption("r", false, "Reset persistance");
 
         formatter.printHelp("catan-server", options);
 
@@ -68,6 +69,9 @@ public class Server {
         }
 
         persist.setPlugin(plugin_type);
+        if(cmd.hasOption("r")){
+            persist.reset();
+        }
         manager.setCheckpoint(checkpoint);
         manager.loadUsers();
 

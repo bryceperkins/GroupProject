@@ -11,7 +11,7 @@ import com.google.gson.*;
 import org.apache.commons.io.*;
 
 
-public class FilePlugin extends BasePlugin implements iPlugin{
+public class FilePlugin extends BasePlugin implements iPlugin, GameDAO, UserDAO, CommandDAO{
     File data_dir;
     File user_file;
     String commands_file = "commands.json";
@@ -54,6 +54,11 @@ public class FilePlugin extends BasePlugin implements iPlugin{
             System.out.println("Could not create file: " + user_file.toString());
         }
         return tmp;
+    }
+
+    public void clearAll(){
+        for(File file: data_dir.listFiles()) 
+            file.delete();
     }
     
     public void addUser(User user){

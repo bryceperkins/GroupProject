@@ -88,4 +88,8 @@ public class Persistor {
     public ArrayList<Command> getCommands(int gameId){
         return plugin.getCommands(gameId);
     }
+
+    public void reset(){
+        plugin.clearAll();
+    }
 }
