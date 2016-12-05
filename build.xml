@@ -186,8 +186,6 @@
             <fileset dir="demo/docs"/>
         </copy>
         <java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
-            <arg value="${plugin}"/>
-            <arg value="${sync}"/>
             <sysproperty key="com.sun.management.jmxremote" value=""/>
             <assertions>
                 <enable/>

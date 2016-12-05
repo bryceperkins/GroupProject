@@ -8,7 +8,11 @@ import java.net.URLClassLoader;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 import java.lang.reflect.Method;
+import java.util.List;
 
+import shared.model.Game;
+import shared.communication.User;
+import shared.commands.Command;
 import server.persistance.iPlugin;
 
 public class Persistor {

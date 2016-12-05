@@ -29,12 +29,31 @@ public class Server {
         String plugin_type = "file";
 
         Options options = new Options();
+        CommandLineParser parser = new DefaultParser();
+        HelpFormatter formatter = new HelpFormatter();
+        CommandLine cmd;
 
         options.addOption("p", true, "Set the plugin type to use");
         options.addOption("t", true, "How often should the server sync");
+        options.addOption("h", false, "Show the this help menu");
 
-        CommandLineParser parser = new DefaultParser();
-        CommandLine cmd = parser.parse( options, args);
+        formatter.printHelp("catan-server", options);
+
+        if (args.length > 0){
+            System.out.println("Check the help (-h) for command line options");
+        }
+
+        try {
+            cmd = parser.parse( options, args);
+        } catch (Exception e){
+            formatter.printHelp("catan-server", options);
+            return;
+        }
+
+        if(cmd.hasOption("h")){
+            formatter.printHelp("catan-server", options);
+            return;
+        }
 
         if(cmd.hasOption("t")){
             checkpoint = Integer.parseInt(cmd.getOptionValue("t"));
