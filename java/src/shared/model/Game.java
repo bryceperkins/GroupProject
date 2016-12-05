@@ -10,6 +10,7 @@ import shared.model.player.*;
 import shared.communication.*;
 import shared.commands.*;
 import server.persistance.Persistor;
+import server.facades.MovesFacade;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -67,6 +68,13 @@ public class Game implements PostProcessor {
         }
         recentCommands.add(c);
         persist.addCommand(id, c);
+    }
+
+    public void getCommands(){
+        recentCommands = persist.getCommands(id);
+        for(Command c: recentCommands){
+            c.serverExecute(new MovesFacade());
+        }
     }
 
     /**

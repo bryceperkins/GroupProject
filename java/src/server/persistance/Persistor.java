@@ -81,7 +81,7 @@ public class Persistor {
         plugin.clearCommands(gameId);
     }
 
-    public ArrayList getCommands(int gameId){
+    public ArrayList<Command> getCommands(int gameId){
         return plugin.getCommands(gameId);
     }
 }

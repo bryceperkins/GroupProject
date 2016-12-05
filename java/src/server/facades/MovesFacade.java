@@ -25,6 +25,8 @@ public class MovesFacade extends BaseFacade{
     GameManager manager = GameManager.getInstance();
     Persistor persist = Persistor.getInstance();
 
+    public MovesFacade(){ }
+
     public MovesFacade(User user){
         super(user);
     }
