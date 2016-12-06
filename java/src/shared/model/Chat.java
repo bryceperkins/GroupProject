@@ -1,12 +1,13 @@
 package shared.model;
 
 import java.util.*;
+import java.io.Serializable;
 
 /**
  * Contains all chat messages and their sources
  */
 
-public class Chat{
+public class Chat implements Serializable{
 	
 	private List<MessageLine> lines;
 	

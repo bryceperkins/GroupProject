@@ -2,11 +2,12 @@ package shared.locations;
 
 import shared.model.Game;
 import shared.model.PostProcessor;
+import java.io.Serializable;
 
 /**
  * Represents the location of a vertex on a hex map
  */
-public class VertexLocation implements PostProcessor
+public class VertexLocation implements PostProcessor, Serializable
 {
 	private transient HexLocation hexLoc;
 	private VertexDirection direction;

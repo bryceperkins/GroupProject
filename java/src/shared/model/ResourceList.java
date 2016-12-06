@@ -3,12 +3,13 @@ package shared.model;
 import shared.definitions.*;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 
 /**
  * Contains a list of all the resources in Catan.
  */
 
-public class ResourceList{
+public class ResourceList implements Serializable{
 	int brick;
 	int ore;
 	int sheep;

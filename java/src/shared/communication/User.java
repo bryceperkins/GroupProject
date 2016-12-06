@@ -3,8 +3,9 @@ package shared.communication;
  * A container for a User.
  */
 import client.data.*;
+import java.io.Serializable;
 
-public class User{
+public class User implements Serializable{
     private String name;
     private String password;
     private int playerID;

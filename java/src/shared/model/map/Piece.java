@@ -1,11 +1,12 @@
 package shared.model.map;
 
+import java.io.Serializable;
 import shared.model.Game;
 import shared.model.PlayerIndex;
 import shared.model.PostProcessor;
 import shared.locations.VertexLocation;
 
-public abstract class Piece implements PostProcessor {
+public abstract class Piece implements PostProcessor, Serializable {
 	
 	private PlayerIndex owner;
 	private VertexLocation location;

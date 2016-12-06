@@ -77,26 +77,15 @@ public class FilePlugin extends BasePlugin implements iPlugin, GameDAO, UserDAO,
     public void addUser(User user){
         HashMap<String, User> users = getUsers();
         users.put(user.getUserName(), user);
-
-        try {
-            FileWriter writer = new FileWriter(user_file);
-            writer.write(gson.toJson(users));
-            writer.close();
-        } catch (IOException e){
-            System.out.println("Could not write to file: " + user_file.toString());
-        }
+        
+        writeIt(user_file, users);
     }
     
     public HashMap<String, User> getUsers(){
         user_file = getFile(data_dir, "users.json");
         HashMap<String, User> users = new HashMap();
         if (user_file.length() != 0){
-            try{
-                BufferedReader reader = new BufferedReader(new FileReader(user_file));
-                users = gson.fromJson(reader, HashMap.class);
-            } catch (FileNotFoundException e){
-                System.out.println("File not found: " + user_file.toString());
-            }
+            users = (HashMap<String, User>) readIt(user_file);
         }
         System.out.println(users.toString());
         return users;
@@ -105,29 +94,16 @@ public class FilePlugin extends BasePlugin implements iPlugin, GameDAO, UserDAO,
     public void addGame(Game game){
         File game_dir = getDir("" + game.getId());
         File game_file = getFile(game_dir, games_file);
-        try {
-            FileWriter writer = new FileWriter(game_file);
-            writer.write(gson.toJson(game));
-            writer.close();
-        } catch (IOException e){
-            System.out.println("Could not write to file: " + game_file.toString());
-        }
-
+        writeIt(game_file, game);
     }
     
-    public ArrayList<Game> getGames(){
-        ArrayList<Game> games  = new ArrayList<Game>();
+    public List<Game> getGames(){
+        List<Game> games  = new ArrayList<Game>();
         for(File file: data_dir.listFiles()){ 
             if (file.isDirectory()){ 
                 File game_file = getFile(file, games_file);
                 if (game_file.length() != 0){
-                    try{
-                        BufferedReader reader = new BufferedReader(new FileReader(game_file));
-                        Game game = gson.fromJson(reader, Game.class);
-                        games.add(game);
-                    } catch (FileNotFoundException e){
-                        System.out.println("File not found: " + game_file.toString());
-                    }
+                    games.add((Game) readIt(game_file));
                 }
             }
         }
@@ -139,21 +115,40 @@ public class FilePlugin extends BasePlugin implements iPlugin, GameDAO, UserDAO,
             if (file.isDirectory()) 
                 file.delete();
     }
+
+    public void writeIt(File f, Object o){
+        try {
+            FileOutputStream fout = new FileOutputStream(f);
+            ObjectOutputStream oos = new ObjectOutputStream(fout);
+            oos.writeObject(o);
+            oos.close();
+            fout.close();
+        } catch (IOException e){
+            System.out.println("Could not write to file: " + f.toString());
+        }
+    }
+
+    public Object readIt(File f){
+        Object o = null;
+        try{
+            FileInputStream fin = new FileInputStream(f);
+            ObjectInputStream ois = new ObjectInputStream(fin);
+            o =  ois.readObject();
+            ois.close();
+            fin.close();
+        } catch (ClassNotFoundException|IOException e){
+            System.out.println("File not found: " +f.toString() + "Exception: " + e);
+        }
+        return o;
+    }
     
     public void addCommand(int gameId, Command command){
-        ArrayList<Command> commands = getCommands(gameId);
+        List<Command> commands = getCommands(gameId);
         File game_dir = getDir("" + gameId);
         File c_file = getFile(game_dir, commands_file);
         commands.add(command);
         System.out.println(commands);
-
-        try {
-            FileWriter writer = new FileWriter(c_file);
-            writer.write(gson.toJson(commands));
-            writer.close();
-        } catch (IOException e){
-            System.out.println("Could not write to file: " + c_file.toString());
-        }
+        writeIt(c_file, commands);
     }
     
     public void clearCommands(int gameId){
@@ -162,18 +157,12 @@ public class FilePlugin extends BasePlugin implements iPlugin, GameDAO, UserDAO,
         commands.delete();
     }
 
-    public ArrayList<Command> getCommands(int gameId){
+    public List<Command> getCommands(int gameId){
         File game_dir = getDir("" + gameId);
-        File command_file = getFile(game_dir, commands_file);
-        ArrayList<Command> commands = new ArrayList<Command>();
-        if (command_file.length() != 0){
-            try{
-                BufferedReader reader = new BufferedReader(new FileReader(command_file));
-                commands = gson.fromJson(reader, ArrayList.class);
-                System.out.println(commands);
-            } catch (FileNotFoundException e){
-                System.out.println("File not found: " + command_file.toString());
-            }
+        File c_file = getFile(game_dir, commands_file);
+        List<Command> commands = new ArrayList<Command>();
+        if (c_file.length() != 0){
+            commands = (ArrayList<Command>) readIt(c_file);
         }
         return commands;
     }

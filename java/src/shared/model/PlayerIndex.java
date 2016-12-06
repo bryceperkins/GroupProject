@@ -1,6 +1,7 @@
 package shared.model;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +9,7 @@ import java.util.Map;
 /**
  * Associates the index of a player with an enumerated value
  */
-public enum PlayerIndex {
+public enum PlayerIndex implements Serializable{
     @SerializedName("-1")
     None(-1),
     @SerializedName("0")

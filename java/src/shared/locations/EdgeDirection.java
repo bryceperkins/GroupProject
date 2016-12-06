@@ -1,8 +1,9 @@
 package shared.locations;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
-public enum EdgeDirection
+public enum EdgeDirection implements Serializable
 {
     @SerializedName("NW")
     NorthWest,

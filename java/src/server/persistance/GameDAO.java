@@ -7,7 +7,7 @@ import shared.communication.User;
 import shared.commands.Command;
 
 public interface GameDAO {
-    public ArrayList<Game> getGames();
+    public List<Game> getGames();
 
     public void addGame(Game game);
 

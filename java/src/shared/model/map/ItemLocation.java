@@ -1,8 +1,9 @@
 package shared.model.map;
 
 import shared.locations.*;
+import java.io.Serializable;
 
-public class ItemLocation {
+public class ItemLocation implements Serializable{
 	private HexLocation location;
 	private VertexDirection direction;
 	

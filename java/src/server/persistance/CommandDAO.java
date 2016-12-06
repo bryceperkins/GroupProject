@@ -12,5 +12,5 @@ public interface CommandDAO {
     
     public void clearCommands(int gameId);
 
-    public ArrayList<Command> getCommands(int gameId);
+    public List<Command> getCommands(int gameId);
 }

@@ -1,5 +1,6 @@
 package shared.model.map;
 
+import java.io.Serializable;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
@@ -10,7 +11,7 @@ import shared.definitions.ResourceType;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Hex implements PostProcessor {
+public class Hex implements PostProcessor, Serializable {
 	private HexLocation location;
 	private boolean hasRobber;
 	private int number;

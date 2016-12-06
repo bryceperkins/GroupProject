@@ -103,8 +103,8 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
         }
     }
     
-    public ArrayList<Game> getGames(){
-        ArrayList<Game> games  = new ArrayList<Game>();
+    public List<Game> getGames(){
+        List<Game> games  = new ArrayList<Game>();
         try {
             Statement stmt = db.getConnection().createStatement();
             rs = stmt.executeQuery( "SELECT * FROM GAME;" );
@@ -187,8 +187,8 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
         }
     }
 
-    public ArrayList<Command> getCommands(int gameid){
-        ArrayList<Command> commands  = new ArrayList<Command>();
+    public List<Command> getCommands(int gameid){
+        List<Command> commands  = new ArrayList<Command>();
         try {
             String query = "SELECT * FROM COMMAND where gameid = ?";
             stmt = db.getConnection().prepareStatement(query);

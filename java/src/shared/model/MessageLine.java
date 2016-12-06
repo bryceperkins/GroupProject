@@ -1,10 +1,12 @@
 package shared.model;
 
+import java.io.Serializable;
+
 /**
  * Contains a message body and the message's source.
  */
 
-public class MessageLine {
+public class MessageLine implements Serializable{
 	
 	private String message;
 	private String source;

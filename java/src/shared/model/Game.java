@@ -16,12 +16,13 @@ import server.facades.MovesFacade;
 
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
 /**
  * Game model class containing all local information provided by
  * the server for a given game.
  */
-public class Game implements PostProcessor {
+public class Game implements PostProcessor, Serializable {
 
     @SerializedName("title")
     private String name;
@@ -37,7 +38,7 @@ public class Game implements PostProcessor {
     private TradeOffer tradeOffer;
     private DevCardList devCardDeck;
     private transient int checkpoint = 10;
-    private transient ArrayList<Command> recentCommands = new ArrayList<Command>();
+    private transient List<Command> recentCommands = new ArrayList<Command>();
     private transient Persistor persist = Persistor.getInstance();
     private transient GameDAO gd;
     private transient CommandDAO cd;
@@ -64,6 +65,7 @@ public class Game implements PostProcessor {
     }
 
     public void setUp(){
+        persist = Persistor.getInstance();
         gd = persist.getGameDAO();
         cd = persist.getCommandDAO();
     }
@@ -77,16 +79,19 @@ public class Game implements PostProcessor {
             recentCommands.clear();
             cd.clearCommands(id);
             gd.addGame(this);
+            System.out.println("Wrote Game");
         }
         recentCommands.add(c);
         cd.addCommand(id, c);
+        System.out.println("Add command: " + c);
     }
 
     public void getCommands(){
-        ArrayList<Command> tmp = cd.getCommands(id);
-        for(int i=0; i< tmp.size(); i++){
-            System.out.println(tmp.get(i));
-        }
+        MovesFacade m = new MovesFacade();
+        m.setGame(id);
+        recentCommands = cd.getCommands(id);
+        for(Command c: recentCommands)
+            c.serverExecute(m);
     }
 
     /**

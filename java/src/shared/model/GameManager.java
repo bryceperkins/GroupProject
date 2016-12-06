@@ -26,7 +26,7 @@ public class GameManager extends Observable{
     private UserDAO ud;
     private GameDAO gd;
     private ServerProxy server;
-    private ArrayList<Game> games = new ArrayList<Game>();
+    private List<Game> games = new ArrayList<Game>();
     private PlayerInfo playerInfo;
     private Poller poller;
     private int activeGameIndex = -1;
@@ -131,7 +131,7 @@ public class GameManager extends Observable{
         activeGameIndex = id;
     }
 
-    public ArrayList<Game> getGames() {
+    public List<Game> getGames() {
         return games;
     }
 

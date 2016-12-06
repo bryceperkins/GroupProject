@@ -1,5 +1,7 @@
 package shared.model.map;
 
-public enum Direction {
+import java.io.Serializable;
+
+public enum Direction implements Serializable{
 	N,NE,NW,S,SE,SW
 }
