@@ -5,8 +5,9 @@ import java.io.*;
 
 import shared.model.Game;
 import shared.communication.User;
-import shared.commands.Command;
+import shared.commands.*;
 import server.persistance.iPlugin;
+import server.handlers.iServerCommand;
 import com.google.gson.*;
 import org.apache.commons.io.*;
 
@@ -24,6 +25,18 @@ public class FilePlugin extends BasePlugin implements iPlugin, GameDAO, UserDAO,
         user_file = getFile(data_dir, "users.json");
         System.out.println("Data dir: " + data_dir.toString());
         System.out.println("Users: " + user_file.toString());
+    }
+
+    public GameDAO getGameDAO(){
+        return this;
+    }
+
+    public UserDAO getUserDAO(){
+        return this;
+    }
+
+    public CommandDAO getCommandDAO(){
+        return this;
     }
 
     private File getDir(String name){
@@ -110,7 +123,8 @@ public class FilePlugin extends BasePlugin implements iPlugin, GameDAO, UserDAO,
                 if (game_file.length() != 0){
                     try{
                         BufferedReader reader = new BufferedReader(new FileReader(game_file));
-                        games = gson.fromJson(reader, ArrayList.class);
+                        Game game = gson.fromJson(reader, Game.class);
+                        games.add(game);
                     } catch (FileNotFoundException e){
                         System.out.println("File not found: " + game_file.toString());
                     }
@@ -151,11 +165,12 @@ public class FilePlugin extends BasePlugin implements iPlugin, GameDAO, UserDAO,
     public ArrayList<Command> getCommands(int gameId){
         File game_dir = getDir("" + gameId);
         File command_file = getFile(game_dir, commands_file);
-        ArrayList<Command> commands = new ArrayList();
+        ArrayList<Command> commands = new ArrayList<Command>();
         if (command_file.length() != 0){
             try{
                 BufferedReader reader = new BufferedReader(new FileReader(command_file));
                 commands = gson.fromJson(reader, ArrayList.class);
+                System.out.println(commands);
             } catch (FileNotFoundException e){
                 System.out.println("File not found: " + command_file.toString());
             }
