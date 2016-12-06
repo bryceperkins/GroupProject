@@ -58,19 +58,12 @@ public class TurnTracker {
 
     public void setNextTurn() {
         int nextTurnInt = currentTurn.getIndex();
-        if (status == GameStatus.SecondRound) {
+        if (round == 2){
             nextTurnInt--;
-        } else {
-            nextTurnInt++;
-        }
-
-        // handle wrapping
-        if (status == GameStatus.FirstRound && nextTurnInt == 4) {
-            nextRound();
-            nextTurnInt = 3;
-        } else if (nextTurnInt == -1 || nextTurnInt == 4) {
-            nextRound();
-            nextTurnInt = 0;
+            if (nextTurnInt < 0){
+                nextTurnInt = 0;
+                nextRound();
+            }
         }
         else{
             nextTurnInt++;

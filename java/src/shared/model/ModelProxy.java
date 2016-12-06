@@ -101,7 +101,8 @@ public class ModelProxy {
     public static boolean isPlayerTurn() {
         Game game = manager.getActiveGame();
         if (game == null || game.getTurnTracker() == null) { return false; }
-        return game.getTurnTracker().getCurrentTurn() == manager.getActivePlayerIndex();
+        Player p = manager.getActiveGame().getPlayerByName(manager.getCurrentPlayerInfo().getName());
+        return game.getTurnTracker().getCurrentTurn() == p.getPlayerIndex();
     }
 
     /**

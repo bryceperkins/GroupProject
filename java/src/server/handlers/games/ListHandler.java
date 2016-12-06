@@ -30,6 +30,6 @@ public class ListHandler extends BaseHandler{
             }
         }
         super.respond(request, code, body);
-        LOGGER.log(Level.INFO, "Finished: " + request.getRequestURI()); 
+        //LOGGER.log(Level.INFO, "Finished: " + request.getRequestURI()); 
     }
 }

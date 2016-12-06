@@ -8,6 +8,9 @@ import shared.model.map.*;
 import shared.model.map.Map;
 import shared.model.player.*;
 import shared.communication.*;
+import shared.commands.*;
+import server.persistance.Persistor;
+import server.facades.MovesFacade;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -30,6 +33,9 @@ public class Game implements PostProcessor {
     private TurnTracker turnTracker;
     private TradeOffer tradeOffer;
     private DevCardList devCardDeck;
+    private transient int checkpoint = 10;
+    private transient ArrayList<Command> recentCommands = new ArrayList<Command>();
+    private transient Persistor persist = Persistor.getInstance();
 
     public Game(){ 
         //name = "Test";
@@ -48,6 +54,28 @@ public class Game implements PostProcessor {
 		devCardDeck.setRoadBuilding(2);
 		devCardDeck.setSoldier(15);
 		devCardDeck.setYearOfPlenty(2);	
+    }
+
+    public void setCheckpoint(int checkpoint){
+        this.checkpoint = checkpoint;
+    }
+    
+    public void addCommand(Command c){
+        System.out.println(recentCommands.size());
+        if ((recentCommands.size() % checkpoint) == 0){
+            recentCommands.clear();
+            persist.clearCommands(id);
+            persist.addGame(this);
+        }
+        recentCommands.add(c);
+        persist.addCommand(id, c);
+    }
+
+    public void getCommands(){
+        recentCommands = persist.getCommands(id);
+        for(Command c: recentCommands){
+            c.serverExecute(new MovesFacade());
+        }
     }
 
     /**

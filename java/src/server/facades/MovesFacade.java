@@ -10,6 +10,8 @@ import shared.locations.VertexLocation;
 import shared.model.map.*;
 import shared.model.player.Player;
 import shared.model.map.Map;
+import server.persistance.Persistor;
+import shared.commands.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,6 +24,9 @@ public class MovesFacade extends BaseFacade{
     private final int CITY_RESOURCES = 2;
 
     GameManager manager = GameManager.getInstance();
+    Persistor persist = Persistor.getInstance();
+
+    public MovesFacade(){ }
 
     public MovesFacade(User user){
         super(user);
@@ -29,13 +34,16 @@ public class MovesFacade extends BaseFacade{
 
     private void updateAI() {
         for (Player player : getGame().getPlayers()) {
-            if (player instanceof AI) {
+            if (player instanceof AI && !((AI) player).hasPlayed()) {
+                ((AI) player).setPlayed();
                 ((AI) player).play();
             }
         }
     }
 
     public String sendChat(int index, String content){
+        getGame().addCommand(new SendChat(PlayerIndex.valueOf(index), content));
+
         if (index < 0 || index > 3) return "Failed";
         if (content == null) return "Failed";
         Game game = getGame();
@@ -58,6 +66,8 @@ public class MovesFacade extends BaseFacade{
      *  @post trade offere removed
      */
     public String acceptTrade(int index, boolean willAccept){
+        getGame().addCommand(new AcceptTrade(PlayerIndex.valueOf(index), willAccept));
+
         Game game = getGame();
         String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
 
@@ -94,6 +104,8 @@ public class MovesFacade extends BaseFacade{
      *  @post If you're the last one to discard, the client model status changes to Robbing
      */
     public String discardCards(int index, ResourceList discardedCards){
+        getGame().addCommand(new DiscardCards(PlayerIndex.valueOf(index), discardedCards));
+
         User user = getUser();
         Game game = getGame();
 
@@ -127,6 +139,8 @@ public class MovesFacade extends BaseFacade{
      *  @post client model's status is now Discarding, Robbing, or Playing
      */
     public String rollNumber(int playerInd, int number){
+        getGame().addCommand(new RollNumber(PlayerIndex.valueOf(playerInd), number));
+
         Game game = getGame();
         Map map = game.getMap();
 
@@ -234,6 +248,7 @@ public class MovesFacade extends BaseFacade{
      *  @post longest road gained if necessary
      */
     public String buildRoad(int index, boolean free, EdgeLocation roadLocation){
+        getGame().addCommand(new BuildRoad(PlayerIndex.valueOf(index), roadLocation, free));
         Game game = getGame();
         User user = getUser();
         Player player = game.getPlayerByName(user.getUserName());
@@ -291,6 +306,7 @@ public class MovesFacade extends BaseFacade{
      *  @post Settlement is on the map
      */
     public String buildSettlement(int index, boolean free, VertexLocation vertexLocation){
+        getGame().addCommand(new BuildSettlement(PlayerIndex.valueOf(index), vertexLocation, free));
         Game game = getGame();
         User user = getUser();
         Player player = game.getPlayerByName(user.getUserName());
@@ -428,6 +444,7 @@ public class MovesFacade extends BaseFacade{
      *  @post city is on the map
      */
     public String buildCity(int index, VertexLocation vertexLocation){
+        getGame().addCommand(new BuildCity(PlayerIndex.valueOf(index), vertexLocation));
 
         Game game = getGame();
         User user = getUser();
@@ -492,6 +509,7 @@ public class MovesFacade extends BaseFacade{
      *  @post trade is offered to the other player
      */
     public String offerTrade(int index, ResourceList offer, int receiver){
+        getGame().addCommand(new OfferTrade(PlayerIndex.valueOf(index), offer, PlayerIndex.valueOf(receiver)));
         Game game = getGame();
         getGame().setTradeOffer(new TradeOffer(index, receiver, offer));
         String name = game.getPlayer(PlayerIndex.valueOf(index)).getName();
@@ -514,6 +532,7 @@ public class MovesFacade extends BaseFacade{
      *  @post trade has been performed
      */
     public String maritimeTrade(int index, int ratio, ResourceType inputResource, ResourceType outputResource){
+        getGame().addCommand(new MaritimeTrade(PlayerIndex.valueOf(index), ratio, inputResource, outputResource));
         ResourceList trade = new ResourceList();
         Game game = getGame();
         switch (inputResource){
@@ -572,6 +591,7 @@ public class MovesFacade extends BaseFacade{
      *  @post Largest army awarded to player with most Solder cards
      */
     public String robPlayer(int index, HexLocation location, int victim){
+        getGame().addCommand(new RobPlayer(PlayerIndex.valueOf(index), PlayerIndex.valueOf(victim), location));
         PlayerIndex victimIndex = PlayerIndex.valueOf(victim);
         Game game = getGame();
         User user = getUser();
@@ -669,6 +689,7 @@ public class MovesFacade extends BaseFacade{
      *  @post it is the next player's turn
      */
     public String finishTurn(int index){
+        getGame().addCommand(new FinishTurn(PlayerIndex.valueOf(index)));
         Player player = getGame().getPlayer(PlayerIndex.valueOf(index));
         String message = player.getName() + "'s turn just ended.";
         getGame().getLog().addLine(new MessageLine(player.getName(), message));
@@ -718,6 +739,11 @@ public class MovesFacade extends BaseFacade{
         tracker.setLargestArmyOwner(largestArmy);
 
         updateAI();
+        for (Player p : getGame().getPlayers()) {
+            if (p instanceof AI) {
+                ((AI) p).clearPlayed();
+            }
+        }
         return getModel();
     }
 
@@ -730,6 +756,7 @@ public class MovesFacade extends BaseFacade{
      *  @post You have a new card - if it is a monument card, add it to old dev cards. Else add to new dev cards
      */
     public String buyDevCard(int index){
+        getGame().addCommand(new BuyDevCard(PlayerIndex.valueOf(index)));
         User user = getUser();
         Game game = getGame();
         Player player = game.getPlayerByName(user.getUserName());
@@ -772,6 +799,7 @@ public class MovesFacade extends BaseFacade{
      *  @post Player is not allowed to play any other dev cards this turn
      */
     public String Soldier(int index, HexLocation location, int victim){
+        getGame().addCommand(new Soldier(PlayerIndex.valueOf(index), PlayerIndex.valueOf(victim), location));
         User user = getUser();
         Game game = getGame();
         Player player = game.getPlayerByName(user.getUserName());
@@ -794,6 +822,7 @@ public class MovesFacade extends BaseFacade{
      *  @post You gained the two specified resources
      */
     public String Year_of_Plenty(int index, ResourceType resource1, ResourceType resource2){
+        getGame().addCommand(new YearOfPlenty(PlayerIndex.valueOf(index), resource1, resource2));
         User user = getUser();
         Game game = getGame();
         Player player = game.getPlayerByName(user.getUserName());
@@ -872,6 +901,7 @@ public class MovesFacade extends BaseFacade{
      *  @post longest road gained if necessary
      */
     public String Road_Building(int index, EdgeLocation spot1, EdgeLocation spot2){
+        getGame().addCommand(new RoadBuilding(PlayerIndex.valueOf(index), spot1, spot2));
         User user = getUser();
         Game game = getGame();
 
@@ -895,6 +925,7 @@ public class MovesFacade extends BaseFacade{
      *  @post You gain the amount of specified resource the other players lost
      */
     public String Monopoly(int index, ResourceType resource){
+        getGame().addCommand(new Monopoly(PlayerIndex.valueOf(index), resource));
         User user = getUser();
         Game game = getGame();
         List<Player> players = game.getPlayers();
@@ -923,6 +954,7 @@ public class MovesFacade extends BaseFacade{
      */
 
     public String Monument(int index){
+        getGame().addCommand(new Monument(PlayerIndex.valueOf(index)));
         int newVictoryPoints;
 
         Game game = getGame();

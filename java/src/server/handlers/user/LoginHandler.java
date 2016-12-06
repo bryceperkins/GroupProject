@@ -33,6 +33,6 @@ public class LoginHandler extends BaseHandler{
             LOGGER.log(Level.INFO, "Setting catan.user cookie"); 
         }
         super.respond(request, code, body);
-        LOGGER.log(Level.INFO, "Finished: " + request.getRequestURI()); 
+        //LOGGER.log(Level.INFO, "Finished: " + request.getRequestURI()); 
     }
 }

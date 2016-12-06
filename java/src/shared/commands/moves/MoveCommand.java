@@ -18,4 +18,8 @@ public abstract class MoveCommand extends Command {
     public int getIndex(){
         return playerIndex;
     }
+
+    public String getType(){
+        return type;
+    }
 }
