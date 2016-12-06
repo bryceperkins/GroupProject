@@ -1,12 +1,13 @@
 package shared.model;
 
 import java.util.*;
+import java.io.Serializable;
 
 /**
  * Contains all log messages and their sources
  */
 
-public class Log{
+public class Log implements Serializable{
 
     private List<MessageLine> lines;
 

@@ -4,8 +4,9 @@ import shared.model.Game;
 import shared.model.PostProcessor;
 import shared.locations.*;
 import shared.model.PlayerIndex;
+import java.io.Serializable;
 
-public class Road implements PostProcessor {
+public class Road implements PostProcessor, Serializable {
 	
 	private PlayerIndex owner;
 	private EdgeLocation location;

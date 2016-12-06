@@ -10,20 +10,11 @@ public interface iPlugin {
     public String getName();
 
     public void clearAll();
-    
-    public void addUser(User user);
-    
-    public HashMap<String, User> getUsers();
-    
-    public ArrayList<Game> getGames();
 
-    public void addGame(Game game);
-
-    public void clearGames();
+    public GameDAO getGameDAO();
     
-    public void addCommand(int gameid, Command command);
+    public UserDAO getUserDAO();
     
-    public void clearCommands(int gameId);
-
-    public ArrayList<Command> getCommands(int gameId);
+    public CommandDAO getCommandDAO();
+    
 }

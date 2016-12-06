@@ -1,13 +1,14 @@
 package shared.model.map;
 
 import java.util.*;
+import java.io.Serializable;
 
 import shared.model.player.*;
 import shared.model.*;
 import shared.locations.*;
 import shared.definitions.ResourceType;
 
-public class Map implements PostProcessor {
+public class Map implements PostProcessor, Serializable {
 
     private List<Hex> hexes;
     private List<Port> ports;

@@ -12,8 +12,9 @@ import shared.model.player.Player;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+import java.io.Serializable;
 
-public class AI extends Player {
+public class AI extends Player implements Serializable{
 
     private transient MovesFacade facade;
     private transient User user;

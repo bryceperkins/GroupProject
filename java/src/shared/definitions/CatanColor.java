@@ -2,8 +2,9 @@ package shared.definitions;
 
 import java.awt.Color;
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
-public enum CatanColor
+public enum CatanColor implements Serializable 
 {
     @SerializedName("red")
 	RED("red"), 

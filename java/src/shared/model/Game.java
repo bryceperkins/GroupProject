@@ -10,15 +10,19 @@ import shared.model.player.*;
 import shared.communication.*;
 import shared.commands.*;
 import server.persistance.Persistor;
+import server.persistance.CommandDAO;
+import server.persistance.GameDAO;
 import server.facades.MovesFacade;
 
+
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
 /**
  * Game model class containing all local information provided by
  * the server for a given game.
  */
-public class Game implements PostProcessor {
+public class Game implements PostProcessor, Serializable {
 
     @SerializedName("title")
     private String name;
@@ -34,8 +38,10 @@ public class Game implements PostProcessor {
     private TradeOffer tradeOffer;
     private DevCardList devCardDeck;
     private transient int checkpoint = 10;
-    private transient ArrayList<Command> recentCommands = new ArrayList<Command>();
+    private transient List<Command> recentCommands = new ArrayList<Command>();
     private transient Persistor persist = Persistor.getInstance();
+    private transient GameDAO gd;
+    private transient CommandDAO cd;
 
     public Game(){ 
         //name = "Test";
@@ -54,6 +60,14 @@ public class Game implements PostProcessor {
 		devCardDeck.setRoadBuilding(2);
 		devCardDeck.setSoldier(15);
 		devCardDeck.setYearOfPlenty(2);	
+
+        setUp();
+    }
+
+    public void setUp(){
+        persist = Persistor.getInstance();
+        gd = persist.getGameDAO();
+        cd = persist.getCommandDAO();
     }
 
     public void setCheckpoint(int checkpoint){
@@ -61,21 +75,23 @@ public class Game implements PostProcessor {
     }
     
     public void addCommand(Command c){
-        System.out.println(recentCommands.size());
         if ((recentCommands.size() % checkpoint) == 0){
             recentCommands.clear();
-            persist.clearCommands(id);
-            persist.addGame(this);
+            cd.clearCommands(id);
+            gd.addGame(this);
+            System.out.println("Wrote Game");
         }
         recentCommands.add(c);
-        persist.addCommand(id, c);
+        cd.addCommand(id, c);
+        System.out.println("Add command: " + c);
     }
 
     public void getCommands(){
-        recentCommands = persist.getCommands(id);
-        for(Command c: recentCommands){
-            c.serverExecute(new MovesFacade());
-        }
+        MovesFacade m = new MovesFacade();
+        m.setGame(id);
+        recentCommands = cd.getCommands(id);
+        for(Command c: recentCommands)
+            c.serverExecute(m);
     }
 
     /**

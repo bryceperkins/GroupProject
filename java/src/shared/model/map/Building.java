@@ -1,8 +1,9 @@
 package shared.model.map;
 
 import shared.model.player.*;
+import java.io.Serializable;
 
-public abstract class Building {
+public abstract class Building implements Serializable {
 	
 	/**
 	 * checks if player can place a building a give intersection

@@ -12,6 +12,8 @@ import com.google.gson.JsonParser;
 import shared.communication.User;
 import client.*;
 import server.persistance.Persistor;
+import server.persistance.UserDAO;
+import server.persistance.GameDAO;
 
 /**
  * Facade class which statically manages the client's games and updates
@@ -20,8 +22,11 @@ import server.persistance.Persistor;
 public class GameManager extends Observable{
 
     private static final GameManager INSTANCE = new GameManager();
+    private Persistor persistor = Persistor.getInstance();
+    private UserDAO ud;
+    private GameDAO gd;
     private ServerProxy server;
-    private ArrayList<Game> games = new ArrayList<Game>();
+    private List<Game> games = new ArrayList<Game>();
     private PlayerInfo playerInfo;
     private Poller poller;
     private int activeGameIndex = -1;
@@ -32,9 +37,14 @@ public class GameManager extends Observable{
     private GameManager () {}
 
     public void loadAll(){
-        Persistor persistor = persistor.getInstance();
-        users = persistor.getUsers();
-        games = persistor.getGames();
+        ud = persistor.getUserDAO();
+        gd = persistor.getGameDAO();
+        users = ud.getUsers();
+        games = gd.getGames();
+        for(Game game: games){
+            game.setUp();
+            game.getCommands();
+        }
     }
 
     public HashMap<String, User> getUsers(){
@@ -54,7 +64,7 @@ public class GameManager extends Observable{
         }
         user.setPlayerID(users.size());
         users.put(user.getUserName(), user);
-        persistor.addUser(user);
+        ud.addUser(user);
         return user;
     }
 
@@ -121,7 +131,7 @@ public class GameManager extends Observable{
         activeGameIndex = id;
     }
 
-    public ArrayList<Game> getGames() {
+    public List<Game> getGames() {
         return games;
     }
 

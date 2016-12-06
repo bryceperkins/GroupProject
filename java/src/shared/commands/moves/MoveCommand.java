@@ -2,8 +2,9 @@ package shared.commands;
 
 import shared.communication.*;
 import shared.model.PlayerIndex;
+import java.io.*;
 
-public abstract class MoveCommand extends Command {
+public abstract class MoveCommand extends Command{
     private String type;
     private int playerIndex;
 

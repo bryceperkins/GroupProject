@@ -1,9 +1,11 @@
 package shared.model;
 
+import java.io.Serializable;
+
 /**
  * Handles a trade offer between two players
  */
-public class TradeOffer {
+public class TradeOffer implements Serializable{
 
     private PlayerIndex sender;
     private PlayerIndex receiver;

@@ -1,5 +1,7 @@
 package shared.model.map;
 
-public class Intersection {
+import java.io.Serializable;
+
+public class Intersection implements Serializable{
 
 }

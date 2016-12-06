@@ -2,12 +2,13 @@ package shared.locations;
 
 import shared.model.Game;
 import shared.model.PostProcessor;
+import java.io.Serializable;
 
 
 /**
  * Represents the location of an edge on a hex map
  */
-public class EdgeLocation implements PostProcessor
+public class EdgeLocation implements PostProcessor, Serializable
 {
 	
 	private transient HexLocation hexLoc;

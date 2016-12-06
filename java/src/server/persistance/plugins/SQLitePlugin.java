@@ -9,6 +9,8 @@ import java.sql.*;
 import java.io.File;
 import com.google.gson.*;
 
+import server.handlers.iServerCommand;
+
 public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, UserDAO, GameDAO{
 
     private Database db;
@@ -25,6 +27,19 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
             System.out.println("Uh oh ... sql problems");
         }
     }
+
+    public GameDAO getGameDAO(){
+        return this;
+    }
+
+    public CommandDAO getCommandDAO(){
+        return this;
+    }
+
+    public UserDAO getUserDAO(){
+        return this;
+    }
+
     public void addUser(User user){
         try {
             String query = "insert or replace into USER (id, username, password) values (?, ?, ?)";
@@ -88,8 +103,8 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
         }
     }
     
-    public ArrayList<Game> getGames(){
-        ArrayList<Game> games  = new ArrayList<Game>();
+    public List<Game> getGames(){
+        List<Game> games  = new ArrayList<Game>();
         try {
             Statement stmt = db.getConnection().createStatement();
             rs = stmt.executeQuery( "SELECT * FROM GAME;" );
@@ -172,8 +187,8 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
         }
     }
 
-    public ArrayList getCommands(int gameid){
-        ArrayList<Command> commands  = new ArrayList<Command>();
+    public List<Command> getCommands(int gameid){
+        List<Command> commands  = new ArrayList<Command>();
         try {
             String query = "SELECT * FROM COMMAND where gameid = ?";
             stmt = db.getConnection().prepareStatement(query);

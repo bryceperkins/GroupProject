@@ -4,8 +4,9 @@ import com.google.gson.annotations.SerializedName;
 import shared.definitions.*;
 import shared.locations.*;
 import shared.model.ResourceList;
+import java.io.Serializable;
 
-public class Port {
+public class Port implements Serializable{
 
 
     @SerializedName("resource")

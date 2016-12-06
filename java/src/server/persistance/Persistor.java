@@ -12,11 +12,18 @@ import shared.model.Game;
 import shared.communication.User;
 import shared.commands.Command;
 import server.persistance.iPlugin;
+import server.persistance.CommandDAO;
+import server.persistance.GameDAO;
+import server.persistance.UserDAO;
 
 public class Persistor {
     private iPlugin plugin;
     private static Persistor INSTANCE;
     private ServiceLoader<iPlugin> loader;
+
+    private GameDAO gd;
+    private UserDAO ud;
+    private CommandDAO cd;
 
     private Persistor () {
         loader = ServiceLoader.load(iPlugin.class);
@@ -48,6 +55,21 @@ public class Persistor {
         if (found){
             System.out.println("Using plugin: " + plugin.getName());
         }
+        gd = plugin.getGameDAO();
+        cd = plugin.getCommandDAO();
+        ud = plugin.getUserDAO();
+    }
+
+    public GameDAO getGameDAO(){
+        return gd;
+    }
+
+    public UserDAO getUserDAO(){
+        return ud;
+    }
+
+    public CommandDAO getCommandDAO(){
+        return cd;
     }
 
     public static Persistor getInstance(){
@@ -55,38 +77,6 @@ public class Persistor {
             INSTANCE = new Persistor();
         }
         return INSTANCE;
-    }
-    
-    public void addUser(User user) {
-        plugin.addUser(user);
-    }
-    
-    public HashMap<String, User> getUsers() {
-        return plugin.getUsers();
-    }
-    
-    public ArrayList<Game> getGames(){
-        return plugin.getGames();
-    }
-
-    public void addGame(Game game){
-        plugin.addGame(game);
-    }
-
-    public void clearGames() {
-        plugin.clearGames();
-    }
-    
-    public void addCommand(int gameid, Command command){
-        plugin.addCommand(gameid, command);
-    }
-    
-    public void clearCommands(int gameId){
-        plugin.clearCommands(gameId);
-    }
-
-    public ArrayList<Command> getCommands(int gameId){
-        return plugin.getCommands(gameId);
     }
 
     public void reset(){

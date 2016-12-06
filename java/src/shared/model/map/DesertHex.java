@@ -1,5 +1,7 @@
 package shared.model.map;
 
-public class DesertHex {
+import java.io.Serializable;
+
+public class DesertHex implements Serializable {
 
 }

@@ -1,5 +1,7 @@
 package shared.model.map;
 
-public class OceanHex {
+import java.io.Serializable;
+
+public class OceanHex implements Serializable{
 
 }

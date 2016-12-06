@@ -3,11 +3,12 @@ package shared.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Observable;
+import java.io.Serializable;
 
 /**
  * Keeps track of the current turn and game state for a given game
  */
-public class TurnTracker {
+public class TurnTracker implements Serializable{
 
     private PlayerIndex currentTurn;
     private GameStatus status;

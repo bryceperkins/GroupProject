@@ -1,8 +1,9 @@
 package shared.model.player;
 
 import shared.definitions.*;
+import java.io.Serializable;
 
-public class DevCardList {
+public class DevCardList implements Serializable{
 
 	private int monopoly = 0;
 	private int monument = 0;

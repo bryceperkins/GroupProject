@@ -15,9 +15,10 @@ import shared.commands.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.io.Serializable;
 
 
-public class MovesFacade extends BaseFacade{
+public class MovesFacade extends BaseFacade implements Serializable{
 
     private final int ROBBING_ROLL = 7;
     private final int SETTLEMENT_RESOURCES = 1;

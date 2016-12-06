@@ -1,5 +1,7 @@
 package shared.model.map;
 
-public class ResourceHex {
+import java.io.Serializable;
+
+public class ResourceHex implements Serializable{
 
 }

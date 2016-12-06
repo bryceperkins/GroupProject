@@ -10,8 +10,9 @@ import shared.model.map.*;
 import shared.definitions.*;
 import com.google.gson.annotations.SerializedName;
 import shared.locations.*;
+import java.io.Serializable;
 
-public class Player implements PostProcessor {
+public class Player implements PostProcessor, Serializable {
 	@SerializedName("cities")
 	private int citiesRemaining;
     @SerializedName("color")
