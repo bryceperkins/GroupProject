@@ -23,8 +23,6 @@ public class FilePlugin extends BasePlugin implements iPlugin, GameDAO, UserDAO,
         super("file");
         data_dir = getDir("data");
         user_file = getFile(data_dir, "users.json");
-        System.out.println("Data dir: " + data_dir.toString());
-        System.out.println("Users: " + user_file.toString());
     }
 
     public GameDAO getGameDAO(){

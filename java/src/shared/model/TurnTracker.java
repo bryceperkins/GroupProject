@@ -80,7 +80,6 @@ public class TurnTracker implements Serializable{
                 setGameStatus(GameStatus.Rolling);
             }
         }
-        System.out.println("Current Turn: " + currentTurn + " Next Turn: " + PlayerIndex.valueOf(nextTurnInt));
         this.currentTurn = PlayerIndex.valueOf(nextTurnInt);
     }
 

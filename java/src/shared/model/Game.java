@@ -54,13 +54,13 @@ public class Game implements PostProcessor, Serializable {
         players = new ArrayList<Player>();
         turnTracker = new TurnTracker();
 		devCardDeck = new DevCardList();
-		
-		devCardDeck.setMonopoly(2);
+        
+        devCardDeck.setMonopoly(2);
 		devCardDeck.setMonument(5);
 		devCardDeck.setRoadBuilding(2);
 		devCardDeck.setSoldier(15);
 		devCardDeck.setYearOfPlenty(2);	
-
+		
         setUp(checkpoint);
     }
 
@@ -81,29 +81,23 @@ public class Game implements PostProcessor, Serializable {
             recentCommands.clear();
             cd.clearCommands(id);
             gd.addGame(this);
-            System.out.println("Wrote Game");
         }
         recentCommands.add(c);
         cd.addCommand(id, c);
-        System.out.println("Add command: " + c);
     }
 
     public void getCommands(){
         for (Player player : players) {
             if (player instanceof AI ) {
-                ((AI) player).setPlayed();
                 ((AI) player).setUp(id, player.getName());
             }
         }
         MovesFacade m = new MovesFacade();
         m.setGame(id);
-        for(Command c: cd.getCommands(id))
+        List<Command> tmp = cd.getCommands(id);
+        System.out.println(tmp.size() + " recent commands");
+        for(Command c: tmp)
             c.serverExecute(m);
-        for (Player player : players) {
-            if (player instanceof AI ) {
-                ((AI) player).clearPlayed();
-            }
-        }
     }
 
     /**
@@ -150,7 +144,7 @@ public class Game implements PostProcessor, Serializable {
 		randomizerList.add(DevCardType.ROAD_BUILD);
 	
 	}		
-	returnCard = randomizerList.get(randy.nextInt() % randomizerList.size());
+	returnCard = randomizerList.get(randy.nextInt(randomizerList.size()));
 
 	devCardDeck.removeCard(returnCard);
 

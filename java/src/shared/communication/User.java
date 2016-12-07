@@ -20,7 +20,6 @@ public class User implements Serializable{
     public User(String name, String password) {
         setUserName(name);
         setPassword(password);
-        System.out.println("Created user: " + name + " with password: " + password);
     }
 
     public void setUserName(String name) {

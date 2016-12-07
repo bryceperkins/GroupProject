@@ -117,7 +117,6 @@ public class MovesFacade extends BaseFacade implements Serializable{
         boolean done = true;
 
         for (Player p: getGame().getPlayers()){
-            System.out.println("Player: " + p.getName() + " " + p.getResources().total() + " " + p.didDiscard());
             if (p.getResources().total() > 7 && !p.didDiscard()) {
                 done = false;
             }
