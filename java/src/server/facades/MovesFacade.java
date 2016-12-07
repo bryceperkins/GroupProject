@@ -35,8 +35,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
 
     private void updateAI() {
         for (Player player : getGame().getPlayers()) {
-            if (player instanceof AI && !((AI) player).hasPlayed()) {
-                ((AI) player).setPlayed();
+            if (player instanceof AI) {
                 ((AI) player).play();
             }
         }
@@ -741,11 +740,6 @@ public class MovesFacade extends BaseFacade implements Serializable{
 
         getGame().setTracker(tracker);
         updateAI();
-        for (Player p : getGame().getPlayers()) {
-            if (p instanceof AI) {
-                ((AI) p).clearPlayed();
-            }
-        }
         return getModel();
     }
 
