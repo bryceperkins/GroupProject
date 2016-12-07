@@ -9,6 +9,7 @@ import shared.model.GameManager;
 public class BaseFacade implements iServerFacade {
     private GameManager manager = GameManager.getInstance();
     private User user;
+    private int gameid;
 
     public BaseFacade(){}
 
@@ -17,11 +18,15 @@ public class BaseFacade implements iServerFacade {
     }
 
     public Game getGame() {
-        return manager.getGame(user.getGameID());
+        if (this.user != null)
+            gameid = user.getGameID();
+        return manager.getGame(gameid);
     }
 
     public void setGame(int game) {
-        this.user.setGameID(game);
+        if (this.user != null)
+            this.user.setGameID(game);
+        this.gameid = game;
     }
 
     public User getUser() {

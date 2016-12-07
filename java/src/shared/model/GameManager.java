@@ -32,7 +32,7 @@ public class GameManager extends Observable{
     private int activeGameIndex = -1;
     private GameController gameController = new GameController();
     private HashMap<String, User> users = new HashMap();
-    private int checkpoint;
+    private int checkpoint = 10;
 
     private GameManager () {}
 
@@ -42,7 +42,7 @@ public class GameManager extends Observable{
         users = ud.getUsers();
         games = gd.getGames();
         for(Game game: games){
-            game.setUp();
+            game.setUp(10);
             game.getCommands();
         }
     }
