@@ -110,7 +110,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
         User user = getUser();
         Game game = getGame();
 
-        Player player = game.getPlayerByName(user.getUserName());
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
         player.getResources().removeResources(discardedCards);
         player.discarded();
         game.getBank().addResources(discardedCards);
@@ -252,7 +252,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
         getGame().addCommand(new BuildRoad(PlayerIndex.valueOf(index), roadLocation, free));
         Game game = getGame();
         User user = getUser();
-        Player player = game.getPlayerByName(user.getUserName());
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
         int remainingRoads = player.getRoadsRemaining();
 
         Map map = game.getMap();
@@ -279,7 +279,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
             existingRoads.add(road);
             map.setRoads(existingRoads);
 
-            logBuild(user.getUserName(), "road");
+            logBuild(player.getName(), "road");
             return getModel();
         }
 
@@ -309,8 +309,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
     public String buildSettlement(int index, boolean free, VertexLocation vertexLocation){
         getGame().addCommand(new BuildSettlement(PlayerIndex.valueOf(index), vertexLocation, free));
         Game game = getGame();
-        User user = getUser();
-        Player player = game.getPlayerByName(user.getUserName());
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
         int remainingSettlements = player.getSettlementsRemaining();
 
         ItemLocation location = new ItemLocation(vertexLocation.getHexLoc(),vertexLocation.getDirection());
@@ -346,16 +345,16 @@ public class MovesFacade extends BaseFacade implements Serializable{
             map.setSettlements(existingSettlements);
 
             if(state.isSecondRound()){
-                giveSecondRoundResources(vertexLocation);
+                giveSecondRoundResources(index, vertexLocation);
             }
 
-            logBuild(user.getUserName(), "settlement");
+            logBuild(player.getName(), "settlement");
             return getModel();
         }
         return "Failed";
     }
 
-    private void giveSecondRoundResources(VertexLocation settlement){
+    private void giveSecondRoundResources(int index, VertexLocation settlement){
         VertexLocation location = settlement.getNormalizedLocation();
         VertexDirection direction = location.getDir();
         HexLocation hexLoc = location.getHexLoc();
@@ -383,26 +382,26 @@ public class MovesFacade extends BaseFacade implements Serializable{
                 break;
         }
 
-        getHexToGivePlayerResource(hexLoc);
-        getHexToGivePlayerResource(hexLoc2);
-        getHexToGivePlayerResource(hexLoc3);
+        getHexToGivePlayerResource(index, hexLoc);
+        getHexToGivePlayerResource(index, hexLoc2);
+        getHexToGivePlayerResource(index, hexLoc3);
     }
 
-    private void getHexToGivePlayerResource(HexLocation loc){
+    private void getHexToGivePlayerResource(int index, HexLocation loc){
         Game game = getGame();
         List<Hex> hexes = game.getMap().getHexes();
         for(Hex hex: hexes){
             HexLocation hexLoc = hex.getLocation();
             if(hexLoc.equals(loc)){
-                addResourceToPlayer(hex.getResource());
+                addResourceToPlayer(index, hex.getResource());
             }
         }
     }
 
-    private void addResourceToPlayer(ResourceType resource){
+    private void addResourceToPlayer(int index, ResourceType resource){
         Game game = getGame();
         User user = getUser();
-        Player player = game.getPlayerByName(user.getUserName());
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
         ResourceList playerResources = player.getResources();
         ResourceList bank = game.getBank();
 
@@ -449,7 +448,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
 
         Game game = getGame();
         User user = getUser();
-        Player player = game.getPlayerByName(user.getUserName());
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
         int citiesRemaining = player.getCitiesRemaining();
 
         ItemLocation location = new ItemLocation(vertexLocation.getHexLoc(),vertexLocation.getDirection());
@@ -492,7 +491,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
                 }
             }
 
-            logBuild(user.getUserName(), "city");
+            logBuild(player.getName(), "city");
             return getModel();
         }
 
@@ -598,7 +597,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
         User user = getUser();
         Map map = game.getMap();
         Random rand = new Random();
-        Player player = game.getPlayerByName(user.getUserName());
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
         Robber robber = map.getRobber();
 
         if(victim == -1){
@@ -760,7 +759,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
         getGame().addCommand(new BuyDevCard(PlayerIndex.valueOf(index)));
         User user = getUser();
         Game game = getGame();
-        Player player = game.getPlayerByName(user.getUserName());
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
 
         ResourceList playerResources = player.getResources();
 
@@ -803,7 +802,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
         getGame().addCommand(new Soldier(PlayerIndex.valueOf(index), PlayerIndex.valueOf(victim), location));
         User user = getUser();
         Game game = getGame();
-        Player player = game.getPlayerByName(user.getUserName());
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
 
         player.removeDevCard(DevCardType.SOLDIER);
         robPlayer(index, location, victim);
@@ -826,7 +825,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
         getGame().addCommand(new YearOfPlenty(PlayerIndex.valueOf(index), resource1, resource2));
         User user = getUser();
         Game game = getGame();
-        Player player = game.getPlayerByName(user.getUserName());
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
 
 		ResourceList resources = player.getResources();
 		ResourceList bank = game.getBank();
@@ -906,7 +905,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
         User user = getUser();
         Game game = getGame();
 
-        Player player = game.getPlayerByName(user.getUserName());
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
         player.removeDevCard(DevCardType.ROAD_BUILD);
 
         //public String buildRoad(int index, boolean free, EdgeLocation roadLocation){
@@ -930,7 +929,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
         User user = getUser();
         Game game = getGame();
         List<Player> players = game.getPlayers();
-        Player player = game.getPlayerByName(user.getUserName());
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
 
         player.removeDevCard(DevCardType.MONOPOLY);
 
@@ -960,7 +959,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
 
         Game game = getGame();
         User user = getUser();
-        Player player = game.getPlayerByName(user.getUserName());
+        Player player = game.getPlayer(PlayerIndex.valueOf(index));
 
         player.removeDevCard(DevCardType.MONUMENT);
 

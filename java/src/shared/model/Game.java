@@ -14,7 +14,7 @@ import server.persistance.CommandDAO;
 import server.persistance.GameDAO;
 import server.facades.MovesFacade;
 
-
+import org.apache.commons.lang3.tuple.Pair;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
@@ -38,7 +38,7 @@ public class Game implements PostProcessor, Serializable {
     private TradeOffer tradeOffer;
     private DevCardList devCardDeck;
     private transient int checkpoint = 10;
-    private transient List<Command> recentCommands = new ArrayList<Command>();
+    private transient List<Command> recentCommands;
     private transient Persistor persist = Persistor.getInstance();
     private transient GameDAO gd;
     private transient CommandDAO cd;
@@ -61,13 +61,16 @@ public class Game implements PostProcessor, Serializable {
 		devCardDeck.setSoldier(15);
 		devCardDeck.setYearOfPlenty(2);	
 
-        setUp();
+        setUp(checkpoint);
     }
 
-    public void setUp(){
+    public void setUp(int checkpoint){
         persist = Persistor.getInstance();
         gd = persist.getGameDAO();
         cd = persist.getCommandDAO();
+        this.checkpoint = checkpoint;
+        recentCommands = new ArrayList<Command>();
+
     }
 
     public void setCheckpoint(int checkpoint){
@@ -87,11 +90,21 @@ public class Game implements PostProcessor, Serializable {
     }
 
     public void getCommands(){
+        for (Player player : players) {
+            if (player instanceof AI ) {
+                ((AI) player).setPlayed();
+                ((AI) player).setUp(id, player.getName());
+            }
+        }
         MovesFacade m = new MovesFacade();
         m.setGame(id);
-        recentCommands = cd.getCommands(id);
-        for(Command c: recentCommands)
+        for(Command c: cd.getCommands(id))
             c.serverExecute(m);
+        for (Player player : players) {
+            if (player instanceof AI ) {
+                ((AI) player).clearPlayed();
+            }
+        }
     }
 
     /**
