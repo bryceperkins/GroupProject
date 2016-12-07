@@ -188,6 +188,7 @@
         </copy>
         <java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
             <sysproperty key="com.sun.management.jmxremote" value=""/>
+            <arg line="${args}"/>
             <assertions>
                 <enable/>
             </assertions>

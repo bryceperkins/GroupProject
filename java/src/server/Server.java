@@ -38,12 +38,6 @@ public class Server {
         options.addOption("h", false, "Show the this help menu");
         options.addOption("r", false, "Reset persistance");
 
-        formatter.printHelp("catan-server", options);
-
-        if (args.length > 0){
-            System.out.println("Check the help (-h) for command line options");
-        }
-
         try {
             cmd = parser.parse( options, args);
         } catch (Exception e){
@@ -58,19 +52,20 @@ public class Server {
 
         if(cmd.hasOption("t")){
             checkpoint = Integer.parseInt(cmd.getOptionValue("t"));
-        } else {
-            System.out.println("Using default value of " + checkpoint + " commands per sync");
         }
 
         if(cmd.hasOption("p")){
             plugin_type = cmd.getOptionValue("p");
-        } else {
-            System.out.println("Using default plugin " + plugin_type);
         }
+            
+        System.out.println("Running checkpoint at " + checkpoint + " commands");
+        System.out.println("Using plugin: " + plugin_type);
 
         persist.setPlugin(plugin_type);
+
         if(cmd.hasOption("r")){
             persist.reset();
+            System.out.println("Reseting persistance...");
         }
         manager.setCheckpoint(checkpoint);
         manager.loadAll();

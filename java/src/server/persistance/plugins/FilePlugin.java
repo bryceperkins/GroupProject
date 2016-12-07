@@ -68,8 +68,13 @@ public class FilePlugin extends BasePlugin implements iPlugin, GameDAO, UserDAO,
     }
 
     public void clearAll(){
-        for(File file: data_dir.listFiles()) 
+        for(File file: data_dir.listFiles()){ 
+            if (file.isDirectory()){ 
+                for(File f: file.listFiles()) 
+                    f.delete();
+            }
             file.delete();
+        }
     }
     
     public void addUser(User user){
