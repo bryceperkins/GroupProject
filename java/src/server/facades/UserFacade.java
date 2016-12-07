@@ -19,8 +19,10 @@ public class UserFacade extends BaseFacade{
     public String login(String username, String password){
         String success = "Failed";
         User user = new User(username, password); 
-        if(manager.login(user)){
+        int answer = manager.login(user);
+        if(answer >= 0){
             success = "Success"; 
+            user.setPlayerID(answer);
             setUser(user);
         }
         return success;

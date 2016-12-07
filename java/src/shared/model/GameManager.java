@@ -51,11 +51,11 @@ public class GameManager extends Observable{
         return users;
     }
 
-    public boolean login(User user){
+    public int login(User user){
         if (users.get(user.getUserName()).equals(user)){
-            return true;
+            return users.get(user.getUserName()).getPlayerID();
         }
-        return false;
+        return -1;
     }
 
     public User register(User user){
