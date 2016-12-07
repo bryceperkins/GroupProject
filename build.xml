@@ -114,7 +114,9 @@
 
     <target name="clean" description="clean build files" >
         <delete dir="${java.build}"/>
-        <delete dir="${java.dist}"/>
+        <delete>
+            <fileset dir="${java.dist}/" includes="**/*.jar"/>
+        </delete>
     </target>
 
     <target name="compile" depends="init" description="compile the source " >
