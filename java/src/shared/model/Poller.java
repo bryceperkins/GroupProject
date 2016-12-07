@@ -53,7 +53,9 @@ public class Poller extends Thread {
             else {
                 JsonArray gamesArray = new JsonParser().parse(new_response).getAsJsonArray();
                 for (int i=0; i < gamesArray.size(); i++){
+                    System.out.println(gamesArray);
                     Game game = gson.fromJson(gamesArray.get(i), Game.class);
+                    System.out.println(game.getName());
                     manager.addGame(game);
                 }
             }

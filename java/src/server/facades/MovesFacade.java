@@ -145,7 +145,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
         Game game = getGame();
         Map map = game.getMap();
 
-        logRoll(number);
+        logRoll(playerInd, number);
 
         if (number == ROBBING_ROLL) {
             boolean discarding = false;
@@ -220,15 +220,16 @@ public class MovesFacade extends BaseFacade implements Serializable{
         }
     }
 
-    private void logRoll(int number) {
-        String logMessage = getUser().getUserName() + " rolled ";
+    private void logRoll(int index, int number) {
+        String name = getGame().getPlayer(PlayerIndex.valueOf(index)).getName();
+        String logMessage = name + " rolled ";
         if (number == 8 || number == 11) {
             logMessage += " an " + number;
         } else {
             logMessage += " a " + number;
         }
 
-        getGame().getLog().addLine(new MessageLine(getUser().getUserName(), logMessage));
+        getGame().getLog().addLine(new MessageLine(name, logMessage));
     }
 
     /**
@@ -692,10 +693,10 @@ public class MovesFacade extends BaseFacade implements Serializable{
         getGame().addCommand(new FinishTurn(PlayerIndex.valueOf(index)));
         Player player = getGame().getPlayer(PlayerIndex.valueOf(index));
         String message = player.getName() + "'s turn just ended.";
-        getGame().getLog().addLine(new MessageLine(player.getName(), message));
         TurnTracker tracker = getGame().getTurnTracker();
-
+        getGame().getLog().addLine(new MessageLine(player.getName(), message));
         tracker.setNextTurn();
+
         player.transferNewDevCards();
 
         PlayerIndex mostRoads = tracker.getLongestRoadOwner();
@@ -738,6 +739,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
         tracker.setLongestRoadOwner(mostRoads);
         tracker.setLargestArmyOwner(largestArmy);
 
+        getGame().setTracker(tracker);
         updateAI();
         for (Player p : getGame().getPlayers()) {
             if (p instanceof AI) {

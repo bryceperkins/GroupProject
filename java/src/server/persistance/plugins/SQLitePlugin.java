@@ -121,6 +121,11 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
             db.safeClose(stmt);
             db.safeClose(rs);
         }
+        Collections.sort(games, new Comparator<Game>(){
+            public int compare(Game g1, Game g2){
+                return (g1.getId() - g2.getId());
+            }
+        });
         return games;
     }
 

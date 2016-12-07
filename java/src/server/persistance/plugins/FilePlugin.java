@@ -100,13 +100,20 @@ public class FilePlugin extends BasePlugin implements iPlugin, GameDAO, UserDAO,
     public List<Game> getGames(){
         List<Game> games  = new ArrayList<Game>();
         for(File file: data_dir.listFiles()){ 
+            System.out.println("Checking " + file.toString());
             if (file.isDirectory()){ 
                 File game_file = getFile(file, games_file);
+                System.out.println("Checking " + game_file.toString());
                 if (game_file.length() != 0){
                     games.add((Game) readIt(game_file));
                 }
             }
         }
+        Collections.sort(games, new Comparator<Game>(){
+            public int compare(Game g1, Game g2){
+                return (g1.getId() - g2.getId());
+            }
+        });
         return games;
     }
 

@@ -145,6 +145,10 @@ public class GameManager extends Observable{
         return (index < 0) ? null : games.get(index);
     }
 
+    public void saveGame(Game game){
+        gd.addGame(game);
+    }
+
     public void addGame(Game game) {
         if(game.getId() >= games.size()){
             games.add(game.getId(), game);

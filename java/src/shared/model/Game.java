@@ -70,7 +70,6 @@ public class Game implements PostProcessor, Serializable {
         cd = persist.getCommandDAO();
         this.checkpoint = checkpoint;
         recentCommands = new ArrayList<Command>();
-
     }
 
     public void setCheckpoint(int checkpoint){
@@ -246,6 +245,10 @@ public class Game implements PostProcessor, Serializable {
     public TurnTracker getTurnTracker() {
         return turnTracker;
     }
+    
+    public void setTracker(TurnTracker t) {
+        turnTracker = t;
+    }
 
     public State getState(){
         if (getTurnTracker().getStatus() == null)
@@ -280,4 +283,5 @@ public class Game implements PostProcessor, Serializable {
         }
         return game;
     }
+
 }

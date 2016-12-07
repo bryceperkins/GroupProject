@@ -64,6 +64,7 @@ public class TurnTracker implements Serializable{
             if (nextTurnInt < 0){
                 nextTurnInt = 0;
                 nextRound();
+                setGameStatus(GameStatus.Rolling);
             }
         }
         else{
@@ -71,13 +72,16 @@ public class TurnTracker implements Serializable{
             if (nextTurnInt > 3){
                 nextTurnInt = 3;
                 if (round > 2){
-                    setGameStatus(GameStatus.Rolling);
                     nextTurnInt = 0;
                 }
                 nextRound();
             }
+            if (round > 2){
+                setGameStatus(GameStatus.Rolling);
+            }
         }
-        currentTurn = PlayerIndex.valueOf(nextTurnInt);
+        System.out.println("Current Turn: " + currentTurn + " Next Turn: " + PlayerIndex.valueOf(nextTurnInt));
+        this.currentTurn = PlayerIndex.valueOf(nextTurnInt);
     }
 
     public void nextRound() {

@@ -37,7 +37,6 @@ public class GamesFacade extends BaseFacade{
 		game.setName(name);
 		game.setId(createId());
 		shared.model.map.Map map = new shared.model.map.Map(tiles, ports, numbers);
-		game.setMap(map);
 		manager.addGame(game);
         join(game.getId(), CatanColor.RED);
         return getModel();
@@ -105,6 +104,7 @@ public class GamesFacade extends BaseFacade{
         else {
             return "Failed";
         }
+        manager.saveGame(game);
         return success;
     }
 
