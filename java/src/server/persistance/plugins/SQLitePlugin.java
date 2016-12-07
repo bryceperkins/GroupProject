@@ -1,6 +1,7 @@
 package server.persistance;
 
 import java.util.*;
+import java.io.*;
 
 import shared.model.Game;
 import shared.communication.User;
@@ -109,7 +110,7 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
             Statement stmt = db.getConnection().createStatement();
             rs = stmt.executeQuery( "SELECT * FROM GAME;" );
             while ( rs.next() ) {
-                Game game = gson.fromJson(rs.getString("json"), Game.class);
+                Game game = (Game) readIt(rs.getBinaryStream("game"));
                 games.add(game);
             }
         }
@@ -125,11 +126,11 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
 
     public void addGame(Game game){
         try {
-            String query = "insert or replace into GAME (gameid, json) values (?, ?)";
+            String query = "insert or replace into GAME (gameid, game) values (?, ?)";
 
             stmt = db.getConnection().prepareStatement(query);
             stmt.setInt(1, game.getId());
-            stmt.setString(2, gson.toJson(game));
+            stmt.setBytes(2, blobIt(game));
             stmt.executeUpdate();
         }
         catch (SQLException e) {
@@ -156,11 +157,11 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
     
     public void addCommand(int gameid, Command command){
         try {
-            String query = "insert into COMMAND (gameid, json) values (?, ?)";
+            String query = "insert into COMMAND (gameid, command) values (?, ?)";
 
             stmt = db.getConnection().prepareStatement(query);
             stmt.setInt(1, gameid);
-            stmt.setString(2, gson.toJson(command));
+            stmt.setBytes(2, blobIt(command));
             stmt.executeUpdate();
         }
         catch (SQLException e) {
@@ -196,7 +197,7 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
 
             rs = stmt.executeQuery();
             while ( rs.next() ) {
-                Command command = gson.fromJson(rs.getString("json"), Command.class);
+                Command command = (Command) readIt(rs.getBinaryStream("command"));
                 commands.add(command);
             }
         }
@@ -216,10 +217,10 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
             String query = "CREATE TABLE IF NOT EXISTS USER (id INT PRIMARY KEY, username TEXT, password TEXT)";
             stmt.executeUpdate(query);
             
-            query = "CREATE TABLE IF NOT EXISTS GAME (gameid int PRIMARY KEY, json TEXT)";
+            query = "CREATE TABLE IF NOT EXISTS GAME (gameid int PRIMARY KEY, game BLOB)";
             stmt.executeUpdate(query);
             
-            query = "CREATE TABLE IF NOT EXISTS COMMAND (gameid int, json TEXT)";
+            query = "CREATE TABLE IF NOT EXISTS COMMAND (gameid int, command BLOB)";
             stmt.executeUpdate(query);
         }
 
@@ -232,6 +233,33 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
         }
 
     }
+    
+    public byte[] blobIt(Object o){
+        try {
+            ByteArrayOutputStream bout = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bout);
+            oos.writeObject(o);
+            oos.flush();
+            oos.close();
+            return bout.toByteArray();
+        } catch (IOException e){
+            System.out.println("Could not blob it Exception " + e);
+            return null;
+        }
+    }
+
+    public Object readIt(InputStream i){
+        Object o = null;
+        try{
+            ObjectInputStream ois = new ObjectInputStream(i);
+            o =  ois.readObject();
+            ois.close();
+        } catch (ClassNotFoundException|IOException e){
+            System.out.println("Could not read it Exception:" + e);
+        }
+        return o;
+    }
+    
 
 
     /**
