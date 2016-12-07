@@ -22,12 +22,8 @@ public class AI extends Player implements Serializable{
 
     public AI(int gameId, CatanColor color, String name, PlayerIndex playerIndex) {
         super(color, name, 24601, playerIndex, 24601);
+        setUp(gameId, name);
 
-        user = new User(name, "password");
-        user.setPlayerID(24601);
-        user.setGameID(gameId);
-
-        facade = new MovesFacade(user);
     }
 
     private void rollNumber() {
@@ -51,6 +47,14 @@ public class AI extends Player implements Serializable{
 
     public void clearPlayed(){
         hasPlayed = false;
+    }
+    
+    public void setUp(int id, String name){
+        user = new User(name, "password");
+        user.setPlayerID(24601);
+        user.setGameID(id);
+        facade = new MovesFacade(user);
+
     }
 
     private void placeRandomRoad() {

@@ -106,6 +106,9 @@ public class VertexLocation implements PostProcessor, Serializable
 	 */
 	public VertexLocation getNormalizedLocation()
 	{
+		if (hexLoc == null) {
+			hexLoc = new HexLocation(x, y);
+		}
 		
 		// Return location that has direction NW or NE
 		

@@ -104,6 +104,9 @@ public class EdgeLocation implements PostProcessor, Serializable
 	 */
 	public EdgeLocation getNormalizedLocation()
 	{
+		if (hexLoc == null) {
+			hexLoc = new HexLocation(x, y);
+		}
 		
 		// Return an EdgeLocation that has direction NW, N, or NE
 		

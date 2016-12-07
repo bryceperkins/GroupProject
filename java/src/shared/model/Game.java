@@ -70,6 +70,7 @@ public class Game implements PostProcessor, Serializable {
         cd = persist.getCommandDAO();
         this.checkpoint = checkpoint;
         recentCommands = new ArrayList<Command>();
+
     }
 
     public void setCheckpoint(int checkpoint){
@@ -89,10 +90,21 @@ public class Game implements PostProcessor, Serializable {
     }
 
     public void getCommands(){
+        for (Player player : players) {
+            if (player instanceof AI ) {
+                ((AI) player).setPlayed();
+                ((AI) player).setUp(id, player.getName());
+            }
+        }
         MovesFacade m = new MovesFacade();
         m.setGame(id);
         for(Command c: cd.getCommands(id))
             c.serverExecute(m);
+        for (Player player : players) {
+            if (player instanceof AI ) {
+                ((AI) player).clearPlayed();
+            }
+        }
     }
 
     /**
