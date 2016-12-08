@@ -57,14 +57,16 @@ public class AI extends Player implements Serializable{
 
     }
 
-    private void placeRandomRoad() {
+    private void placeRandomRoad(boolean free) {
         Map map = facade.getGame().getMap();
+        if(!free && !canBuildRoad())
+            return;
         for (Hex hex : map.getHexes()) {
             HexLocation hexlocation = hex.getLocation();
             for (EdgeDirection direction : EdgeDirection.values()) {
                 EdgeLocation location = new EdgeLocation(hexlocation, direction);
                 if (map.canBuildRoad(this, location, new State(facade.getGame().getTurnTracker().getStatus()))) {
-                    facade.buildRoad(getPlayerIndex().getIndex(), true, location);
+                    facade.buildRoad(getPlayerIndex().getIndex(), free, location);
                     return;
                 }
             }
@@ -81,14 +83,30 @@ public class AI extends Player implements Serializable{
         }
     }
 
-    private void placeRandomSettlement() {
+    private void placeRandomSettlement(boolean free) {
         Map map = facade.getGame().getMap();
+        if(!free && !canBuildSettlement())
+            return;
         for (Hex hex : map.getHexes()) {
             HexLocation hexlocation = hex.getLocation();
             for (VertexDirection direction : VertexDirection.values()) {
                 ItemLocation location = new ItemLocation(hexlocation, direction);
                 if (map.canBuildSettlement(this, location, new State(facade.getGame().getTurnTracker().getStatus()))) {
-                    facade.buildSettlement(getPlayerIndex().getIndex(), true, new VertexLocation(hexlocation, direction));
+                    facade.buildSettlement(getPlayerIndex().getIndex(), free, new VertexLocation(hexlocation, direction));
+                    return;
+                }
+            }
+        }
+    }
+    
+    private void placeRandomCity() {
+        Map map = facade.getGame().getMap();
+        for (Hex hex : map.getHexes()) {
+            HexLocation hexlocation = hex.getLocation();
+            for (VertexDirection direction : VertexDirection.values()) {
+                ItemLocation location = new ItemLocation(hexlocation, direction);
+                if (map.canBuildCity(this, location)) {
+                    facade.buildCity(getPlayerIndex().getIndex(), new VertexLocation(hexlocation, direction));
                     return;
                 }
             }
@@ -101,6 +119,29 @@ public class AI extends Player implements Serializable{
 
     private void finishTurn() {
         facade.finishTurn(getPlayerIndex().getIndex());
+    }
+
+    private void doStuff(){
+        if (getResources().total() > 7){
+            for (ResourceType r: ResourceType.values()){
+                if (getResources().count(r) > 4){
+                    if (getResources().count(ResourceType.WOOD) == 0)
+                        facade.maritimeTrade(getPlayerIndex().getIndex(), 4, r, ResourceType.WOOD);
+                    else if (getResources().count(ResourceType.BRICK) == 0)
+                        facade.maritimeTrade(getPlayerIndex().getIndex(), 4, r, ResourceType.BRICK);
+                    else if (getResources().count(ResourceType.SHEEP) == 0)
+                        facade.maritimeTrade(getPlayerIndex().getIndex(), 4, r, ResourceType.SHEEP);
+                    else if (getResources().count(ResourceType.WHEAT) == 0)
+                        facade.maritimeTrade(getPlayerIndex().getIndex(), 4, r, ResourceType.WHEAT);
+                    else if (getResources().count(ResourceType.ORE) == 0)
+                        facade.maritimeTrade(getPlayerIndex().getIndex(), 4, r, ResourceType.ORE);
+                }
+            }
+        }
+        if (canBuildCity())
+            placeRandomCity();
+        if (canBuyDevCard())
+            facade.buyDevCard(getPlayerIndex().getIndex());
     }
 
     public void play() {
@@ -118,22 +159,23 @@ public class AI extends Player implements Serializable{
 
         TurnTracker.GameStatus status = game.getTurnTracker().getStatus();
 
+        boolean free = true;
+
         switch (status) {
             case Rolling:
                 rollNumber();
                 break;
+            case Playing:
+                doStuff();
+                free = false;
             case FirstRound:
             case SecondRound:
-                placeRandomRoad();
-                placeRandomSettlement();
+                placeRandomRoad(free);
+                placeRandomSettlement(free);
                 finishTurn();
                 break;
             case Discarding:
                 discard();
-                break;
-            case Playing:
-                discard();
-                finishTurn();
                 break;
             case Robbing:
                 placeRobberRandomly();

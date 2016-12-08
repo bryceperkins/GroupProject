@@ -118,14 +118,16 @@ public class MovesFacade extends BaseFacade implements Serializable{
 
         for (Player p: getGame().getPlayers()){
             if (p.getResources().total() > 7 && !p.didDiscard()) {
-                done = false;
+                if (!(p instanceof AI))
+                    done = false;
             }
         }
 
         if (done){
             game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Robbing);
         }
-
+        
+        updateAI();
         return getModel();
     }
 
@@ -158,6 +160,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
                 game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Robbing);
             }
 
+            updateAI();
             return getModel();
         }
 
