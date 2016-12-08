@@ -40,7 +40,13 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
     public UserDAO getUserDAO(){
         return this;
     }
-
+    
+    /**
+     * Enters user information into database via sqlite query
+     * argument is the information to be inputted based on whats inside of a User object
+     * 
+     * @param user user information to be added to SQLite database
+     */
     public void addUser(User user){
         try {
             String query = "insert or replace into USER (id, username, password) values (?, ?, ?)";
@@ -59,7 +65,10 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
             db.safeClose(stmt);
         }
     }
-
+    
+    /**
+     * clears all information from database
+     */
     public void clearAll(){
         try {
             Statement stmt = db.getConnection().createStatement();
@@ -81,6 +90,11 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
 
     }
     
+    /**
+     * fetches user information, returns hashmap object with username as key that maps to a user object
+     *  
+     *  @return HashMap of user information mapped to user objects
+     */
     public HashMap<String, User> getUsers(){
         HashMap<String, User> users  = new HashMap<String, User>();
         try {
@@ -104,6 +118,11 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
         }
     }
     
+    /**
+     * retreives all games loaded in sqlite database, returns list of all games
+     * 
+     * @return list of game objects stored in sqlite database 
+     */
     public List<Game> getGames(){
         List<Game> games  = new ArrayList<Game>();
         try {
@@ -128,7 +147,12 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
         });
         return games;
     }
-
+    
+    /**
+     * adds game infomration to database, this method forms a BLOB string from game object parameter and inserts it as a query
+     * 
+     * @param game information object
+     */
     public void addGame(Game game){
         try {
             String query = "insert or replace into GAME (gameid, game) values (?, ?)";
@@ -146,6 +170,10 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
         }
     }
 
+    /**
+     * clears all games from SQLite database
+     * 
+     */
     public void clearGames(){
         try {
             Statement stmt = db.getConnection().createStatement();
@@ -160,6 +188,13 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
         }
     }
     
+    /**
+     * add command to database along with the game it's associated with. 
+     * this method will create a BLOB string form the command object paramter
+     * 
+     * @param gameid - the game index the command is associated with
+     * @param command - the command object to be inserted into the database 
+     */
     public void addCommand(int gameid, Command command){
         try {
             String query = "insert into COMMAND (gameid, command) values (?, ?)";
@@ -178,6 +213,11 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
 
     }
     
+    /**
+     * clears all commands from the database that are associated with the gameid parameter
+     * 
+     * @param gameid int associated with game index 
+     */
     public void clearCommands(int gameid){
         try {
             String query = "DELETE from COMMAND where gameid = ?";
@@ -193,6 +233,12 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
         }
     }
 
+    /**
+     * retreives all commands from database that are associated with a specific game id
+     * 
+     * @param gameid the game index associated with the commands the user wishes to retreive
+     * @return list of all commands associated with gameid parameter
+     */
     public List<Command> getCommands(int gameid){
         List<Command> commands  = new ArrayList<Command>();
         try {
@@ -216,6 +262,9 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
         return commands;
     }
 
+    /**
+     * this method creates all tables if they do not already exist in the database  
+     */
     private void createTables(){
         try {
             Statement stmt = db.getConnection().createStatement();
@@ -239,6 +288,12 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
 
     }
     
+    /**
+     * this method returns a SQLite blob of parameter o
+     * 
+     * @param o java object to be created into a binary large object
+     * @return byte array information representation of parameter o
+     */
     public byte[] blobIt(Object o){
         try {
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -252,7 +307,12 @@ public class SQLitePlugin extends BasePlugin implements iPlugin, CommandDAO, Use
             return null;
         }
     }
-
+    
+    /** this method transforms database BLOB into program object
+     * 
+     * @param i inputstream to gather information for objects from
+     * @return this method returns a base java object class 
+     */
     public Object readIt(InputStream i){
         Object o = null;
         try{
