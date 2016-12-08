@@ -157,7 +157,6 @@ public class FilePlugin extends BasePlugin implements iPlugin, GameDAO, UserDAO,
         File game_dir = getDir("" + gameId);
         File c_file = getFile(game_dir, commands_file);
         commands.add(command);
-        System.out.println(commands);
         writeIt(c_file, commands);
     }
     
