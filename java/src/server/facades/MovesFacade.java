@@ -734,6 +734,12 @@ public class MovesFacade extends BaseFacade implements Serializable{
             getGame().getPlayer(largestArmy).setVictoryPoints(la.getVictoryPoints() + 2);
         }
 
+        for (Player p: getGame().getPlayers()){
+            if (p.getVictoryPoints() >= 10){
+                getGame().setWinner(p.getPlayerIndex());
+            }
+        }
+
         tracker.setLongestRoadOwner(mostRoads);
         tracker.setLargestArmyOwner(largestArmy);
 
