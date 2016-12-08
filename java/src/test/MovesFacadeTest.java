@@ -1,5 +1,3 @@
-package test;
-
 import org.junit.Test;
 import server.facades.MovesFacade;
 
@@ -9,5 +7,4 @@ public class MovesFacadeTest {
     public void testRollNumber_itAddsUserResources() {
         MovesFacade facade = new MovesFacade(null);
     }
-
 }
