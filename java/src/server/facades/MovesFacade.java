@@ -127,7 +127,6 @@ public class MovesFacade extends BaseFacade implements Serializable{
             game.getTurnTracker().setGameStatus(TurnTracker.GameStatus.Robbing);
         }
         
-        updateAI();
         return getModel();
     }
 
@@ -167,7 +166,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
         // Creates map of resources to a set of normalized locations that match the roll (not tied to pieces)
         HashMap<ResourceType, Set<VertexLocation>> locations = new HashMap<>();
         for (Hex h : map.getHexes()) {
-            if (h.getNumber() == number) {
+            if (h.getNumber() == number && !(h.hasRobber())) {
                 if (!locations.containsKey(h.getResource())) {
                     locations.put(h.getResource(), new HashSet<>());
                 }
@@ -479,6 +478,7 @@ public class MovesFacade extends BaseFacade implements Serializable{
             int victoryPoints = player.getVictoryPoints();
             player.setVictoryPoints(victoryPoints + 1);
             player.setCitiesRemaining(citiesRemaining - 1);
+            player.setSettlementsRemaining(player.getSettlementsRemaining() + 1);
             City city = new City(player.getPlayerIndex(), vertexLocation);
             List<City> existingCities = map.getCities();
             existingCities.add(city);

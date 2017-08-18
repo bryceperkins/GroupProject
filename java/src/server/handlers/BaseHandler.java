@@ -33,8 +33,12 @@ public abstract class BaseHandler implements HttpHandler{
     protected void respond(HttpExchange request, int code, String body) throws IOException{
         if (body.equals("Success") || body.equals("Failed")){
             request.getResponseHeaders().set("Content-Type", "text/plain");
+            request.getResponseHeaders().set("Access-Control-Allow-Methods", "POST, GET, OPTIONS , PUT");
+            request.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
         } else {
             request.getResponseHeaders().set("Content-Type", "application/json");
+            request.getResponseHeaders().set("Access-Control-Allow-Methods", "POST, GET, OPTIONS , PUT");
+            request.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
         }
         request.sendResponseHeaders(code, 0);       
         OutputStream os = request.getResponseBody();

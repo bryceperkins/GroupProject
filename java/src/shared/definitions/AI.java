@@ -31,9 +31,6 @@ public class AI extends Player implements Serializable{
         int die1 = rand.nextInt(6) + 1;
         int die2 = rand.nextInt(6) + 1;
         int rollResult = die1 + die2;
-        if (rollResult == 7){
-            rollResult = 8;
-        }
         facade.rollNumber(getPlayerIndex().getIndex(), rollResult);
     }
 
@@ -122,6 +119,15 @@ public class AI extends Player implements Serializable{
     }
 
     private void doStuff(){
+        if (canBuildRoad())
+            placeRandomRoad(false);
+        if (canBuildSettlement())
+            placeRandomSettlement(false);
+        if (canBuildCity())
+            placeRandomCity();
+        if (canBuyDevCard())
+            facade.buyDevCard(getPlayerIndex().getIndex());
+
         if (getResources().total() > 7){
             for (ResourceType r: ResourceType.values()){
                 if (getResources().count(r) > 4){
@@ -138,10 +144,15 @@ public class AI extends Player implements Serializable{
                 }
             }
         }
+        if (canBuildRoad())
+            placeRandomRoad(false);
+        if (canBuildSettlement())
+            placeRandomSettlement(false);
         if (canBuildCity())
             placeRandomCity();
         if (canBuyDevCard())
             facade.buyDevCard(getPlayerIndex().getIndex());
+        discard();
     }
 
     public void play() {
@@ -167,7 +178,8 @@ public class AI extends Player implements Serializable{
                 break;
             case Playing:
                 doStuff();
-                free = false;
+                finishTurn();
+                break;
             case FirstRound:
             case SecondRound:
                 placeRandomRoad(free);

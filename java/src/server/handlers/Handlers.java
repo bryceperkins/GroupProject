@@ -33,6 +33,8 @@ public class Handlers {
                 //mimetypes.add(FileUtils.getMimeType(filepath));
                 mimetypes.add("text/html");
                 exchange.getResponseHeaders().put("Content­type", mimetypes);
+                exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "POST, GET, OPTIONS , PUT");
+                exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
                 exchange.sendResponseHeaders(200,response.length);
                 OutputStream os = exchange.getResponseBody();
                 os.write(response);

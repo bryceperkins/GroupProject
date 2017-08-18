@@ -44,6 +44,7 @@ public class Http implements iServer {
         // Swagger Endpoints
         server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
         server.createContext("/docs/api/view", new Handlers.BasicFile(""));
+        server.createContext("/docs/", new Handlers.BasicFile(""));
         server.createContext("/", new Handlers.BasicFile(""));
         
         server.setExecutor(null); // creates a default executor
